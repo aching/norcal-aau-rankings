@@ -667,6 +667,7 @@ def build_board(cohort, title, sub, gen):
         on = ' class="on"' if c == cohort else ""
         tabs += f'<a href="{c}.html"{on}>{t}</a>'
     tabs += '<a href="upcoming.html">Upcoming</a>'
+    tabs += '<a href="organizers.html">Organizers</a>'
     titles_html = "".join(f"<li>{esc(t)}</li>" for t in titles) or "<li>None</li>"
     upcoming = upcoming_rosters()
     # team detail pages: two passes (slugs first so opponent links

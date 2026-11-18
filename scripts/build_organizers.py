@@ -216,6 +216,10 @@ def main():
     orgs = load_ee_history()
     counts = corpus_game_counts()
     participants = corpus_participants()
+    try:
+        strength = json.load(open(HERE.parent / "data" / "org_strength.json"))
+    except (FileNotFoundError, json.JSONDecodeError):
+        strength = {}
     upcoming = load_upcoming()
     up_by_org = defaultdict(list)
     for e in upcoming:
@@ -273,6 +277,22 @@ def main():
                                 f"<ul>{items}</ul></section>")
         else:
             upcoming_section = ""
+        if org in strength:
+            s = strength[org]
+            divrows = "".join(
+                f"<tr><td>{esc(d['div'])}</td>"
+                f"<td>{d['avg']:.3f}</td><td>{d['n']}</td></tr>"
+                for d in s["divisions"][:12])
+            div_section = (
+                f"<section class=\"note\"><h2>Strongest divisions "
+                f"(avg ranked-team score, last 365d)</h2></section>"
+                f"<table class=\"hist\"><thead><tr><th>Division</th>"
+                f"<th>Avg strength</th><th>Teams</th></tr></thead>"
+                f"<tbody>{divrows}</tbody></table>")
+            summary += (f" Competition strength {s['avg']:.3f} "
+                        f"({s['n']} ranked appearances, {s['events']} events).")
+        else:
+            div_section = ""
         rows = []
         pmap = team_page_map()
         for h in past:
@@ -316,11 +336,74 @@ def main():
         slugs[org] = slug
         (OUT / f"{slug}.html").write_text(PAGE.format(
             css=CSS, extra_css="", org=esc(org), summary=summary, tabs=tabs,
-            upcoming_section=upcoming_section, past_n=len(past),
+            upcoming_section=upcoming_section + div_section, past_n=len(past),
             rows="\n".join(rows)))
     # write slug map for upcoming page linking
     json.dump(slugs, open(HERE.parent / "data" / "org_slugs.json", "w"), indent=1)
     print(f"wrote {len(slugs)} organizer pages -> {OUT}")
+
+    # ---- organizers index: ranked by avg strength of field ----
+    try:
+        strength = json.load(open(HERE.parent / "data" / "org_strength.json"))
+    except (FileNotFoundError, json.JSONDecodeError):
+        strength = {}
+    orows = []
+    for i, (org, s) in enumerate(
+            sorted(strength.items(), key=lambda kv: -kv[1]["avg"]), 1):
+        top = s["divisions"][0] if s["divisions"] else None
+        top_txt = f"{top['div']} ({top['avg']:.3f})" if top else "-"
+        orows.append(
+            f"<tr><td>{i}</td>"
+            f"<td><a href=\"organizers/{slugs.get(org, '')}.html\">{esc(org)}</a></td>"
+            f"<td>{s['avg']:.3f}</td><td>{s['n']}</td><td>{s['events']}</td>"
+            f"<td>{esc(top_txt)}</td></tr>")
+    unranked = sorted(o for o in slugs if o not in strength)
+    urows = "".join(
+        f"<tr><td></td><td><a href=\"organizers/{slugs[o]}.html\">{esc(o)}</a></td>"
+        f"<td colspan=4 style=\"color:var(--mut)\">insufficient scraped games "
+        f"(need 20+ ranked appearances)</td></tr>" for o in unranked)
+    tabs_idx = "".join(
+        f'<a href="{c}.html">{t}</a>' for c, (t, _, _) in
+        {"11u": ("11U", 0, 0), "12u": ("12U/6th Grade", 0, 0),
+         "13u": ("13U/7th Grade", 0, 0), "14u": ("14U/8th Grade", 0, 0)}.items())
+    idx_html = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Organizers &mdash; ranked by strength of field</title>
+<style>
+{CSS}
+table.hist {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
+table.hist th {{ text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }}
+table.hist td {{ padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }}
+@media (max-width: 700px) {{
+  table.hist {{ display: block; overflow-x: auto; font-size: 12.5px; }}
+  table.hist td {{ padding: 7px 6px; }}
+}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; rankings hub</a>
+<header class="top">
+<h1>Organizers</h1>
+<p>Ranked by avg strength of field: mean ranked-team score over resolved
+ranked appearances in scraped events (last 365d, min 20 appearances).
+{len(strength)} ranked, {len(unranked)} with insufficient data.</p>
+<nav class="tabs">{tabs_idx}<a href="upcoming.html">Upcoming</a><a href="organizers.html" class="on">Organizers</a></nav>
+</header>
+<table class="hist">
+<thead><tr><th>#</th><th>Organizer</th><th>Strength</th><th>Appearances</th><th>Events</th><th>Top division</th></tr></thead>
+<tbody>
+{"".join(orows) + urows}
+</tbody>
+</table>
+</div>
+</body>
+</html>"""
+    (HERE.parent / "site" / "organizers.html").write_text(idx_html)
+    print(f"wrote organizers index ({len(strength)} ranked + {len(unranked)} unranked)")
 
 
 if __name__ == "__main__":

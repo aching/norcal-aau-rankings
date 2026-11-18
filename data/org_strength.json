@@ -1,0 +1,236 @@
+{
+ "Grassroots 365": {
+  "avg": 0.0351,
+  "n": 80,
+  "events": 10,
+  "divisions": [
+   {
+    "div": "14U/8th Grade Silver",
+    "avg": 0.061,
+    "n": 8
+   },
+   {
+    "div": "14U/8th Grade Gold",
+    "avg": 0.0503,
+    "n": 10
+   },
+   {
+    "div": "13U/7th Grade Silver",
+    "avg": 0.0446,
+    "n": 5
+   },
+   {
+    "div": "12U/6th Grade Silver",
+    "avg": 0.043,
+    "n": 5
+   },
+   {
+    "div": "12U/6th Grade Gold",
+    "avg": 0.0298,
+    "n": 5
+   },
+   {
+    "div": "13U/7th Grade Gold",
+    "avg": 0.029333333333333333,
+    "n": 6
+   },
+   {
+    "div": "14U/8th Grade Bronze",
+    "avg": 0.02033333333333333,
+    "n": 15
+   }
+  ]
+ },
+ "GSG Hoops": {
+  "avg": 0.015345360824742268,
+  "n": 194,
+  "events": 22,
+  "divisions": [
+   {
+    "div": "5th Grade (11U) Division",
+    "avg": 0.020200000000000003,
+    "n": 5
+   },
+   {
+    "div": "6th Grade (12U) Boys Division",
+    "avg": 0.01854761904761905,
+    "n": 42
+   },
+   {
+    "div": "6th Grade (12U) Division",
+    "avg": 0.017666666666666667,
+    "n": 6
+   },
+   {
+    "div": "5th Grade (11U) Boys Division",
+    "avg": 0.017615384615384616,
+    "n": 26
+   },
+   {
+    "div": "7th Grade (13U) Boys Division",
+    "avg": 0.014326530612244898,
+    "n": 49
+   },
+   {
+    "div": "8th Grade (14U) Boys Division",
+    "avg": 0.011770833333333333,
+    "n": 48
+   },
+   {
+    "div": "8th Grade (14U) Division",
+    "avg": 0.009875,
+    "n": 8
+   },
+   {
+    "div": "7th Grade (13U) Division",
+    "avg": 0.0098,
+    "n": 5
+   }
+  ]
+ },
+ "Hoop 121": {
+  "avg": 0.026604651162790694,
+  "n": 86,
+  "events": 11,
+  "divisions": [
+   {
+    "div": "11u White - Boys",
+    "avg": 0.0298,
+    "n": 5
+   },
+   {
+    "div": "11u",
+    "avg": 0.02823076923076923,
+    "n": 13
+   },
+   {
+    "div": "13u",
+    "avg": 0.026,
+    "n": 9
+   },
+   {
+    "div": "12u White",
+    "avg": 0.0216,
+    "n": 5
+   },
+   {
+    "div": "14u",
+    "avg": 0.0215,
+    "n": 10
+   }
+  ]
+ },
+ "NorCal Sports TV": {
+  "avg": 0.0202,
+  "n": 20,
+  "events": 6,
+  "divisions": [
+   {
+    "div": "14U Boys",
+    "avg": 0.022799999999999997,
+    "n": 10
+   },
+   {
+    "div": "11U Boys",
+    "avg": 0.0154,
+    "n": 5
+   }
+  ]
+ },
+ "4BallersOnly": {
+  "avg": 0.023715151515151515,
+  "n": 165,
+  "events": 10,
+  "divisions": [
+   {
+    "div": "11u Division 1",
+    "avg": 0.04278571428571428,
+    "n": 14
+   },
+   {
+    "div": "14u Division 1",
+    "avg": 0.0391,
+    "n": 10
+   },
+   {
+    "div": "13u Division 1",
+    "avg": 0.03133333333333333,
+    "n": 12
+   },
+   {
+    "div": "12u Division 1",
+    "avg": 0.02866666666666667,
+    "n": 12
+   },
+   {
+    "div": "14u Division 2",
+    "avg": 0.024833333333333332,
+    "n": 18
+   },
+   {
+    "div": "13u Division 2",
+    "avg": 0.018923076923076924,
+    "n": 13
+   },
+   {
+    "div": "11u Division 3",
+    "avg": 0.018000000000000002,
+    "n": 11
+   },
+   {
+    "div": "12u Division 2",
+    "avg": 0.017904761904761906,
+    "n": 21
+   },
+   {
+    "div": "14u Divison 3",
+    "avg": 0.016555555555555556,
+    "n": 9
+   },
+   {
+    "div": "12u Division 3",
+    "avg": 0.01635714285714286,
+    "n": 14
+   },
+   {
+    "div": "14u Division 3",
+    "avg": 0.016166666666666666,
+    "n": 6
+   },
+   {
+    "div": "13u Division 3",
+    "avg": 0.008400000000000001,
+    "n": 5
+   }
+  ]
+ },
+ "Bay City Basketball": {
+  "avg": 0.01954285714285714,
+  "n": 70,
+  "events": 6,
+  "divisions": [
+   {
+    "div": "7th Boys Silver",
+    "avg": 0.02542857142857143,
+    "n": 7
+   },
+   {
+    "div": "7th Boys Bronze East",
+    "avg": 0.0056,
+    "n": 5
+   }
+  ]
+ },
+ "BAMTOURNAMENTS": {
+  "avg": 0.011363636363636364,
+  "n": 33,
+  "events": 4,
+  "divisions": [
+   {
+    "div": "14U/8TH GRADE (RED / WHITE) - BOYS",
+    "avg": 0.005,
+    "n": 7
+   }
+  ]
+ }
+}
