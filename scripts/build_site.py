@@ -287,6 +287,7 @@ TEAM_TMPL = """<!DOCTYPE html>
 </div>
 {why_section}
 <section class="note"><h2>Titles ({ntitles})</h2><ul>{titlelist}</ul></section>
+{upcoming_section}
 <section class="note"><h2>Full record ({ngames} scored games, newest first)</h2>
 <table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
 <tbody>{gamerows}</tbody></table></section>
@@ -443,7 +444,33 @@ def slug_of(team):
     return s or "team"
 
 
-def team_page(cohort, cohort_title, r, gen, page_of, rank_of):
+def upcoming_rosters():
+    """Load data/upcoming_rosters.json -> {team_id: [(date, event, url, raw, div)]}.
+
+    Only resolved matches (team_id set) are returned. Missing file or no
+    matches -> {}. Never raises -- team pages build without the section.
+    """
+    try:
+        events = json.load(open(REPO / "data" / "upcoming_rosters.json"))
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+    by_team = {}
+    for eid, ev in events.items():
+        for t in ev.get("teams", []) or []:
+            tid = t.get("team_id")
+            if not tid:
+                continue
+            by_team.setdefault(tid, []).append({
+                "date": ev.get("start", ""), "event": ev.get("event", "?"),
+                "url": ev.get("url", ""), "raw": t.get("raw", ""),
+                "div": t.get("div", ""),
+            })
+    for lst in by_team.values():
+        lst.sort(key=lambda x: (x["date"], x["event"]))
+    return by_team
+
+
+def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None):
     """Write site/teams/<cohort>/<slug>.html -- full detail page.
 
     page_of: team_id -> relative page path (for opponent links).
@@ -514,6 +541,18 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of):
         tabs += f'<a href="../../{c}.html">{t}</a>'
     why_html = (f"<section class=\"note\"><h2>Why #{r['rank']}</h2>"
                 f"<ul>{why}</ul></section>" if r.get("rank") and why else "")
+    up_list = (upcoming or {}).get(r["team"], [])
+    if up_list:
+        up_items = "".join(
+            f"<li>{esc(u['date'][5:].replace('-', '/'))} &mdash; "
+            f"<a href=\"{esc(u['url'])}\">{esc(u['event'])}</a>"
+            f" <span style=\"color:var(--mut)\">({esc(u['div'])}"
+            f"{' as ' + esc(u['raw']) if u['raw'].lower() != r['team'].lower() else ''})</span></li>"
+            for u in up_list)
+        upcoming_section = (f"<section class=\"note\"><h2>Upcoming "
+                            f"({len(up_list)})</h2><ul>{up_items}</ul></section>")
+    else:
+        upcoming_section = ""
     page = TEAM_TMPL.format(
         team=esc(r["team"]) + marks, cohort=esc(cohort),
         cohort_title=esc(cohort_title), tabs=tabs, css=CSS,
@@ -528,6 +567,7 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of):
         sos=f"{r['sos']:.3f}" if r.get("rank") else "-",
         gen=esc(gen), why=why, why_section=why_html, ngames=len(log),
         titlelist=titlelist, ntitles=len(_titles),
+        upcoming_section=upcoming_section,
         gamerows=gamerows, lastn=esc(lastn),
     )
     # filename decided by caller (two-pass dedup); return the HTML,
@@ -628,6 +668,7 @@ def build_board(cohort, title, sub, gen):
         tabs += f'<a href="{c}.html"{on}>{t}</a>'
     tabs += '<a href="upcoming.html">Upcoming</a>'
     titles_html = "".join(f"<li>{esc(t)}</li>" for t in titles) or "<li>None</li>"
+    upcoming = upcoming_rosters()
     # team detail pages: two passes (slugs first so opponent links
     # resolve, then pages). page_of maps team_id -> board-relative path.
     # NOTE: filenames must be deterministic across rebuilds (opponent
@@ -657,7 +698,7 @@ def build_board(cohort, title, sub, gen):
     for r in data:
         rel = page_of[r["team"]]
         (outdir / rel.split("/")[-1]).write_text(
-            team_page(cohort, title, r, gen, page_of, rank_of))
+            team_page(cohort, title, r, gen, page_of, rank_of, upcoming))
         r["page"] = rel
     if unranked:
         ulist = "\n".join(

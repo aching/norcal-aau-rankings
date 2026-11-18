@@ -1,0 +1,801 @@
+{
+ "8233": {
+  "event": "NorCal Prep Invitational 2026",
+  "start": "2026-11-19",
+  "end": "2026-11-21",
+  "url": "https://bracketteam.com/event/8233/NorCal_Prep_Invitational_2026",
+  "src": "BT",
+  "teams": [
+   {
+    "raw": "Antioch High School",
+    "div": "Boys Varsity Showcase",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "DVHS",
+    "div": "Boys Varsity Showcase",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Mountain House",
+    "div": "Boys Varsity Showcase",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Stagg High School",
+    "div": "Boys Varsity Showcase",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Benicia High School",
+    "div": "Girls Varsity Showcase",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Granada High School",
+    "div": "Girls Varsity Showcase",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Saint Joseph Notre Dame High School",
+    "div": "Girls Varsity Showcase",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St. Vincent St. Patrick",
+    "div": "Girls Varsity Showcase",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Antioch High School",
+    "div": "Boys JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Brave Christian School",
+    "div": "Boys JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Cornerstone Christian School",
+    "div": "Boys JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Deer Valley High School",
+    "div": "Boys JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Mountain House High School",
+    "div": "Boys JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Stagg High School",
+    "div": "Boys JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Benicia High School",
+    "div": "Girls JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Carondelet High School",
+    "div": "Girls JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Cornerstone Christian School",
+    "div": "Girls JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Dublin",
+    "div": "Girls JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Freedom High School",
+    "div": "Girls JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Las Lomas High School",
+    "div": "Girls JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Pittsburg High School",
+    "div": "Girls JV Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Liberty High School",
+    "div": "Girls Freshmen Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "SRV",
+    "div": "Girls Freshmen Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Antioch High School",
+    "div": "Boys Freshmen Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Mountain House High School",
+    "div": "Boys Freshmen Premier",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   }
+  ]
+ },
+ "8657": {
+  "event": "St Eugene's CYO Tournament",
+  "start": "2026-11-21",
+  "end": "2026-11-22",
+  "url": "https://bracketteam.com/event/8657/St_Eugenes_CYO_Tournament",
+  "src": "BT",
+  "teams": [
+   {
+    "raw": "BullDogs (Bowman)",
+    "div": "3rd Boys",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "COA",
+    "div": "3rd Boys",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Hoop Stars (Foley)",
+    "div": "3rd Boys",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "OLG",
+    "div": "3rd Boys",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Sebastian",
+    "div": "3rd Boys",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Warriors ( Meyer)",
+    "div": "3rd Boys",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "OLG (Rosenberg)",
+    "div": "4th Boys D2",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugenes (Reid)",
+    "div": "4th Boys D2",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Rose (Jenkins)",
+    "div": "4th Boys D2",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Vincent (Weis)",
+    "div": "4th Boys D2",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "(Lappin)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "OLG (Leon)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "OLL (Bass)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "OLL Panthers (Rogoff)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Elizabeth (Blanquie)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugenes (Browne)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugenes (Kline)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Hillary (Jorgenson)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Isabella (Corbett)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Mary's",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Rose (Condiotti)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Rose (Hill)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Rose (Inman)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Sebastian (Gatlin)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Sebastian (Pahlavan)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Sebastian (Stutes)",
+    "div": "5th w/4th D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Blazers (Martin)",
+    "div": "6th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Elizabeth (Morato)",
+    "div": "6th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugenes (Magatelli)",
+    "div": "6th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Isabella (MacMinn)",
+    "div": "6th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Rafael (Malik)",
+    "div": "6th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Vincent  (Stone)",
+    "div": "6th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Vincent (Weis)",
+    "div": "6th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "The Munchkins (Vera)",
+    "div": "6th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugene's (Olson)",
+    "div": "7th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugenes (Cole)",
+    "div": "7th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Isabella (Samuel)",
+    "div": "7th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Isabella (Vigil)",
+    "div": "7th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugenes (Bruntlet)",
+    "div": "8th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugenes (Saltzman)",
+    "div": "8th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Rose (Runyan)",
+    "div": "8th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Vincent (Tolks)",
+    "div": "8th Boys",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "All Sars (Schaffer)",
+    "div": "4th Girls",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "OLG (Fitzsimons)",
+    "div": "4th Girls",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "OLG (Sandoval)",
+    "div": "4th Girls",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Rose",
+    "div": "4th Girls",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Athale 5G (Athale)",
+    "div": "5th/6th Girls",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugenes (Langlois)",
+    "div": "5th/6th Girls",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugenes (Saltzman)",
+    "div": "5th/6th Girls",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Vincent (Tolks)",
+    "div": "5th/6th Girls",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "COA",
+    "div": "6th Girls D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "OLG (Fitzsimmons)",
+    "div": "6th Girls D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "OLG (Sandoval)",
+    "div": "6th Girls D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Petaluma Hustle",
+    "div": "6th Girls D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugenes (Scott)",
+    "div": "6th Girls D1",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "COA (Ballatore)",
+    "div": "7th Girls",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "OLL (Bass)",
+    "div": "7th Girls",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St Eugenes (Hollen)",
+    "div": "7th Girls",
+    "conf": "normalized",
+    "team_id": null,
+    "cohort": null
+   }
+  ]
+ },
+ "8246": {
+  "event": "Adidas Mr. Mike Main Event 2026",
+  "start": "2026-12-01",
+  "end": "2026-12-05",
+  "url": "https://bracketteam.com/event/8246/Adidas_Mr_Mike_Main_Event_2026",
+  "src": "BT",
+  "teams": [
+   {
+    "raw": "Cornerstone Christian School",
+    "div": "Main Event Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Kings Academy",
+    "div": "Main Event Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Clayton Valley High School",
+    "div": "Legacy Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "College Park",
+    "div": "Legacy Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Concord High School",
+    "div": "Legacy Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Cornerstone Christian School",
+    "div": "Legacy Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Open",
+    "div": "Legacy Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Saint Mary's College",
+    "div": "Legacy Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Venture Academy",
+    "div": "Legacy Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Deer Valley High School",
+    "div": "Rising Start DIvision",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Kings Academy",
+    "div": "Rising Start DIvision",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Clayton Valley",
+    "div": "Future Stars Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "College Park",
+    "div": "Future Stars Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Cornerstone Christian School",
+    "div": "Future Stars Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Oakland Tech",
+    "div": "Future Stars Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Pinole Valley High School",
+    "div": "Future Stars Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Riordan high school",
+    "div": "Future Stars Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Sacred Heart Cathedral Preparatory",
+    "div": "Future Stars Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Emreald High School",
+    "div": "Next Up Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Pittsburg High School",
+    "div": "Next Up Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Sacred Heart Cathedral Prep",
+    "div": "Next Up Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "San Ramon Valley",
+    "div": "Next Up Division",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   }
+  ]
+ },
+ "7562": {
+  "event": "JV Cougar Classic",
+  "start": "2026-12-10",
+  "end": "2026-12-12",
+  "url": "https://bracketteam.com/event/7562/JV_Cougar_Classic",
+  "src": "BT",
+  "teams": [
+   {
+    "raw": "Alhambra",
+    "div": "JV",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Carondelet JV",
+    "div": "JV",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "Pittsburg",
+    "div": "JV",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   },
+   {
+    "raw": "St. Ignatius",
+    "div": "JV",
+    "conf": "bare",
+    "team_id": null,
+    "cohort": null
+   }
+  ]
+ }
+}
