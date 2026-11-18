@@ -191,7 +191,7 @@ EE teams/schedule detail needs the event page until the refresh pipeline records
 </div>
 </header>
 <table class="upcoming">
-<thead><tr><th>Date</th><th>Event</th><th>Area</th><th>Status</th><th>Teams</th><th></th></tr></thead>
+<thead><tr><th>Date</th><th>Event</th><th>Area</th><th>Status</th><th>Teams</th></tr></thead>
 <tbody>
 {rows}
 </tbody>
@@ -236,8 +236,7 @@ def main():
             f'<span style="color:var(--mut);font-size:12.5px">{esc(e["city"])}</span></td>'
             f'<td>{esc(e["region"])}</td>'
             f'<td class="{st_cls}">{esc(e["status"])}</td>'
-            f'<td>{esc(e["teams"])}</td>'
-            f'<td><a href="{esc(e["url"])}">page &rarr;</a></td></tr>')
+            f'<td>{esc(e["teams"])}</td></tr>')
     window = f"{events[0]['date']} -- {events[-1]['date']}" if events else "no events"
     out = HERE.parent / "site" / "upcoming.html"
     out.write_text(PAGE.format(css=CSS, tabs=tabs, window=esc(window),
