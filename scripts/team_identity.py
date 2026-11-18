@@ -75,8 +75,15 @@ OVERRIDES = [
     # level token disambiguates, handled below at match time.
     (("tm basketball", "14u"), "tm:falcons-black-14u"),
     (("tm basketball", "8th"), "tm:falcons-black-14u"),
-    # TM program: Griffins track
-    (("tm griffins", None), "tm:griffins"),
+    # TM Griffins rename (user-confirmed Nov 2026): bare "TM Basketball"
+    # entries (year-round, latest 10/24 Soldiers Halloween) and explicit
+    # "TM Griffins 12U" entries (GSG x BAM Nov events, from 10/31) are
+    # the same squad -- the registration label just gained "Griffins".
+    # Same program, adjacent windows, never co-occur. Merge into the
+    # history-carrying tm:griffins-12u.
+    (("tm griffins 12u", "12u"), "tm:griffins-12u"),
+    (("tm griffins 12u", "6th"), "tm:griffins-12u"),
+    (("tm griffins 12u", None), "tm:griffins-12u"),
     (("tm basketball", "12u"), "tm:griffins-12u"),
     (("tm basketball", "6th"), "tm:griffins-12u"),
     # Cali Gold ranked 8th squads
