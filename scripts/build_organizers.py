@@ -260,11 +260,13 @@ def main():
             items = "".join(
                 f"<li>{esc(u['date'][5:].replace('-', '/'))} &mdash; "
                 f"<a href=\"{esc(u['url'])}\">{esc(u['name'])}</a> "
-                f"(<a href=\"{esc(u['url'])}/schedule\">schedule/teams</a>) "
+                f"[<a href=\"{esc(u['url'])}/schedule\">schedule</a>] "
+                f"[<a href=\"{esc(u['url'])}/teams\">teams</a>] "
                 f"<span class=\"count\">{esc(u['status'])}</span></li>" for u in up
                 if u["src"] == "EE") + "".join(
                 f"<li>{esc(u['date'][5:].replace('-', '/'))} &mdash; "
                 f"<a href=\"{esc(u['url'])}\">{esc(u['name'])}</a> "
+                f"[<a href=\"{esc(u['url'])}\">schedule/teams</a>] "
                 f"<span class=\"count\">{esc(u['status'])}</span></li>" for u in up
                 if u["src"] != "EE")
             upcoming_section = (f"<section class=\"note\"><h2>Upcoming ({len(up)})</h2>"
@@ -296,7 +298,8 @@ def main():
                        f"{len(divs)} divisions)</summary>" +
                        "".join(groups) + "</details>")
             else:
-                who = (f"(<a href=\"{esc(url)}/schedule\">schedule/teams</a>)")
+                who = (f"[<a href=\"{esc(url)}/schedule\">schedule</a>] "
+                       f"[<a href=\"{esc(url)}/teams\">teams</a>]")
             rows.append(
                 f"<tr><td style=\"white-space:nowrap\">{esc((h['start'] or '')[5:].replace('-', '/'))}</td>"
                 f"<td><a href=\"{esc(url)}\">{esc(h['name'])}</a> {who}<br>"
