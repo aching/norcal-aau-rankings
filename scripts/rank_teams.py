@@ -544,6 +544,10 @@ def main():
                     help="disable the win%% multiplier (default: final "
                          "score x (0.5 + 0.5 x win%%) so winning matters "
                          "outright)")
+    ap.add_argument("--no-circuit-floor", action="store_true",
+                    help="disable the circuit floor (default: a team with "
+                         "a game in a vetted shoe circuit cannot rank "
+                         "below the best silver-modal team)")
     ap.add_argument("--no-norcal-gate", action="store_true",
                     help="rank circuit-only (SoCal) teams too (default: excluded)")
     ap.add_argument("--active-days", type=int, default=60,
@@ -621,6 +625,24 @@ def main():
         "250228",  # Jr. 3SSB West & Mountain Super Regional
         "259196",  # 3Stripes Gold West Championships (Finals)
         "275133",  # Fall 2026 Season (surname house league, not club)
+    }
+    # Shoe-circuit vetted events (subset of NON_NORCAL_EVENTS minus the
+    # house league): Nike Jr. EYBL, adidas 3SSB / 3Stripes. Selection
+    # into these circuits is itself a credential (user-confirmed Nov
+    # 2026): a circuit team must rank above any silver team. Applied
+    # as a floor on published score (see below), not a win bonus --
+    # circuit games are mostly losses vs ghosts, so bonuses can't
+    # reach them; the floor prices the vetting directly.
+    CIRCUIT_EVENTS = (NON_NORCAL_EVENTS - {"275133"}) | {
+        "273271",  # Jr. 3SSB West Open Qualifier (Anaheim, Oct 3-4 2026)
+        "250214",  # Jr. 3SSB West Tip-Off (Oct 2025)
+        "238739",  # 3Stripes Gold Earn Your Stripes / Encore
+        "238740",  # 3Stripes Gold West Championship / Final Act
+        "259191",  # 3Stripes Gold West Sessions I & II (2026)
+        # NOT circuit: Made Hoops events (264028 Norcal Clash, 264307
+        # West Live Finale) are open-registration big tournaments, not
+        # vetted selection -- prestige multiplier only. 278985 ABCD
+        # camp has no bracket games (skipped per policy).
     }
     ranked, thin = [], []
     team_games = {}
@@ -1103,6 +1125,35 @@ def main():
                        h2h, len(title_map.get(team_id, []))))
     ranked.sort(key=lambda r: (r[0], r[1], r[2], r[3]), reverse=True)
 
+    # Circuit floor (user-confirmed Nov 2026): selection into a vetted
+    # shoe circuit (Jr. EYBL / 3SSB / 3Stripes) is itself a credential --
+    # a circuit team must rank above any silver team. Applied as a floor
+    # on published score: the max published score among literal
+    # silver-modal teams. NOTE: deliberately NOT the ceiling's
+    # open==silver peer rule -- most local ball is modal-open, so the
+    # peer definition would set the floor near the top of the board and
+    # leapfrog gold teams the user wants to stay ahead ("almost every
+    # gold team"). Runs AFTER the ceiling (membership outranks it by
+    # design) and BEFORE the H2H swaps so direct results still flip
+    # within the band. --no-circuit-floor disables. Records into
+    # CIRCUIT_FLOOR for the Why-line annotation below.
+    CIRCUIT_FLOOR = {}
+    if not args.no_circuit_floor and not args.no_sos:
+        _pos = {r[5]: i for i, r in enumerate(ranked)}
+        _silver_max = 0.0
+        for r in ranked:
+            if modal.get(r[5], "open") == "silver" and r[0] > _silver_max:
+                _silver_max = r[0]
+        if _silver_max > 0:
+            for tid, games in team_games.items():
+                if any(str(g[4]) in CIRCUIT_EVENTS for g in games):
+                    i = _pos.get(tid)
+                    if i is not None and ranked[i][0] < _silver_max:
+                        old = ranked[i][0]
+                        ranked[i] = (_silver_max,) + ranked[i][1:]
+                        CIRCUIT_FLOOR[tid] = (old, _silver_max)
+            ranked.sort(key=lambda r: (r[0], r[1], r[2], r[3]), reverse=True)
+
     # Head-to-head tiebreak (CFP-style): if a lower team directly beat a
     # higher team in-window and their scores are within --h2h-band, the
     # two exchange places. Pairwise on final scores; nobody else moves.
@@ -1354,6 +1405,9 @@ def main():
         if tid in CEIL_INFO:
             tails.append(f"capped at {_flat(CEIL_INFO[tid][0])}"
                          f" clean-best ({CEIL_INFO[tid][1]:.3f})")
+        if tid in CIRCUIT_FLOOR:
+            tails.append(f"circuit floor {CIRCUIT_FLOOR[tid][0]:.3f}"
+                         f"→{CIRCUIT_FLOOR[tid][1]:.3f}")
         try:
             _age = (_date.fromisoformat(today)
                     - _date.fromisoformat(games[0][0][:10])).days
@@ -1369,7 +1423,7 @@ def main():
                 break
         lines.append("; ".join(tails) if tails else
                      f"Latest {_mdy(games[0][0])}")
-        return lines[:5]
+        return lines[:6]
 
     def margin_of(tid, games):
         sc = [(g[8], g[9]) for g in games
