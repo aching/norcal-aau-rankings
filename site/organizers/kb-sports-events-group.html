@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KB Sports Events Group &mdash; organizer history</title>
+<style>
+
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+
+table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
+table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.count { font-size: 12px; color: var(--mut); }
+@media (max-width: 700px) {
+  table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
+  table.hist td { padding: 7px 6px; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../upcoming.html">&larr; upcoming tournaments</a>
+<header class="top">
+<h1>KB Sports Events Group</h1>
+<p>9 EE events. <a href="https://basketball.exposureevents.com/organizations/22154">EE organization page &rarr;</a></p>
+<nav class="tabs"><a href="../11u.html">11U</a><a href="../12u.html">12U/6th Grade</a><a href="../13u.html">13U/7th Grade</a><a href="../14u.html">14U/8th Grade</a></nav>
+</header>
+
+<section class="note"><h2>Past events (9)</h2></section>
+<table class="hist">
+<thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
+<tbody>
+<tr><td style="white-space:nowrap">07/24</td><td><a href="https://basketball.exposureevents.com/263108/kb-sports-west-coast-finale">KB Sports West Coast Finale</a><br><span class="count"> Las Vegas</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/03</td><td><a href="https://basketball.exposureevents.com/263133/kb-sports-las-vegas-circuit">KB Sports Las Vegas Circuit</a><br><span class="count"> Las Vegas</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/26</td><td><a href="https://basketball.exposureevents.com/256967/kb-sports-west-coast-national-championship-rings">KB Sports  West Coast National Championship (Rings)</a><br><span class="count"> Las Vegas</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/01</td><td><a href="https://basketball.exposureevents.com/263103/kb-sports-bay-area-ballers-war">KB Sports  Bay Area Ballers War</a><br><span class="count">Oakland </span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/10</td><td><a href="https://basketball.exposureevents.com/263102/kb-sports-golden-state-showdown">KB Sports  Golden State Showdown</a><br><span class="count">Oakland </span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/13</td><td><a href="https://basketball.exposureevents.com/257560/kb-sports-march-madness-vegas">KB Sports  March Madness Vegas</a><br><span class="count"> Las Vegas</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/16</td><td><a href="https://basketball.exposureevents.com/257559/kb-sports-mlk-vegas">KB Sports  MLK Vegas</a><br><span class="count"> Las Vegas</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/25</td><td><a href="https://basketball.exposureevents.com/232500/kb-sports-west-coast-classic">KB Sports  West Coast Classic</a><br><span class="count"> Las Vegas</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/27</td><td><a href="https://basketball.exposureevents.com/232089/kb-sports-hoop-nation-west-coast-national-championship-rings">KB Sports/Hoop Nation   West Coast National Championship (Rings)</a><br><span class="count"> Las Vegas</span></td><td>&mdash;</td></tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

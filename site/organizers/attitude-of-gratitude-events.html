@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attitude of Gratitude Events &mdash; organizer history</title>
+<style>
+
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+
+table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
+table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.count { font-size: 12px; color: var(--mut); }
+@media (max-width: 700px) {
+  table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
+  table.hist td { padding: 7px 6px; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../upcoming.html">&larr; upcoming tournaments</a>
+<header class="top">
+<h1>Attitude of Gratitude Events</h1>
+<p>101 EE events &middot; 2 with 237 scraped games &middot; 2 upcoming. <a href="https://basketball.exposureevents.com/organizations/33325">EE organization page &rarr;</a></p>
+<nav class="tabs"><a href="../11u.html">11U</a><a href="../12u.html">12U/6th Grade</a><a href="../13u.html">13U/7th Grade</a><a href="../14u.html">14U/8th Grade</a></nav>
+</header>
+<section class="note"><h2>Upcoming (2)</h2><ul><li>11/21 &mdash; <a href="https://basketball.exposureevents.com/261733/norcal-rumble-for-the-ring">NorCal Rumble for the Ring</a> <span class="count">announced, divisions TBA</span></li><li>12/05 &mdash; <a href="https://basketball.exposureevents.com/261734/it-means-more-norcal-jr-p32-regional-final">It Means More: NorCal Jr P32 Regional Final</a> <span class="count">announced, divisions TBA</span></li></ul></section>
+<section class="note"><h2>Past events (93)</h2></section>
+<table class="hist">
+<thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
+<tbody>
+<tr><td style="white-space:nowrap">11/14</td><td><a href="https://basketball.exposureevents.com/261732/norcal-battle-for-the-belt">NorCal Battle for the Belt</a><br><span class="count">Livermore</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/14</td><td><a href="https://basketball.exposureevents.com/261400/stage-one-fall-run-finals-and-season-of-gratitude-showcase">Stage one Fall Run Finals &amp; Season of Gratitude Showcase</a><br><span class="count">Kent</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/07</td><td><a href="https://basketball.exposureevents.com/261754/rumble-for-the-ring">Rumble for the Ring</a><br><span class="count">Garden Grove</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/07</td><td><a href="https://basketball.exposureevents.com/261447/az-chase-for-the-chain-w--lys">AZ Chase for the Chain w/ LYS</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/07</td><td><a href="https://basketball.exposureevents.com/261399/vancouver-fall-showcase">Vancouver Fall Showcase</a><br><span class="count">Vancouver</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/31</td><td><a href="https://basketball.exposureevents.com/261398/centralia-5">Centralia 5</a><br><span class="count">Centralia</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/24</td><td><a href="https://basketball.exposureevents.com/274176/socal-chase-for-the-chain">Socal Chase for the Chain</a><br><span class="count">Long Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/24</td><td><a href="https://basketball.exposureevents.com/274409/hardcourt-on-the-harbor">Hardcourt on the Harbor</a><br><span class="count">Gig Harbor</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/17</td><td><a href="https://basketball.exposureevents.com/261396/seattle-hoop-summit">Seattle Hoop Summit</a><br><span class="count">Auburn</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/17</td><td><a href="https://basketball.exposureevents.com/261731/norcal-fall-classic">NorCal Fall Classic</a><br><span class="count">Marin</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/17</td><td><a href="https://basketball.exposureevents.com/261397/stage-one-the-fall-run-s2">Stage One - The Fall Run S2</a><br><span class="count">Kent</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/17</td><td><a href="https://basketball.exposureevents.com/274204/silver-waves-media-ranking-finale">Silver Waves Media Ranking Finale</a><br><span class="count">Momentous</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/10</td><td><a href="https://basketball.exposureevents.com/261446/sw-slam">SW Slam</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/10</td><td><a href="https://basketball.exposureevents.com/261730/norcal-chase-for-the-chain">NorCal Chase for the Chain</a><br><span class="count">Livermore</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/10</td><td><a href="https://basketball.exposureevents.com/261753/socal-battle-for-the-belt">SoCal Battle for the Belt</a><br><span class="count">Garden Grove</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/03</td><td><a href="https://basketball.exposureevents.com/261395/centralia-4">Centralia 4</a><br><span class="count">Centralia</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/03</td><td><a href="https://basketball.exposureevents.com/261393/nw-chase-for-the-chain">NW Chase for the Chain</a><br><span class="count">Vancouver</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/03</td><td><a href="https://basketball.exposureevents.com/261394/stage-one-series-the-fall-run-s1">Stage One Series: The Fall Run S1</a><br><span class="count">Kent</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/26</td><td><a href="https://basketball.exposureevents.com/261392/it-means-more-seattle">It means More: Seattle</a><br><span class="count">Auburn</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/26</td><td><a href="https://basketball.exposureevents.com/274175/it-means-more-socal-jr-p32-qualifier">It Means More: SoCal Jr P32 Qualifier</a><br><span class="count">Long Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/19</td><td><a href="https://basketball.exposureevents.com/261752/it-means-more-jr-power-32-socal-qualifier">It Means More Jr Power 32: SoCal Qualifier</a><br><span class="count">Garden Grove</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/19</td><td><a href="https://basketball.exposureevents.com/261729/sf-rumble-for-the-ring">SF Rumble for the Ring</a><br><span class="count">San Francisco</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/19</td><td><a href="https://basketball.exposureevents.com/261445/it-means-more-phoenix-qualifier-w-lys">It Means More: Phoenix Qualifier w/LYS</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/19</td><td><a href="https://basketball.exposureevents.com/274407/sww-scholastic-invite">SWW Scholastic Invite</a><br><span class="count">Kalama</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/12</td><td><a href="https://basketball.exposureevents.com/261728/it-means-more-norcal-jr-power-32-qualifier">It Means More: NorCal Jr Power 32 Qualifier</a><br><span class="count">Walnut Creek</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/12</td><td><a href="https://basketball.exposureevents.com/261391/seattle-battle-for-the-belt-w--bf">Seattle Battle for the Belt w/ BF</a><br><span class="count">Auburn</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/12</td><td><a href="https://basketball.exposureevents.com/274174/fall-kickoff-aog-x-cali-gold">Fall Kickoff AOG x Cali Gold</a><br><span class="count">Torrance</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/05</td><td><a href="https://basketball.exposureevents.com/274167/labor-day-showcase">Labor Day Showcase</a><br><span class="count">Rocklin</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/29</td><td><a href="https://basketball.exposureevents.com/274173/summer-sizzle-aog-x-cali-gold">Summer Sizzle AOG x Cali Gold</a><br><span class="count">Torrance</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/08</td><td><a href="https://basketball.exposureevents.com/261444/sw-summer-hustle-w-peak">SW Summer Hustle W Peak</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/25</td><td><a href="https://basketball.exposureevents.com/261389/stage-one-summer-championships">Stage One Summer Championships</a><br><span class="count">Kent</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/25</td><td><a href="https://basketball.exposureevents.com/261443/hoop-life-national-event">Hoop Life National Event</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/25</td><td><a href="https://basketball.exposureevents.com/261390/nw-summer-finale-w--hoop-source">NW Summer Finale w/ Hoop Source</a><br><span class="count">Auburn</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/25</td><td><a href="https://basketball.exposureevents.com/272956/norcal-summer-ranking-finale">NorCal Summer Ranking Finale</a><br><span class="count">Livermore</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/23</td><td><a href="https://basketball.exposureevents.com/261988/las-vegas-classic">Las Vegas Classic</a><br><span class="count">Las Vegas</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/18</td><td><a href="https://basketball.exposureevents.com/261442/battle-in-the-desert-session-ii">Battle in the Desert: Session II</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/17</td><td><a href="https://basketball.exposureevents.com/261751/summer-finale-planning-ncaa-live-period">Summer Finale (Planning NCAA Live Period)</a><br><span class="count">Seal Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/16</td><td><a href="https://basketball.exposureevents.com/261987/las-vegas-main-event">Las Vegas Main Event</a><br><span class="count">Las Vegas</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/14</td><td><a href="https://basketball.exposureevents.com/272573/aog-high-academic-super-bowl">AOG High Academic Super Bowl</a><br><span class="count">Seal Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/10</td><td><a href="https://basketball.exposureevents.com/261388/pnw-summer-challenge-w-hoopsource">PNW Summer Challenge - w HoopSource</a><br><span class="count">Auburn</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/10</td><td><a href="https://basketball.exposureevents.com/261750/summer-classic-planning-ncaa-live-period">Summer Classic (Planning NCAA Live Period)</a><br><span class="count">Garden Grove</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/09</td><td><a href="https://basketball.exposureevents.com/261985/las-vegas-live-w--big-foot">Las Vegas Live w/ Big Foot</a><br><span class="count">Tark</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/04</td><td><a href="https://basketball.exposureevents.com/261749/international-world-championships">International World Championships</a><br><span class="count">Garden Grove</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/04</td><td><a href="https://basketball.exposureevents.com/261727/norcal-summer-tip-off">NorCal Summer Tip-Off</a><br><span class="count">Rocklin</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/03</td><td><a href="https://basketball.exposureevents.com/261441/az-summer-tip-off">AZ Summer Tip Off</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/03</td><td><a href="https://basketball.exposureevents.com/261387/battle-in-seattle">Battle in Seattle</a><br><span class="count">Auburn</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/27</td><td><a href="https://basketball.exposureevents.com/261440/az-state-championships">AZ State Championships</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/20</td><td><a href="https://basketball.exposureevents.com/261386/nw-nationals">NW Nationals</a><br><span class="count">Centralia</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/20</td><td><a href="https://basketball.exposureevents.com/261385/welcome-to-oly">Welcome to Oly</a><br><span class="count">Centralia</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/13</td><td><a href="https://basketball.exposureevents.com/261726/summer-madness">Summer Madness</a><br><span class="count">Rocklin</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/13</td><td><a href="https://basketball.exposureevents.com/270413/june-jam">June Jam</a><br><span class="count">Long Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/261383/stage-one-road-to-nationals-s3">Stage One Road to Nationals: S3</a><br><span class="count">Kent</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/261384/nw-nationals-qualifier-vancouver">NW Nationals Qualifier - Vancouver</a><br><span class="count">Vancouver</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/261439/az-state-regionals">AZ State Regionals</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/261382/nw-nationals-qualifier-seattle">NW Nationals Qualifier - Seattle</a><br><span class="count">Auburn</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/261748/lsba-and-aog-june-jump-off">LSBA and AOG June Jump Off</a><br><span class="count">Orange County</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/261381/hub-city-summer-preview">Hub City Summer Preview</a><br><span class="count">Centralia</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/261747/socal-memorial-day">Socal Memorial Day</a><br><span class="count">Orange County</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/261380/nw-memorial-day-classic">NW Memorial Day Classic</a><br><span class="count">Auburn</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/261438/az-memorial-day-classic">AZ Memorial Day Classic</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/261983/reno-memorial-day">Reno Memorial Day</a><br><span class="count">Reno</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/261982/vegas-memorial-day">Vegas Memorial Day</a><br><span class="count">LVBC</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/16</td><td><a href="https://basketball.exposureevents.com/261379/stage-one-road-to-nationals-s2">Stage One Road to Nationals: S2</a><br><span class="count">Kent</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/16</td><td><a href="https://basketball.exposureevents.com/261437/battle-in-the-desert-session-i">Battle in the Desert: Session I</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/16</td><td><a href="https://basketball.exposureevents.com/261725/norcal-spring-shootout">NorCal Spring Shootout</a><br><span class="count">Walnut Creek</span></td><td>70</td></tr>
+<tr><td style="white-space:nowrap">05/09</td><td><a href="https://basketball.exposureevents.com/261378/nw-mothers-day-classic">NW Mother's Day Classic</a><br><span class="count">Centralia</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/09</td><td><a href="https://basketball.exposureevents.com/261724/mothers-day-classic">Mothers Day Classic</a><br><span class="count">Marin</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/02</td><td><a href="https://basketball.exposureevents.com/261377/battle-of-the-borders">Battle of the Borders</a><br><span class="count">Auburn</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/02</td><td><a href="https://basketball.exposureevents.com/261723/norcal-preview">NorCal Preview</a><br><span class="count">Livermore</span></td><td>167</td></tr>
+<tr><td style="white-space:nowrap">05/02</td><td><a href="https://basketball.exposureevents.com/261744/the-prime-event-west-with-select-events-girls-only">The Prime Event West with Select Events (Girls Only)</a><br><span class="count">Seal Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/02</td><td><a href="https://basketball.exposureevents.com/261745/socal-beach-bash-boys-only">SoCal Beach Bash (Boys Only)</a><br><span class="count">Orange County</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/25</td><td><a href="https://basketball.exposureevents.com/261376/stage-one-road-to-nationals-s1">Stage One Road to Nationals: S1</a><br><span class="count">Kent</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/25</td><td><a href="https://basketball.exposureevents.com/261436/cactus-classic">Cactus Classic</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/25</td><td><a href="https://basketball.exposureevents.com/261743/sunshine-hoops-classic">Sunshine Hoops Classic</a><br><span class="count">Orange County</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/25</td><td><a href="https://basketball.exposureevents.com/261722/golden-state-challenge">Golden State Challenge</a><br><span class="count">Walnut Creek</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/25</td><td><a href="https://basketball.exposureevents.com/261763/nw-hoop-summit">NW Hoop Summit</a><br><span class="count">Vancouver</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/18</td><td><a href="https://basketball.exposureevents.com/261742/hoops-on-the-harbor">Hoops on the Harbor</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/18</td><td><a href="https://basketball.exposureevents.com/261721/bay-area-showdown">Bay Area Showdown</a><br><span class="count">Walnut Creek</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/17</td><td><a href="https://basketball.exposureevents.com/261375/idaho-potato-bowl">Idaho Potato Bowl</a><br><span class="count">Boise</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/11</td><td><a href="https://basketball.exposureevents.com/261740/battle-of-the-brands">Battle of the Brands</a><br><span class="count">Orange County</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/11</td><td><a href="https://basketball.exposureevents.com/261374/battlefield-nw-girls-only-event">Battlefield NW - Girls Only Event</a><br><span class="count">Auburn</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/11</td><td><a href="https://basketball.exposureevents.com/261741/the-grand-opening-with-select-events-girls-only">The Grand Opening with Select Events (Girls Only)</a><br><span class="count">Garden Grove</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/04</td><td><a href="https://basketball.exposureevents.com/261739/socal-hoop-fest">SoCal Hoop Fest</a><br><span class="count">Norwalk</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/28</td><td><a href="https://basketball.exposureevents.com/261738/oc-rose-bowl">OC Rose Bowl</a><br><span class="count">Long Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/28</td><td><a href="https://basketball.exposureevents.com/261372/rain-city-extravaganza-w--bf">Rain City Extravaganza w/ BF</a><br><span class="count">Auburn</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/28</td><td><a href="https://basketball.exposureevents.com/261720/norcal-spring-kick-off">NorCal Spring Kick Off</a><br><span class="count">Livermore</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/21</td><td><a href="https://basketball.exposureevents.com/261435/az-spring-round-up">AZ Spring Round Up</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/14</td><td><a href="https://basketball.exposureevents.com/261737/lsba-and-aog-spring-splash">LSBA and AOG Spring Splash</a><br><span class="count">Westminister</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/14</td><td><a href="https://basketball.exposureevents.com/261736/it-means-more-jr-power-32-championships">It Means More Jr Power 32 Championships</a><br><span class="count">Seal Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/07</td><td><a href="https://basketball.exposureevents.com/261434/grand-canyon-state-games">Grand Canyon State Games</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/24</td><td><a href="https://basketball.exposureevents.com/261735/aog-winter-championships">AOG Winter Championships</a><br><span class="count">Seal Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/24</td><td><a href="https://basketball.exposureevents.com/261433/aog-winter-classic">AOG Winter Classic</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/17</td><td><a href="https://basketball.exposureevents.com/261719/mlk-norcal-classic">MLK NorCal Classic</a><br><span class="count">Rocklin</span></td><td>&mdash;</td></tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

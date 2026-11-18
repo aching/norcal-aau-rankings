@@ -109,7 +109,7 @@ def load_events():
             "date": (e.get("StartDate") or "")[:10],
             "end": (e.get("EndDate") or "")[:10],
             "name": e.get("Name", "?"),
-            "org": (e.get("OrganizationName") or "").strip(),
+            "org": canon_org(e.get("OrganizationName") or ""),
             "org_url": f"{EE_BASE}/organizations/{e['OrganizationId']}" if e.get("OrganizationId") else "",
             "city": e.get("City") or e.get("Location") or "",
             "region": region_of([e.get("City") or "", e.get("Location") or ""]),
@@ -138,7 +138,7 @@ def load_events():
         teams = f"{paid} paid teams" if paid else "no teams listed yet"
         pub = (e.get("public_url") or {}).get("absolute") or f"https://bracketteam.com/event/{e.get('id')}"
         admins = e.get("administrators") or []
-        orgs = sorted({(a.get("organization_name") or "").strip() for a in admins
+        orgs = sorted({canon_org(a.get("organization_name")) for a in admins
                        if isinstance(a, dict) and (a.get("organization_name") or "").strip()})
         events.append({
             "date": str(e.get("start_date") or "")[:10],
@@ -223,6 +223,24 @@ def esc(s):
     return str(s).replace("&", "&amp;").replace("<", "&lt;")
 
 
+ORG_CANONICAL = {
+    "bay area roaddawgs": "Bay Area Roaddawgs",
+    "blacktop 24/7": "BlackTop 24/7",
+    "iconic hoop events": "Iconic Hoop Events",
+}
+
+
+def canon_org(name):
+    return ORG_CANONICAL.get((name or "").strip().lower(), (name or "").strip())
+
+
+def org_slugs():
+    try:
+        return json.load(open(HERE.parent / "data" / "org_slugs.json"))
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+
 def main():
     events = load_events()
     gen = date.today().isoformat()
@@ -232,13 +250,22 @@ def main():
          "13u": ("13U/7th Grade", 0, 0), "14u": ("14U/8th Grade", 0, 0)}.items())
     present = [r for r in REGION_ORDER if any(e["region"] == r for e in events)]
     region_buttons = "".join(f'<button data-r="{r}">{r}</button>' for r in present)
+    slugs = org_slugs()
     rows = []
     for e in events:
         st_cls = "st-posted" if "schedule posted" in e["status"] else ("st-tba" if "TBA" in e["status"] else "")
         d = e["date"][5:].replace("-", "/")
-        org = esc(e.get("org", ""))
-        if org and e.get("org_url"):
-            org = f'<a href="{esc(e["org_url"])}">{org}</a>'
+        parts = []
+        for o in [x.strip() for x in (e.get("org") or "").split(";")]:
+            if not o:
+                continue
+            if o in slugs:
+                parts.append(f'<a href="organizers/{slugs[o]}.html">{esc(o)}</a>')
+            elif e.get("org_url"):
+                parts.append(f'<a href="{esc(e["org_url"])}">{esc(o)}</a>')
+            else:
+                parts.append(esc(o))
+        org = "; ".join(parts)
         rows.append(
             f'<tr data-region="{esc(e["region"])}">'
             f'<td style="white-space:nowrap">{d}</td>'

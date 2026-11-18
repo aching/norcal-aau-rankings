@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sports Academy &mdash; organizer history</title>
+<style>
+
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+
+table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
+table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.count { font-size: 12px; color: var(--mut); }
+@media (max-width: 700px) {
+  table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
+  table.hist td { padding: 7px 6px; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../upcoming.html">&larr; upcoming tournaments</a>
+<header class="top">
+<h1>Sports Academy</h1>
+<p>65 EE events. <a href="https://basketball.exposureevents.com/organizations/26993">EE organization page &rarr;</a></p>
+<nav class="tabs"><a href="../11u.html">11U</a><a href="../12u.html">12U/6th Grade</a><a href="../13u.html">13U/7th Grade</a><a href="../14u.html">14U/8th Grade</a></nav>
+</header>
+
+<section class="note"><h2>Past events (65)</h2></section>
+<table class="hist">
+<thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
+<tbody>
+<tr><td style="white-space:nowrap">11/07</td><td><a href="https://basketball.exposureevents.com/273210/fall-frenzy-open-event">Fall Frenzy - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/10</td><td><a href="https://basketball.exposureevents.com/273212/fall-championship-signature-event">Fall Championship - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/26</td><td><a href="https://basketball.exposureevents.com/273206/fall-invitational-signature-event">Fall Invitational - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/12</td><td><a href="https://basketball.exposureevents.com/273204/back-to-school-kick-off-open-event">Back To School Kick Off - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/22</td><td><a href="https://basketball.exposureevents.com/267016/summer-finale-open-event">Summer Finale - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/08</td><td><a href="https://basketball.exposureevents.com/267015/summer-invitational-signature-event">Summer Invitational - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/01</td><td><a href="https://basketball.exposureevents.com/267014/summer-showdown-open-event">Summer Showdown - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/25</td><td><a href="https://basketball.exposureevents.com/272447/summer-bash-open-event">Summer Bash - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/18</td><td><a href="https://basketball.exposureevents.com/267013/summer-sizzle-open-event">Summer Sizzle - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/11</td><td><a href="https://basketball.exposureevents.com/267012/summer-slam-open-event">Summer Slam  - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/27</td><td><a href="https://basketball.exposureevents.com/267011/summer-championship-signature-event">Summer Championship - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/13</td><td><a href="https://basketball.exposureevents.com/267010/back-in-action-open-event">Back In Action - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/12</td><td><a href="https://basketball.exposureevents.com/270484/saybl-summer-2026">SAYBL Summer 2026</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/267009/summer-kickoff-signature-event">Summer Kickoff - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/05</td><td><a href="https://basketball.exposureevents.com/270478/3-on-3-summer-tournament">3 on 3 Summer Tournament</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/269137/spring-finale-open-event">Spring Finale - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/264944/spring-classic-signature-event">Spring Classic - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/09</td><td><a href="https://basketball.exposureevents.com/264945/mothers-day-shootout-open-event">Mothers Day Shootout - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/02</td><td><a href="https://basketball.exposureevents.com/265355/girls-national-cup-signature-event">Girls National Cup - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/02</td><td><a href="https://basketball.exposureevents.com/264943/spring-championship-signature-event">Spring Championship - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/25</td><td><a href="https://basketball.exposureevents.com/264947/spring-slam-open-event">Spring Slam - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/11</td><td><a href="https://basketball.exposureevents.com/264942/spring-invitational-signature-event">Spring Invitational - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/04</td><td><a href="https://basketball.exposureevents.com/264950/easter-shootout-open-event">Easter Shootout - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/28</td><td><a href="https://basketball.exposureevents.com/264941/march-mayhem-open-event">March Mayhem - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/21</td><td><a href="https://basketball.exposureevents.com/264940/spring-swish-signature-event">Spring Swish - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/20</td><td><a href="https://basketball.exposureevents.com/266019/saybl-spring-2026">SAYBL Spring 2026</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/14</td><td><a href="https://basketball.exposureevents.com/264939/spring-fling-open-event">Spring Fling - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/13</td><td><a href="https://basketball.exposureevents.com/265949/3-on-3-spring-tournament">3 on 3 Spring Tournament</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/07</td><td><a href="https://basketball.exposureevents.com/264949/spring-kickoff-open-event">Spring Kickoff - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/21</td><td><a href="https://basketball.exposureevents.com/259371/winter-finale-signature-event">Winter Finale - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/14</td><td><a href="https://basketball.exposureevents.com/259370/grand-finale-national-cup">Grand Finale - National Cup</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/07</td><td><a href="https://basketball.exposureevents.com/260979/super-shootout">Super Shootout</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/31</td><td><a href="https://basketball.exposureevents.com/260978/winter-classic-open-event">Winter Classic - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/24</td><td><a href="https://basketball.exposureevents.com/260977/winter-championship-signature-event">Winter Championship - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/17</td><td><a href="https://basketball.exposureevents.com/260976/mlk-classic-open-event">MLK Classic - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/10</td><td><a href="https://basketball.exposureevents.com/260973/winter-chill-open-event">Winter Chill - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/03</td><td><a href="https://basketball.exposureevents.com/259373/new-year-bash-open-event">New Year Bash - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">12/20</td><td><a href="https://basketball.exposureevents.com/259366/session-1-national-cup-boys">Session 1 - National Cup - BOYS</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">12/13</td><td><a href="https://basketball.exposureevents.com/257687/holiday-classic-signature-event">Holiday Classic - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">12/12</td><td><a href="https://basketball.exposureevents.com/260290/saybl-winter-2025">SAYBL Winter 2025</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">12/06</td><td><a href="https://basketball.exposureevents.com/257686/sa-and-focus-winter-kick-off-open-event">SA &amp; Focus Winter Kick Off - Open Event</a><br><span class="count">Seal Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">12/06</td><td><a href="https://basketball.exposureevents.com/259365/session-1-sa-national-cup-girls">Session 1 - SA National Cup - GIRLS</a><br><span class="count">Seal Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/22</td><td><a href="https://basketball.exposureevents.com/252851/thanksgiving-classic-signature-event">Thanksgiving Classic - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/08</td><td><a href="https://basketball.exposureevents.com/252848/fall-extravaganza-open-event">Fall Extravaganza - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/25</td><td><a href="https://basketball.exposureevents.com/252846/fall-frenzy-open-event">Fall Frenzy - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/18</td><td><a href="https://basketball.exposureevents.com/250251/the-prep-open-event">The Prep - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/11</td><td><a href="https://basketball.exposureevents.com/250249/fall-championship-signature-event">Fall Championship - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/04</td><td><a href="https://basketball.exposureevents.com/250246/fall-classic-open-event">Fall Classic - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/27</td><td><a href="https://basketball.exposureevents.com/250244/fall-ball-open-event">Fall Ball - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/20</td><td><a href="https://basketball.exposureevents.com/250242/fall-invitational-signature-event">Fall Invitational - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/19</td><td><a href="https://basketball.exposureevents.com/254016/saybl-fall-2025">SAYBL Fall 2025</a><br><span class="count">Thousand Oaks </span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/13</td><td><a href="https://basketball.exposureevents.com/250238/battlegrounds-open-event">Battlegrounds - Open Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/12</td><td><a href="https://basketball.exposureevents.com/253943/fall-3-on-3-tournament-2025">Fall 3 On 3 Tournament 2025</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/06</td><td><a href="https://basketball.exposureevents.com/250236/back-to-school-kick-off-signature-event">Back to School Kick Off - Signature Event</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/16</td><td><a href="https://basketball.exposureevents.com/249130/summer-finale">Summer Finale</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/09</td><td><a href="https://basketball.exposureevents.com/249129/summer-slam">Summer Slam</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/02</td><td><a href="https://basketball.exposureevents.com/236822/summer-showdown">Summer Showdown</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/18</td><td><a href="https://basketball.exposureevents.com/236820/eot-x-sa-summer-swoosh-see-eot-app">EOT X SA Summer Swoosh (See EOT App)</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/12</td><td><a href="https://basketball.exposureevents.com/236819/summer-sizzle">Summer Sizzle</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/11</td><td><a href="https://basketball.exposureevents.com/247133/eot-x-sa-summer-socal-showcase-see-eot-app">EOT x SA Summer SoCal Showcase (See EOT App)</a><br><span class="count">Seal Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/28</td><td><a href="https://basketball.exposureevents.com/247131/summer-invitational">Summer Invitational</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/21</td><td><a href="https://basketball.exposureevents.com/236818/back-in-action">Back In Action</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/13</td><td><a href="https://basketball.exposureevents.com/246812/saybl-summer-2025">SAYBL Summer 2025</a><br><span class="count">Thousand Oaks </span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/07</td><td><a href="https://basketball.exposureevents.com/236817/summer-championship">Summer Championship</a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/246588/3on3-spring-tournament">3on3 Spring Tournament </a><br><span class="count">Thousand Oaks</span></td><td>&mdash;</td></tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

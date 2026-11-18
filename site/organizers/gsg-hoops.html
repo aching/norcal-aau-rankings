@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GSG Hoops &mdash; organizer history</title>
+<style>
+
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+
+table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
+table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.count { font-size: 12px; color: var(--mut); }
+@media (max-width: 700px) {
+  table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
+  table.hist td { padding: 7px 6px; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../upcoming.html">&larr; upcoming tournaments</a>
+<header class="top">
+<h1>GSG Hoops</h1>
+<p>97 EE events &middot; 43 with 3641 scraped games &middot; 12 upcoming. <a href="https://basketball.exposureevents.com/organizations/33328">EE organization page &rarr;</a></p>
+<nav class="tabs"><a href="../11u.html">11U</a><a href="../12u.html">12U/6th Grade</a><a href="../13u.html">13U/7th Grade</a><a href="../14u.html">14U/8th Grade</a></nav>
+</header>
+<section class="note"><h2>Upcoming (12)</h2><ul><li>11/21 &mdash; <a href="https://basketball.exposureevents.com/273463/bam-x-gsg-thanksgiving-classic">BAM x GSG - Thanksgiving Classic</a> <span class="count">13 divisions published, teams/schedule TBA</span></li><li>11/28 &mdash; <a href="https://basketball.exposureevents.com/273464/gsg-x-bam-november-shootout">GSG x BAM - November Shootout</a> <span class="count">13 divisions published, teams/schedule TBA</span></li><li>12/05 &mdash; <a href="https://basketball.exposureevents.com/273465/bam-x-gsg-bay-area-takeover">BAM x GSG - Bay Area Takeover</a> <span class="count">13 divisions published, teams/schedule TBA</span></li><li>12/12 &mdash; <a href="https://basketball.exposureevents.com/273466/gsg-x-bam-holiday-classic">GSG x BAM - Holiday Classic</a> <span class="count">13 divisions published, teams/schedule TBA</span></li><li>12/19 &mdash; <a href="https://basketball.exposureevents.com/273467/bam-x-gsg-christmas-shootout">BAM x GSG - Christmas Shootout</a> <span class="count">13 divisions published, teams/schedule TBA</span></li><li>01/02 &mdash; <a href="https://basketball.exposureevents.com/273468/gsg-x-bam-new-years-tip-off">GSG x BAM - New Year's Tip-Off</a> <span class="count">13 divisions published, teams/schedule TBA</span></li><li>01/09 &mdash; <a href="https://basketball.exposureevents.com/273469/bam-x-gsg-battleground-showcase">BAM x GSG - Battleground Showcase</a> <span class="count">13 divisions published, teams/schedule TBA</span></li><li>01/16 &mdash; <a href="https://basketball.exposureevents.com/273471/gsg-x-bam-mlk-tournament">GSG x BAM - MLK Tournament</a> <span class="count">13 divisions published, teams/schedule TBA</span></li><li>01/23 &mdash; <a href="https://basketball.exposureevents.com/273472/bam-x-gsg-winter-shootout">BAM x GSG - Winter Shootout</a> <span class="count">13 divisions published, teams/schedule TBA</span></li><li>01/30 &mdash; <a href="https://basketball.exposureevents.com/273473/gsg-x-bam-winter-hoopfest">GSG x BAM - Winter HoopFest</a> <span class="count">13 divisions published, teams/schedule TBA</span></li><li>02/06 &mdash; <a href="https://basketball.exposureevents.com/273474/bam-x-gsg-golden-state-tip-off">BAM x GSG - Golden State Tip-Off</a> <span class="count">13 divisions published, teams/schedule TBA</span></li><li>02/13 &mdash; <a href="https://basketball.exposureevents.com/273477/gsg-x-bam-superbowl-slam">GSG x BAM - Superbowl Slam</a> <span class="count">13 divisions published, teams/schedule TBA</span></li></ul></section>
+<section class="note"><h2>Past events (97)</h2></section>
+<table class="hist">
+<thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
+<tbody>
+<tr><td style="white-space:nowrap">11/14</td><td><a href="https://basketball.exposureevents.com/273462/gsg-x-bam-bay-area-fall-showcase">GSG x BAM - Bay Area Fall Showcase</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/07</td><td><a href="https://basketball.exposureevents.com/273461/bam-x-gsg-hardwood-showdown">BAM x GSG - Hardwood Showdown</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/31</td><td><a href="https://basketball.exposureevents.com/273460/gsg-x-bam-halloween-showcase">GSG x BAM - Halloween Showcase</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/24</td><td><a href="https://basketball.exposureevents.com/273455/gsg-mens-open-adult-tournament">GSG Men's Open - Adult Tournament</a><br><span class="count">Richmond</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/24</td><td><a href="https://basketball.exposureevents.com/273459/bam-x-gsg-halloween-havoc">BAM x GSG - Halloween Havoc</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/17</td><td><a href="https://basketball.exposureevents.com/273458/gsg-x-bam-bay-area-clash">GSG x BAM - Bay Area Clash</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/10</td><td><a href="https://basketball.exposureevents.com/273457/bam-x-gsg-the-show-bay-area-edition">BAM x GSG - The Show - Bay Area Edition</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/03</td><td><a href="https://basketball.exposureevents.com/273456/gsg-x-bam-norcal-shootout">GSG x BAM - NorCal Shootout</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/03</td><td><a href="https://basketball.exposureevents.com/275109/battle-in-the-capital-sacramento-ca">Battle in the Capital (Sacramento, CA)</a><br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/26</td><td><a href="https://basketball.exposureevents.com/277994/bam-x-gsg-battle-in-the-fall">BAM x GSG - Battle in the Fall</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/19</td><td><a href="https://basketball.exposureevents.com/273453/gsg-x-bam-bay-area-fall-classic">GSG x BAM - Bay Area Fall Classic</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/12</td><td><a href="https://basketball.exposureevents.com/273130/the-tip-off-classic-powered-by-4ballers-only-x-bay-area-flight-x-gsg-hoops">The Tip-Off Classic - Powered by 4Ballers Only x Bay Area Flight x GSG Hoops</a><br><span class="count">Walnut Creek/Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/05</td><td><a href="https://basketball.exposureevents.com/276300/gsg-x-hh-x-bam-labor-day-shootout">GSG x HH x BAM - Labor Day Shootout</a><br><span class="count">Hayward</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/30</td><td><a href="https://basketball.exposureevents.com/276032/at2-basketball-camp-with-amen-and-ausar-thompson">AT2 Basketball Camp (with Amen &amp; Ausar Thompson)</a><br><span class="count">San Leandro</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/29</td><td><a href="https://basketball.exposureevents.com/264325/bam-x-gsg-summer-finale">BAM x GSG - Summer Finale</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/22</td><td><a href="https://basketball.exposureevents.com/264324/gsg-x-bam-heat-check-classic">GSG x BAM - Heat Check Classic</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/16</td><td><a href="https://basketball.exposureevents.com/272964/gsg-richmond-youth-rec-league-summer-fall-2026">GSG - Richmond - Youth Rec League - Summer/Fall 2026</a><br><span class="count">Richmond</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/15</td><td><a href="https://basketball.exposureevents.com/264323/bam-x-gsg-bay-area-hoopfest">BAM x GSG - Bay Area HoopFest</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/08</td><td><a href="https://basketball.exposureevents.com/264322/king-of-cali-powered-by-battleground-circuit">King of Cali powered by Battleground Circuit</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/01</td><td><a href="https://basketball.exposureevents.com/264321/gsg-x-bam-summer-showcase">GSG x BAM - Summer Showcase</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/25</td><td><a href="https://basketball.exposureevents.com/264320/bam-x-gsg-summer-jam">BAM x GSG - Summer Jam</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/18</td><td><a href="https://basketball.exposureevents.com/268580/sacramento-invitational">Sacramento Invitational</a><br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/18</td><td><a href="https://basketball.exposureevents.com/264319/gsg-x-bam-summer-showdown">GSG x BAM - Summer Showdown</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/11</td><td><a href="https://basketball.exposureevents.com/264318/bam-x-gsg-norcal-summer-classic">BAM x GSG - NorCal Summer Classic</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/04</td><td><a href="https://basketball.exposureevents.com/264317/gsg-x-bam-july-4th-shootout">GSG x BAM - July 4th Shootout</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/27</td><td><a href="https://basketball.exposureevents.com/264316/bam-x-gsg-summer-slam">BAM x GSG - Summer Slam</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/20</td><td><a href="https://basketball.exposureevents.com/264315/gsg-x-bam-fathers-day-shootout">GSG x BAM - Father's Day Shootout</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/13</td><td><a href="https://basketball.exposureevents.com/264314/the-east-bay-summer-battle-powered-by-4ballers-only-x-justhoop-x-gsg">The East Bay Summer Battle - powered by 4Ballers Only x JustHoop x GSG</a><br><span class="count">San Leandro &amp; Surrounding Gyms</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/11</td><td><a href="https://basketball.exposureevents.com/268813/gsg-tiny-tots-thursdays-sacramento-ca">GSG - Tiny Tots Thursdays (Sacramento, CA)</a><br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/07</td><td><a href="https://basketball.exposureevents.com/266287/gsg-tiny-tots-richmond-ca">GSG - Tiny Tots (Richmond, CA)</a><br><span class="count">Richmond</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/264313/gsg-x-bam-norcal-collision">GSG x BAM - NorCal Collision</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/31</td><td><a href="https://basketball.exposureevents.com/268812/gsg-tiny-tots-sundays-hayward-ca">GSG - Tiny Tots Sundays (Hayward, CA)</a><br><span class="count">Hayward</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/264312/bam-x-gsg-spring-finale">BAM x GSG - Spring Finale</a><br><span class="count">San Ramon/Danville</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/262358/memorial-day-mayhem-powered-by-4ballers-only-and-battleground-circuit">Memorial Day Mayhem powered by 4Ballers Only &amp; Battleground Circuit</a><br><span class="count">Walnut Creek/San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/16</td><td><a href="https://basketball.exposureevents.com/262164/king-of-norcal-powered-by-battleground-circuit">King of NorCal powered by Battleground Circuit</a><br><span class="count">San Ramon</span></td><td>170</td></tr>
+<tr><td style="white-space:nowrap">05/09</td><td><a href="https://basketball.exposureevents.com/262163/bam-x-gsg-mothers-day-shootout">BAM x GSG - Mother's Day Shootout</a><br><span class="count">San Ramon/Oakland</span></td><td>125</td></tr>
+<tr><td style="white-space:nowrap">05/02</td><td><a href="https://basketball.exposureevents.com/262161/gsg-x-bam-bay-area-jamboree">GSG x BAM - Bay Area Jamboree</a><br><span class="count">San Ramon</span></td><td>107</td></tr>
+<tr><td style="white-space:nowrap">04/25</td><td><a href="https://basketball.exposureevents.com/262160/bam-x-gsg-bayside-battle">BAM x GSG - Bayside Battle</a><br><span class="count">San Ramon/Hayward</span></td><td>138</td></tr>
+<tr><td style="white-space:nowrap">04/18</td><td><a href="https://basketball.exposureevents.com/262159/gsg-x-bam-bay-area-spring-jam">GSG x BAM - Bay Area Spring Jam</a><br><span class="count">San Ramon</span></td><td>179</td></tr>
+<tr><td style="white-space:nowrap">04/12</td><td><a href="https://basketball.exposureevents.com/266284/gsg-tiny-tots-hayward-ca">GSG - Tiny Tots (Hayward, CA)</a><br><span class="count">Hayward</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/11</td><td><a href="https://basketball.exposureevents.com/262158/bam-x-gsg-hoop-supremacy">BAM x GSG - Hoop Supremacy</a><br><span class="count">San Ramon/Hayward</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/04</td><td><a href="https://basketball.exposureevents.com/262156/gsg-x-bam-easter-jam">GSG x BAM - Easter Jam</a><br><span class="count">San Ramon</span></td><td>98</td></tr>
+<tr><td style="white-space:nowrap">04/03</td><td><a href="https://basketball.exposureevents.com/266285/gsg-tiny-tots-sacramento-ca">GSG - Tiny Tots (Sacramento, CA)</a><br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/28</td><td><a href="https://basketball.exposureevents.com/259700/bam-x-gsg-bay-area-hoop-cup">BAM x GSG - Bay Area Hoop Cup</a><br><span class="count">San Ramon/Richmond/Hayward</span></td><td>162</td></tr>
+<tr><td style="white-space:nowrap">03/22</td><td><a href="https://basketball.exposureevents.com/259710/gsg-richmond-youth-rec-league-spring-2026">GSG - Richmond - Youth Rec League - Spring 2026</a><br><span class="count">Richmond</span></td><td>51</td></tr>
+<tr><td style="white-space:nowrap">03/21</td><td><a href="https://basketball.exposureevents.com/259699/king-of-sonoma-county-powered-by-battlegrounds-circuit">King of Sonoma County powered by Battlegrounds Circuit</a><br><span class="count">Santa Rosa</span></td><td>38</td></tr>
+<tr><td style="white-space:nowrap">03/21</td><td><a href="https://basketball.exposureevents.com/264361/gsg-x-bam-spring-shootout">GSG x BAM - Spring Shootout</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/14</td><td><a href="https://basketball.exposureevents.com/262153/bam-x-gsg-march-madness">BAM x GSG - March Madness</a><br><span class="count">San Ramon/Richmond</span></td><td>63</td></tr>
+<tr><td style="white-space:nowrap">03/07</td><td><a href="https://basketball.exposureevents.com/259698/gsg-x-bam-west-coast-rumble">GSG x BAM - West Coast Rumble</a><br><span class="count">Alameda/Oakland/Richmond</span></td><td>111</td></tr>
+<tr><td style="white-space:nowrap">02/28</td><td><a href="https://basketball.exposureevents.com/259697/king-of-the-bay-powered-by-battleground-x-lakeshow">King of the Bay powered by Battleground x Lakeshow</a><br><span class="count">East Bay Gyms</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/21</td><td><a href="https://basketball.exposureevents.com/259696/gsg-x-bam-bay-area-hoop-challenge">GSG x BAM - Bay Area Hoop Challenge</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>96</td></tr>
+<tr><td style="white-space:nowrap">02/16</td><td><a href="https://basketball.exposureevents.com/263457/2026-presidents-day-camp">2026 Presidents' Day Camp</a><br><span class="count">Richmond</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/14</td><td><a href="https://basketball.exposureevents.com/259695/bam-x-gsg-golden-state-tip-off">BAM x GSG - Golden State Tip-Off</a><br><span class="count">East Bay</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/07</td><td><a href="https://basketball.exposureevents.com/259694/gsg-x-bam-super-bowl-slam">GSG x BAM - Super Bowl Slam</a><br><span class="count">San Ramon/Oakland/Richmond </span></td><td>52</td></tr>
+<tr><td style="white-space:nowrap">01/31</td><td><a href="https://basketball.exposureevents.com/259692/bam-x-gsg-winter-hoopfest">BAM x GSG - Winter Hoopfest</a><br><span class="count">San Ramon/San Leandro</span></td><td>92</td></tr>
+<tr><td style="white-space:nowrap">01/24</td><td><a href="https://basketball.exposureevents.com/259691/gsg-x-bam-winter-shootout">GSG x BAM - Winter Shootout</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>79</td></tr>
+<tr><td style="white-space:nowrap">01/19</td><td><a href="https://basketball.exposureevents.com/262034/2026-mlk-day-camp">2026 MLK Day Camp</a><br><span class="count">Richmond</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/17</td><td><a href="https://basketball.exposureevents.com/248678/gsg-x-bam-mlk-tournament">GSG x BAM - MLK Tournament</a><br><span class="count">San Ramon/San Leandro/Oakland</span></td><td>100</td></tr>
+<tr><td style="white-space:nowrap">01/10</td><td><a href="https://basketball.exposureevents.com/248677/bam-x-gsg-battleground-showcase">BAM x GSG - Battleground Showcase</a><br><span class="count">San Ramon/Richmond</span></td><td>59</td></tr>
+<tr><td style="white-space:nowrap">01/03</td><td><a href="https://basketball.exposureevents.com/248676/gsg-x-bam-new-years-tip-off">GSG x BAM - New Year's Tip-Off</a><br><span class="count">Hayward/Richmond</span></td><td>42</td></tr>
+<tr><td style="white-space:nowrap">12/29</td><td><a href="https://basketball.exposureevents.com/261126/2025-winter-break-basketball-camp">2025 Winter Break Basketball Camp</a><br><span class="count">Richmond</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">12/20</td><td><a href="https://basketball.exposureevents.com/248673/bam-x-gsg-christmas-shootout">BAM x GSG - Christmas Shootout</a><br><span class="count">San Ramon/Hayward</span></td><td>102</td></tr>
+<tr><td style="white-space:nowrap">12/13</td><td><a href="https://basketball.exposureevents.com/248672/bam-x-gsg-holiday-classic">BAM x GSG - Holiday Classic</a><br><span class="count">San Ramon/Hayward</span></td><td>74</td></tr>
+<tr><td style="white-space:nowrap">12/06</td><td><a href="https://basketball.exposureevents.com/248671/bam-x-gsg-bay-area-takeover">BAM X GSG - Bay Area Takeover</a><br><span class="count">San Ramon/Richmond</span></td><td>62</td></tr>
+<tr><td style="white-space:nowrap">11/29</td><td><a href="https://basketball.exposureevents.com/248670/shootout">Shootout</a><br><span class="count">San Leandro/Oakland/Richmond</span></td><td>44</td></tr>
+<tr><td style="white-space:nowrap">11/22</td><td><a href="https://basketball.exposureevents.com/248669/gsg-x-bam-thanksgiving-classic">GSG x BAM - Thanksgiving Classic</a><br><span class="count">San Ramon/Richmond</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/15</td><td><a href="https://basketball.exposureevents.com/248668/gsg-x-bam-fall-showcase">GSG x BAM - Fall Showcase</a><br><span class="count">San Ramon/Hayward</span></td><td>106</td></tr>
+<tr><td style="white-space:nowrap">11/08</td><td><a href="https://basketball.exposureevents.com/248667/bam-x-gsg-hardwood-showdown">BAM x GSG - Hardwood Showdown</a><br><span class="count">San Leandro</span></td><td>59</td></tr>
+<tr><td style="white-space:nowrap">11/01</td><td><a href="https://basketball.exposureevents.com/248666/gsg-x-high-hopes-shootout">GSG x High Hopes - Shootout</a><br><span class="count">Hayward/Oakland</span></td><td>64</td></tr>
+<tr><td style="white-space:nowrap">10/25</td><td><a href="https://basketball.exposureevents.com/248665/gsg-x-bam-halloween-havoc">GSG x BAM - Halloween Havoc</a><br><span class="count">San Ramon/Hayward/Richmond</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/22</td><td><a href="https://basketball.exposureevents.com/255914/gsg-adult-league-fall-2025">GSG - Adult League - Fall 2025</a><br><span class="count">Richmond</span></td><td>20</td></tr>
+<tr><td style="white-space:nowrap">10/18</td><td><a href="https://basketball.exposureevents.com/256547/bam-x-gsg-bay-area-clash">BAM x GSG - Bay Area Clash</a><br><span class="count">San Ramon</span></td><td>56</td></tr>
+<tr><td style="white-space:nowrap">10/18</td><td><a href="https://basketball.exposureevents.com/248664/king-of-norcal-powered-by-battleground-circuit">King of NorCal - Powered by Battleground Circuit</a><br><span class="count">Santa Rosa</span></td><td>81</td></tr>
+<tr><td style="white-space:nowrap">10/11</td><td><a href="https://basketball.exposureevents.com/248663/bam-x-gsg-the-show-bay-area-edition">BAM x GSG - The Show - Bay Area Edition</a><br><span class="count">San Ramon/Hayward</span></td><td>99</td></tr>
+<tr><td style="white-space:nowrap">10/05</td><td><a href="https://basketball.exposureevents.com/254717/gsg-richmond-youth-rec-league-fall-2025">GSG - Richmond - Youth Rec League - Fall 2025</a><br><span class="count">Richmond</span></td><td>53</td></tr>
+<tr><td style="white-space:nowrap">10/04</td><td><a href="https://basketball.exposureevents.com/248662/ballin-for-breast-cancer-kimbos-memory-tournament">Ballin for Breast Cancer - Kimbo’s Memory Tournament</a><br><span class="count">Hayward</span></td><td>161</td></tr>
+<tr><td style="white-space:nowrap">09/27</td><td><a href="https://basketball.exposureevents.com/248661/bam-x-gsg-battle-in-the-fall">BAM x GSG - Battle in the Fall</a><br><span class="count">San Ramon</span></td><td>90</td></tr>
+<tr><td style="white-space:nowrap">09/20</td><td><a href="https://basketball.exposureevents.com/248660/gsg-x-bam-bay-area-fall-classic-september-tip-off">GSG x BAM - Bay Area Fall Classic/September Tip Off</a><br><span class="count">San Ramon</span></td><td>87</td></tr>
+<tr><td style="white-space:nowrap">09/13</td><td><a href="https://basketball.exposureevents.com/248659/bam-x-gsg-norcal-shootout">BAM x GSG - NorCal Shootout</a><br><span class="count">San Ramon</span></td><td>83</td></tr>
+<tr><td style="white-space:nowrap">09/07</td><td><a href="https://basketball.exposureevents.com/249267/gsg-tiny-tots-basketball-class">GSG - Tiny Tots Basketball Class</a><br><span class="count">Richmond</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/06</td><td><a href="https://basketball.exposureevents.com/248658/bam-x-gsg-fall-tip-off">BAM x GSG - Fall Tip-off</a><br><span class="count">San Ramon</span></td><td>82</td></tr>
+<tr><td style="white-space:nowrap">08/30</td><td><a href="https://basketball.exposureevents.com/245183/gsg-shootout">GSG - Shootout</a><br><span class="count">Oakland/San Leandro/Hayward</span></td><td>88</td></tr>
+<tr><td style="white-space:nowrap">08/23</td><td><a href="https://basketball.exposureevents.com/245182/bam-x-gsg-norcal-summer-finale">BAM x GSG - NorCal Summer Finale</a><br><span class="count">San Ramon</span></td><td>88</td></tr>
+<tr><td style="white-space:nowrap">08/16</td><td><a href="https://basketball.exposureevents.com/245181/gsg-bam-summer-showcase">GSG/BAM - Summer Showcase</a><br><span class="count">San Ramon</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/09</td><td><a href="https://basketball.exposureevents.com/245180/gsg-grand-finale-premier-tournament">GSG - Grand Finale - Premier Tournament</a><br><span class="count">San Leandro</span></td><td>114</td></tr>
+<tr><td style="white-space:nowrap">08/02</td><td><a href="https://basketball.exposureevents.com/245179/gsg-shootout">GSG - Shootout</a><br><span class="count">Hayward</span></td><td>51</td></tr>
+<tr><td style="white-space:nowrap">07/26</td><td><a href="https://basketball.exposureevents.com/245177/gsg-shootout">GSG - Shootout</a><br><span class="count">Alameda</span></td><td>90</td></tr>
+<tr><td style="white-space:nowrap">07/19</td><td><a href="https://basketball.exposureevents.com/245175/gsg-mid-summer-madness-premier-tournament">GSG - Mid Summer Madness - Premier Tournament</a><br><span class="count">SF East Bay</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/12</td><td><a href="https://basketball.exposureevents.com/245174/gsg-shootout">GSG - Shootout</a><br><span class="count">SF East Bay</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/05</td><td><a href="https://basketball.exposureevents.com/245173/gsg-shootout">GSG - Shootout</a><br><span class="count">SF East Bay</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/29</td><td><a href="https://basketball.exposureevents.com/247099/at2-basketball-camp-with-amen-and-ausar-thompson">AT2 Basketball Camp (with Amen &amp; Ausar Thompson)</a><br><span class="count">San Leandro</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/28</td><td><a href="https://basketball.exposureevents.com/245172/gsg-shootout">GSG - Shootout</a><br><span class="count">SF Bay Area</span></td><td>49</td></tr>
+<tr><td style="white-space:nowrap">06/21</td><td><a href="https://basketball.exposureevents.com/245171/gsg-summer-showdown-premier-tournament">GSG - Summer Showdown - Premier Tournament</a><br><span class="count">SF East Bay</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/14</td><td><a href="https://basketball.exposureevents.com/246665/gsg-adult-summer-league">GSG - Adult Summer League</a><br><span class="count">Richmond</span></td><td>16</td></tr>
+<tr><td style="white-space:nowrap">06/14</td><td><a href="https://basketball.exposureevents.com/245170/gsg-shootout">GSG - Shootout</a><br><span class="count">SF East Bay</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/07</td><td><a href="https://basketball.exposureevents.com/245169/gsg-shootout">GSG - Shootout</a><br><span class="count">SF East Bay</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/01</td><td><a href="https://basketball.exposureevents.com/245400/gsg-richmond-youth-rec-league-summer-2025">GSG - Richmond - Youth Rec League - Summer 2025</a><br><span class="count">Richmond</span></td><td>60</td></tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

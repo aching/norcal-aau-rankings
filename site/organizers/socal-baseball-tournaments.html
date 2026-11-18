@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SoCal Baseball Tournaments &mdash; organizer history</title>
+<style>
+
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+
+table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
+table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.count { font-size: 12px; color: var(--mut); }
+@media (max-width: 700px) {
+  table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
+  table.hist td { padding: 7px 6px; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../upcoming.html">&larr; upcoming tournaments</a>
+<header class="top">
+<h1>SoCal Baseball Tournaments</h1>
+<p>73 EE events. <a href="https://basketball.exposureevents.com/organizations/24681">EE organization page &rarr;</a></p>
+<nav class="tabs"><a href="../11u.html">11U</a><a href="../12u.html">12U/6th Grade</a><a href="../13u.html">13U/7th Grade</a><a href="../14u.html">14U/8th Grade</a></nav>
+</header>
+
+<section class="note"><h2>Past events (73)</h2></section>
+<table class="hist">
+<thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
+<tbody>
+<tr><td style="white-space:nowrap">11/15</td><td><a href="https://basketball.exposureevents.com/274190/sbt-of-jwpb-1-day-11-15">SBT of JWPB 1-Day (11/15)</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/08</td><td><a href="https://basketball.exposureevents.com/281064/sbt-of-jwpb-1-day-11-8">SBT of JWPB 1-Day (11/8)</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/07</td><td><a href="https://basketball.exposureevents.com/261299/sbt-of-jwpb-2-day-11-7-11-8">SBT of JWPB 2-Day (11/7-11/8)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/24</td><td><a href="https://basketball.exposureevents.com/261298/sbt-of-jwpb-2-day-10-24-10-25">SBT of JWPB 2-Day (10/24-10/25)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/18</td><td><a href="https://basketball.exposureevents.com/274189/sbt-of-jwpb-1-day-10-18">SBT of JWPB 1-Day (10/18)</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/17</td><td><a href="https://basketball.exposureevents.com/279520/engine-57-10-17-10-18">Engine 57 (10/17-10/18)</a><br><span class="count">Beaumont</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/10</td><td><a href="https://basketball.exposureevents.com/261297/sbt-of-jwpb-2-day-10-10-10-11">SBT of JWPB 2-Day (10/10-10/11)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/04</td><td><a href="https://basketball.exposureevents.com/274188/sbt-of-jwpb-1-day-10-4">SBT of JWPB 1-Day (10/4)</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/27</td><td><a href="https://basketball.exposureevents.com/274187/sbt-of-jwpb-1-day-9-27">SBT of JWPB 1-Day (9/27)</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/20</td><td><a href="https://basketball.exposureevents.com/274186/sbt-of-jwpb-1-day-9-20">SBT of JWPB 1-Day (9/20)</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/12</td><td><a href="https://basketball.exposureevents.com/261296/sbt-of-jwpb-2-day-9-12-9-13">SBT of JWPB 2-Day (9/12-9/13)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/30</td><td><a href="https://basketball.exposureevents.com/276460/jwpb-1-day-8-30">JWPB 1-Day (8/30)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/29</td><td><a href="https://basketball.exposureevents.com/261295/sbt-of-jwpb-2-day-8-29-8-30">SBT of JWPB 2-Day (8/29-8/30)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/23</td><td><a href="https://basketball.exposureevents.com/274185/sbt-of-jwpb-1-day-8-23">SBT of JWPB 1-Day (8/23)</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/16</td><td><a href="https://basketball.exposureevents.com/274184/sbt-of-jwpb-1-day-8-16">SBT of JWPB 1-Day (8/16)</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/01</td><td><a href="https://basketball.exposureevents.com/261294/sbt-of-jwpb-2-day-8-1-8-2">SBT of JWPB 2-Day (8/1-8/2)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/11</td><td><a href="https://basketball.exposureevents.com/272376/sbt-of-jwpb-2-day-7-11-7-12">SBT of JWPB 2-Day (7/11-7/12)</a><br><span class="count">Lake Elsinore</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/05</td><td><a href="https://basketball.exposureevents.com/272052/jwpb-1-day-7-5">JWPB 1-Day (7/5)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/28</td><td><a href="https://basketball.exposureevents.com/261293/sbt-of-jwpb-1-day-6-28">SBT of JWPB 1-Day (6/28)</a><br><span class="count">Menifee/Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/21</td><td><a href="https://basketball.exposureevents.com/261292/sbt-of-jwpb-1-day-6-21">SBT of JWPB 1-Day (6/21)</a><br><span class="count">Menifee/Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/14</td><td><a href="https://basketball.exposureevents.com/261291/sbt-of-jwpb-1-day-6-14">SBT of JWPB 1-Day (6/14)</a><br><span class="count">Menifee/Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/07</td><td><a href="https://basketball.exposureevents.com/261290/sbt-of-jwpb-1-day-6-7">SBT of JWPB 1-Day (6/7)</a><br><span class="count">Menifee/Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/31</td><td><a href="https://basketball.exposureevents.com/270081/jwpb-1-day-5-31">JWPB 1-Day (5/31)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/261284/sbt-of-jwpb-2-day-5-30-5-31">SBT of JWPB 2-Day (5/30-5/31)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/269733/jwpb-2-day-5-23-5-24">JWPB 2-Day (5/23-5/24)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/17</td><td><a href="https://basketball.exposureevents.com/261287/sbt-of-jwpb-1-day-5-17">SBT of JWPB 1-Day (5/17)</a><br><span class="count">Menifee/Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/09</td><td><a href="https://basketball.exposureevents.com/261288/sbt-of-jwpb-1-day-mothers-day-5-9">SBT of JWPB 1-Day Mothers Day (5/9)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/03</td><td><a href="https://basketball.exposureevents.com/261286/sbt-of-jwpb-1-day-5-3">SBT of JWPB 1-Day (5/3)</a><br><span class="count">Menifee</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/03</td><td><a href="https://basketball.exposureevents.com/268581/jwpb-1-day-5-3">JWPB 1-Day (5/3)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/26</td><td><a href="https://basketball.exposureevents.com/261285/sbt-of-jwpb-1-day-4-26">SBT of JWPB 1-Day (4/26)</a><br><span class="count">Menifee/Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/18</td><td><a href="https://basketball.exposureevents.com/261289/sbt-of-jwpb-2-day-4-18-4-19">SBT of JWPB 2-Day (4/18-4/19)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/12</td><td><a href="https://basketball.exposureevents.com/261283/sbt-of-jwpb-1-day-4-12-rained-out">SBT of JWPB 1-Day (4/12) RAINED OUT</a><br><span class="count">Menifee/Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/29</td><td><a href="https://basketball.exposureevents.com/261282/sbt-of-jwpb-1-day-3-29">SBT of JWPB 1-Day (3/29)</a><br><span class="count">Menifee/Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/22</td><td><a href="https://basketball.exposureevents.com/261279/jwpb-1-day-3-22">JWPB 1-Day (3/22)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/15</td><td><a href="https://basketball.exposureevents.com/261278/sbt-of-jwpb-1-day-3-15">SBT of JWPB 1-Day (3/15)</a><br><span class="count">Menifee/Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/15</td><td><a href="https://basketball.exposureevents.com/265986/jwpb-1-day-3-15"> JWPB 1-Day (3/15)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/07</td><td><a href="https://basketball.exposureevents.com/261276/sbt-of-jwpb-2-day-3-7-3-8">SBT of JWPB 2-Day (3/7-3/8)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/01</td><td><a href="https://basketball.exposureevents.com/261275/sbt-of-jwpb-1-day-3-1">SBT of JWPB 1-Day (3/1)</a><br><span class="count">Menifee/Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/22</td><td><a href="https://basketball.exposureevents.com/261274/sbt-of-jwpb-1-day-2-22">SBT of JWPB 1-Day (2/22)</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/15</td><td><a href="https://basketball.exposureevents.com/261273/sbt-of-jwpb-1-day-2-15">SBT of JWPB 1-Day (2/15)</a><br><span class="count">Menifee/Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/31</td><td><a href="https://basketball.exposureevents.com/261272/sbt-of-jwpb-2-day-1-31-2-1">SBT of JWPB 2-Day (1/31-2/1)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/25</td><td><a href="https://basketball.exposureevents.com/261271/sbt-of-jwpb-1-day-1-25">SBT of JWPB 1-Day (1/25)</a><br><span class="count">Menifee/Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/18</td><td><a href="https://basketball.exposureevents.com/261270/sbt-of-jwpb-1-day-1-18">SBT of JWPB 1-Day (1/18)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/11</td><td><a href="https://basketball.exposureevents.com/261269/sbt-of-jwpb-1-day-1-11">SBT of JWPB 1-Day (1/11)</a><br><span class="count">Menifee/Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">12/21</td><td><a href="https://basketball.exposureevents.com/258850/sbt-of-jwpb-1-day-12-21">SBT of JWPB 1-Day (12/21)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">12/14</td><td><a href="https://basketball.exposureevents.com/236099/sbt-of-jwpb-1-day-12-14">SBT of JWPB 1-Day (12/14)</a><br><span class="count">Riverside/Menifee</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">12/07</td><td><a href="https://basketball.exposureevents.com/258095/sbt-of-jwpb-1-day-12-7">SBT of JWPB 1-Day (12/7)</a><br><span class="count">Riverside/Menifee</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/29</td><td><a href="https://basketball.exposureevents.com/259403/jwpb-2-day-11-29-11-30">JWPB 2-Day (11/29-11/30)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/23</td><td><a href="https://basketball.exposureevents.com/236097/sbt-of-jwpb-1-day-11-23">SBT of JWPB 1-Day (11/23)</a><br><span class="count">Riverside/Menifee</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/16</td><td><a href="https://basketball.exposureevents.com/236096/sbt-of-jwpb-1-day-11-16">SBT Of JWPB 1-Day (11/16)</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/08</td><td><a href="https://basketball.exposureevents.com/236104/sbt-of-jwpb-2-day-11-8-11-9">SBT Of JWPB 2-Day (11/8-11/9)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/02</td><td><a href="https://basketball.exposureevents.com/236095/sbt-of-jwpb-1-day-11-2">SBT Of JWPB 1-Day (11/2)</a><br><span class="count">Riverside/Menifee</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/25</td><td><a href="https://basketball.exposureevents.com/257106/sbt-of-jwpb-2-day-10-25-10-26">SBT of JWPB 2-Day (10/25-10/26)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/25</td><td><a href="https://basketball.exposureevents.com/236638/jwpb-2-day-10-25-10-26">JWPB 2-Day (10/25-10/26)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/19</td><td><a href="https://basketball.exposureevents.com/236094/sbt-of-jwpb-1-day-10-19">SBT Of JWPB 1-Day (10/19)</a><br><span class="count">Murrieta</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/12</td><td><a href="https://basketball.exposureevents.com/254817/sbt-of-jwpb-1-day-10-12">SBT Of JWPB 1-Day (10/12)</a><br><span class="count">Murrieta</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/11</td><td><a href="https://basketball.exposureevents.com/236637/sbt-of-jwpb-2-day-10-11-10-12">SBT Of JWPB 2-Day (10/11-10/12)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/05</td><td><a href="https://basketball.exposureevents.com/236093/sbt-of-jwpb-1-day-10-5">SBT Of JWPB 1-Day (10/5)</a><br><span class="count">Murrieta</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/28</td><td><a href="https://basketball.exposureevents.com/236092/sbt-of-jwpb-1-day-9-28">SBT Of JWPB 1-Day (9/28)</a><br><span class="count">Murrieta</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/21</td><td><a href="https://basketball.exposureevents.com/236091/sbt-of-jwpb-1-day-9-21">SBT Of JWPB 1-Day (9/21)</a><br><span class="count">Murrieta</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/14</td><td><a href="https://basketball.exposureevents.com/254025/sbt-of-jwpb-9-14">SBT of JWPB (9/14)</a><br><span class="count">Menifee</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/13</td><td><a href="https://basketball.exposureevents.com/254029/jwpb-2-day-9-13-9-14">JWPB 2-Day (9/13-9/14)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/13</td><td><a href="https://basketball.exposureevents.com/236636/sbt-of-jwpb-2-day-9-13-9-14">SBT Of JWPB 2-Day (9/13-9/14)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/06</td><td><a href="https://basketball.exposureevents.com/253523/jwpb-2-day-9-6-9-7">JWPB 2-Day (9/6-9/7)</a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/06</td><td><a href="https://basketball.exposureevents.com/236635/sbt-of-jwpb-2-day-9-6-9-7">SBT Of JWPB 2-Day (9/6-9/7)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/30</td><td><a href="https://basketball.exposureevents.com/236090/sbt-of-jwpb-2-day-8-30-8-31">SBT Of JWPB 2-Day (8/30-8/31)</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/23</td><td><a href="https://basketball.exposureevents.com/250754/sbt-of-jwpb-1-day-8-23-14u-only">SBT Of JWPB 1-Day (8/23) 14u Only</a><br><span class="count">Murrieta</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/17</td><td><a href="https://basketball.exposureevents.com/252004/jwpb-1-day-8-17">JWPB 1-Day (8/17) </a><br><span class="count">Fontana</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/16</td><td><a href="https://basketball.exposureevents.com/250753/sbt-of-jwpb-1-day-8-16-13u-only">SBT Of JWPB 1-Day (8/16) 13u Only</a><br><span class="count">Murrieta</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/02</td><td><a href="https://basketball.exposureevents.com/236100/sbt-of-jwpb-2-day-8-2-8-3">SBT Of JWPB 2-Day (8/2-8/3)</a><br><span class="count">Temecula</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/29</td><td><a href="https://basketball.exposureevents.com/247854/sbt-of-jwpb-1-day-6-29">SBT Of JWPB 1-Day (6/29)</a><br><span class="count">Murrieta</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/22</td><td><a href="https://basketball.exposureevents.com/236083/sbt-of-jwpb-1-day-6-22">SBT Of JWPB 1-Day (6/22)</a><br><span class="count">Murrieta</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/15</td><td><a href="https://basketball.exposureevents.com/236082/sbt-of-jwpb-1-day-6-15">SBT Of JWPB 1-Day (6/15)</a><br><span class="count">Murrieta</span></td><td>&mdash;</td></tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

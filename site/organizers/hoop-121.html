@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoop 121 &mdash; organizer history</title>
+<style>
+
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+
+table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
+table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.count { font-size: 12px; color: var(--mut); }
+@media (max-width: 700px) {
+  table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
+  table.hist td { padding: 7px 6px; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../upcoming.html">&larr; upcoming tournaments</a>
+<header class="top">
+<h1>Hoop 121</h1>
+<p>47 EE events &middot; 25 with 2176 scraped games &middot; 4 upcoming. <a href="https://basketball.exposureevents.com/organizations/12589">EE organization page &rarr;</a></p>
+<nav class="tabs"><a href="../11u.html">11U</a><a href="../12u.html">12U/6th Grade</a><a href="../13u.html">13U/7th Grade</a><a href="../14u.html">14U/8th Grade</a></nav>
+</header>
+<section class="note"><h2>Upcoming (4)</h2><ul><li>11/28 &mdash; <a href="https://basketball.exposureevents.com/277318/sf-work-hard-play-hard-holiday-hoops">SF WORK HARD PLAY HARD - Holiday Hoops</a> <span class="count">8 divisions published, teams/schedule TBA</span></li><li>12/05 &mdash; <a href="https://basketball.exposureevents.com/255461/winter-kickoff-jamboree">Winter Kickoff Jamboree</a> <span class="count">7 divisions published, teams/schedule TBA</span></li><li>12/19 &mdash; <a href="https://basketball.exposureevents.com/277319/sf-work-hard-play-hard-winter-middle-school-madness">SF WORK HARD PLAY HARD WINTER MIDDLE SCHOOL MADNESS</a> <span class="count">9 divisions published, teams/schedule TBA</span></li><li>02/06 &mdash; <a href="https://basketball.exposureevents.com/263860/groundhog-day-top-30-championship">Groundhog Day Top 30 Championship</a> <span class="count">11 divisions published, teams/schedule TBA</span></li></ul></section>
+<section class="note"><h2>Past events (44)</h2></section>
+<table class="hist">
+<thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
+<tbody>
+<tr><td style="white-space:nowrap">11/14</td><td><a href="https://basketball.exposureevents.com/255460/bay-area-hoop-explosion">Bay Area Hoop Explosion</a><br><span class="count">Walnut Creek</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/07</td><td><a href="https://basketball.exposureevents.com/255459/the-bay-area-fall-fest-invitational">The Bay Area Fall Fest Invitational</a><br><span class="count">East Bay Area</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/24</td><td><a href="https://basketball.exposureevents.com/278886/soldiers-halloween-invitational">SOLDIERS HALLOWEEN INVITATIONAL</a><br><span class="count">Los Altos</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/17</td><td><a href="https://basketball.exposureevents.com/275771/bay-area-live">BAY AREA LIVE</a><br><span class="count">Alameda</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/03</td><td><a href="https://basketball.exposureevents.com/255458/2026-october-hoop-fest">2026 October Hoop Fest</a><br><span class="count">Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/19</td><td><a href="https://basketball.exposureevents.com/277317/sf-work-hard-play-hard-annual-fall-kickoff">SF WORK HARD PLAY HARD - ANNUAL FALL KICKOFF</a><br><span class="count">Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/05</td><td><a href="https://basketball.exposureevents.com/253704/labor-day-championships">Labor Day Championships</a><br><span class="count">East Bay Area</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/22</td><td><a href="https://basketball.exposureevents.com/252716/2026-back-to-school-jam-session">2026 BACK TO SCHOOL JAM SESSION</a><br><span class="count">Walnut Creek</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/15</td><td><a href="https://basketball.exposureevents.com/274946/sf-work-hard-play-hard-best-of-the-best">SF WORK HARD PLAY HARD BEST OF THE BEST</a><br><span class="count">Pinole</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/01</td><td><a href="https://basketball.exposureevents.com/273710/sf-whph-summer-finale">SF WHPH - SUMMER FINALE</a><br><span class="count">San Francisco</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/18</td><td><a href="https://basketball.exposureevents.com/249886/2026-las-vegas-tune-up">2026 Las Vegas Tune Up</a><br><span class="count">Alameda</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/04</td><td><a href="https://basketball.exposureevents.com/262894/sf-work-hard-play-hard-annual-summer-showdown">SF WORK HARD PLAY HARD ANNUAL SUMMER SHOWDOWN</a><br><span class="count">Alameda</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/20</td><td><a href="https://basketball.exposureevents.com/247158/2026-fathers-day-hoop-fest">2026 Father's Day Hoop Fest!</a><br><span class="count">Hayward</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/19</td><td><a href="https://basketball.exposureevents.com/268585/mc-summer-shootout-2026">MC Summer Shootout 2026</a><br><span class="count">Hayward</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/13</td><td><a href="https://basketball.exposureevents.com/262893/sf-whph-the-grind-dont-stop">SF WHPH - The Grind Don't Stop</a><br><span class="count">Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/262891/sf-whph-and-sf-rebels-sf-takeover">SF WHPH &amp; SF Rebels - SF Takeover</a><br><span class="count">San Francisco</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/257525/soldiers-south-bay-invitational">Soldier's South Bay Invitational</a><br><span class="count">Los Altos</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/16</td><td><a href="https://basketball.exposureevents.com/262890/sf-whph-hoop-it-up">SF WHPH - Hoop It Up</a><br><span class="count">Oakland</span></td><td>136</td></tr>
+<tr><td style="white-space:nowrap">05/09</td><td><a href="https://basketball.exposureevents.com/247159/alicia-renee-anderson-memorial-shootout">Alicia Renee Anderson Memorial Shootout</a><br><span class="count">Hayward</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/02</td><td><a href="https://basketball.exposureevents.com/267745/gba-salinas-slam-tournament">GBA Salinas Slam Tournament</a><br><span class="count">Salinas</span></td><td>91</td></tr>
+<tr><td style="white-space:nowrap">04/25</td><td><a href="https://basketball.exposureevents.com/262889/sf-whph-the-main-event">SF WHPH - The Main Event</a><br><span class="count">Oakland</span></td><td>108</td></tr>
+<tr><td style="white-space:nowrap">04/11</td><td><a href="https://basketball.exposureevents.com/263541/2026-hoop-honors-showcase">2026 Hoop Honors Showcase</a><br><span class="count">Oakland</span></td><td>50</td></tr>
+<tr><td style="white-space:nowrap">03/21</td><td><a href="https://basketball.exposureevents.com/262888/sf-whph-spring-kickoff">SF WHPH SPRING KICKOFF</a><br><span class="count">BAY AREA</span></td><td>67</td></tr>
+<tr><td style="white-space:nowrap">03/14</td><td><a href="https://basketball.exposureevents.com/241348/2026-east-bay-buzzer-beater">2026 East Bay Buzzer Beater</a><br><span class="count">Oakland</span></td><td>58</td></tr>
+<tr><td style="white-space:nowrap">02/28</td><td><a href="https://basketball.exposureevents.com/257535/soldiers-norcal-heat-check">SOLDIER'S NORCAL HEAT CHECK</a><br><span class="count">Hayward</span></td><td>80</td></tr>
+<tr><td style="white-space:nowrap">01/31</td><td><a href="https://basketball.exposureevents.com/240466/groundhog-day-top-30-championship">Groundhog Day Top 30 Championship</a><br><span class="count">Alameda</span></td><td>122</td></tr>
+<tr><td style="white-space:nowrap">01/03</td><td><a href="https://basketball.exposureevents.com/261515/sf-whph-new-year-tip-off">SF WHPH - New Year Tip Off</a><br><span class="count">Walnut Creek</span></td><td>63</td></tr>
+<tr><td style="white-space:nowrap">12/20</td><td><a href="https://basketball.exposureevents.com/260172/sf-work-hard-play-hard-winter-middle-school-madness">SF WORK HARD PLAY HARD WINTER MIDDLE SCHOOL MADNESS</a><br><span class="count">Alameda</span></td><td>85</td></tr>
+<tr><td style="white-space:nowrap">12/06</td><td><a href="https://basketball.exposureevents.com/247160/winter-kickoff-jamboree">Winter Kickoff Jamboree</a><br><span class="count">Alameda</span></td><td>57</td></tr>
+<tr><td style="white-space:nowrap">11/15</td><td><a href="https://basketball.exposureevents.com/258225/sf-work-hard-play-hard-holiday-hoops">SF WORK HARD PLAY HARD - Holiday Hoops</a><br><span class="count">Alameda</span></td><td>55</td></tr>
+<tr><td style="white-space:nowrap">11/08</td><td><a href="https://basketball.exposureevents.com/234792/bay-area-hoop-explosion">Bay Area Hoop Explosion</a><br><span class="count">Walnut Creek</span></td><td>124</td></tr>
+<tr><td style="white-space:nowrap">11/01</td><td><a href="https://basketball.exposureevents.com/234791/the-bay-area-fall-fest-invitational">The Bay Area Fall Fest Invitational</a><br><span class="count">East Bay Area</span></td><td>164</td></tr>
+<tr><td style="white-space:nowrap">10/04</td><td><a href="https://basketball.exposureevents.com/234790/2025-october-hoop-fest">2025 October Hoop Fest</a><br><span class="count">Oakland</span></td><td>144</td></tr>
+<tr><td style="white-space:nowrap">09/13</td><td><a href="https://basketball.exposureevents.com/249946/sf-work-hard-play-hard-annual-fall-kickoff">SF WORK HARD PLAY HARD - ANNUAL FALL KICKOFF</a><br><span class="count">Oakland</span></td><td>102</td></tr>
+<tr><td style="white-space:nowrap">09/06</td><td><a href="https://basketball.exposureevents.com/232756/labor-day-championships">Labor Day Championships</a><br><span class="count">East Bay Area</span></td><td>84</td></tr>
+<tr><td style="white-space:nowrap">08/30</td><td><a href="https://basketball.exposureevents.com/252050/hoops-on-the-hill-x-hoop-121-challenge-on-the-hill">Hoops on the Hill x Hoop 121 - Challenge on the Hill</a><br><span class="count">Oakland</span></td><td>21</td></tr>
+<tr><td style="white-space:nowrap">08/23</td><td><a href="https://basketball.exposureevents.com/232755/2025-back-to-school-jam-session">2025 BACK TO SCHOOL JAM SESSION</a><br><span class="count">Walnut Creek</span></td><td>90</td></tr>
+<tr><td style="white-space:nowrap">08/16</td><td><a href="https://basketball.exposureevents.com/249945/sf-work-hard-play-hard-best-of-the-best">SF WORK HARD PLAY HARD BEST OF THE BEST</a><br><span class="count">Oakland</span></td><td>65</td></tr>
+<tr><td style="white-space:nowrap">08/02</td><td><a href="https://basketball.exposureevents.com/249715/sf-work-hard-play-hard-bring-your-best">SF WORK HARD PLAY HARD - Bring Your Best</a><br><span class="count">San Francisco</span></td><td>25</td></tr>
+<tr><td style="white-space:nowrap">07/19</td><td><a href="https://basketball.exposureevents.com/232754/2025-las-vegas-tune-up">2025 Las Vegas Tune Up</a><br><span class="count">Alameda</span></td><td>120</td></tr>
+<tr><td style="white-space:nowrap">06/28</td><td><a href="https://basketball.exposureevents.com/238550/sf-work-hard-play-hard-annual-summer-showdown">SF WORK HARD PLAY HARD ANNUAL SUMMER SHOWDOWN</a><br><span class="count">Alameda</span></td><td>115</td></tr>
+<tr><td style="white-space:nowrap">06/28</td><td><a href="https://basketball.exposureevents.com/238178/hoop-121-and-bay-area-hoop-community-summer-stars-challenge">*Hoop 121 &amp; Bay Area Hoop Community - Summer Stars Challenge</a><br><span class="count">East Bay</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/20</td><td><a href="https://basketball.exposureevents.com/240791/mc-summer-shootout-2025">MC Summer Shootout 2025</a><br><span class="count">Hayward</span></td><td>87</td></tr>
+<tr><td style="white-space:nowrap">06/14</td><td><a href="https://basketball.exposureevents.com/232753/2025-fathers-day-hoop-fest">2025 Father's Day Hoop Fest!</a><br><span class="count">Hayward</span></td><td>63</td></tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

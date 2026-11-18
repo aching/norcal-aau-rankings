@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elite Hoops Association &mdash; organizer history</title>
+<style>
+
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+
+table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
+table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.count { font-size: 12px; color: var(--mut); }
+@media (max-width: 700px) {
+  table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
+  table.hist td { padding: 7px 6px; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../upcoming.html">&larr; upcoming tournaments</a>
+<header class="top">
+<h1>Elite Hoops Association</h1>
+<p>27 EE events. <a href="https://basketball.exposureevents.com/organizations/32876">EE organization page &rarr;</a></p>
+<nav class="tabs"><a href="../11u.html">11U</a><a href="../12u.html">12U/6th Grade</a><a href="../13u.html">13U/7th Grade</a><a href="../14u.html">14U/8th Grade</a></nav>
+</header>
+
+<section class="note"><h2>Past events (27)</h2></section>
+<table class="hist">
+<thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
+<tbody>
+<tr><td style="white-space:nowrap">11/14</td><td><a href="https://basketball.exposureevents.com/273542/the-holiday-tip-off-classic">The Holiday Tip Off Classic</a><br><span class="count">Tustin</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/07</td><td><a href="https://basketball.exposureevents.com/273539/veterans-day-invitational">Veterans Day Invitational</a><br><span class="count">Tustin</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/24</td><td><a href="https://basketball.exposureevents.com/276525/clash-of-the-counties-pt-2">Clash of The Counties Pt. 2</a><br><span class="count">La Habra</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/24</td><td><a href="https://basketball.exposureevents.com/279857/halloween-hoopfest">Halloween Hoopfest</a><br><span class="count">Redondo Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/17</td><td><a href="https://basketball.exposureevents.com/276524/clash-of-the-counties-pt-1">Clash of The Counties pt 1</a><br><span class="count">La Habra</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/10</td><td><a href="https://basketball.exposureevents.com/273537/fall-ball-thriller">Fall Ball Thriller </a><br><span class="count">Norwalk</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/26</td><td><a href="https://basketball.exposureevents.com/273535/the-fall-clash">The Fall Clash </a><br><span class="count">Tustin </span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/22</td><td><a href="https://basketball.exposureevents.com/278302/the-hs-fall-invite-battle-by-the-beach">The HS Fall Invite - Battle by The Beach</a><br><span class="count">Los Angeles</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/22</td><td><a href="https://basketball.exposureevents.com/277137/the-hs-fall-invite">The HS Fall Invite</a><br><span class="count">Los Angeles</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/16</td><td><a href="https://basketball.exposureevents.com/265801/cali-live-summer-finale">Cali Live Summer Finale</a><br><span class="count">Irvine</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/09</td><td><a href="https://basketball.exposureevents.com/265800/cali-live-summer-showcase">Cali Live Summer Showcase</a><br><span class="count">Irvine</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/05</td><td><a href="https://basketball.exposureevents.com/270380/eha-summer-tune-up">EHA Summer Tune Up </a><br><span class="count">Tustin </span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/15</td><td><a href="https://basketball.exposureevents.com/262098/cali-live-spring-showcase-ncaa-certified">Cali Live Spring Showcase (NCAA CERTIFIED)</a><br><span class="count">TUSTIN</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/18</td><td><a href="https://basketball.exposureevents.com/262096/west-coast-showdown">West Coast Showdown </a><br><span class="count">Garden Grove </span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/10</td><td><a href="https://basketball.exposureevents.com/262102/west-thriller">West Thriller</a><br><span class="count">Norwalk </span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/21</td><td><a href="https://basketball.exposureevents.com/262095/spring-showcase">Spring Showcase </a><br><span class="count">Garden Grove </span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/31</td><td><a href="https://basketball.exposureevents.com/262094/winter-showcase">Winter Showcase </a><br><span class="count">Tustin</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/29</td><td><a href="https://basketball.exposureevents.com/252958/thanksgiving-showcase">Thanksgiving Showcase</a><br><span class="count">Garden Grove</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/25</td><td><a href="https://basketball.exposureevents.com/256892/halloween-hoopfest">Halloween Hoopfest</a><br><span class="count">Redondo Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/18</td><td><a href="https://basketball.exposureevents.com/252957/fall-ball-thriller-fall-frenzy-youth">Fall Ball Thriller/Fall Frenzy (Youth)</a><br><span class="count">Irvine </span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/17</td><td><a href="https://basketball.exposureevents.com/256169/battle-by-the-beach">Battle by the Beach</a><br><span class="count">Santa Barbara</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/11</td><td><a href="https://basketball.exposureevents.com/253220/fall-ball-thriller">Fall Ball Thriller </a><br><span class="count">Norwalk</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/27</td><td><a href="https://basketball.exposureevents.com/249322/the-fall-invite-youth">The Fall Invite Youth </a><br><span class="count">Tustin</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/23</td><td><a href="https://basketball.exposureevents.com/253959/the-hs-fall-invite">The HS Fall Invite</a><br><span class="count">Los Angeles</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/23</td><td><a href="https://basketball.exposureevents.com/249534/summer-sizzle-shootout">Summer Sizzle Shootout</a><br><span class="count">Anaheim </span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/14</td><td><a href="https://basketball.exposureevents.com/246301/summer-rumble-ii">Summer Rumble II</a><br><span class="count">Redondo Beach</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/07</td><td><a href="https://basketball.exposureevents.com/246009/summer-rumble">Summer Rumble </a><br><span class="count">Norwalk</span></td><td>&mdash;</td></tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>
