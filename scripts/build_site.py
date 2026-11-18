@@ -626,6 +626,7 @@ def build_board(cohort, title, sub, gen):
     for c, (t, _, _) in COHORTS.items():
         on = ' class="on"' if c == cohort else ""
         tabs += f'<a href="{c}.html"{on}>{t}</a>'
+    tabs += '<a href="upcoming.html">Upcoming</a>'
     titles_html = "".join(f"<li>{esc(t)}</li>" for t in titles) or "<li>None</li>"
     # team detail pages: two passes (slugs first so opponent links
     # resolve, then pages). page_of maps team_id -> board-relative path.
