@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11U unranked teams</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="11u.html">&larr; 11U board</a>
+<nav class="tabs"><a href="11u.html" class="on">11U</a><a href="12u.html">12U/6th Grade</a><a href="14u.html">14U/8th Grade</a></nav>
+<header class="top">
+<h1>11U &mdash; unranked teams (625)</h1>
+<p>Every team with at least one scored game but no board rank (too few
+games, inactive, or out-of-region). Generated 2026-11-17.</p>
+</header>
+<ul><li><a href="teams/11u/1-on-1-gold-11u.html">1 on 1 gold:11u</a> (2g, latest 2026-01-24)</li>
+<li><a href="teams/11u/1on1-black-11u.html">1on1 black:11u</a> (3g, latest 2025-12-07)</li>
+<li><a href="teams/11u/1on1-gold-11u.html">1on1 gold:11u</a> (3g, latest 2025-12-07)</li>
+<li><a href="teams/11u/1on1-11u.html">1on1:11u</a> (4g, latest 2025-09-14)</li>
+<li><a href="teams/11u/2-tuff-elite-11u.html">2 tuff elite:11u</a> (6g, latest 2026-04-12)</li>
+<li><a href="teams/11u/2034-elite-ca-11u.html">2034 elite ca:11u</a> (4g, latest 2026-10-04)</li>
+<li><a href="teams/11u/209-ballerz-11u.html">209 ballerz:11u</a> (3g, latest 2025-10-19)</li>
+<li><a href="teams/11u/209-heat-11u-1.html">209 heat /:11u</a> (2g, latest 2026-07-18)</li>
+<li><a href="teams/11u/209-heat-red-11u.html">209 heat red:11u</a> (2g, latest 2026-08-29)</li>
+<li><a href="teams/11u/24-8-3ssb-11u.html">24/8 3ssb:11u</a> (2g, latest 2026-10-18)</li>
+<li><a href="teams/11u/24-8-academy-black-11u.html">24/8 academy black:11u</a> (4g, latest 2026-03-29)</li>
+<li><a href="teams/11u/24-8-academy-blue-11u.html">24/8 academy blue:11u</a> (3g, latest 2026-03-22)</li>
+<li><a href="teams/11u/24-8-academy-jr-3ssb-11u.html">24/8 academy jr 3ssb:11u</a> (4g, latest 2026-09-13)</li>
+<li><a href="teams/11u/24-8-academy-11u.html">24/8 academy:11u</a> (2g, latest 2025-09-27)</li>
+<li><a href="teams/11u/24-8-dmac-11u.html">24/8 dmac:11u</a> (4g, latest 2025-11-15)</li>
+<li><a href="teams/11u/24-8-wiggins-11u.html">24/8 wiggins:11u</a> (2g, latest 2026-05-16)</li>
+<li><a href="teams/11u/32-elite-ca-11u.html">32 elite ca:11u</a> (1g, latest 2026-05-23)</li>
+<li><a href="teams/11u/4city-purple-11u.html">4city purple:11u</a> (4g, latest 2026-05-24)</li>
+<li><a href="teams/11u/5onfive-ca-11u.html">5onfive ca:11u</a> (5g, latest 2026-10-04)</li>
+<li><a href="teams/11u/707-premier-11u.html">707 premier:11u</a> (2g, latest 2025-11-01)</li>
+<li><a href="teams/11u/707-soldiers-11u.html">707 soldiers:11u</a> (17g, latest 2026-08-09)</li>
+<li><a href="teams/11u/916-dc-11u.html">916 dc:11u</a> (2g, latest 2026-03-21)</li>
+<li><a href="teams/11u/916-united-11u.html">916 united:11u</a> (4g, latest 2025-11-30)</li>
+<li><a href="teams/11u/a-t-dub-11u.html">a t dub:11u</a> (2g, latest 2025-07-12)</li>
+<li><a href="teams/11u/a4-11u.html">a4:11u</a> (1g, latest 2025-11-01)</li>
+<li><a href="teams/11u/advantage-basketball-11u.html">advantage basketball:11u</a> (9g, latest 2026-09-13)</li>
+<li><a href="teams/11u/advantage-11u.html">advantage:11u</a> (12g, latest 2026-08-22)</li>
+<li><a href="teams/11u/aiba-red-33-11u.html">aiba red 33:11u</a> (4g, latest 2025-10-26)</li>
+<li><a href="teams/11u/aiba-11u.html">aiba:11u</a> (4g, latest 2026-09-13)</li>
+<li><a href="teams/11u/aip-basketball-11u.html">aip basketball:11u</a> (2g, latest 2026-04-11)</li>
+<li><a href="teams/11u/alameda-vipers-boun-11u.html">alameda vipers boun /:11u</a> (2g, latest 2026-01-31)</li>
+<li><a href="teams/11u/alameda-vipers-lau-11u.html">alameda vipers lau:11u</a> (2g, latest 2025-07-26)</li>
+<li><a href="teams/11u/alameda-vipers-rainey-11u-1.html">alameda vipers rainey /:11u</a> (3g, latest 2026-01-31)</li>
+<li><a href="teams/11u/alameda-vipers-rainey-11u.html">alameda vipers rainey:11u</a> (8g, latest 2026-07-18)</li>
+<li><a href="teams/11u/alameda-vipers-rebanal-11u.html">alameda vipers rebanal:11u</a> (4g, latest 2026-05-17)</li>
+<li><a href="teams/11u/alameda-vipers-sun-11u.html">alameda vipers sun:11u</a> (2g, latest 2025-07-26)</li>
+<li><a href="teams/11u/alameda-vipers-11u.html">alameda vipers:11u</a> (28g, latest 2026-03-07)</li>
+<li><a href="teams/11u/all-covered-prospects-ca-11u.html">all covered prospects ca:11u</a> (7g, latest 2026-10-04)</li>
+<li><a href="teams/11u/all-covered-prospects-11u.html">all covered prospects:11u</a> (7g, latest 2026-05-24)</li>
+<li><a href="teams/11u/all-net-11u.html">all net:11u</a> (2g, latest 2026-02-07)</li>
+<li><a href="teams/11u/all-players-together-11u.html">all players together:11u</a> (2g, latest 2025-09-06)</li>
+<li><a href="teams/11u/apex-basketball-11u.html">apex basketball:11u</a> (2g, latest 2025-11-08)</li>
+<li><a href="teams/11u/arsenal-black-11u.html">arsenal black:11u</a> (2g, latest 2026-04-04)</li>
+<li><a href="teams/11u/arsenal-kp-11u.html">arsenal kp:11u</a> (2g, latest 2026-10-18)</li>
+<li><a href="teams/11u/arsenal-orange-11u.html">arsenal orange:11u</a> (7g, latest 2026-04-26)</li>
+<li><a href="teams/11u/ayb-wildcats-5th-11u.html">ayb wildcats /5th:11u</a> (5g, latest 2026-05-03)</li>
+<li><a href="teams/11u/ayb-wildcats-11u.html">ayb wildcats:11u</a> (7g, latest 2026-03-01)</li>
+<li><a href="teams/11u/b3yond-basketball-11u.html">b3yond basketball:11u</a> (1g, latest 2026-11-07)</li>
+<li><a href="teams/11u/b4-11u.html">b4:11u</a> (1g, latest 2025-12-13)</li>
+<li><a href="teams/11u/baas-dragons-11u.html">baas dragons:11u</a> (2g, latest 2026-05-09)</li>
+<li><a href="teams/11u/bag-team-phenoms-11u.html">bag team phenoms:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/ball-game-academy-black-eddie-11u.html">ball game academy black eddie:11u</a> (2g, latest 2026-11-14)</li>
+<li><a href="teams/11u/ball-game-academy-black-harvey-11u.html">ball game academy black harvey:11u</a> (2g, latest 2026-10-17)</li>
+<li><a href="teams/11u/ball-game-academy-black-11u.html">ball game academy black:11u</a> (3g, latest 2026-09-27)</li>
+<li><a href="teams/11u/ball-game-academy-eddie-11u.html">ball game academy eddie:11u</a> (6g, latest 2026-08-29)</li>
+<li><a href="teams/11u/ball-game-academy-select-lo-11u.html">ball game academy select lo:11u</a> (2g, latest 2026-11-07)</li>
+<li><a href="teams/11u/ball-game-academy-select-11u.html">ball game academy select:11u</a> (2g, latest 2026-10-24)</li>
+<li><a href="teams/11u/ball-game-academy-11u.html">ball game academy:11u</a> (18g, latest 2026-08-22)</li>
+<li><a href="teams/11u/ballers-blue-devil-elite-11u.html">ballers blue devil elite:11u</a> (2g, latest 2025-08-30)</li>
+<li><a href="teams/11u/ballin-since-birth-11u.html">ballin’ since birth:11u</a> (8g, latest 2026-05-24)</li>
+<li><a href="teams/11u/barnstormers-11u.html">barnstormers:11u</a> (4g, latest 2026-05-16)</li>
+<li><a href="teams/11u/barstow-showtime-ca-11u.html">barstow showtime ca:11u</a> (8g, latest 2026-05-10)</li>
+<li><a href="teams/11u/barstow-showtime-11u.html">barstow showtime:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/bay-area-aces-11u-1.html">bay area aces /:11u</a> (2g, latest 2026-10-17)</li>
+<li><a href="teams/11u/bay-area-blue-devils-11u.html">bay area blue devils:11u</a> (6g, latest 2025-08-30)</li>
+<li><a href="teams/11u/bay-area-knuckleheadz-11u.html">bay area knuckleheadz:11u</a> (3g, latest 2025-09-07)</li>
+<li><a href="teams/11u/bay-area-knucleheadz-11u.html">bay area knucleheadz:11u</a> (2g, latest 2025-08-16)</li>
+<li><a href="teams/11u/bay-area-mambas-11u-1.html">bay area mambas /:11u</a> (4g, latest 2026-04-04)</li>
+<li><a href="teams/11u/bay-area-mambas-10-11u.html">bay area mambas 10/:11u</a> (5g, latest 2025-10-25)</li>
+<li><a href="teams/11u/bay-area-mambas-black-11u-1.html">bay area mambas black /:11u</a> (8g, latest 2025-10-19)</li>
+<li><a href="teams/11u/bay-area-mambas-black-10-11u.html">bay area mambas black 10/:11u</a> (4g, latest 2025-08-16)</li>
+<li><a href="teams/11u/bay-area-mambas-black-11u.html">bay area mambas black:11u</a> (6g, latest 2025-08-23)</li>
+<li><a href="teams/11u/bay-area-mambas-red-11u.html">bay area mambas red:11u</a> (5g, latest 2026-10-10)</li>
+<li><a href="teams/11u/bay-area-mambas-11u.html">bay area mambas:11u</a> (6g, latest 2026-09-26)</li>
+<li><a href="teams/11u/bay-area-maniacs-11u.html">bay area maniacs:11u</a> (2g, latest 2025-10-05)</li>
+<li><a href="teams/11u/bay-area-maniacz-11u.html">bay area maniacz:11u</a> (4g, latest 2026-04-25)</li>
+<li><a href="teams/11u/bay-area-rebels-11u-1.html">bay area rebels /:11u</a> (4g, latest 2026-05-02)</li>
+<li><a href="teams/11u/bay-area-rebels-cyrus-11u.html">bay area rebels cyrus:11u</a> (2g, latest 2025-09-06)</li>
+<li><a href="teams/11u/bay-area-rebels-11u.html">bay area rebels:11u</a> (11g, latest 2026-10-25)</li>
+<li><a href="teams/11u/bay-area-regulators-11u.html">bay area regulators:11u</a> (7g, latest 2026-11-08)</li>
+<li><a href="teams/11u/bay-area-rise-11u.html">bay area rise:11u</a> (2g, latest 2025-08-30)</li>
+<li><a href="teams/11u/bay-area-samurai-11u.html">bay area samurai:11u</a> (1g, latest 2026-11-07)</li>
+<li><a href="teams/11u/bay-area-stars-academy-11u.html">bay area stars academy:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/bay-area-stars-x-hits-academy-11u.html">bay area stars x hits academy:11u</a> (2g, latest 2026-10-10)</li>
+<li><a href="teams/11u/bay-area-surge-11u-1.html">bay area surge /:11u</a> (1g, latest 2026-08-29)</li>
+<li><a href="teams/11u/bay-area-surge-11u.html">bay area surge:11u</a> (2g, latest 2025-12-21)</li>
+<li><a href="teams/11u/bay-area-swoosh-11u.html">bay area swoosh:11u</a> (3g, latest 2026-03-22)</li>
+<li><a href="teams/11u/bay-area-thunder-10-11u.html">bay area thunder 10/:11u</a> (2g, latest 2025-11-22)</li>
+<li><a href="teams/11u/bay-area-thunder-11u.html">bay area thunder:11u</a> (18g, latest 2026-09-12)</li>
+<li><a href="teams/11u/bay-area-titans-11u.html">bay area titans:11u</a> (2g, latest 2026-05-23)</li>
+<li><a href="teams/11u/bay-area-wildcats-11u.html">bay area wildcats:11u</a> (28g, latest 2026-08-22)</li>
+<li><a href="teams/11u/bay-boyz-ca-11u.html">bay boyz ca:11u</a> (2g, latest 2026-05-24)</li>
+<li><a href="teams/11u/bay-city-4th-black-11u.html">bay city 4th black:11u</a> (4g, latest 2026-05-24)</li>
+<li><a href="teams/11u/bay-city-5th-black-11u.html">bay city 5th black:11u</a> (13g, latest 2026-11-08)</li>
+<li><a href="teams/11u/bay-city-5th-red-11u.html">bay city 5th red:11u</a> (7g, latest 2026-05-24)</li>
+<li><a href="teams/11u/bay-city-5th-silver-11u.html">bay city 5th silver:11u</a> (4g, latest 2026-05-24)</li>
+<li><a href="teams/11u/bay-city-black-11u.html">bay city black:11u</a> (2g, latest 2025-12-14)</li>
+<li><a href="teams/11u/bay-city-eb-5th-11u.html">bay city eb 5th/:11u</a> (3g, latest 2026-09-20)</li>
+<li><a href="teams/11u/bay-city-eb-aj-11u.html">bay city eb aj:11u</a> (3g, latest 2026-03-29)</li>
+<li><a href="teams/11u/bay-city-eb-red-5th-11u.html">bay city eb red 5th/:11u</a> (3g, latest 2026-09-20)</li>
+<li><a href="teams/11u/bay-city-select-ca-11u.html">bay city select ca:11u</a> (7g, latest 2026-05-10)</li>
+<li><a href="teams/11u/bay-city-11u.html">bay city:11u</a> (1g, latest 2025-06-21)</li>
+<li><a href="teams/11u/bay-players-elite-11u.html">bay players elite:11u</a> (2g, latest 2026-10-03)</li>
+<li><a href="teams/11u/bay-players-gray-11u.html">bay players gray:11u</a> (2g, latest 2026-10-17)</li>
+<li><a href="teams/11u/bay-players-green-11u.html">bay players green:11u</a> (2g, latest 2026-10-17)</li>
+<li><a href="teams/11u/bay-players-select-11u.html">bay players select:11u</a> (2g, latest 2026-10-03)</li>
+<li><a href="teams/11u/bay-players-11u.html">bay players:11u</a> (2g, latest 2026-11-07)</li>
+<li><a href="teams/11u/bay-united-basketball-club-11u.html">bay united basketball club:11u</a> (3g, latest 2025-12-07)</li>
+<li><a href="teams/11u/bga-elite-11u.html">bga elite:11u</a> (3g, latest 2026-09-27)</li>
+<li><a href="teams/11u/black-ops-baskaetball-11u.html">black ops baskaetball:11u</a> (4g, latest 2025-08-24)</li>
+<li><a href="teams/11u/black-ops-basketball-11u.html">black ops basketball:11u</a> (4g, latest 2025-08-10)</li>
+<li><a href="teams/11u/blades-of-hoop-11u.html">blades of hoop:11u</a> (3g, latest 2026-11-15)</li>
+<li><a href="teams/11u/blaze-11-black-11u.html">blaze 11 black:11u</a> (2g, latest 2025-11-09)</li>
+<li><a href="teams/11u/blaze-black-11u.html">blaze black:11u</a> (2g, latest 2026-10-03)</li>
+<li><a href="teams/11u/blitz-11u.html">blitz:11u</a> (1g, latest 2025-10-05)</li>
+<li><a href="teams/11u/bmg-elite-11u.html">bmg elite:11u</a> (4g, latest 2026-08-09)</li>
+<li><a href="teams/11u/brave-elite-gold-11u.html">brave elite gold:11u</a> (2g, latest 2026-11-07)</li>
+<li><a href="teams/11u/bt-cubs-11u.html">bt cubs:11u</a> (4g, latest 2025-08-17)</li>
+<li><a href="teams/11u/bta-basketball-11u.html">bta basketball:11u</a> (2g, latest 2025-07-19)</li>
+<li><a href="teams/11u/bta-11u.html">bta:11u</a> (2g, latest 2026-04-11)</li>
+<li><a href="teams/11u/ca-storm-johnson-11u.html">ca storm johnson:11u</a> (4g, latest 2026-04-18)</li>
+<li><a href="teams/11u/cal-red-raiders-11u.html">cal red raiders:11u</a> (2g, latest 2025-09-27)</li>
+<li><a href="teams/11u/cali-gold-11u.html">cali gold:11u</a> (3g, latest 2026-10-04)</li>
+<li><a href="teams/11u/cali-rebels-black-jr-3ssb-11u.html">cali rebels black jr 3ssb:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/california-storm-johnson-11u.html">california storm johnson:11u</a> (7g, latest 2026-05-24)</li>
+<li><a href="teams/11u/ccop-kevin-11u.html">ccop kevin:11u</a> (2g, latest 2025-10-04)</li>
+<li><a href="teams/11u/cda-basketball-elite-11u.html">cda basketball elite:11u</a> (2g, latest 2025-09-06)</li>
+<li><a href="teams/11u/cda-basketball-select-11u.html">cda basketball select:11u</a> (9g, latest 2025-12-07)</li>
+<li><a href="teams/11u/cda-basketball-11u.html">cda basketball:11u</a> (4g, latest 2025-10-05)</li>
+<li><a href="teams/11u/cda-elite-11u.html">cda elite:11u</a> (7g, latest 2026-07-18)</li>
+<li><a href="teams/11u/cda-select-basketball-11u.html">cda select basketball:11u</a> (4g, latest 2025-09-14)</li>
+<li><a href="teams/11u/cda-select-11u.html">cda select:11u</a> (10g, latest 2026-01-24)</li>
+<li><a href="teams/11u/cda-vince-11u.html">cda vince:11u</a> (2g, latest 2026-08-08)</li>
+<li><a href="teams/11u/cda-11u.html">cda:11u</a> (33g, latest 2026-09-05)</li>
+<li><a href="teams/11u/cen-cal-raiders-11u.html">cen cal raiders:11u</a> (4g, latest 2026-04-25)</li>
+<li><a href="teams/11u/central-valley-elite-ca-11u.html">central valley elite ca:11u</a> (2g, latest 2026-05-24)</li>
+<li><a href="teams/11u/chew-on-this-10-11-11u.html">chew on this 10/11:11u</a> (2g, latest 2025-08-16)</li>
+<li><a href="teams/11u/chew-on-this-10-11u.html">chew on this 10/:11u</a> (2g, latest 2026-05-09)</li>
+<li><a href="teams/11u/chew-on-this-11-12-11u.html">chew on this 11/12:11u</a> (2g, latest 2026-05-16)</li>
+<li><a href="teams/11u/chew-on-this-11u.html">chew on this:11u</a> (4g, latest 2026-08-01)</li>
+<li><a href="teams/11u/chico-avengers-11u.html">chico avengers:11u</a> (2g, latest 2025-09-27)</li>
+<li><a href="teams/11u/colorado-magic-co-11u.html">colorado magic co:11u</a> (3g, latest 2026-05-10)</li>
+<li><a href="teams/11u/corona-nation-jr-3ssb-11u.html">corona nation jr 3ssb:11u</a> (4g, latest 2025-10-05)</li>
+<li><a href="teams/11u/cot-11u.html">cot:11u</a> (6g, latest 2026-01-11)</li>
+<li><a href="teams/11u/creekside-warriors-11u.html">creekside warriors:11u</a> (6g, latest 2025-07-12)</li>
+<li><a href="teams/11u/crown-hustle-11u.html">crown hustle:11u</a> (2g, latest 2026-02-07)</li>
+<li><a href="teams/11u/cruiser-boys-11u.html">cruiser boys:11u</a> (2g, latest 2026-02-28)</li>
+<li><a href="teams/11u/cruisers-11u.html">cruisers:11u</a> (3g, latest 2026-10-25)</li>
+<li><a href="teams/11u/ctbxgu-11u.html">ctbxgu:11u</a> (2g, latest 2026-11-07)</li>
+<li><a href="teams/11u/cv-assault-11u.html">cv assault:11u</a> (4g, latest 2026-03-14)</li>
+<li><a href="teams/11u/cv-hornets-11u.html">cv hornets:11u</a> (1g, latest 2025-06-29)</li>
+<li><a href="teams/11u/damand-ca-11u.html">damand ca:11u</a> (3g, latest 2026-10-04)</li>
+<li><a href="teams/11u/damand-11u.html">damand:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/dbc-watts-11u.html">dbc watts:11u</a> (3g, latest 2026-09-13)</li>
+<li><a href="teams/11u/dbc-11u.html">dbc:11u</a> (7g, latest 2026-11-07)</li>
+<li><a href="teams/11u/dc-finest-11u-1.html">dc finest:11u</a> (2g, latest 2026-04-25)</li>
+<li><a href="teams/11u/delta-heat-4th-5th-torres-5th-11u.html">delta heat 4th/5th torres 5th/:11u</a> (3g, latest 2026-09-20)</li>
+<li><a href="teams/11u/delta-heat-5th-mazur-5th-11u.html">delta heat 5th mazur 5th/:11u</a> (3g, latest 2026-09-20)</li>
+<li><a href="teams/11u/delta-heat-black-11u.html">delta heat black:11u</a> (7g, latest 2026-09-13)</li>
+<li><a href="teams/11u/delta-heat-elite-11u.html">delta heat elite:11u</a> (8g, latest 2025-09-07)</li>
+<li><a href="teams/11u/delta-heat-mazur-11u.html">delta heat mazur:11u</a> (2g, latest 2026-11-07)</li>
+<li><a href="teams/11u/delta-heat-red-11u.html">delta heat red:11u</a> (3g, latest 2026-09-13)</li>
+<li><a href="teams/11u/delta-heat-torres-11u.html">delta heat torres:11u</a> (3g, latest 2026-11-08)</li>
+<li><a href="teams/11u/delta-heat-11u.html">delta heat:11u</a> (1g, latest 2026-11-14)</li>
+<li><a href="teams/11u/discover-basketball-11u.html">discover basketball:11u</a> (4g, latest 2025-07-06)</li>
+<li><a href="teams/11u/dream-chasers-11u.html">dream chasers:11u</a> (2g, latest 2026-02-07)</li>
+<li><a href="teams/11u/dublin-united-11u.html">dublin united:11u</a> (13g, latest 2026-11-14)</li>
+<li><a href="teams/11u/duran-allstars-11u.html">duran allstars:11u</a> (4g, latest 2026-07-25)</li>
+<li><a href="teams/11u/duran-s-all-stars-11u.html">duran's all stars:11u</a> (2g, latest 2025-09-06)</li>
+<li><a href="teams/11u/east-bay-athletics-nik-11u.html">east bay athletics nik:11u</a> (2g, latest 2026-10-31)</li>
+<li><a href="teams/11u/east-bay-athletics-11u.html">east bay athletics:11u</a> (10g, latest 2026-08-09)</li>
+<li><a href="teams/11u/east-bay-bulldogs-11u.html">east bay bulldogs:11u</a> (18g, latest 2026-10-10)</li>
+<li><a href="teams/11u/east-bay-champions-11u.html">east bay champions:11u</a> (5g, latest 2026-05-23)</li>
+<li><a href="teams/11u/east-bay-elite-11u-1.html">east bay elite /:11u</a> (2g, latest 2025-12-13)</li>
+<li><a href="teams/11u/east-bay-elite-basketball-11u.html">east bay elite basketball:11u</a> (4g, latest 2026-03-01)</li>
+<li><a href="teams/11u/east-bay-elite-11u.html">east bay elite:11u</a> (21g, latest 2026-09-06)</li>
+<li><a href="teams/11u/east-bay-soldiers-11u.html">east bay soldiers:11u</a> (9g, latest 2026-10-24)</li>
+<li><a href="teams/11u/eb-bulldogs-white-11u.html">eb bulldogs white:11u</a> (2g, latest 2026-09-19)</li>
+<li><a href="teams/11u/eb-elite-11u.html">eb elite:11u</a> (6g, latest 2026-07-25)</li>
+<li><a href="teams/11u/eba-jermey-11u.html">eba jermey:11u</a> (2g, latest 2026-09-26)</li>
+<li><a href="teams/11u/ebc-elite-11u.html">ebc elite:11u</a> (3g, latest 2025-10-19)</li>
+<li><a href="teams/11u/ebc-11u.html">ebc:11u</a> (4g, latest 2026-04-18)</li>
+<li><a href="teams/11u/ebs-11u.html">ebs:11u</a> (14g, latest 2026-10-10)</li>
+<li><a href="teams/11u/element-11u.html">element:11u</a> (8g, latest 2026-09-19)</li>
+<li><a href="teams/11u/elevate-11u-1.html">elevate /:11u</a> (2g, latest 2025-09-13)</li>
+<li><a href="teams/11u/elevate-10-11u.html">elevate 10/:11u</a> (2g, latest 2025-07-12)</li>
+<li><a href="teams/11u/elevate-11u.html">elevate:11u</a> (4g, latest 2026-08-29)</li>
+<li><a href="teams/11u/elite-big-time-11u.html">elite big time:11u</a> (2g, latest 2026-10-18)</li>
+<li><a href="teams/11u/esb-2033-11u.html">esb 2033:11u</a> (4g, latest 2026-05-03)</li>
+<li><a href="teams/11u/european-school-of-basketball-2033-11u.html">european school of basketball 2033:11u</a> (3g, latest 2026-05-24)</li>
+<li><a href="teams/11u/f-o-a-11u.html">f o a:11u</a> (4g, latest 2025-08-10)</li>
+<li><a href="teams/11u/feba-5-blue-11u.html">feba 5 blue:11u</a> (4g, latest 2026-01-11)</li>
+<li><a href="teams/11u/feba-5-white-11u.html">feba 5 white:11u</a> (4g, latest 2026-01-11)</li>
+<li><a href="teams/11u/feba-5-11u.html">feba 5:11u</a> (5g, latest 2025-10-05)</li>
+<li><a href="teams/11u/feba-blue-11u.html">feba blue:11u</a> (2g, latest 2026-02-07)</li>
+<li><a href="teams/11u/feba-white-11u.html">feba white:11u</a> (2g, latest 2026-02-07)</li>
+<li><a href="teams/11u/firmly-rooted-eoydc-10-11u.html">firmly rooted eoydc 10/:11u</a> (2g, latest 2025-10-04)</li>
+<li><a href="teams/11u/firmly-rooted-eoydc-11u.html">firmly rooted eoydc:11u</a> (6g, latest 2026-05-09)</li>
+<li><a href="teams/11u/firmly-rooted-eyodc-black-11u.html">firmly rooted eyodc black:11u</a> (2g, latest 2025-06-28)</li>
+<li><a href="teams/11u/firmly-rooted-eyodc-red-11u.html">firmly rooted eyodc red:11u</a> (2g, latest 2025-06-28)</li>
+<li><a href="teams/11u/firmly-rooted-11u.html">firmly rooted:11u</a> (5g, latest 2026-07-26)</li>
+<li><a href="teams/11u/flight-abel-11u.html">flight abel:11u</a> (2g, latest 2026-10-10)</li>
+<li><a href="teams/11u/flight-academy-gray-11u.html">flight academy gray:11u</a> (4g, latest 2025-08-24)</li>
+<li><a href="teams/11u/flight-academy-red-11u.html">flight academy red:11u</a> (4g, latest 2025-08-24)</li>
+<li><a href="teams/11u/flight-dennis-11u.html">flight dennis:11u</a> (2g, latest 2026-10-17)</li>
+<li><a href="teams/11u/foa-black-11u.html">foa black:11u</a> (4g, latest 2025-07-27)</li>
+<li><a href="teams/11u/fro-ca-11u.html">fro ca:11u</a> (3g, latest 2026-05-10)</li>
+<li><a href="teams/11u/fsa-west-11u-1.html">fsa west /:11u</a> (2g, latest 2026-08-16)</li>
+<li><a href="teams/11u/fsa-west-11u.html">fsa west:11u</a> (1g, latest 2026-08-08)</li>
+<li><a href="teams/11u/fury-basketball-elite-11u.html">fury basketball elite:11u</a> (3g, latest 2026-05-03)</li>
+<li><a href="teams/11u/fury-basketball-select-11u.html">fury basketball select:11u</a> (3g, latest 2026-05-03)</li>
+<li><a href="teams/11u/fury-carolina-11u.html">fury carolina:11u</a> (3g, latest 2026-04-04)</li>
+<li><a href="teams/11u/fury-elite-11u.html">fury elite:11u</a> (22g, latest 2026-08-30)</li>
+<li><a href="teams/11u/fury-navy-11u.html">fury navy:11u</a> (4g, latest 2026-04-04)</li>
+<li><a href="teams/11u/fury-select-11u.html">fury select:11u</a> (15g, latest 2026-08-30)</li>
+<li><a href="teams/11u/gamespeed-academy-ca-11u.html">gamespeed academy ca:11u</a> (8g, latest 2026-10-04)</li>
+<li><a href="teams/11u/gamespeed-academy-gold-ca-11u.html">gamespeed academy gold ca:11u</a> (4g, latest 2026-03-15)</li>
+<li><a href="teams/11u/gamespeed-academy-gold-11u.html">gamespeed academy gold:11u</a> (4g, latest 2025-10-05)</li>
+<li><a href="teams/11u/gg-hawk-hoops-jr-3ssb-ca-11u.html">gg hawk hoops jr 3ssb ca:11u</a> (5g, latest 2026-10-04)</li>
+<li><a href="teams/11u/ggh-no-shows-11u.html">ggh no shows:11u</a> (1g, latest 2026-08-22)</li>
+<li><a href="teams/11u/ggh-11u.html">ggh:11u</a> (1g, latest 2025-07-05)</li>
+<li><a href="teams/11u/golden-state-dubs-11u.html">golden state dubs:11u</a> (7g, latest 2026-03-08)</li>
+<li><a href="teams/11u/good-2-great-11u.html">good 2 great:11u</a> (2g, latest 2026-04-11)</li>
+<li><a href="teams/11u/grind-team-black-11u.html">grind team black:11u</a> (2g, latest 2025-11-08)</li>
+<li><a href="teams/11u/grind-team-blue-11u.html">grind team blue:11u</a> (2g, latest 2025-11-08)</li>
+<li><a href="teams/11u/h2g-11u.html">h2g:11u</a> (4g, latest 2025-10-05)</li>
+<li><a href="teams/11u/hayward-panthers-11u.html">hayward panthers:11u</a> (7g, latest 2025-08-17)</li>
+<li><a href="teams/11u/hayward-swoosh-11u.html">hayward swoosh:11u</a> (4g, latest 2026-05-09)</li>
+<li><a href="teams/11u/hdmd-11u.html">hdmd:11u</a> (6g, latest 2026-05-03)</li>
+<li><a href="teams/11u/hits-academy-11u.html">hits academy:11u</a> (4g, latest 2026-05-16)</li>
+<li><a href="teams/11u/hitz-academy-11u.html">hitz academy:11u</a> (2g, latest 2026-04-11)</li>
+<li><a href="teams/11u/hoop-dreams-11u.html">hoop dreams:11u</a> (15g, latest 2026-11-07)</li>
+<li><a href="teams/11u/hoop-right-5th-jones-11u.html">hoop right 5th jones:11u</a> (4g, latest 2026-03-08)</li>
+<li><a href="teams/11u/hoop-right-5th-larry-11u.html">hoop right 5th larry:11u</a> (3g, latest 2026-03-08)</li>
+<li><a href="teams/11u/hoop-right-larry-11u.html">hoop right larry:11u</a> (3g, latest 2025-11-02)</li>
+<li><a href="teams/11u/hoopers-u-11u.html">hoopers u:11u</a> (2g, latest 2026-09-19)</li>
+<li><a href="teams/11u/hoopright-jones-11u.html">hoopright jones:11u</a> (4g, latest 2026-02-22)</li>
+<li><a href="teams/11u/hoopright-11u.html">hoopright:11u</a> (4g, latest 2025-10-26)</li>
+<li><a href="teams/11u/hoopsphere-bronze-chima-11u.html">hoopsphere / bronze chima:11u</a> (2g, latest 2025-06-14)</li>
+<li><a href="teams/11u/hoopsphere-bronze-holsey-11u.html">hoopsphere / bronze holsey:11u</a> (2g, latest 2025-06-14)</li>
+<li><a href="teams/11u/hoopsphere-bronze-steve-11u.html">hoopsphere bronze steve:11u</a> (3g, latest 2025-06-28)</li>
+<li><a href="teams/11u/hoopsphere-next-gen-steve-11u.html">hoopsphere next gen steve:11u</a> (6g, latest 2026-05-02)</li>
+<li><a href="teams/11u/hoopsphere-rising-micah-11u.html">hoopsphere rising micah:11u</a> (2g, latest 2026-11-07)</li>
+<li><a href="teams/11u/hoopsphere-rising-rich-10-11u.html">hoopsphere rising rich 10/:11u</a> (2g, latest 2026-10-31)</li>
+<li><a href="teams/11u/hoopsphere-rising-rich-11u.html">hoopsphere rising rich:11u</a> (2g, latest 2026-09-19)</li>
+<li><a href="teams/11u/huskies-blue-11u.html">huskies blue:11u</a> (5g, latest 2025-09-01)</li>
+<li><a href="teams/11u/huskies-white-11u.html">huskies white:11u</a> (5g, latest 2025-09-01)</li>
+<li><a href="teams/11u/idf-11u.html">idf:11u</a> (1g, latest 2025-07-05)</li>
+<li><a href="teams/11u/ie-storm-ca-11u.html">ie storm ca:11u</a> (4g, latest 2026-05-10)</li>
+<li><a href="teams/11u/impact-brandon-11u.html">impact brandon:11u</a> (3g, latest 2026-03-15)</li>
+<li><a href="teams/11u/impact-11u.html">impact:11u</a> (3g, latest 2026-05-17)</li>
+<li><a href="teams/11u/iskill-elite-11u.html">iskill elite:11u</a> (11g, latest 2026-05-03)</li>
+<li><a href="teams/11u/iskill-s-11u.html">iskill's:11u</a> (3g, latest 2026-01-11)</li>
+<li><a href="teams/11u/iskills-red-11u.html">iskills red:11u</a> (1g, latest 2026-03-21)</li>
+<li><a href="teams/11u/javstep-10-11u.html">javstep 10/:11u</a> (2g, latest 2026-03-21)</li>
+<li><a href="teams/11u/javstep-black-11u.html">javstep black:11u</a> (6g, latest 2026-10-17)</li>
+<li><a href="teams/11u/javstep-jes-sr-11u.html">javstep jes sr:11u</a> (2g, latest 2026-05-02)</li>
+<li><a href="teams/11u/javstep-jess-sr-11u.html">javstep jess sr:11u</a> (4g, latest 2026-05-16)</li>
+<li><a href="teams/11u/jbe-707-11u.html">jbe 707 /:11u</a> (2g, latest 2026-10-24)</li>
+<li><a href="teams/11u/jdub-elite-ok-11u.html">jdub elite ok:11u</a> (3g, latest 2026-10-04)</li>
+<li><a href="teams/11u/jmj-11u.html">jmj:11u</a> (2g, latest 2026-04-19)</li>
+<li><a href="teams/11u/jr-rose-city-rebels-11u.html">jr rose city rebels:11u</a> (5g, latest 2026-05-24)</li>
+<li><a href="teams/11u/jr-s-cr3w-11u.html">jr’s cr3w:11u</a> (2g, latest 2026-08-16)</li>
+<li><a href="teams/11u/jsizzles-2034-jalen-suggs-az-11u.html">jsizzles 2034 jalen suggs az:11u</a> (5g, latest 2026-05-10)</li>
+<li><a href="teams/11u/jsizzles-jalen-suggs-2034-az-11u.html">jsizzles jalen suggs 2034 az:11u</a> (5g, latest 2026-10-04)</li>
+<li><a href="teams/11u/jsk-black-ca-11u.html">jsk black ca:11u</a> (4g, latest 2026-05-10)</li>
+<li><a href="teams/11u/jsk-blue-ca-11u.html">jsk blue ca:11u</a> (3g, latest 2026-05-10)</li>
+<li><a href="teams/11u/jsk-blue-11u.html">jsk blue:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/jsk-ca-11u.html">jsk ca:11u</a> (4g, latest 2026-10-04)</li>
+<li><a href="teams/11u/just-hoop-francisco-11u.html">just hoop francisco:11u</a> (4g, latest 2025-10-04)</li>
+<li><a href="teams/11u/just-hoop-rise-lj-11u.html">just hoop rise lj:11u</a> (4g, latest 2025-06-08)</li>
+<li><a href="teams/11u/just-hoop-rise-will-11u.html">just hoop rise will:11u</a> (8g, latest 2026-03-15)</li>
+<li><a href="teams/11u/just-hoop-rise-11u.html">just hoop rise:11u</a> (7g, latest 2026-11-07)</li>
+<li><a href="teams/11u/just-hoop-west-10-11u.html">just hoop west 10/:11u</a> (1g, latest 2025-06-14)</li>
+<li><a href="teams/11u/just-respect-black-randy-11u.html">just respect black randy:11u</a> (1g, latest 2026-03-07)</li>
+<li><a href="teams/11u/just-respect-black-11u.html">just respect black:11u</a> (4g, latest 2026-09-12)</li>
+<li><a href="teams/11u/just-respect-jimpee-11u.html">just respect jimpee:11u</a> (4g, latest 2026-07-25)</li>
+<li><a href="teams/11u/just-respect-randy-11u.html">just respect randy:11u</a> (2g, latest 2026-10-10)</li>
+<li><a href="teams/11u/just-us-basketball-11u.html">just us basketball:11u</a> (2g, latest 2026-05-23)</li>
+<li><a href="teams/11u/just-us-11u.html">just us:11u</a> (4g, latest 2026-04-18)</li>
+<li><a href="teams/11u/justhoop-ant-11u.html">justhoop ant:11u</a> (1g, latest 2025-06-14)</li>
+<li><a href="teams/11u/justhoop-east-joel-11u.html">justhoop east joel:11u</a> (6g, latest 2026-05-23)</li>
+<li><a href="teams/11u/justhoop-elite-11u.html">justhoop elite:11u</a> (3g, latest 2026-09-13)</li>
+<li><a href="teams/11u/justhoop-laolu-11u.html">justhoop laolu:11u</a> (2g, latest 2025-08-30)</li>
+<li><a href="teams/11u/justhoop-rise-francisco-11u.html">justhoop rise francisco:11u</a> (1g, latest 2026-10-03)</li>
+<li><a href="teams/11u/justhoop-rise-will-11u.html">justhoop rise will:11u</a> (11g, latest 2026-03-29)</li>
+<li><a href="teams/11u/justhoop-rise-11u.html">justhoop rise:11u</a> (13g, latest 2026-09-13)</li>
+<li><a href="teams/11u/justhoop-west-francisco-11u.html">justhoop west francisco:11u</a> (2g, latest 2026-09-26)</li>
+<li><a href="teams/11u/kba-11u.html">kba:11u</a> (20g, latest 2025-09-01)</li>
+<li><a href="teams/11u/kidlat-11u.html">kidlat:11u</a> (4g, latest 2026-07-18)</li>
+<li><a href="teams/11u/komplex-socal-buckets-11u.html">komplex/ socal buckets:11u</a> (5g, latest 2025-10-05)</li>
+<li><a href="teams/11u/ladera-premier-jr-3ssb-11u.html">ladera premier jr 3ssb:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/lakeshow-3ssb-2033-ca-11u.html">lakeshow 3ssb 2033 ca:11u</a> (4g, latest 2026-03-15)</li>
+<li><a href="teams/11u/lakeshow-bryant-5th-11u.html">lakeshow bryant 5th/:11u</a> (3g, latest 2026-09-20)</li>
+<li><a href="teams/11u/lakeshow-chatman-11u.html">lakeshow chatman:11u</a> (4g, latest 2025-06-22)</li>
+<li><a href="teams/11u/lakeshow-duckett-11u.html">lakeshow duckett:11u</a> (13g, latest 2025-07-06)</li>
+<li><a href="teams/11u/lakeshow-giusti-11u.html">lakeshow giusti:11u</a> (22g, latest 2026-05-24)</li>
+<li><a href="teams/11u/lakeshow-johnson-11u.html">lakeshow johnson:11u</a> (7g, latest 2026-08-29)</li>
+<li><a href="teams/11u/lakeshow-jones-5th-11u.html">lakeshow jones 5th/:11u</a> (3g, latest 2026-09-20)</li>
+<li><a href="teams/11u/lakeshow-kolacinski-11u.html">lakeshow kolacinski:11u</a> (2g, latest 2026-02-14)</li>
+<li><a href="teams/11u/lakeshow-niyi-5th-11u.html">lakeshow niyi 5th/:11u</a> (3g, latest 2026-09-20)</li>
+<li><a href="teams/11u/lakeshow-pickney-11u.html">lakeshow pickney:11u</a> (40g, latest 2026-05-24)</li>
+<li><a href="teams/11u/lakeshow-tillman-11u.html">lakeshow tillman:11u</a> (3g, latest 2025-06-22)</li>
+<li><a href="teams/11u/left-coast-legends-ca-11u.html">left coast legends ca:11u</a> (4g, latest 2026-10-04)</li>
+<li><a href="teams/11u/legacy-elite-az-11u.html">legacy elite az:11u</a> (4g, latest 2026-05-10)</li>
+<li><a href="teams/11u/legendary-ducks-ca-11u.html">legendary ducks ca:11u</a> (1g, latest 2026-05-23)</li>
+<li><a href="teams/11u/leverage-bulldogs-ca-11u.html">leverage bulldogs ca:11u</a> (10g, latest 2026-05-10)</li>
+<li><a href="teams/11u/leverage-bulldogs-11u.html">leverage bulldogs:11u</a> (4g, latest 2025-10-05)</li>
+<li><a href="teams/11u/lgs-bba-elite-11u.html">lgs bba elite:11u</a> (4g, latest 2026-03-01)</li>
+<li><a href="teams/11u/lgsr-bba-select-11u.html">lgsr bba select:11u</a> (4g, latest 2025-08-10)</li>
+<li><a href="teams/11u/locked-in-cisco-11u.html">locked in cisco:11u</a> (2g, latest 2025-07-19)</li>
+<li><a href="teams/11u/locked-in-david-11u.html">locked in david:11u</a> (2g, latest 2025-10-25)</li>
+<li><a href="teams/11u/lodi-fury-11u.html">lodi fury:11u</a> (20g, latest 2026-10-18)</li>
+<li><a href="teams/11u/lsba-premier-ca-11u.html">lsba premier ca:11u</a> (3g, latest 2026-05-10)</li>
+<li><a href="teams/11u/lsba-premier-11u.html">lsba premier:11u</a> (4g, latest 2025-10-05)</li>
+<li><a href="teams/11u/lsba-united-11u.html">lsba united:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/magic-elite-11u.html">magic elite:11u</a> (4g, latest 2025-10-05)</li>
+<li><a href="teams/11u/mamba-united-11u.html">mamba united:11u</a> (4g, latest 2025-06-29)</li>
+<li><a href="teams/11u/mambas-united-gold-11u.html">mambas united gold:11u</a> (2g, latest 2026-08-08)</li>
+<li><a href="teams/11u/manteca-aviators-11u.html">manteca aviators:11u</a> (4g, latest 2025-08-10)</li>
+<li><a href="teams/11u/manteca-magic-11u.html">manteca magic:11u</a> (4g, latest 2025-12-20)</li>
+<li><a href="teams/11u/marina-elite-11u.html">marina elite:11u</a> (4g, latest 2025-08-02)</li>
+<li><a href="teams/11u/mavs-11u.html">mavs:11u</a> (3g, latest 2025-06-15)</li>
+<li><a href="teams/11u/mba-triple-threat-kassel-11u.html">mba triple threat kassel:11u</a> (5g, latest 2026-05-03)</li>
+<li><a href="teams/11u/mc-elite-11u.html">mc elite:11u</a> (6g, latest 2026-04-11)</li>
+<li><a href="teams/11u/mercado-basketball-blue-11u.html">mercado basketball blue:11u</a> (2g, latest 2026-08-29)</li>
+<li><a href="teams/11u/mercado-basketball-orange-11u.html">mercado basketball orange:11u</a> (1g, latest 2026-08-29)</li>
+<li><a href="teams/11u/mercado-11u.html">mercado:11u</a> (2g, latest 2025-11-01)</li>
+<li><a href="teams/11u/mo-cali-royals-11u.html">mo cali royals:11u</a> (11g, latest 2026-08-22)</li>
+<li><a href="teams/11u/nbba-5th-ua-r-winter-11u.html">nbba 5th ua r winter:11u</a> (3g, latest 2026-02-01)</li>
+<li><a href="teams/11u/nbba-black-solis-11u.html">nbba black solis:11u</a> (3g, latest 2025-06-22)</li>
+<li><a href="teams/11u/nbba-black-11u.html">nbba black:11u</a> (4g, latest 2025-06-08)</li>
+<li><a href="teams/11u/nbba-demaestri-11u.html">nbba demaestri:11u</a> (3g, latest 2026-11-08)</li>
+<li><a href="teams/11u/nbba-demasestri-11u.html">nbba demasestri:11u</a> (2g, latest 2026-10-24)</li>
+<li><a href="teams/11u/nbba-gray-ratshin-11u.html">nbba gray ratshin:11u</a> (3g, latest 2025-06-22)</li>
+<li><a href="teams/11u/nbba-gray-solis-11u.html">nbba gray solis:11u</a> (3g, latest 2026-03-22)</li>
+<li><a href="teams/11u/nbba-gray-walsh-11u.html">nbba gray walsh:11u</a> (3g, latest 2026-03-22)</li>
+<li><a href="teams/11u/nbba-larson-11u.html">nbba larson:11u</a> (5g, latest 2026-01-17)</li>
+<li><a href="teams/11u/nbba-marin-black-baker-11u.html">nbba marin black baker:11u</a> (4g, latest 2026-05-24)</li>
+<li><a href="teams/11u/nbba-marin-gray-5th-crail-glenn-5th-11u.html">nbba marin gray 5th crail/glenn 5th/:11u</a> (2g, latest 2026-09-19)</li>
+<li><a href="teams/11u/nbba-marin-gray-solis-11u.html">nbba marin gray solis:11u</a> (4g, latest 2026-05-24)</li>
+<li><a href="teams/11u/nbba-sonoma-bertao-11u.html">nbba sonoma bertao:11u</a> (4g, latest 2026-05-24)</li>
+<li><a href="teams/11u/nbba-ua-demaestri-11u.html">nbba ua demaestri:11u</a> (3g, latest 2026-10-04)</li>
+<li><a href="teams/11u/nbba-ua-turner-11u.html">nbba ua turner:11u</a> (3g, latest 2026-03-22)</li>
+<li><a href="teams/11u/nbba-ua-11u.html">nbba ua:11u</a> (4g, latest 2025-06-08)</li>
+<li><a href="teams/11u/nbba-11u.html">nbba:11u</a> (13g, latest 2026-09-13)</li>
+<li><a href="teams/11u/njb-all-net-team-11u.html">njb all net team:11u</a> (4g, latest 2025-11-30)</li>
+<li><a href="teams/11u/nor-cal-elite-black-mickle-11u.html">nor cal elite black mickle:11u</a> (2g, latest 2026-04-04)</li>
+<li><a href="teams/11u/nor-cal-elite-black-11u.html">nor cal elite black:11u</a> (3g, latest 2026-01-04)</li>
+<li><a href="teams/11u/nor-cal-elite-gold-11u.html">nor cal elite gold:11u</a> (3g, latest 2025-06-08)</li>
+<li><a href="teams/11u/nor-cal-elite-red-11u.html">nor cal elite red:11u</a> (3g, latest 2026-01-04)</li>
+<li><a href="teams/11u/nor-cal-elite-white-11u.html">nor cal elite white:11u</a> (3g, latest 2025-12-21)</li>
+<li><a href="teams/11u/nor-cal-gold-mickle-11u.html">nor cal gold mickle:11u</a> (2g, latest 2026-04-04)</li>
+<li><a href="teams/11u/norcal-elite-black-mickle-11u.html">norcal elite black mickle:11u</a> (7g, latest 2026-02-15)</li>
+<li><a href="teams/11u/norcal-elite-black-11u.html">norcal elite black:11u</a> (3g, latest 2026-05-03)</li>
+<li><a href="teams/11u/norcal-elite-blue-evans-11u.html">norcal elite blue evans:11u</a> (10g, latest 2026-05-09)</li>
+<li><a href="teams/11u/norcal-elite-blue-kenny-11u.html">norcal elite blue kenny:11u</a> (3g, latest 2025-11-09)</li>
+<li><a href="teams/11u/norcal-elite-blue-ron-11u.html">norcal elite blue ron:11u</a> (2g, latest 2025-06-14)</li>
+<li><a href="teams/11u/norcal-elite-bruder-11u.html">norcal elite bruder:11u</a> (2g, latest 2026-11-07)</li>
+<li><a href="teams/11u/norcal-elite-gold-mickle-11u.html">norcal elite gold mickle:11u</a> (5g, latest 2026-02-15)</li>
+<li><a href="teams/11u/norcal-elite-gold-11u.html">norcal elite gold:11u</a> (6g, latest 2026-03-22)</li>
+<li><a href="teams/11u/norcal-elite-keith-5th-11u.html">norcal elite keith 5th/:11u</a> (3g, latest 2026-09-20)</li>
+<li><a href="teams/11u/norcal-elite-red-ken-11u.html">norcal elite red ken:11u</a> (9g, latest 2026-01-18)</li>
+<li><a href="teams/11u/norcal-elite-white-allocco-11u.html">norcal elite white allocco:11u</a> (9g, latest 2026-01-11)</li>
+<li><a href="teams/11u/norcal-elite-white-ron-11u.html">norcal elite white ron:11u</a> (2g, latest 2025-06-14)</li>
+<li><a href="teams/11u/norcal-elite-white-11u.html">norcal elite white:11u</a> (4g, latest 2025-11-02)</li>
+<li><a href="teams/11u/norcal-elite-11u.html">norcal elite:11u</a> (4g, latest 2026-07-26)</li>
+<li><a href="teams/11u/norcal-prep-alfonzo-sat-only-11u.html">norcal prep alfonzo sat only:11u</a> (2g, latest 2025-12-06)</li>
+<li><a href="teams/11u/norcal-prep-alfonzo-11u.html">norcal prep alfonzo:11u</a> (2g, latest 2025-07-19)</li>
+<li><a href="teams/11u/norcal-prep-byron-11u.html">norcal prep byron:11u</a> (2g, latest 2026-04-04)</li>
+<li><a href="teams/11u/norcal-prep-11u.html">norcal prep:11u</a> (4g, latest 2025-11-30)</li>
+<li><a href="teams/11u/norcal-rush-sf-11u.html">norcal rush sf:11u</a> (6g, latest 2025-10-05)</li>
+<li><a href="teams/11u/norcal-rush-11u.html">norcal rush:11u</a> (16g, latest 2026-05-09)</li>
+<li><a href="teams/11u/norcal-united-11u.html">norcal united:11u</a> (27g, latest 2026-08-09)</li>
+<li><a href="teams/11u/nova-hoops-ca-11u.html">nova hoops ca:11u</a> (3g, latest 2026-10-04)</li>
+<li><a href="teams/11u/nt2c-stallions-elite-11u.html">nt2c stallions elite:11u</a> (4g, latest 2025-09-28)</li>
+<li><a href="teams/11u/nt2c-11u.html">nt2c:11u</a> (2g, latest 2025-12-13)</li>
+<li><a href="teams/11u/oakland-rebels-red-11u.html">oakland rebels red:11u</a> (8g, latest 2025-07-20)</li>
+<li><a href="teams/11u/oakland-rebels-sat-only-11u.html">oakland rebels sat only:11u</a> (2g, latest 2026-05-23)</li>
+<li><a href="teams/11u/oakland-soldiers-ashton-11u.html">oakland soldiers ashton:11u</a> (23g, latest 2026-05-03)</li>
+<li><a href="teams/11u/oakland-soldiers-green-shakeem-11u.html">oakland soldiers green shakeem:11u</a> (2g, latest 2026-04-04)</li>
+<li><a href="teams/11u/oakland-soldiers-larry-11u.html">oakland soldiers larry:11u</a> (2g, latest 2026-03-15)</li>
+<li><a href="teams/11u/oakland-soldiers-shakeem-11u.html">oakland soldiers shakeem:11u</a> (29g, latest 2026-05-17)</li>
+<li><a href="teams/11u/oakland-soldiers-11u.html">oakland soldiers:11u</a> (40g, latest 2026-10-25)</li>
+<li><a href="teams/11u/one-on-one-basketball-black-11u.html">one on one basketball black:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/one-on-one-basketball-gold-11u.html">one on one basketball gold:11u</a> (2g, latest 2025-10-05)</li>
+<li><a href="teams/11u/one-on-one-premier-gold-11u.html">one on one premier gold:11u</a> (2g, latest 2026-05-09)</li>
+<li><a href="teams/11u/one-on-one-stefen-1-11u.html">one on one stefen 1:11u</a> (3g, latest 2025-11-16)</li>
+<li><a href="teams/11u/one-on-one-11u.html">one on one:11u</a> (3g, latest 2026-03-29)</li>
+<li><a href="teams/11u/outlaws-elite-11u.html">outlaws elite:11u</a> (8g, latest 2025-08-10)</li>
+<li><a href="teams/11u/outlaws-jp-11u.html">outlaws jp:11u</a> (2g, latest 2025-07-12)</li>
+<li><a href="teams/11u/outlaws-van-11u.html">outlaws van:11u</a> (2g, latest 2025-07-12)</li>
+<li><a href="teams/11u/outlaws-11u.html">outlaws:11u</a> (4g, latest 2025-12-20)</li>
+<li><a href="teams/11u/p-town-djay-11u.html">p town djay:11u</a> (2g, latest 2026-10-24)</li>
+<li><a href="teams/11u/pa-flight-11u.html">pa flight:11u</a> (2g, latest 2025-08-30)</li>
+<li><a href="teams/11u/paul-george-elite-2033-11u.html">paul george elite 2033:11u</a> (4g, latest 2026-01-11)</li>
+<li><a href="teams/11u/payton-s-place-2034-ca-11u.html">payton's place 2034 ca:11u</a> (3g, latest 2026-10-04)</li>
+<li><a href="teams/11u/paytons-place-11u.html">paytons place:11u</a> (6g, latest 2026-08-30)</li>
+<li><a href="teams/11u/pbh-elite-11u-1.html">pbh elite /:11u</a> (2g, latest 2026-05-16)</li>
+<li><a href="teams/11u/pbh-elite-11u.html">pbh elite:11u</a> (20g, latest 2026-11-07)</li>
+<li><a href="teams/11u/pbh-select-11u.html">pbh select:11u</a> (21g, latest 2026-04-18)</li>
+<li><a href="teams/11u/pbh-11u.html">pbh:11u</a> (8g, latest 2026-08-29)</li>
+<li><a href="teams/11u/pge-norcal-ahmad-11u.html">pge norcal ahmad:11u</a> (2g, latest 2026-11-07)</li>
+<li><a href="teams/11u/phb-elite-11u.html">phb elite:11u</a> (2g, latest 2026-03-21)</li>
+<li><a href="teams/11u/play-united-11u.html">play united:11u</a> (2g, latest 2026-11-07)</li>
+<li><a href="teams/11u/pma-east-bay-11u.html">pma east bay:11u</a> (2g, latest 2026-10-24)</li>
+<li><a href="teams/11u/pma-eb-knights-11u.html">pma eb knights /:11u</a> (2g, latest 2025-11-29)</li>
+<li><a href="teams/11u/pma-knights-11-12-gray-11u.html">pma knights 11/12 gray:11u</a> (2g, latest 2026-10-10)</li>
+<li><a href="teams/11u/pma-knights-11-12-11u.html">pma knights 11/12:11u</a> (2g, latest 2026-09-12)</li>
+<li><a href="teams/11u/pma-knights-black-11u.html">pma knights black:11u</a> (3g, latest 2026-10-24)</li>
+<li><a href="teams/11u/pma-knights-east-bay-11u-1.html">pma knights east bay /:11u</a> (2g, latest 2025-09-20)</li>
+<li><a href="teams/11u/pma-knights-east-bay-11u.html">pma knights east bay:11u</a> (17g, latest 2026-08-22)</li>
+<li><a href="teams/11u/pma-knights-gray-11u-1.html">pma knights gray /:11u</a> (2g, latest 2026-09-26)</li>
+<li><a href="teams/11u/pma-knights-gray-11u.html">pma knights gray:11u</a> (2g, latest 2025-08-30)</li>
+<li><a href="teams/11u/pma-knights-red-ca-11u.html">pma knights red ca:11u</a> (5g, latest 2026-05-10)</li>
+<li><a href="teams/11u/pma-knights-red-miguel-11u.html">pma knights red miguel:11u</a> (2g, latest 2026-09-26)</li>
+<li><a href="teams/11u/pma-knights-red-11u.html">pma knights red:11u</a> (6g, latest 2026-04-11)</li>
+<li><a href="teams/11u/pma-knights-white-11u.html">pma knights white:11u</a> (8g, latest 2026-05-02)</li>
+<li><a href="teams/11u/pma-knights-11u.html">pma knights:11u</a> (19g, latest 2026-09-13)</li>
+<li><a href="teams/11u/port-city-11u.html">port city:11u</a> (9g, latest 2025-12-14)</li>
+<li><a href="teams/11u/portland-reign-or-11u.html">portland reign or:11u</a> (3g, latest 2026-03-15)</li>
+<li><a href="teams/11u/prowlers-basketball-11u.html">prowlers basketball:11u</a> (2g, latest 2026-04-25)</li>
+<li><a href="teams/11u/ptown-anthony-11u.html">ptown anthony:11u</a> (4g, latest 2025-08-16)</li>
+<li><a href="teams/11u/ptown-vu-11u.html">ptown vu:11u</a> (2g, latest 2025-08-23)</li>
+<li><a href="teams/11u/ptown-11u.html">ptown:11u</a> (1g, latest 2025-08-09)</li>
+<li><a href="teams/11u/pure-blooded-hoopers-11u.html">pure blooded hoopers:11u</a> (3g, latest 2026-07-26)</li>
+<li><a href="teams/11u/red-dawg-select-11u.html">red dawg select:11u</a> (12g, latest 2026-05-16)</li>
+<li><a href="teams/11u/regulators-11u.html">regulators:11u</a> (4g, latest 2025-07-20)</li>
+<li><a href="teams/11u/reign-city-alan-11u.html">reign city alan:11u</a> (2g, latest 2026-08-15)</li>
+<li><a href="teams/11u/reign-city-allan-11u.html">reign city allan:11u</a> (12g, latest 2026-08-29)</li>
+<li><a href="teams/11u/reign-city-gumapas-11u.html">reign city gumapas:11u</a> (2g, latest 2026-03-14)</li>
+<li><a href="teams/11u/reign-city-silver-11u.html">reign city silver:11u</a> (2g, latest 2026-10-03)</li>
+<li><a href="teams/11u/reign-city-11u.html">reign city:11u</a> (2g, latest 2026-04-11)</li>
+<li><a href="teams/11u/reignstorm-11u.html">reignstorm /:11u</a> (2g, latest 2025-09-13)</li>
+<li><a href="teams/11u/reignstorm-black-11u.html">reignstorm black:11u</a> (3g, latest 2025-07-27)</li>
+<li><a href="teams/11u/reignstorm-blue-11u.html">reignstorm blue:11u</a> (2g, latest 2025-07-26)</li>
+<li><a href="teams/11u/renegades-basketball-11u.html">renegades basketball:11u</a> (13g, latest 2025-10-12)</li>
+<li><a href="teams/11u/renegades-black-justin-11u.html">renegades black justin:11u</a> (2g, latest 2026-05-09)</li>
+<li><a href="teams/11u/renegades-black-11u.html">renegades black:11u</a> (3g, latest 2026-05-17)</li>
+<li><a href="teams/11u/renegades-orange-rhod-11u.html">renegades orange rhod:11u</a> (2g, latest 2026-05-09)</li>
+<li><a href="teams/11u/renegades-orange-11u.html">renegades orange:11u</a> (6g, latest 2026-05-17)</li>
+<li><a href="teams/11u/river-city-academy-11u.html">river city academy:11u</a> (4g, latest 2025-07-12)</li>
+<li><a href="teams/11u/royal-kings-gold-11u.html">royal kings gold:11u</a> (4g, latest 2026-04-04)</li>
+<li><a href="teams/11u/royal-kings-silver-11u.html">royal kings silver:11u</a> (3g, latest 2026-04-04)</li>
+<li><a href="teams/11u/royal-kings-black-11u.html">royal kings ‘black:11u</a> (4g, latest 2026-02-22)</li>
+<li><a href="teams/11u/rpal-11u.html">rpal:11u</a> (1g, latest 2026-01-04)</li>
+<li><a href="teams/11u/rsf-11u.html">rsf:11u</a> (3g, latest 2025-06-08)</li>
+<li><a href="teams/11u/sac-legends-11u.html">sac legends:11u</a> (1g, latest 2025-09-28)</li>
+<li><a href="teams/11u/sac-soldiers-11u.html">sac soldiers:11u</a> (2g, latest 2025-07-05)</li>
+<li><a href="teams/11u/sacramento-yellow-jackets-11u.html">sacramento yellow jackets:11u</a> (14g, latest 2026-05-03)</li>
+<li><a href="teams/11u/saints-elite-select-ca-11u.html">saints elite select ca:11u</a> (4g, latest 2026-05-10)</li>
+<li><a href="teams/11u/san-joaquin-mavericks-11u.html">san joaquin mavericks:11u</a> (4g, latest 2026-04-12)</li>
+<li><a href="teams/11u/san-jose-spartans-arthur-1-11u.html">san jose spartans arthur #1:11u</a> (2g, latest 2026-09-26)</li>
+<li><a href="teams/11u/san-jose-spartans-jamaal-11u.html">san jose spartans jamaal:11u</a> (3g, latest 2026-10-25)</li>
+<li><a href="teams/11u/san-leandro-celtics-11u.html">san leandro celtics:11u</a> (2g, latest 2026-11-14)</li>
+<li><a href="teams/11u/santa-barbara-basketball-academy-11u.html">santa barbara basketball academy:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/sao-11u.html">sao:11u</a> (2g, latest 2025-07-05)</li>
+<li><a href="teams/11u/sd-sharks-black-2033-11u.html">sd sharks black 2033:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/sd-sharks-elite-2033-11u.html">sd sharks elite 2033:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/sf-champions-11u.html">sf champions:11u</a> (4g, latest 2025-11-09)</li>
+<li><a href="teams/11u/sf-champs-elite-11u.html">sf champs elite:11u</a> (4g, latest 2026-09-13)</li>
+<li><a href="teams/11u/sf-champs-11u.html">sf champs:11u</a> (3g, latest 2026-09-20)</li>
+<li><a href="teams/11u/sf-rebels-11u.html">sf rebels:11u</a> (19g, latest 2026-03-15)</li>
+<li><a href="teams/11u/sfba-5th-11u.html">sfba 5th:11u</a> (2g, latest 2025-10-25)</li>
+<li><a href="teams/11u/sfba-sports-performance-11u.html">sfba sports performance:11u</a> (3g, latest 2025-06-15)</li>
+<li><a href="teams/11u/sfba-11u.html">sfba:11u</a> (19g, latest 2026-05-16)</li>
+<li><a href="teams/11u/sfpal-11u.html">sfpal:11u</a> (3g, latest 2026-08-23)</li>
+<li><a href="teams/11u/silicon-soldiers-elite-11u.html">silicon soldiers elite:11u</a> (3g, latest 2025-06-29)</li>
+<li><a href="teams/11u/silicon-soldiers-select-11u.html">silicon soldiers select:11u</a> (3g, latest 2025-11-16)</li>
+<li><a href="teams/11u/silicon-soldiers-spearman-11u.html">silicon soldiers spearman:11u</a> (3g, latest 2025-11-16)</li>
+<li><a href="teams/11u/silicon-valley-soldiers-elite-11u.html">silicon valley soldiers elite:11u</a> (4g, latest 2025-08-10)</li>
+<li><a href="teams/11u/silicon-valley-soldiers-scholl-11u.html">silicon valley soldiers scholl:11u</a> (4g, latest 2025-08-10)</li>
+<li><a href="teams/11u/silicon-valley-soldiers-select-11u.html">silicon valley soldiers select:11u</a> (4g, latest 2025-08-10)</li>
+<li><a href="teams/11u/silicon-valley-spearman-11u.html">silicon valley spearman:11u</a> (4g, latest 2026-01-11)</li>
+<li><a href="teams/11u/sj-mavs-11u.html">sj mavs:11u</a> (3g, latest 2026-09-20)</li>
+<li><a href="teams/11u/sj-spartans-5th-11u.html">sj spartans 5th:11u</a> (2g, latest 2026-04-04)</li>
+<li><a href="teams/11u/sl-lions-11u.html">sl lions:11u</a> (3g, latest 2025-06-08)</li>
+<li><a href="teams/11u/sonoma-gold-elite-11u.html">sonoma gold elite:11u</a> (2g, latest 2026-08-01)</li>
+<li><a href="teams/11u/sonoma-gold-11u.html">sonoma gold:11u</a> (2g, latest 2026-08-01)</li>
+<li><a href="teams/11u/speed-city-11u.html">speed city:11u</a> (2g, latest 2026-08-22)</li>
+<li><a href="teams/11u/splash-city-11u.html">splash city:11u</a> (2g, latest 2026-09-06)</li>
+<li><a href="teams/11u/sport-strong-11u.html">sport strong:11u</a> (3g, latest 2026-09-13)</li>
+<li><a href="teams/11u/sports-strong-11u.html">sports strong:11u</a> (7g, latest 2026-03-22)</li>
+<li><a href="teams/11u/sportstrong-black-11u.html">sportstrong black:11u</a> (3g, latest 2026-11-15)</li>
+<li><a href="teams/11u/sportstrong-blue-11u.html">sportstrong blue:11u</a> (14g, latest 2026-01-18)</li>
+<li><a href="teams/11u/sportstrong-elite-11u.html">sportstrong elite:11u</a> (3g, latest 2025-06-22)</li>
+<li><a href="teams/11u/sportstrong-gray-11u.html">sportstrong gray:11u</a> (3g, latest 2025-12-14)</li>
+<li><a href="teams/11u/sportstrong-grey-11u.html">sportstrong grey:11u</a> (6g, latest 2026-05-03)</li>
+<li><a href="teams/11u/sportstrong-white-11u.html">sportstrong white:11u</a> (6g, latest 2026-05-03)</li>
+<li><a href="teams/11u/stack-days-marshall-ca-11u.html">stack days marshall ca:11u</a> (3g, latest 2026-10-04)</li>
+<li><a href="teams/11u/stallions-elite-11u.html">stallions elite:11u</a> (8g, latest 2025-11-09)</li>
+<li><a href="teams/11u/stallions-11u.html">stallions:11u</a> (2g, latest 2025-12-20)</li>
+<li><a href="teams/11u/stampede-11u.html">stampede:11u</a> (3g, latest 2026-08-09)</li>
+<li><a href="teams/11u/stan-elite-11u.html">stan elite:11u</a> (2g, latest 2026-10-31)</li>
+<li><a href="teams/11u/stanford-sparrow-11u.html">stanford sparrow:11u</a> (2g, latest 2026-01-17)</li>
+<li><a href="teams/11u/stl-grey-11u.html">stl grey:11u</a> (8g, latest 2026-10-25)</li>
+<li><a href="teams/11u/stl-white-11u.html">stl white:11u</a> (3g, latest 2026-08-30)</li>
+<li><a href="teams/11u/stl-11u.html">stl:11u</a> (9g, latest 2026-04-25)</li>
+<li><a href="teams/11u/stockton-bulls-11u.html">stockton bulls:11u</a> (2g, latest 2026-09-20)</li>
+<li><a href="teams/11u/stockton-mavericks-11u.html">stockton mavericks:11u</a> (11g, latest 2025-11-02)</li>
+<li><a href="teams/11u/super-skills-elite-p-galvin-11u.html">super skills elite p galvin:11u</a> (2g, latest 2026-09-26)</li>
+<li><a href="teams/11u/super-skills-elite-11u.html">super skills elite:11u</a> (2g, latest 2026-09-12)</li>
+<li><a href="teams/11u/sv-soldiers-blue-11u.html">sv soldiers blue:11u</a> (4g, latest 2026-02-07)</li>
+<li><a href="teams/11u/sv-soldiers-elite-11u.html">sv soldiers elite:11u</a> (10g, latest 2025-07-27)</li>
+<li><a href="teams/11u/sv-soldiers-grey-11u.html">sv soldiers grey:11u</a> (3g, latest 2025-06-22)</li>
+<li><a href="teams/11u/sv-soldiers-prospects-11u.html">sv soldiers prospects:11u</a> (7g, latest 2026-08-23)</li>
+<li><a href="teams/11u/sv-soldiers-scholl-11u.html">sv soldiers scholl:11u</a> (2g, latest 2025-07-19)</li>
+<li><a href="teams/11u/sv-soldiers-select-spearman-11u.html">sv soldiers select spearman:11u</a> (5g, latest 2026-04-04)</li>
+<li><a href="teams/11u/sv-soldiers-speaeman-11u.html">sv soldiers speaeman:11u</a> (2g, latest 2026-02-07)</li>
+<li><a href="teams/11u/sv-soldiers-spearman-11u.html">sv soldiers spearman:11u</a> (38g, latest 2026-05-24)</li>
+<li><a href="teams/11u/sv-soldiers-11u.html">sv soldiers:11u</a> (4g, latest 2026-01-25)</li>
+<li><a href="teams/11u/team-arsenal-black-11u.html">team arsenal black:11u</a> (2g, latest 2026-05-02)</li>
+<li><a href="teams/11u/team-arsenal-elite-11u.html">team arsenal elite:11u</a> (5g, latest 2025-12-14)</li>
+<li><a href="teams/11u/team-arsenal-national-kp-11u.html">team arsenal national kp:11u</a> (3g, latest 2025-12-21)</li>
+<li><a href="teams/11u/team-arsenal-national-11u.html">team arsenal national:11u</a> (6g, latest 2026-02-07)</li>
+<li><a href="teams/11u/team-arsenal-11u.html">team arsenal:11u</a> (6g, latest 2026-01-18)</li>
+<li><a href="teams/11u/team-blaze-11-black-11u.html">team blaze 11 black:11u</a> (3g, latest 2026-09-06)</li>
+<li><a href="teams/11u/team-blaze-black-5th-11u.html">team blaze black 5th/:11u</a> (2g, latest 2026-09-19)</li>
+<li><a href="teams/11u/team-blaze-black-11u.html">team blaze black:11u</a> (4g, latest 2026-04-12)</li>
+<li><a href="teams/11u/team-blaze-silver-11u.html">team blaze silver:11u</a> (2g, latest 2025-06-28)</li>
+<li><a href="teams/11u/team-chew-on-this-11u.html">team chew on this:11u</a> (4g, latest 2026-11-07)</li>
+<li><a href="teams/11u/team-daily-aau-ajani-11u.html">team daily aau ajani:11u</a> (2g, latest 2025-06-14)</li>
+<li><a href="teams/11u/team-daily-athletics-11u.html">team daily athletics:11u</a> (2g, latest 2026-08-22)</li>
+<li><a href="teams/11u/team-daily-black-coach-ben-11u.html">team daily black coach ben:11u</a> (2g, latest 2026-11-07)</li>
+<li><a href="teams/11u/team-daily-red-ben-11u.html">team daily red ben:11u</a> (2g, latest 2026-07-25)</li>
+<li><a href="teams/11u/team-daily-victor-11u.html">team daily victor:11u</a> (14g, latest 2026-01-10)</li>
+<li><a href="teams/11u/team-daily-11u.html">team daily:11u</a> (13g, latest 2026-08-30)</li>
+<li><a href="teams/11u/team-elite-11u-1.html">team elite /:11u</a> (2g, latest 2025-11-15)</li>
+<li><a href="teams/11u/team-elite-11u.html">team elite:11u</a> (7g, latest 2026-11-14)</li>
+<li><a href="teams/11u/team-esface-5th-blazers-11u.html">team esface 5th blazers:11u</a> (3g, latest 2025-12-07)</li>
+<li><a href="teams/11u/team-esface-5th-goers-11u.html">team esface 5th goers:11u</a> (3g, latest 2025-12-07)</li>
+<li><a href="teams/11u/team-esface-blazers-11u.html">team esface blazers:11u</a> (4g, latest 2026-02-07)</li>
+<li><a href="teams/11u/team-esface-cam-11u.html">team esface cam:11u</a> (2g, latest 2025-08-09)</li>
+<li><a href="teams/11u/team-esface-goers-11u.html">team esface goers:11u</a> (4g, latest 2026-10-17)</li>
+<li><a href="teams/11u/team-esface-11u.html">team esface:11u</a> (5g, latest 2026-08-01)</li>
+<li><a href="teams/11u/team-grind-11u.html">team grind:11u</a> (4g, latest 2025-12-20)</li>
+<li><a href="teams/11u/team-hendu-elite-11u.html">team hendu elite:11u</a> (2g, latest 2026-04-11)</li>
+<li><a href="teams/11u/team-hendu-11u.html">team hendu:11u</a> (2g, latest 2026-04-11)</li>
+<li><a href="teams/11u/team-just-respect-black-11u.html">team just respect black:11u</a> (6g, latest 2026-04-25)</li>
+<li><a href="teams/11u/team-kidd-11u.html">team kidd:11u</a> (9g, latest 2025-07-13)</li>
+<li><a href="teams/11u/team-kidlat-11u.html">team kidlat:11u</a> (2g, latest 2026-08-01)</li>
+<li><a href="teams/11u/team-locked-in-cisco-11u.html">team locked in cisco:11u</a> (4g, latest 2025-08-10)</li>
+<li><a href="teams/11u/team-locked-in-11u.html">team locked in:11u</a> (11g, latest 2026-05-16)</li>
+<li><a href="teams/11u/team-marathon-11u.html">team marathon:11u</a> (23g, latest 2026-11-08)</li>
+<li><a href="teams/11u/team-rampage-11u.html">team rampage:11u</a> (2g, latest 2026-10-10)</li>
+<li><a href="teams/11u/team-uneqld-11u.html">team uneqld /:11u</a> (4g, latest 2026-02-21)</li>
+<li><a href="teams/11u/team-unequal-trey-gray-11u.html">team unequal trey gray:11u</a> (3g, latest 2026-09-27)</li>
+<li><a href="teams/11u/team-unequaled-reggie-11u.html">team unequaled reggie:11u</a> (2g, latest 2026-11-07)</li>
+<li><a href="teams/11u/team-unlimited-deangelo-11u.html">team unlimited deangelo:11u</a> (2g, latest 2026-01-24)</li>
+<li><a href="teams/11u/team-unlimited-red-deangelo-11u.html">team unlimited red deangelo:11u</a> (2g, latest 2025-11-29)</li>
+<li><a href="teams/11u/team-unlimited-select-deangelo-11u.html">team unlimited select deangelo:11u</a> (9g, latest 2026-05-03)</li>
+<li><a href="teams/11u/team-unlimited-select-jelani-11u.html">team unlimited select jelani:11u</a> (4g, latest 2025-06-08)</li>
+<li><a href="teams/11u/team-unlimited-select-mateo-11u.html">team unlimited select mateo:11u</a> (4g, latest 2025-06-08)</li>
+<li><a href="teams/11u/team-unlimitted-select-dlo-11u.html">team unlimitted select dlo:11u</a> (4g, latest 2025-08-03)</li>
+<li><a href="teams/11u/team-unlimitted-select-jelani-11u.html">team unlimitted select jelani:11u</a> (4g, latest 2025-08-03)</li>
+<li><a href="teams/11u/team-unlimitted-11u.html">team unlimitted:11u</a> (8g, latest 2025-10-26)</li>
+<li><a href="teams/11u/the-grind-team-11u.html">the grind team:11u</a> (2g, latest 2026-05-16)</li>
+<li><a href="teams/11u/the-process-academy-11u.html">the process academy:11u</a> (2g, latest 2026-10-10)</li>
+<li><a href="teams/11u/thu-11u.html">thu:11u</a> (2g, latest 2025-08-30)</li>
+<li><a href="teams/11u/tm-basketball-club-11u.html">tm basketball club:11u</a> (16g, latest 2026-08-09)</li>
+<li><a href="teams/11u/tm-dragons-11u.html">tm dragons:11u</a> (2g, latest 2025-06-28)</li>
+<li><a href="teams/11u/tm-griffins-11u.html">tm griffins:11u</a> (2g, latest 2026-07-25)</li>
+<li><a href="teams/11u/tm-warriors-11u.html">tm warriors:11u</a> (4g, latest 2025-07-27)</li>
+<li><a href="teams/11u/tm-11u.html">tm:11u</a> (5g, latest 2026-09-19)</li>
+<li><a href="teams/11u/top-flight-elite-11u.html">top flight elite:11u</a> (6g, latest 2026-11-07)</li>
+<li><a href="teams/11u/top-flight-11u.html">top flight:11u</a> (2g, latest 2026-10-24)</li>
+<li><a href="teams/11u/top-performance-11u.html">top performance:11u</a> (17g, latest 2026-08-22)</li>
+<li><a href="teams/11u/tracy-rangers-11u.html">tracy rangers:11u</a> (2g, latest 2026-05-16)</li>
+<li><a href="teams/11u/train-first-11u.html">train first:11u</a> (2g, latest 2025-09-06)</li>
+<li><a href="teams/11u/triple-threat-athletics-11u.html">triple threat athletics:11u</a> (2g, latest 2025-06-28)</li>
+<li><a href="teams/11u/triple-threat-regional-11u.html">triple threat regional:11u</a> (9g, latest 2026-03-22)</li>
+<li><a href="teams/11u/triple-threat-11u.html">triple threat:11u</a> (4g, latest 2026-02-07)</li>
+<li><a href="teams/11u/trugame-vegas-splash-nv-11u.html">trugame vegas splash nv:11u</a> (3g, latest 2026-03-15)</li>
+<li><a href="teams/11u/trunm-nm-11u.html">trunm nm:11u</a> (3g, latest 2026-03-15)</li>
+<li><a href="teams/11u/trusavage-academy-11u.html">trusavage academy:11u</a> (3g, latest 2026-05-17)</li>
+<li><a href="teams/11u/trust-basketball-11u.html">trust basketball:11u</a> (13g, latest 2026-04-25)</li>
+<li><a href="teams/11u/trust-gold-11u.html">trust gold:11u</a> (2g, latest 2025-08-16)</li>
+<li><a href="teams/11u/trust-white-11u.html">trust white:11u</a> (2g, latest 2025-08-16)</li>
+<li><a href="teams/11u/tumakbo-bay-area-11u.html">tumakbo bay area:11u</a> (4g, latest 2026-01-11)</li>
+<li><a href="teams/11u/tumakbo-11u.html">tumakbo:11u</a> (2g, latest 2025-11-22)</li>
+<li><a href="teams/11u/u-g-h-11u.html">u g h:11u</a> (11g, latest 2025-11-09)</li>
+<li><a href="teams/11u/underdogs-10-tyler-11u.html">underdogs 10/ tyler:11u</a> (3g, latest 2026-09-13)</li>
+<li><a href="teams/11u/underdogs-black-11u.html">underdogs black:11u</a> (3g, latest 2026-03-22)</li>
+<li><a href="teams/11u/underdogs-peninsula-10-tyler-11u.html">underdogs peninsula 10/ tyler:11u</a> (3g, latest 2026-10-11)</li>
+<li><a href="teams/11u/underdogs-peninsula-10-11u.html">underdogs peninsula 10/:11u</a> (2g, latest 2026-10-17)</li>
+<li><a href="teams/11u/underdogs-sf-black-11u.html">underdogs sf black:11u</a> (3g, latest 2025-11-09)</li>
+<li><a href="teams/11u/underrated-11u.html">underrated:11u</a> (2g, latest 2025-10-18)</li>
+<li><a href="teams/11u/up-next-jr-3ssb-ca-11u.html">up next jr 3ssb ca:11u</a> (4g, latest 2026-10-04)</li>
+<li><a href="teams/11u/upper-level-elite-4th-5th-11u.html">upper level elite 4th/5th:11u</a> (2g, latest 2026-02-07)</li>
+<li><a href="teams/11u/upper-level-elite-11u.html">upper level elite:11u</a> (6g, latest 2026-03-21)</li>
+<li><a href="teams/11u/valley-boys-11u.html">valley boys:11u</a> (2g, latest 2026-02-22)</li>
+<li><a href="teams/11u/valley-boyz-11u.html">valley boyz:11u</a> (8g, latest 2025-12-06)</li>
+<li><a href="teams/11u/valllejo-generals-11u.html">valllejo generals:11u</a> (2g, latest 2025-08-23)</li>
+<li><a href="teams/11u/villains-espinoza-11u.html">villains espinoza:11u</a> (2g, latest 2026-05-09)</li>
+<li><a href="teams/11u/villains-11u.html">villains:11u</a> (3g, latest 2026-08-09)</li>
+<li><a href="teams/11u/vision-butler-11u.html">vision butler:11u</a> (11g, latest 2025-08-23)</li>
+<li><a href="teams/11u/vision-robles-11u-1.html">vision robles /:11u</a> (7g, latest 2026-01-17)</li>
+<li><a href="teams/11u/vision-robles-11u.html">vision robles:11u</a> (2g, latest 2025-08-30)</li>
+<li><a href="teams/11u/vision-torres-11u.html">vision torres:11u</a> (25g, latest 2026-04-25)</li>
+<li><a href="teams/11u/vision-valkyrie-11u.html">vision valkyrie:11u</a> (2g, latest 2026-03-14)</li>
+<li><a href="teams/11u/vision-waves-11u.html">vision waves /:11u</a> (2g, latest 2025-08-10)</li>
+<li><a href="teams/11u/warriors-blue-kenji-11u.html">warriors blue kenji:11u</a> (2g, latest 2025-10-11)</li>
+<li><a href="teams/11u/warriors-gold-kenji-11u.html">warriors gold kenji:11u</a> (2g, latest 2026-09-13)</li>
+<li><a href="teams/11u/warriors-gold-kenny-11u.html">warriors gold kenny:11u</a> (3g, latest 2025-10-12)</li>
+<li><a href="teams/11u/warriors-gold-yae-11u.html">warriors gold yae:11u</a> (6g, latest 2026-01-10)</li>
+<li><a href="teams/11u/we-compete-cubs-11u.html">we compete cubs:11u</a> (5g, latest 2025-10-05)</li>
+<li><a href="teams/11u/we-compete-sat-only-11u.html">we compete sat only:11u</a> (2g, latest 2025-06-21)</li>
+<li><a href="teams/11u/we-run-it-10-11u.html">we run it 10/:11u</a> (2g, latest 2025-11-22)</li>
+<li><a href="teams/11u/we-run-it-11u.html">we run it:11u</a> (18g, latest 2026-08-15)</li>
+<li><a href="teams/11u/we-whp-11u.html">we/whp:11u</a> (4g, latest 2026-09-06)</li>
+<li><a href="teams/11u/wecompete-nation-cubs-11u.html">wecompete nation cubs:11u</a> (32g, latest 2026-05-02)</li>
+<li><a href="teams/11u/wecompete-nation-roars-11u.html">wecompete nation roars:11u</a> (2g, latest 2026-04-11)</li>
+<li><a href="teams/11u/wecompete-nation-wolves-11u.html">wecompete nation wolves:11u</a> (4g, latest 2026-09-13)</li>
+<li><a href="teams/11u/westbay-osprays-black-tim-11u.html">westbay osprays black tim:11u</a> (3g, latest 2026-05-03)</li>
+<li><a href="teams/11u/westbay-ospreys-black-11u.html">westbay ospreys black:11u</a> (2g, latest 2026-04-04)</li>
+<li><a href="teams/11u/whittier-phantoms-11u.html">whittier phantoms:11u</a> (3g, latest 2025-10-05)</li>
+<li><a href="teams/11u/whp-11u.html">whp:11u</a> (3g, latest 2026-10-11)</li>
+<li><a href="teams/11u/wildcats-10-11u.html">wildcats 10/:11u</a> (2g, latest 2025-06-28)</li>
+<li><a href="teams/11u/wildcats-11u.html">wildcats:11u</a> (28g, latest 2026-04-18)</li>
+<li><a href="teams/11u/wv-drive-11u.html">wv drive:11u</a> (1g, latest 2025-10-05)</li>
+<li><a href="teams/11u/xclusive-ballers-11u.html">xclusive ballers:11u</a> (2g, latest 2025-07-05)</li>
+<li><a href="teams/11u/yba-elite-rize-11u.html">yba elite rize:11u</a> (2g, latest 2026-09-12)</li>
+<li><a href="teams/11u/yba-shadi-11u.html">yba shadi:11u</a> (4g, latest 2025-06-29)</li>
+<li><a href="teams/11u/yellow-jackets-11u.html">yellow jackets:11u</a> (27g, latest 2026-09-12)</li>
+<li><a href="teams/11u/young-dons-11u.html">young dons:11u</a> (5g, latest 2025-10-05)</li></ul>
+</div>
+</body>
+</html>

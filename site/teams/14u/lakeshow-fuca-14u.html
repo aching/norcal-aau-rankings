@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lakeshow fuca:14u 🏆 (14u) NorCal AAU</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../14u.html">&larr; 14U/8th Grade board</a>
+<nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../14u.html">14U/8th Grade</a></nav>
+<div class="detail-head">
+<h2>#7 lakeshow fuca:14u 🏆 [T]</h2>
+<p class="sub">0.072 &middot; 51-18 all-time &middot; 55.5 PPG / 40.2 OPP / +15.3 DIFF / L1 STRK / 9-1 L10 &middot; tier mix up,gold,silver &middot; window 13-1 (last 14) &middot; SOS 0.067 &middot; 2026-11-17</p>
+</div>
+<section class="note"><h2>Why #7</h2><ul><li>Form 7-0 in-band (gold, 13-1 overall); 64% sample kept (14g)</li><li>Best win #2 NorCal Elite 14u (Alloc... 43-41 (9/20, gold)</li><li>Hardest test lost to #6 BMG 14u National 64-65 (10/18)</li><li>Schedule gold-leaning (gold7/silver4/up3), sos 0.067, 8 ghost</li><li>Margin biggest +65 / closest -1 (window +15.3)</li></ul></section>
+<section class="note"><h2>Titles (5)</h2><ul><li><span class="tbadge t-silver">silver</span> <a href="https://basketball.exposureevents.com/249868/mlk-showcase/teams/lakeshow-14u-fuca?divisionteamid=4925746">runner-up 14u Division 2 [silver] @ MLK Showcase - Schedule - Jan 17-18, 2026 (1/18/2026)</a></li><li><span class="tbadge t-silver">silver</span> <a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-14u-fuca?divisionteamid=4772581">champ 14u Division 2 [silver] @ The Fall Extravaganza - Schedule - Oct 11-12, 2025 (10/12/2025)</a></li><li><span class="tbadge t-silver">silver</span> <a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/lakeshow-14u-fuca?divisionteamid=4880631">champ 14u Division 2 [silver] @ Jingle Jam - Schedule - Dec 13-14, 2025 (12/14/2025)</a></li><li><span class="tbadge t-silver">silver</span> <a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/lakeshow-14u-fuca?divisionteamid=4914397">champ 14U/8th Grade Silver [silver] @ G365 New Year's Bash - Schedule - Jan 10-11, 2026 * (1/11/2026)</a></li><li><span class="tbadge t-silver">silver</span> <a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-14u-fuca?divisionteamid=5299171">champ 14u Division 2 [silver] @ Memorial Day Mayhem - Schedule - May 23-24, 2026 (5/24/2026)</a></li></ul></section>
+<section class="note"><h2>Full record (69 scored games, newest first)</h2>
+<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr><td>10-18</td><td class="l">L 64-65</td><td><a href="bmg-national-14u.html">BMG 14u National</a></td><td>#6</td><td>JV Boys 1</td><td><a href="https://basketball.exposureevents.com/278257/bay-area-fall-classic/teams/lakeshow-14u-fuca?divisionteamid=5608119">Bay Area Fall Classic - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-17</td><td class="w">W 57-41</td><td>Southbay Snipers Jimmy 16U</td><td>-</td><td>JV Boys 1</td><td><a href="https://basketball.exposureevents.com/278257/bay-area-fall-classic/teams/lakeshow-14u-fuca?divisionteamid=5608119">Bay Area Fall Classic - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-17</td><td class="w">W 54-39</td><td>Hoopright 9th Colin</td><td>-</td><td>JV Boys 1</td><td><a href="https://basketball.exposureevents.com/278257/bay-area-fall-classic/teams/lakeshow-14u-fuca?divisionteamid=5608119">Bay Area Fall Classic - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>09-20</td><td class="w">W 104-39</td><td><a href="wecompete-grizzlies-gold-14u.html">WeCompete Nation Grizzlies Black 14u 8th/14U</a></td><td>#9</td><td>14u Gold</td><td><a href="https://events.fastbreakcompete.ai/event/11319-fall-tip-off">Fall Tip-Off</a></td></tr>
+<tr><td>09-20</td><td class="w">W 43-41</td><td><a href="norcal-elite-allocco-14u.html">NorCal Elite 14u (Allocco) 8th/14U</a></td><td>#2</td><td>14u Gold</td><td><a href="https://events.fastbreakcompete.ai/event/11319-fall-tip-off">Fall Tip-Off</a></td></tr>
+<tr><td>09-19</td><td class="w">W 55-46</td><td><a href="nbba-ua-8th-k-winter-8th-14u.html">NBBA UA 8th (K. Winter) 8th/14U</a></td><td>-</td><td>14u Gold</td><td><a href="https://events.fastbreakcompete.ai/event/11319-fall-tip-off">Fall Tip-Off</a></td></tr>
+<tr><td>09-19</td><td class="w">W 62-33</td><td><a href="sf-champions-circuit-paul-8th-14u.html">SF Champions 14u Circuit (Paul) 8th/14U</a></td><td>-</td><td>14u Gold</td><td><a href="https://events.fastbreakcompete.ai/event/11319-fall-tip-off">Fall Tip-Off</a></td></tr>
+<tr><td>08-30</td><td class="w">W 52-48</td><td>Oakland Soldiers-Dre</td><td>-</td><td>15u Division 1</td><td><a href="https://basketball.exposureevents.com/275765/dream-court-kick-off-invitational/teams/lakeshow-14u-fuca?divisionteamid=5527420">Dream Court Kick Off Invitational - Schedule - Aug 29-30, 2026</a></td></tr>
+<tr><td>08-29</td><td class="w">W 53-34</td><td>Panthers</td><td>-</td><td>15u Division 1</td><td><a href="https://basketball.exposureevents.com/275765/dream-court-kick-off-invitational/teams/lakeshow-14u-fuca?divisionteamid=5527420">Dream Court Kick Off Invitational - Schedule - Aug 29-30, 2026</a></td></tr>
+<tr><td>08-29</td><td class="w">W 48-42</td><td>Oakland Soldiers-Dre</td><td>-</td><td>15u Division 1</td><td><a href="https://basketball.exposureevents.com/275765/dream-court-kick-off-invitational/teams/lakeshow-14u-fuca?divisionteamid=5527420">Dream Court Kick Off Invitational - Schedule - Aug 29-30, 2026</a></td></tr>
+<tr><td>05-24</td><td class="w">W 41-30</td><td><a href="what-wins-14u.html">What Wins</a></td><td>-</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-14u-fuca?divisionteamid=5299171">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-24</td><td class="w">W 41-35</td><td><a href="bay-area-phenoms-14u.html">Bay Area Phenoms</a></td><td>-</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-14u-fuca?divisionteamid=5299171">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-23</td><td class="w">W 44-32</td><td><a href="top-performance-14u.html">Top Performance</a></td><td>#125</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-14u-fuca?divisionteamid=5299171">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-23</td><td class="w">W 59-38</td><td><a href="wolfpack-mhc-14u.html">Wolfpack MHC</a></td><td>-</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-14u-fuca?divisionteamid=5299171">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-09</td><td class="w">W 65-41</td><td><a href="sportstrong-blue-8th.html">SportStrong - Blue</a></td><td>-</td><td>8th Grade D2</td><td><a href="https://basketball.exposureevents.com/265856/spring-live-tune-up/teams/lakeshow-14u-fuca?divisionteamid=5248823">Spring Live Tune Up - Schedule - May 9-10, 2026</a></td></tr>
+<tr><td>05-09</td><td class="l">L 37-69</td><td><a href="team-just-respect-jr-3ssb-14u.html">Team Just Respect 14U Jr. 3SSB</a></td><td>-</td><td>8th Grade D2</td><td><a href="https://basketball.exposureevents.com/265856/spring-live-tune-up/teams/lakeshow-14u-fuca?divisionteamid=5248823">Spring Live Tune Up - Schedule - May 9-10, 2026</a></td></tr>
+<tr><td>04-26</td><td class="l">L 27-39</td><td><a href="fresno-wildcats-elite-14u.html">Fresno Wildcats Elite</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252010/g365-norcal-clash/teams/lakeshow-14u-fuca?divisionteamid=5186732">G365 NorCal Clash - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-26</td><td class="w">W 45-40</td><td><a href="trust-basketball-14u.html">Trust Basketball</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252010/g365-norcal-clash/teams/lakeshow-14u-fuca?divisionteamid=5186732">G365 NorCal Clash - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-25</td><td class="w">W 42-37</td><td><a href="renegades-orange-14u.html">Renegades 14u Orange</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252010/g365-norcal-clash/teams/lakeshow-14u-fuca?divisionteamid=5186732">G365 NorCal Clash - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-25</td><td class="w">W 44-42</td><td><a href="team-just-respect-jr-3ssb-14u.html">Team Just Respect Jr. 3SSB</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252010/g365-norcal-clash/teams/lakeshow-14u-fuca?divisionteamid=5186732">G365 NorCal Clash - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>03-15</td><td class="l">L 33-46</td><td><a href="trust-basketball-14u.html">Trust Basketball</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/lakeshow-14u-fuca?divisionteamid=5022616">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>03-15</td><td class="w">W 45-37</td><td><a href="south-bay-snipers-14u.html">South Bay Snipers</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/lakeshow-14u-fuca?divisionteamid=5022616">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>03-14</td><td class="w">W 48-35</td><td><a href="south-bay-snipers-14u.html">South Bay Snipers</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/lakeshow-14u-fuca?divisionteamid=5022616">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>03-14</td><td class="w">W 65-32</td><td><a href="just-breathe-elite-14u.html">Just Breathe Elite</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/lakeshow-14u-fuca?divisionteamid=5022616">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>03-01</td><td class="l">L 48-51</td><td><a href="yba-aftermath-14u.html">YBA Aftermath</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250894/g365-golden-gate-classic/teams/lakeshow-14u-fuca?divisionteamid=4992676">G365 Golden Gate Classic - Schedule - Feb 28 - Mar 1, 2026</a></td></tr>
+<tr><td>03-01</td><td class="w">W 59-39</td><td><a href="team-esface-blazers-8th.html">Team Esface 8th Grade Blazers</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250894/g365-golden-gate-classic/teams/lakeshow-14u-fuca?divisionteamid=4992676">G365 Golden Gate Classic - Schedule - Feb 28 - Mar 1, 2026</a></td></tr>
+<tr><td>02-28</td><td class="w">W 46-40</td><td><a href="sacramento-yellow-jackets-14u.html">Sacramento Yellow Jackets</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250894/g365-golden-gate-classic/teams/lakeshow-14u-fuca?divisionteamid=4992676">G365 Golden Gate Classic - Schedule - Feb 28 - Mar 1, 2026</a></td></tr>
+<tr><td>02-28</td><td class="l">L 36-50</td><td><a href="marin-wildcats-14u.html">Marin Wildcats</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250894/g365-golden-gate-classic/teams/lakeshow-14u-fuca?divisionteamid=4992676">G365 Golden Gate Classic - Schedule - Feb 28 - Mar 1, 2026</a></td></tr>
+<tr><td>02-15</td><td class="l">L 51-53</td><td><a href="eastbay-bulldogs-8-red-14u.html">Eastbay Bulldogs 8 Red</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/lakeshow-14u-fuca?divisionteamid=4969428">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-15</td><td class="w">W 44-34</td><td><a href="san-jose-spartans-sladky-14u.html">San Jose Spartans Sladky</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/lakeshow-14u-fuca?divisionteamid=4969428">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-14</td><td class="w">W 54-33</td><td><a href="ema-l-e-a-d-e-r-s-blue-14u.html">EMA L.E.A.D.E.R.S. 14u Blue</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/lakeshow-14u-fuca?divisionteamid=4969428">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-14</td><td class="l">L 33-59</td><td><a href="payton-s-place-elite-14u-1.html">Payton’s Place Elite</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/lakeshow-14u-fuca?divisionteamid=4969428">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>01-18</td><td class="w">W 48-34</td><td><a href="sv-soldiers-select-14u.html">SV Soldiers Select</a></td><td>-</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249868/mlk-showcase/teams/lakeshow-14u-fuca?divisionteamid=4925746">MLK Showcase - Schedule - Jan 17-18, 2026</a></td></tr>
+<tr><td>01-18</td><td class="l">L 26-34</td><td>SV Soldiers 13u National</td><td>-</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249868/mlk-showcase/teams/lakeshow-14u-fuca?divisionteamid=4925746">MLK Showcase - Schedule - Jan 17-18, 2026</a></td></tr>
+<tr><td>01-17</td><td class="w">W 43-24</td><td><a href="firmly-rooted-eoydc-14u.html">Firmly Rooted EOYDC</a></td><td>#72</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249868/mlk-showcase/teams/lakeshow-14u-fuca?divisionteamid=4925746">MLK Showcase - Schedule - Jan 17-18, 2026</a></td></tr>
+<tr><td>01-17</td><td class="w">W 44-43</td><td>Oakland Soldiers 13u (Ashton)</td><td>-</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249868/mlk-showcase/teams/lakeshow-14u-fuca?divisionteamid=4925746">MLK Showcase - Schedule - Jan 17-18, 2026</a></td></tr>
+<tr><td>01-11</td><td class="w">W 70-38</td><td><a href="ballerz-united-2030-14u.html">Ballerz United 2030</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/lakeshow-14u-fuca?divisionteamid=4914397">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-11</td><td class="w">W 68-55</td><td><a href="marin-wildcats-14u.html">Marin Wildcats</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/lakeshow-14u-fuca?divisionteamid=4914397">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-11</td><td class="w">W 48-47</td><td><a href="silicon-valley-elite-14u.html">Silicon Valley 14u Elite</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/lakeshow-14u-fuca?divisionteamid=4914397">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="l">L 43-71</td><td><a href="silicon-valley-elite-14u.html">Silicon Valley 14u Elite</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/lakeshow-14u-fuca?divisionteamid=4914397">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="w">W 47-33</td><td><a href="shark-city-14u.html">Shark City</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/lakeshow-14u-fuca?divisionteamid=4914397">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>12-14</td><td class="w">W 45-32</td><td><a href="payton-s-place-14u.html">Payton's Place</a></td><td>#29</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/lakeshow-14u-fuca?divisionteamid=4880631">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-14</td><td class="w">W 61-19</td><td><a href="all-in-elite-nor-cal-black-14u.html">All In Elite Nor Cal Black</a></td><td>-</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/lakeshow-14u-fuca?divisionteamid=4880631">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="w">W 45-25</td><td><a href="wecompete-grizzlies-gold-14u.html">WeCompete Nation Grizzlies Black</a></td><td>#9</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/lakeshow-14u-fuca?divisionteamid=4880631">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="w">W 33-21</td><td><a href="firmly-rooted-eoydc-14u.html">Firmly Rooted EOYDC</a></td><td>#72</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/lakeshow-14u-fuca?divisionteamid=4880631">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-07</td><td class="w">W 53-38</td><td><a href="sbb-rebels-black-14u.html">SBB Rebels Black</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-14u-fuca?divisionteamid=4870510">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-07</td><td class="l">L 23-38</td><td><a href="ema-leaders-14u.html">EMA Leaders 14U</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-14u-fuca?divisionteamid=4870510">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-06</td><td class="l">L 43-49</td><td><a href="ema-leaders-14u.html">EMA Leaders 14U</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-14u-fuca?divisionteamid=4870510">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-06</td><td class="w">W 43-19</td><td><a href="team-esface-8th-blazers-14u.html">Team Esface 8th Blazers</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-14u-fuca?divisionteamid=4870510">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>11-09</td><td class="w">W 50-33</td><td><a href="east-bay-athletics-14u.html">East Bay Athletics</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/lakeshow-14u-fuca?divisionteamid=4819475">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-09</td><td class="w">W 62-34</td><td><a href="sbb-rebels-14u.html">SBB Rebels</a></td><td>#164</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/lakeshow-14u-fuca?divisionteamid=4819475">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-09</td><td class="l">L 33-44</td><td><a href="we-run-it-14u.html">We Run It</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/lakeshow-14u-fuca?divisionteamid=4819475">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-08</td><td class="w">W 61-39</td><td><a href="sbb-rebels-14u.html">SBB Rebels</a></td><td>#164</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/lakeshow-14u-fuca?divisionteamid=4819475">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-08</td><td class="w">W 51-45</td><td><a href="top-flight-elite-8th-white-14u.html">Top Flight Elite 8th White</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/lakeshow-14u-fuca?divisionteamid=4819475">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>10-19</td><td class="l">L 67-84</td><td>Lakeshow 13U Pickney</td><td>-</td><td>8th Boys Silver West</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/lakeshow-14u-fuca?divisionteamid=4784815">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="w">W 33-27</td><td>SV Soldiers 13u</td><td>-</td><td>8th Boys Silver West</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/lakeshow-14u-fuca?divisionteamid=4784815">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="w">W 64-19</td><td><a href="top-flight-elite-8th-8th.html">Top Flight Elite 8th</a></td><td>-</td><td>8th Boys Silver West</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/lakeshow-14u-fuca?divisionteamid=4784815">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-12</td><td class="w">W 50-35</td><td><a href="flight-academy-14u.html">Flight Academy</a></td><td>#115</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-14u-fuca?divisionteamid=4772581">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>10-12</td><td class="w">W 50-33</td><td><a href="sj-spartans-14u.html">SJ Spartans</a></td><td>#36</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-14u-fuca?divisionteamid=4772581">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>10-11</td><td class="w">W 55-24</td><td><a href="ball-game-academy-14u.html">Ball Game Academy</a></td><td>#78</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-14u-fuca?divisionteamid=4772581">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>10-11</td><td class="w">W 52-15</td><td><a href="sb-snipers-jimmy-14u.html">SB Snipers (Jimmy)</a></td><td>-</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-14u-fuca?divisionteamid=4772581">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>10-05</td><td class="l">L 30-41</td><td><a href="berkeley-red-devils-red-14u.html">Berkeley Red Devils Red</a></td><td>#59</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/lakeshow-14u-fuca?divisionteamid=4762354">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>10-05</td><td class="w">W 65-26</td><td><a href="team-daily-ben-14u.html">Team Daily Ben</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/lakeshow-14u-fuca?divisionteamid=4762354">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>10-04</td><td class="w">W 43-34</td><td><a href="stockton-mavericks-green-14u.html">Stockton Mavericks Green</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/lakeshow-14u-fuca?divisionteamid=4762354">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>10-04</td><td class="l">L 21-34</td><td><a href="california-storm-parham-14u.html">California Storm (Parham)</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/lakeshow-14u-fuca?divisionteamid=4762354">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>09-14</td><td class="w">W 55-49</td><td><a href="dream-team-14u.html">Dream Team</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249798/g365-king-of-the-town/teams/lakeshow-14u-fuca?divisionteamid=4733116">G365 King of the Town - Schedule - Sep 13-14, 2025</a></td></tr>
+<tr><td>09-14</td><td class="l">L 36-37</td><td><a href="bay-city-8th-black-14u.html">Bay City 8th Black</a></td><td>#180</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249798/g365-king-of-the-town/teams/lakeshow-14u-fuca?divisionteamid=4733116">G365 King of the Town - Schedule - Sep 13-14, 2025</a></td></tr>
+<tr><td>09-13</td><td class="l">L 33-36</td><td><a href="top-flight-elite-8th-white-denzel-14u.html">Top Flight Elite 8th White - Denzel</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249798/g365-king-of-the-town/teams/lakeshow-14u-fuca?divisionteamid=4733116">G365 King of the Town - Schedule - Sep 13-14, 2025</a></td></tr>
+<tr><td>09-13</td><td class="w">W 45-33</td><td><a href="dream-team-14u.html">Dream Team</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249798/g365-king-of-the-town/teams/lakeshow-14u-fuca?divisionteamid=4733116">G365 King of the Town - Schedule - Sep 13-14, 2025</a></td></tr></tbody></table></section>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last last 14 games within 180 days; full record below spans all scored games.</footer>
+</div>
+</body>
+</html>

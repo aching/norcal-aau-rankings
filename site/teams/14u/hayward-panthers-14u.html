@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hayward panthers:14u 🏆 (14u) NorCal AAU</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../14u.html">&larr; 14U/8th Grade board</a>
+<nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../14u.html">14U/8th Grade</a></nav>
+<div class="detail-head">
+<h2>#51 hayward panthers:14u 🏆 [T]</h2>
+<p class="sub">0.024 &middot; 33-20 all-time &middot; 33.1 PPG / 29.8 OPP / +3.3 DIFF / W6 STRK / 9-1 L10 &middot; tier mix open,bronze &middot; window 11-4 (last 15) &middot; SOS 0.037 &middot; 2026-11-17</p>
+</div>
+<section class="note"><h2>Why #51</h2><ul><li>Form 5-4 in-band (open, 11-4 overall); 65% sample kept (15g)</li><li>Best win #39 GSH (Duawin) 29-27 (10/4, open)</li><li>Hardest test lost to #39 GSH (Duawin) 33-37 (10/3)</li><li>Schedule open-leaning (open9/bronze6), sos 0.037, 4 ghost</li><li>Margin biggest +21 / closest -3 (window +3.3)</li></ul></section>
+<section class="note"><h2>Titles (1)</h2><ul><li><span class="tbadge t-bronze">bronze</span> <a href="https://basketball.exposureevents.com/255460/bay-area-hoop-explosion/teams/hayward-panthers?divisionteamid=5661337">champ 14u Division 3 [bronze] @ Bay Area Hoop Explosion - Schedule - Nov 14-15, 2026 (11/15/2026)</a></li></ul></section>
+<section class="note"><h2>Full record (53 scored games, newest first)</h2>
+<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr><td>11-15</td><td class="w">W 38-33</td><td><a href="norcal-elite-stephen-14u.html">NorCal Elite 14u - Stephen</a></td><td>-</td><td>14u Division 3</td><td><a href="https://basketball.exposureevents.com/255460/bay-area-hoop-explosion/teams/hayward-panthers?divisionteamid=5661337">Bay Area Hoop Explosion - Schedule - Nov 14-15, 2026</a></td></tr>
+<tr><td>11-15</td><td class="w">W 43-37</td><td><a href="sportstrong-grey-14u.html">SportStrong 14u Grey</a></td><td>#153</td><td>14u Division 3</td><td><a href="https://basketball.exposureevents.com/255460/bay-area-hoop-explosion/teams/hayward-panthers?divisionteamid=5661337">Bay Area Hoop Explosion - Schedule - Nov 14-15, 2026</a></td></tr>
+<tr><td>11-14</td><td class="w">W 40-19</td><td><a href="norcal-elite-stephen-14u.html">NorCal Elite 14u - Stephen</a></td><td>-</td><td>14u Division 3</td><td><a href="https://basketball.exposureevents.com/255460/bay-area-hoop-explosion/teams/hayward-panthers?divisionteamid=5661337">Bay Area Hoop Explosion - Schedule - Nov 14-15, 2026</a></td></tr>
+<tr><td>11-14</td><td class="w">W 40-36</td><td><a href="sportstrong-grey-14u.html">SportStrong 14u Grey</a></td><td>#153</td><td>14u Division 3</td><td><a href="https://basketball.exposureevents.com/255460/bay-area-hoop-explosion/teams/hayward-panthers?divisionteamid=5661337">Bay Area Hoop Explosion - Schedule - Nov 14-15, 2026</a></td></tr>
+<tr><td>11-07</td><td class="w">W 34-33</td><td><a href="bmg-select-14u.html">BMG Select</a></td><td>-</td><td>14u D3</td><td><a href="https://basketball.exposureevents.com/255459/the-bay-area-fall-fest-invitational/teams/hayward-panthers?divisionteamid=5642766">The Bay Area Fall Fest Invitational - Schedule - Nov 7-8, 2026</a></td></tr>
+<tr><td>11-07</td><td class="w">W 39-28</td><td><a href="ronin-14u.html">Ronin</a></td><td>#134</td><td>14u D3</td><td><a href="https://basketball.exposureevents.com/255459/the-bay-area-fall-fest-invitational/teams/hayward-panthers?divisionteamid=5642766">The Bay Area Fall Fest Invitational - Schedule - Nov 7-8, 2026</a></td></tr>
+<tr><td>10-18</td><td class="l">L 14-17</td><td><a href="ballers-united-14u.html">Ballers United</a></td><td>#75</td><td>14u Red</td><td><a href="https://basketball.exposureevents.com/275771/bay-area-live/teams/hayward-panthers?divisionteamid=5606305">BAY AREA LIVE - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-17</td><td class="w">W 35-21</td><td><a href="ronin-14u.html">Ronin</a></td><td>#134</td><td>14u Red</td><td><a href="https://basketball.exposureevents.com/275771/bay-area-live/teams/hayward-panthers?divisionteamid=5606305">BAY AREA LIVE - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-17</td><td class="w">W 23-17</td><td><a href="ball-game-academy-select-josh-14u.html">Ball Game Academy Select (Josh)</a></td><td>-</td><td>14u Red</td><td><a href="https://basketball.exposureevents.com/275771/bay-area-live/teams/hayward-panthers?divisionteamid=5606305">BAY AREA LIVE - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-04</td><td class="w">W 29-27</td><td><a href="gsh-duawin-14u.html">GSH (Duawin)</a></td><td>#39</td><td>14u White</td><td><a href="https://basketball.exposureevents.com/255458/2026-october-hoop-fest/teams/hayward-panthers?divisionteamid=5575829">2026 October Hoop Fest - Schedule - Oct 3-4, 2026</a></td></tr>
+<tr><td>10-04</td><td class="w">W 30-17</td><td><a href="top-flight-elite-14u.html">Top Flight Elite</a></td><td>#63</td><td>14u White</td><td><a href="https://basketball.exposureevents.com/255458/2026-october-hoop-fest/teams/hayward-panthers?divisionteamid=5575829">2026 October Hoop Fest - Schedule - Oct 3-4, 2026</a></td></tr>
+<tr><td>10-03</td><td class="w">W 31-27</td><td><a href="ball-game-academy-select-14u.html">Ball Game Academy Select</a></td><td>#182</td><td>14u White</td><td><a href="https://basketball.exposureevents.com/255458/2026-october-hoop-fest/teams/hayward-panthers?divisionteamid=5575829">2026 October Hoop Fest - Schedule - Oct 3-4, 2026</a></td></tr>
+<tr><td>10-03</td><td class="l">L 33-37</td><td><a href="gsh-duawin-14u.html">GSH (Duawin)</a></td><td>#39</td><td>14u White</td><td><a href="https://basketball.exposureevents.com/255458/2026-october-hoop-fest/teams/hayward-panthers?divisionteamid=5575829">2026 October Hoop Fest - Schedule - Oct 3-4, 2026</a></td></tr>
+<tr><td>08-08</td><td class="l">L 30-41</td><td><a href="fth-14u.html">FTH 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/264322/king-of-cali-powered-by-battleground-circuit/teams/hayward-panthers-14u?divisionteamid=5503804">King of Cali powered by Battleground Circuit - Schedule - Aug 8-9, 2026</a></td></tr>
+<tr><td>08-02</td><td class="l">L 37-57</td><td><a href="hoopright-14u.html">HoopRight</a></td><td>-</td><td>14U/8th Grade</td><td><a href="https://basketball.exposureevents.com/263328/strictly-hoops-bring-the-heat-norcal/teams/hayward-panthers?divisionteamid=5493446">Strictly Hoops: Bring the Heat NorCal - Schedule - Aug 1-2, 2026</a></td></tr>
+<tr><td>08-02</td><td class="l">L 35-40</td><td><a href="lakeshow-johnson-14u.html">Lakeshow 14u Johnson</a></td><td>-</td><td>14U/8th Grade</td><td><a href="https://basketball.exposureevents.com/263328/strictly-hoops-bring-the-heat-norcal/teams/hayward-panthers?divisionteamid=5493446">Strictly Hoops: Bring the Heat NorCal - Schedule - Aug 1-2, 2026</a></td></tr>
+<tr><td>08-01</td><td class="l">L 27-49</td><td><a href="mo-bounce-14u-1.html">MO'BOUNCE</a></td><td>-</td><td>14U/8th Grade</td><td><a href="https://basketball.exposureevents.com/263328/strictly-hoops-bring-the-heat-norcal/teams/hayward-panthers?divisionteamid=5493446">Strictly Hoops: Bring the Heat NorCal - Schedule - Aug 1-2, 2026</a></td></tr>
+<tr><td>08-01</td><td class="l">L 55-68</td><td><a href="payton-s-place-elite-14u.html">Payton's Place Elite</a></td><td>-</td><td>14U/8th Grade</td><td><a href="https://basketball.exposureevents.com/263328/strictly-hoops-bring-the-heat-norcal/teams/hayward-panthers?divisionteamid=5493446">Strictly Hoops: Bring the Heat NorCal - Schedule - Aug 1-2, 2026</a></td></tr>
+<tr><td>05-24</td><td class="l">L 26-27</td><td><a href="lakeshow-blaisdell-14u.html">Lakeshow 14U Blaisdell</a></td><td>-</td><td>14u Division 3</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/hayward-panthers?divisionteamid=5299184">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-23</td><td class="l">L 17-36</td><td><a href="blueprint-14u.html">Blueprint</a></td><td>#165</td><td>14u Division 3</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/hayward-panthers?divisionteamid=5299184">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-23</td><td class="w">W 36-30</td><td><a href="sf-samurai-14u.html">SF Samurai</a></td><td>-</td><td>14u Division 3</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/hayward-panthers?divisionteamid=5299184">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-09</td><td class="w">W 76-23</td><td><a href="hoopsphere-next-gen-steve-14u.html">HoopSphere 14u NEXT-GEN (Steve)</a></td><td>-</td><td>14u - Boys (White)</td><td><a href="https://basketball.exposureevents.com/247159/alicia-renee-anderson-memorial-shootout/teams/hayward-panthers?divisionteamid=5226612">Alicia Renee Anderson Memorial Shootout - Schedule - May 9, 2026</a></td></tr>
+<tr><td>05-09</td><td class="l">L 32-34</td><td><a href="top-flight-elite-black-carter-14u.html">Top Flight Elite Black - Carter</a></td><td>-</td><td>14u - Boys (White)</td><td><a href="https://basketball.exposureevents.com/247159/alicia-renee-anderson-memorial-shootout/teams/hayward-panthers?divisionteamid=5226612">Alicia Renee Anderson Memorial Shootout - Schedule - May 9, 2026</a></td></tr>
+<tr><td>02-22</td><td class="w">W 50-37</td><td><a href="hoopright-colin-14u.html">HoopRight Colin</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/261173/strictly-hoops-winter-finale-norcal/teams/hayward-panthers?divisionteamid=4982602">Strictly Hoops: Winter Finale NorCal - Schedule - Feb 21-22, 2026</a></td></tr>
+<tr><td>02-22</td><td class="w">W 56-54</td><td><a href="royal-kings-14u.html">Royal Kings</a></td><td>#173</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/261173/strictly-hoops-winter-finale-norcal/teams/hayward-panthers?divisionteamid=4982602">Strictly Hoops: Winter Finale NorCal - Schedule - Feb 21-22, 2026</a></td></tr>
+<tr><td>02-21</td><td class="w">W 39-25</td><td><a href="jbe-14u.html">JBE 14u</a></td><td>#179</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/261173/strictly-hoops-winter-finale-norcal/teams/hayward-panthers?divisionteamid=4982602">Strictly Hoops: Winter Finale NorCal - Schedule - Feb 21-22, 2026</a></td></tr>
+<tr><td>02-21</td><td class="l">L 47-70</td><td><a href="just-us-basketball-14u.html">Just Us Basketball</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/261173/strictly-hoops-winter-finale-norcal/teams/hayward-panthers?divisionteamid=4982602">Strictly Hoops: Winter Finale NorCal - Schedule - Feb 21-22, 2026</a></td></tr>
+<tr><td>02-01</td><td class="l">L 11-49</td><td><a href="sv-soldiers-elite-14u.html">SV Soldiers 14u Elite</a></td><td>-</td><td>14u Invite Only</td><td><a href="https://basketball.exposureevents.com/240466/groundhog-day-top-30-championship/teams/hayward-panthers?divisionteamid=4941961">Groundhog Day Top 30 Championship - Schedule - Jan 31 - Feb 1, 2026</a></td></tr>
+<tr><td>02-01</td><td class="w">W 41-36</td><td>Oakland Soldiers 13u (Ashton)</td><td>-</td><td>14u Invite Only</td><td><a href="https://basketball.exposureevents.com/240466/groundhog-day-top-30-championship/teams/hayward-panthers?divisionteamid=4941961">Groundhog Day Top 30 Championship - Schedule - Jan 31 - Feb 1, 2026</a></td></tr>
+<tr><td>01-31</td><td class="l">L 22-58</td><td><a href="sf-whph-black-14u.html">SF WHPH 14u Black</a></td><td>-</td><td>14u Invite Only</td><td><a href="https://basketball.exposureevents.com/240466/groundhog-day-top-30-championship/teams/hayward-panthers?divisionteamid=4941961">Groundhog Day Top 30 Championship - Schedule - Jan 31 - Feb 1, 2026</a></td></tr>
+<tr><td>12-21</td><td class="w">W 39-36</td><td><a href="nor-cal-elite-black-14u.html">Nor Cal Elite (black)</a></td><td>-</td><td>14u White</td><td><a href="https://basketball.exposureevents.com/260172/sf-work-hard-play-hard-winter-middle-school-madness/teams/hayward-panthers?divisionteamid=4890453">SF WORK HARD PLAY HARD WINTER MIDDLE SCHOOL MADNESS - Schedule - Dec 20-21, 2025</a></td></tr>
+<tr><td>12-20</td><td class="w">W 41-27</td><td><a href="nor-cal-elite-black-14u.html">Nor Cal Elite (black)</a></td><td>-</td><td>14u White</td><td><a href="https://basketball.exposureevents.com/260172/sf-work-hard-play-hard-winter-middle-school-madness/teams/hayward-panthers?divisionteamid=4890453">SF WORK HARD PLAY HARD WINTER MIDDLE SCHOOL MADNESS - Schedule - Dec 20-21, 2025</a></td></tr>
+<tr><td>12-20</td><td class="w">W 41-26</td><td><a href="sportsstrong-14u.html">Sportsstrong</a></td><td>-</td><td>14u White</td><td><a href="https://basketball.exposureevents.com/260172/sf-work-hard-play-hard-winter-middle-school-madness/teams/hayward-panthers?divisionteamid=4890453">SF WORK HARD PLAY HARD WINTER MIDDLE SCHOOL MADNESS - Schedule - Dec 20-21, 2025</a></td></tr>
+<tr><td>12-14</td><td class="w">W 46-36</td><td><a href="norcal-elite-gold-carter-14u.html">NorCal Elite 14u Gold (Carter)</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/hayward-panthers?divisionteamid=4880652">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="l">L F-L</td><td><a href="bay-area-knuckleheadz-14u.html">Bay Area Knuckleheadz</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/hayward-panthers?divisionteamid=4880652">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="w">W 65-45</td><td><a href="norcal-elite-silver-ellison-14u.html">NorCal Elite 14u Silver (Ellison)</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/hayward-panthers?divisionteamid=4880652">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>10-26</td><td class="w">W 44-25</td><td><a href="mba-triple-threat-14u.html">MBA Triple Threat</a></td><td>#163</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/hayward-panthers?divisionteamid=4795372">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
+<tr><td>10-26</td><td class="l">L 23-39</td><td><a href="top-flight-elite-14u.html">Top Flight Elite</a></td><td>#63</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/hayward-panthers?divisionteamid=4795372">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
+<tr><td>10-25</td><td class="w">W 33-32</td><td><a href="hoopright-wan-14u.html">HoopRight Wan</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/hayward-panthers?divisionteamid=4795372">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
+<tr><td>10-25</td><td class="w">W 50-26</td><td><a href="all-net-14u.html">All Net</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/hayward-panthers?divisionteamid=4795372">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
+<tr><td>10-12</td><td class="w">W 45-34</td><td><a href="sv-soldiers-grey-14u.html">SV Soldiers Grey</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/hayward-panthers?divisionteamid=4772597">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>10-11</td><td class="l">L 32-41</td><td><a href="norcal-elite-black-jordan-14u.html">NorCal Elite 14u Black (Jordan)</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/hayward-panthers?divisionteamid=4772597">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>10-11</td><td class="w">W 50-13</td><td><a href="sb-snipers-peter-14u.html">SB Snipers (Peter)</a></td><td>#131</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/hayward-panthers?divisionteamid=4772597">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>08-17</td><td class="w">W 51-43</td><td><a href="kraken-14u.html">Kraken</a></td><td>-</td><td>14u</td><td><a href="https://basketball.exposureevents.com/249945/sf-work-hard-play-hard-best-of-the-best/teams/hayward-panthers?divisionteamid=4696636">SF WORK HARD PLAY HARD BEST OF THE BEST - Schedule - Aug 16-17, 2025</a></td></tr>
+<tr><td>08-17</td><td class="w">W 52-41</td><td><a href="team-esface-14u.html">Team Esface</a></td><td>-</td><td>14u</td><td><a href="https://basketball.exposureevents.com/249945/sf-work-hard-play-hard-best-of-the-best/teams/hayward-panthers?divisionteamid=4696636">SF WORK HARD PLAY HARD BEST OF THE BEST - Schedule - Aug 16-17, 2025</a></td></tr>
+<tr><td>08-16</td><td class="l">L 42-43</td><td><a href="whph-14u.html">WHPH</a></td><td>#38</td><td>14u</td><td><a href="https://basketball.exposureevents.com/249945/sf-work-hard-play-hard-best-of-the-best/teams/hayward-panthers?divisionteamid=4696636">SF WORK HARD PLAY HARD BEST OF THE BEST - Schedule - Aug 16-17, 2025</a></td></tr>
+<tr><td>08-03</td><td class="l">L 33-36</td><td><a href="sac-gaels-14u.html">Sac Gaels</a></td><td>-</td><td>14U/8th Grade</td><td><a href="https://basketball.exposureevents.com/229917/strictly-hoops-bring-the-heat-norcal/teams/hayward-panthers?divisionteamid=4680256">Strictly Hoops: Bring the Heat NorCal - Schedule - Aug 2-3, 2025</a></td></tr>
+<tr><td>08-03</td><td class="l">L 36-42</td><td><a href="ame-14u.html">AME</a></td><td>-</td><td>14U/8th Grade</td><td><a href="https://basketball.exposureevents.com/229917/strictly-hoops-bring-the-heat-norcal/teams/hayward-panthers?divisionteamid=4680256">Strictly Hoops: Bring the Heat NorCal - Schedule - Aug 2-3, 2025</a></td></tr>
+<tr><td>08-02</td><td class="w">W 72-22</td><td><a href="ares-basketball-14u.html">Ares Basketball</a></td><td>-</td><td>14U/8th Grade</td><td><a href="https://basketball.exposureevents.com/229917/strictly-hoops-bring-the-heat-norcal/teams/hayward-panthers?divisionteamid=4680256">Strictly Hoops: Bring the Heat NorCal - Schedule - Aug 2-3, 2025</a></td></tr>
+<tr><td>08-02</td><td class="w">W 39-36</td><td><a href="209-ballerz-14u.html">209 BALLERZ</a></td><td>-</td><td>14U/8th Grade</td><td><a href="https://basketball.exposureevents.com/229917/strictly-hoops-bring-the-heat-norcal/teams/hayward-panthers?divisionteamid=4680256">Strictly Hoops: Bring the Heat NorCal - Schedule - Aug 2-3, 2025</a></td></tr>
+<tr><td>06-08</td><td class="l">L 23-49</td><td><a href="h2g-14u.html">H2G</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/236775/battle-in-the-bay/teams/hayward-panthers?divisionteamid=4528790">Battle In The Bay - Schedule - Jun 7-8, 2025</a></td></tr>
+<tr><td>06-07</td><td class="w">W 41-38</td><td><a href="bay-city-red-14u.html">Bay City Red</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/236775/battle-in-the-bay/teams/hayward-panthers?divisionteamid=4528790">Battle In The Bay - Schedule - Jun 7-8, 2025</a></td></tr>
+<tr><td>06-07</td><td class="w">W 51-46</td><td><a href="rsf-14u.html">RSF</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/236775/battle-in-the-bay/teams/hayward-panthers?divisionteamid=4528790">Battle In The Bay - Schedule - Jun 7-8, 2025</a></td></tr></tbody></table></section>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last last 15 games within 180 days; full record below spans all scored games.</footer>
+</div>
+</body>
+</html>

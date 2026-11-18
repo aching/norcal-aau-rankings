@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>wecompete grizzlies gold:14u 🏆 (14u) NorCal AAU</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../14u.html">&larr; 14U/8th Grade board</a>
+<nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../14u.html">14U/8th Grade</a></nav>
+<div class="detail-head">
+<h2>#9 wecompete grizzlies gold:14u 🏆 [T]</h2>
+<p class="sub">0.074 &middot; 58-37 all-time &middot; 57.0 PPG / 44.4 OPP / +12.6 DIFF / W6 STRK / 8-2 L10 &middot; tier mix gold,open &middot; window 10-5 (last 15) &middot; SOS 0.109 &middot; 2026-11-17</p>
+</div>
+<section class="note"><h2>Why #9</h2><ul><li>Form 6-5 in-band (gold, 10-5 overall); 65% sample kept (15g)</li><li>Best win #6 BMG 14U National 60-38 (9/13, gold)</li><li>Hardest test lost to #1 Fury 58-65 (9/13)</li><li>Schedule gold-leaning (gold11/open4), sos 0.109, 5 ghost</li><li>Margin biggest +64 / closest -7 (window +12.6)</li></ul></section>
+<section class="note"><h2>Titles (6)</h2><ul><li><span class="tbadge t-open">open</span> <a href="https://basketball.exposureevents.com/234791/the-bay-area-fall-fest-invitational/teams/wecompete-nation-grizzlies-14u?divisionteamid=4805264">champ 14U/15U [open] @ The Bay Area Fall Fest Invitational - Schedule - Nov 1-2, 2025 (11/2/2025)</a></li><li><span class="tbadge t-national">national</span> <a href="https://basketball.exposureevents.com/240466/groundhog-day-top-30-championship/teams/wecompete-nation-grizzlies-14u?divisionteamid=4943953">runner-up 14u Invite Only [national] @ Groundhog Day Top 30 Championship - Schedule - Jan 31 - Feb 1, 2026 (2/1/2026)</a></li><li><span class="tbadge t-gold">gold</span> <a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/wecompete-nation-grizzlies-elite?divisionteamid=4969415">runner-up 14U/8th Grade Gold [gold] @ G365 Battle at the Bay - Schedule - Feb 14-16, 2026 * (2/16/2026)</a></li><li><span class="tbadge t-gold">gold</span> <a href="https://basketball.exposureevents.com/261073/norcal-spring-battle/teams/wecompete-nation-grizzlies-elite?divisionteamid=5070091">champ 14u Division 1 [gold] @ NorCal Spring Battle - Schedule - Mar 28-29, 2026 (3/29/2026)</a></li><li><span class="tbadge t-gold">gold</span> <a href="https://basketball.exposureevents.com/274377/g365-king-of-the-town/teams/wecompete-nation-grizzles-elite?divisionteamid=5545458">runner-up 14U/8th Grade Gold [gold] @ G365 King of the Town - Schedule - Sep 12-13, 2026 * (9/13/2026)</a></li><li><span class="tbadge t-open">open</span> <a href="https://basketball.exposureevents.com/275767/bay-area-fall-classic/teams/wecompete-14u-grizzlies-gold?divisionteamid=5566438">champ 15u Yellow Division [open] @ Bay Area Fall Classic - Schedule - Sep 26-27, 2026 (9/27/2026)</a></li></ul></section>
+<section class="note"><h2>Full record (95 scored games, newest first)</h2>
+<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr><td>11-07</td><td class="w">W 66-29</td><td><a href="sportstrong-14u.html">SportStrong</a></td><td>#70</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/278370/g365-rumble-in-the-town/teams/we-compete-grizzlies-gold?divisionteamid=5649801">G365 Rumble in the Town - Schedule - Nov 7-8, 2026</a></td></tr>
+<tr><td>11-07</td><td class="w">W 70-55</td><td><a href="all-in-elite-uaa-14u.html">All-In Elite UAA</a></td><td>#114</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/278370/g365-rumble-in-the-town/teams/we-compete-grizzlies-gold?divisionteamid=5649801">G365 Rumble in the Town - Schedule - Nov 7-8, 2026</a></td></tr>
+<tr><td>09-27</td><td class="w">W 80-46</td><td><a href="oakland-soldiers-camo-14u.html">Oakland Soldiers 14u Camo</a></td><td>#28</td><td>15u Yellow Division</td><td><a href="https://basketball.exposureevents.com/275767/bay-area-fall-classic/teams/wecompete-14u-grizzlies-gold?divisionteamid=5566438">Bay Area Fall Classic - Schedule - Sep 26-27, 2026</a></td></tr>
+<tr><td>09-27</td><td class="w">W 54-46</td><td>Sportstrong White</td><td>-</td><td>15u Yellow Division</td><td><a href="https://basketball.exposureevents.com/275767/bay-area-fall-classic/teams/wecompete-14u-grizzlies-gold?divisionteamid=5566438">Bay Area Fall Classic - Schedule - Sep 26-27, 2026</a></td></tr>
+<tr><td>09-26</td><td class="w">W 63-30</td><td>Team Unlimited-Lo</td><td>-</td><td>15u Yellow Division</td><td><a href="https://basketball.exposureevents.com/275767/bay-area-fall-classic/teams/wecompete-14u-grizzlies-gold?divisionteamid=5566438">Bay Area Fall Classic - Schedule - Sep 26-27, 2026</a></td></tr>
+<tr><td>09-26</td><td class="w">W 94-30</td><td>SB Snipers-Carlos 1</td><td>-</td><td>15u Yellow Division</td><td><a href="https://basketball.exposureevents.com/275767/bay-area-fall-classic/teams/wecompete-14u-grizzlies-gold?divisionteamid=5566438">Bay Area Fall Classic - Schedule - Sep 26-27, 2026</a></td></tr>
+<tr><td>09-20</td><td class="l">L 39-104</td><td><a href="lakeshow-fuca-14u.html">Lakeshow 14U Fuca 8th/14U</a></td><td>#7</td><td>14u Gold</td><td><a href="https://events.fastbreakcompete.ai/event/11319-fall-tip-off">Fall Tip-Off</a></td></tr>
+<tr><td>09-19</td><td class="w">W 33-22</td><td><a href="flow-elite-blue-8th-14u.html">Flow Elite 14u Blue 8th/14U</a></td><td>-</td><td>14u Gold</td><td><a href="https://events.fastbreakcompete.ai/event/11319-fall-tip-off">Fall Tip-Off</a></td></tr>
+<tr><td>09-19</td><td class="l">L 20-35</td><td><a href="norcal-elite-allocco-14u.html">NorCal Elite 14u (Allocco) 8th/14U</a></td><td>#2</td><td>14u Gold</td><td><a href="https://events.fastbreakcompete.ai/event/11319-fall-tip-off">Fall Tip-Off</a></td></tr>
+<tr><td>09-13</td><td class="w">W 60-38</td><td><a href="bmg-national-14u.html">BMG 14U National</a></td><td>#6</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/274377/g365-king-of-the-town/teams/wecompete-nation-grizzles-elite?divisionteamid=5545458">G365 King of the Town - Schedule - Sep 12-13, 2026</a></td></tr>
+<tr><td>09-13</td><td class="w">W 58-36</td><td><a href="slight-underdawgs-14u.html">Slight UnderDawgs</a></td><td>#116</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/274377/g365-king-of-the-town/teams/wecompete-nation-grizzles-elite?divisionteamid=5545458">G365 King of the Town - Schedule - Sep 12-13, 2026</a></td></tr>
+<tr><td>09-13</td><td class="l">L 58-65</td><td><a href="fury-14u.html">Fury</a></td><td>#1</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/274377/g365-king-of-the-town/teams/wecompete-nation-grizzles-elite?divisionteamid=5545458">G365 King of the Town - Schedule - Sep 12-13, 2026</a></td></tr>
+<tr><td>09-12</td><td class="l">L 38-55</td><td><a href="fury-14u.html">Fury</a></td><td>#1</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/274377/g365-king-of-the-town/teams/wecompete-nation-grizzles-elite?divisionteamid=5545458">G365 King of the Town - Schedule - Sep 12-13, 2026</a></td></tr>
+<tr><td>09-12</td><td class="w">W 89-29</td><td>Payton's Place 13U</td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/274377/g365-king-of-the-town/teams/wecompete-nation-grizzles-elite?divisionteamid=5545458">G365 King of the Town - Schedule - Sep 12-13, 2026</a></td></tr>
+<tr><td>05-24</td><td class="l">L 33-46</td><td>Bay City Select-TG</td><td>-</td><td>15u Division 1</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/wecompete-nation-grizzles-elite-14u?divisionteamid=5299201">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-23</td><td class="w">W 38-19</td><td>JSO Spartans</td><td>-</td><td>15u Division 1</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/wecompete-nation-grizzles-elite-14u?divisionteamid=5299201">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-23</td><td class="l">L 36-39</td><td>Lakeshow 15U Gold Crawley</td><td>-</td><td>15u Division 1</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/wecompete-nation-grizzles-elite-14u?divisionteamid=5299201">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>04-18</td><td class="w">W 60-22</td><td><a href="sf-whph-8th.html">SF WHPH</a></td><td>-</td><td>8th Silver</td><td><a href="https://basketball.exposureevents.com/263710/oakland-finest-easter-invitational-2026/teams/wecompete-nation-grizzlies-black?divisionteamid=5155116">Oakland Finest Easter Invitational 2026 - Schedule - Apr 18-19, 2026</a></td></tr>
+<tr><td>04-18</td><td class="l">L 26-36</td><td><a href="oakland-soldiers-keith-8th.html">Oakland Soldiers - Keith</a></td><td>-</td><td>8th Silver</td><td><a href="https://basketball.exposureevents.com/263710/oakland-finest-easter-invitational-2026/teams/wecompete-nation-grizzlies-black?divisionteamid=5155116">Oakland Finest Easter Invitational 2026 - Schedule - Apr 18-19, 2026</a></td></tr>
+<tr><td>04-18</td><td class="w">W 51-27</td><td><a href="norcal-prep-bynum-8th.html">NorCal Prep (Bynum)</a></td><td>-</td><td>8th Gold</td><td><a href="https://basketball.exposureevents.com/263710/oakland-finest-easter-invitational-2026/teams/wecompete-nation-grizzlies-elite?divisionteamid=5155103">Oakland Finest Easter Invitational 2026 - Schedule - Apr 18-19, 2026</a></td></tr>
+<tr><td>04-18</td><td class="w">W 60-27</td><td><a href="lava-8th.html">Lava</a></td><td>-</td><td>8th Gold</td><td><a href="https://basketball.exposureevents.com/263710/oakland-finest-easter-invitational-2026/teams/wecompete-nation-grizzlies-elite?divisionteamid=5155103">Oakland Finest Easter Invitational 2026 - Schedule - Apr 18-19, 2026</a></td></tr>
+<tr><td>04-11</td><td class="l">L 24-34</td><td><a href="707-soldiers-14u.html">707 Soldiers</a></td><td>-</td><td>14u</td><td><a href="https://basketball.exposureevents.com/263541/2026-hoop-honors-showcase/teams/wecompete-nation-grizzlies?divisionteamid=5117361">2026 Hoop Honors Showcase - Schedule - Apr 11, 2026</a></td></tr>
+<tr><td>04-11</td><td class="w">W 40-15</td><td><a href="legion-14u.html">Legion</a></td><td>-</td><td>14u</td><td><a href="https://basketball.exposureevents.com/263541/2026-hoop-honors-showcase/teams/wecompete-nation-grizzlies?divisionteamid=5117361">2026 Hoop Honors Showcase - Schedule - Apr 11, 2026</a></td></tr>
+<tr><td>03-29</td><td class="w">W 54-33</td><td><a href="sf-whph-14u.html">SF WHPH</a></td><td>#27</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/261073/norcal-spring-battle/teams/wecompete-nation-grizzlies-elite?divisionteamid=5070091">NorCal Spring Battle - Schedule - Mar 28-29, 2026</a></td></tr>
+<tr><td>03-29</td><td class="w">W 42-33</td><td><a href="wolfpack-elite-2030-14u.html">Wolfpack Elite 2030</a></td><td>-</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/261073/norcal-spring-battle/teams/wecompete-nation-grizzlies-elite?divisionteamid=5070091">NorCal Spring Battle - Schedule - Mar 28-29, 2026</a></td></tr>
+<tr><td>03-28</td><td class="w">W 56-46</td><td><a href="justhoop-2030-14u.html">Justhoop 2030</a></td><td>-</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/261073/norcal-spring-battle/teams/wecompete-nation-grizzlies-elite?divisionteamid=5070091">NorCal Spring Battle - Schedule - Mar 28-29, 2026</a></td></tr>
+<tr><td>03-28</td><td class="w">W 49-45</td><td><a href="seaside-finest-14u.html">Seaside Finest</a></td><td>-</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/261073/norcal-spring-battle/teams/wecompete-nation-grizzlies-elite?divisionteamid=5070091">NorCal Spring Battle - Schedule - Mar 28-29, 2026</a></td></tr>
+<tr><td>03-15</td><td class="l">L 33-42</td><td><a href="lakeshow-boyd-14u.html">Lakeshow 14U Boyd</a></td><td>#120</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/wecompete-nation-grizzlies-black?divisionteamid=5022621">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>03-15</td><td class="w">W 38-33</td><td><a href="ema-l-e-a-d-e-r-s-14u.html">EMA L.E.A.D.E.R.S.</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/wecompete-nation-grizzlies-black?divisionteamid=5022621">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>03-15</td><td class="l">L 65-69</td><td><a href="team-touch-14u.html">Team Touch</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/wecompete-nation-grizzlies-elite?divisionteamid=5022605">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>03-15</td><td class="l">L 37-47</td><td><a href="wildcats-14u.html">Wildcats</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/wecompete-nation-grizzlies-elite?divisionteamid=5022605">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>03-14</td><td class="l">L 27-32</td><td><a href="payton-s-place-elite-14u.html">Payton's Place Elite</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/wecompete-nation-grizzlies-black?divisionteamid=5022621">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>03-14</td><td class="w">W 23-15</td><td><a href="south-bay-snipers-14u.html">South Bay Snipers</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/wecompete-nation-grizzlies-black?divisionteamid=5022621">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>03-14</td><td class="w">W 43-25</td><td><a href="1on1-14u.html">1on1</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/wecompete-nation-grizzlies-elite?divisionteamid=5022605">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>03-14</td><td class="l">L 40-45</td><td><a href="dream-team-14u.html">Dream Team</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/250896/g365-the-mayhem/teams/wecompete-nation-grizzlies-elite?divisionteamid=5022605">G365 The Mayhem - Schedule - Mar 14-15, 2026</a></td></tr>
+<tr><td>02-16</td><td class="l">L 41-44</td><td><a href="all-net-basketball-club-14u.html">All Net Basketball Club</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/wecompete-nation-grizzlies-black?divisionteamid=4969430">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-16</td><td class="l">L 41-54</td><td><a href="916-dream-chasers-14u.html">916 Dream Chasers</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/wecompete-nation-grizzlies-elite?divisionteamid=4969415">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-15</td><td class="w">W 45-38</td><td><a href="lakeshow-boyd-14u.html">Lakeshow 14U Boyd</a></td><td>#120</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/wecompete-nation-grizzlies-black?divisionteamid=4969430">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-15</td><td class="w">W 71-49</td><td><a href="ballerz-united-2030-14u.html">Ballerz United 2030</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/wecompete-nation-grizzlies-elite?divisionteamid=4969415">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-15</td><td class="w">W 47-42</td><td><a href="lakeshow-crawley-14u.html">Lakeshow 14U Crawley</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/wecompete-nation-grizzlies-elite?divisionteamid=4969415">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-14</td><td class="w">W 40-36</td><td><a href="all-net-green-14u.html">All Net Green</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/wecompete-nation-grizzlies-black?divisionteamid=4969430">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-14</td><td class="l">L 22-48</td><td><a href="all-net-basketball-club-14u.html">All Net Basketball Club</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/wecompete-nation-grizzlies-black?divisionteamid=4969430">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-14</td><td class="w">W 39-28</td><td><a href="sf-whph-14u.html">SF WHPH</a></td><td>#27</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/wecompete-nation-grizzlies-elite?divisionteamid=4969415">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-14</td><td class="l">L 36-39</td><td><a href="norcal-wolfpack-14u.html">Norcal Wolfpack</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/250890/g365-battle-at-the-bay/teams/wecompete-nation-grizzlies-elite?divisionteamid=4969415">G365 Battle at the Bay - Schedule - Feb 14-16, 2026</a></td></tr>
+<tr><td>02-01</td><td class="w">W 42-23</td><td><a href="sv-soldiers-elite-14u.html">SV Soldiers 14u Elite</a></td><td>-</td><td>14u Invite Only</td><td><a href="https://basketball.exposureevents.com/240466/groundhog-day-top-30-championship/teams/wecompete-nation-grizzlies-14u?divisionteamid=4943953">Groundhog Day Top 30 Championship - Schedule - Jan 31 - Feb 1, 2026</a></td></tr>
+<tr><td>02-01</td><td class="w">W 48-34</td><td><a href="sv-soldiers-elite-14u.html">SV Soldiers 14u Elite</a></td><td>-</td><td>14u Invite Only</td><td><a href="https://basketball.exposureevents.com/240466/groundhog-day-top-30-championship/teams/wecompete-nation-grizzlies-14u?divisionteamid=4943953">Groundhog Day Top 30 Championship - Schedule - Jan 31 - Feb 1, 2026</a></td></tr>
+<tr><td>02-01</td><td class="l">L 59-60</td><td><a href="one-on-one-gold-14u.html">One On One - Gold</a></td><td>-</td><td>14u Invite Only</td><td><a href="https://basketball.exposureevents.com/240466/groundhog-day-top-30-championship/teams/wecompete-nation-grizzlies-14u?divisionteamid=4943953">Groundhog Day Top 30 Championship - Schedule - Jan 31 - Feb 1, 2026</a></td></tr>
+<tr><td>01-31</td><td class="w">W 50-31</td><td><a href="south-bay-ronin-14u.html">South Bay Ronin</a></td><td>-</td><td>14u Invite Only</td><td><a href="https://basketball.exposureevents.com/240466/groundhog-day-top-30-championship/teams/wecompete-nation-grizzlies-14u?divisionteamid=4943953">Groundhog Day Top 30 Championship - Schedule - Jan 31 - Feb 1, 2026</a></td></tr>
+<tr><td>01-17</td><td class="w">W 68-35</td><td><a href="team-unlimited-14u.html">Team Unlimited</a></td><td>#99</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/249868/mlk-showcase/teams/wecompete-nation-grizzles-elite?divisionteamid=4925732">MLK Showcase - Schedule - Jan 17-18, 2026</a></td></tr>
+<tr><td>01-17</td><td class="l">L 36-38</td><td><a href="team-lillard-2030-14u.html">Team Lillard 2030</a></td><td>-</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/249868/mlk-showcase/teams/wecompete-nation-grizzles-elite?divisionteamid=4925732">MLK Showcase - Schedule - Jan 17-18, 2026</a></td></tr>
+<tr><td>01-11</td><td class="w">W 59-41</td><td><a href="el-dorado-hills-trojans-aau-14u.html">El Dorado Hills Trojans AAU</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/wecompete-nation-grizzlies?divisionteamid=4914386">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-11</td><td class="l">L 46-69</td><td><a href="916-dream-chasers-14u.html">916 Dream Chasers</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/wecompete-nation-grizzlies?divisionteamid=4914386">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-11</td><td class="l">L 36-56</td><td><a href="marin-wildcats-14u.html">Marin Wildcats</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/wecompete-nation-grizzlies-black?divisionteamid=4914395">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-11</td><td class="l">L 55-57</td><td><a href="ballerz-united-2030-14u.html">Ballerz United 2030</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/wecompete-nation-grizzlies-black?divisionteamid=4914395">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="w">W 53-30</td><td><a href="el-dorado-hills-trojans-aau-14u.html">El Dorado Hills Trojans AAU</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/wecompete-nation-grizzlies?divisionteamid=4914386">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="w">W 48-0</td><td><a href="team-arsenal-ellite-14u.html">Team Arsenal Ellite</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/wecompete-nation-grizzlies?divisionteamid=4914386">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="l">L 45-64</td><td><a href="sbb-rebels-14u.html">SBB Rebels</a></td><td>#164</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/wecompete-nation-grizzlies-black?divisionteamid=4914395">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="l">L 33-52</td><td><a href="ballerz-united-2030-14u.html">Ballerz United 2030</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/wecompete-nation-grizzlies-black?divisionteamid=4914395">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>12-14</td><td class="l">L 40-54</td><td><a href="sv-soldiers-select-14u.html">SV Soldiers Select</a></td><td>-</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/wecompete-nation-grizzlies-black?divisionteamid=4880642">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-14</td><td class="l">L 40-45</td><td><a href="norcal-elite-red-allocco-14u.html">NorCal Elite 14u Red (Allocco)</a></td><td>-</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/wecompete-nation-grizzlies-elite?divisionteamid=4880626">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="w">W 41-35</td><td><a href="firmly-rooted-eoydc-14u.html">Firmly Rooted EOYDC</a></td><td>#72</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/wecompete-nation-grizzlies-black?divisionteamid=4880642">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="l">L 25-45</td><td><a href="lakeshow-fuca-14u.html">Lakeshow 14U Fuca</a></td><td>#7</td><td>14u Division 2</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/wecompete-nation-grizzlies-black?divisionteamid=4880642">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="w">W 44-27</td><td><a href="team-unlimited-14u.html">Team Unlimited</a></td><td>#99</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/wecompete-nation-grizzlies-elite?divisionteamid=4880626">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="w">W 45-41</td><td><a href="one-on-one-gold-14u.html">One on One Gold</a></td><td>-</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/wecompete-nation-grizzlies-elite?divisionteamid=4880626">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-06</td><td class="l">L 21-46</td><td><a href="alameda-vipers-14u.html">Alameda Vipers</a></td><td>-</td><td>14u - Boys</td><td><a href="https://basketball.exposureevents.com/247160/winter-kickoff-jamboree/teams/wecompete-nation-grizzlies-black?divisionteamid=4870713">Winter Kickoff Jamboree - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-06</td><td class="w">W 53-41</td><td><a href="bay-area-hurricanes-14u.html">Bay Area Hurricanes</a></td><td>-</td><td>14u - Boys</td><td><a href="https://basketball.exposureevents.com/247160/winter-kickoff-jamboree/teams/wecompete-nation-grizzlies-black?divisionteamid=4870713">Winter Kickoff Jamboree - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-06</td><td class="l">L 26-44</td><td><a href="top-flight-elite-1-14u.html">Top Flight Elite 1</a></td><td>-</td><td>14u - Boys</td><td><a href="https://basketball.exposureevents.com/247160/winter-kickoff-jamboree/teams/wecompete-nation-grizzlies-elite?divisionteamid=4870712">Winter Kickoff Jamboree - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-06</td><td class="w">W 60-28</td><td><a href="blades-of-hoop-14u.html">Blades of Hoop</a></td><td>-</td><td>14u - Boys</td><td><a href="https://basketball.exposureevents.com/247160/winter-kickoff-jamboree/teams/wecompete-nation-grizzlies-elite?divisionteamid=4870712">Winter Kickoff Jamboree - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>11-09</td><td class="l">L 34-47</td><td><a href="lakeshow-crawley-14u.html">Lakeshow 14U Crawley</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/wecompete-nation-grizzlies?divisionteamid=4819465">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-09</td><td class="w">W 43-41</td><td>Lakeshow 13U Pickney</td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/wecompete-nation-grizzlies?divisionteamid=4819465">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-09</td><td class="l">L 20-30</td><td><a href="sbb-rebels-14u.html">SBB Rebels</a></td><td>#164</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/wecompete-nation-grizzlies?divisionteamid=4819474">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-09</td><td class="l">L 38-39</td><td><a href="team-esface-blazers-8th.html">Team Esface 8th Grade Blazers</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/wecompete-nation-grizzlies?divisionteamid=4819474">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-08</td><td class="w">W 42-39</td><td><a href="team-lillard-2030-norcal-14u.html">Team Lillard 2030 (NorCal)</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/wecompete-nation-grizzlies?divisionteamid=4819465">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-08</td><td class="w">W 43-37</td><td><a href="team-esface-goers-8th.html">Team Esface 8th Grade Goers</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/wecompete-nation-grizzlies?divisionteamid=4819465">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-08</td><td class="l">L 31-41</td><td><a href="we-run-it-14u.html">We Run It</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/wecompete-nation-grizzlies?divisionteamid=4819474">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-08</td><td class="w">W 54-46</td><td><a href="dream-team-14u.html">Dream Team</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/wecompete-nation-grizzlies?divisionteamid=4819474">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-02</td><td class="w">W 54-51</td><td><a href="one-on-one-gold-14u.html">One on One Gold</a></td><td>-</td><td>14U/15U</td><td><a href="https://basketball.exposureevents.com/234791/the-bay-area-fall-fest-invitational/teams/wecompete-nation-grizzlies-14u?divisionteamid=4805264">The Bay Area Fall Fest Invitational - Schedule - Nov 1-2, 2025</a></td></tr>
+<tr><td>11-02</td><td class="w">W 46-29</td><td><a href="oakland-soldiers-dre-14u.html">Oakland Soldiers (Dre)</a></td><td>-</td><td>14U/15U</td><td><a href="https://basketball.exposureevents.com/234791/the-bay-area-fall-fest-invitational/teams/wecompete-nation-grizzlies-14u?divisionteamid=4805264">The Bay Area Fall Fest Invitational - Schedule - Nov 1-2, 2025</a></td></tr>
+<tr><td>11-02</td><td class="w">W 51-50</td><td><a href="sv-soldiers-elite-tony-14u.html">SV Soldiers Elite -Tony</a></td><td>-</td><td>14U/15U</td><td><a href="https://basketball.exposureevents.com/234791/the-bay-area-fall-fest-invitational/teams/wecompete-nation-grizzlies-14u?divisionteamid=4805264">The Bay Area Fall Fest Invitational - Schedule - Nov 1-2, 2025</a></td></tr>
+<tr><td>11-02</td><td class="l">L 28-32</td><td><a href="golden-state-dubs-14u.html">Golden State Dubs</a></td><td>#105</td><td>14u D2</td><td><a href="https://basketball.exposureevents.com/234791/the-bay-area-fall-fest-invitational/teams/wecompete-nation-grizzlies-black-14u?divisionteamid=4805275">The Bay Area Fall Fest Invitational - Schedule - Nov 1-2, 2025</a></td></tr>
+<tr><td>11-02</td><td class="l">L 51-53</td><td><a href="golden-state-dubs-14u.html">Golden State Dubs</a></td><td>#105</td><td>14u D2</td><td><a href="https://basketball.exposureevents.com/234791/the-bay-area-fall-fest-invitational/teams/wecompete-nation-grizzlies-black-14u?divisionteamid=4805275">The Bay Area Fall Fest Invitational - Schedule - Nov 1-2, 2025</a></td></tr>
+<tr><td>11-01</td><td class="w">W 70-35</td><td><a href="east-bay-athletics-black-14u.html">East Bay Athletics Black</a></td><td>-</td><td>14U/15U</td><td><a href="https://basketball.exposureevents.com/234791/the-bay-area-fall-fest-invitational/teams/wecompete-nation-grizzlies-14u?divisionteamid=4805264">The Bay Area Fall Fest Invitational - Schedule - Nov 1-2, 2025</a></td></tr>
+<tr><td>11-01</td><td class="w">W 47-33</td><td><a href="one-on-one-black-14u.html">One on One Black</a></td><td>-</td><td>14u D2</td><td><a href="https://basketball.exposureevents.com/234791/the-bay-area-fall-fest-invitational/teams/wecompete-nation-grizzlies-black-14u?divisionteamid=4805275">The Bay Area Fall Fest Invitational - Schedule - Nov 1-2, 2025</a></td></tr>
+<tr><td>10-19</td><td class="l">L 47-54</td><td><a href="bay-city-2030-8th.html">Bay City 2030</a></td><td>-</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/wecompete-nation-grizzlies-14u?divisionteamid=4784812">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-19</td><td class="w">W 49-29</td><td><a href="hoopright-8th-colin-8th.html">Hoopright 8th Colin</a></td><td>-</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/wecompete-nation-grizzlies-14u?divisionteamid=4784812">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="w">W 49-24</td><td><a href="ballaz-united-8th-8th.html">Ballaz United 8th</a></td><td>-</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/wecompete-nation-grizzlies-14u?divisionteamid=4784812">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-05</td><td class="w">W 43-37</td><td><a href="california-storm-parham-14u.html">California Storm (Parham)</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/we-compete-nation-grizzlies?divisionteamid=4762358">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>10-05</td><td class="w">W 55-24</td><td><a href="top-flight-elite-14u.html">Top Flight Elite</a></td><td>#63</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/we-compete-nation-grizzlies?divisionteamid=4762358">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>10-05</td><td class="l">L 36-47</td><td><a href="berkeley-red-devils-red-14u.html">Berkeley Red Devils Red</a></td><td>#59</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/we-compete-nation-grizzlies?divisionteamid=4762358">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>10-04</td><td class="w">W 37-29</td><td><a href="team-daily-ben-14u.html">Team Daily Ben</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/we-compete-nation-grizzlies?divisionteamid=4762358">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>10-04</td><td class="w">W 62-32</td><td><a href="24-8-elite-academy-black-14u.html">24/8 Elite Academy Black</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/we-compete-nation-grizzlies?divisionteamid=4762358">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>07-20</td><td class="w">W 48-24</td><td>Hoop Right (Yazan)</td><td>-</td><td>13U/7th Grade|14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/229915/strictly-hoops-settle-the-score/teams/wecompete-nation-grizzlies-elite?divisionteamid=4657930">Strictly Hoops: Settle the Score - Schedule - Jul 19-20, 2025</a></td></tr>
+<tr><td>07-20</td><td class="w">W 28-14</td><td>All For one</td><td>-</td><td>13U/7th Grade|14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/229915/strictly-hoops-settle-the-score/teams/wecompete-nation-grizzlies-elite?divisionteamid=4657930">Strictly Hoops: Settle the Score - Schedule - Jul 19-20, 2025</a></td></tr>
+<tr><td>07-19</td><td class="w">W 50-30</td><td>All For one</td><td>-</td><td>13U/7th Grade|14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/229915/strictly-hoops-settle-the-score/teams/wecompete-nation-grizzlies-elite?divisionteamid=4657930">Strictly Hoops: Settle the Score - Schedule - Jul 19-20, 2025</a></td></tr>
+<tr><td>07-19</td><td class="w">W 101-39</td><td>Hoop Elite</td><td>-</td><td>13U/7th Grade|14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/229915/strictly-hoops-settle-the-score/teams/wecompete-nation-grizzlies-elite?divisionteamid=4657930">Strictly Hoops: Settle the Score - Schedule - Jul 19-20, 2025</a></td></tr></tbody></table></section>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last last 15 games within 180 days; full record below spans all scored games.</footer>
+</div>
+</body>
+</html>

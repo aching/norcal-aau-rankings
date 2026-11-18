@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hoop elite:14u (14u) NorCal AAU</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../14u.html">&larr; 14U/8th Grade board</a>
+<nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../14u.html">14U/8th Grade</a></nav>
+<div class="detail-head">
+<h2>#53 hoop elite:14u</h2>
+<p class="sub">0.024 &middot; 13-19 all-time &middot; 40.7 PPG / 41.6 OPP / -0.9 DIFF / W2 STRK / 5-5 L10 &middot; tier mix open,silver &middot; window 5-7 (last 12) &middot; SOS 0.092 &middot; 2026-11-17</p>
+</div>
+<section class="note"><h2>Why #53</h2><ul><li>Form 5-7 in-band (silver, 5-7 overall); 60% sample kept (12g)</li><li>Best win #14 SF Champs 14u 42-23 (9/19, silver)</li><li>Hardest test lost to #36 SJ Spartans 14u 23-35 (10/10) (step-up)</li><li>Schedule open-leaning (open6/silver6), sos 0.092, no ghosts</li><li>Margin biggest +29 / closest -1 (window -0.9)</li></ul></section>
+<section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
+<section class="note"><h2>Full record (32 scored games, newest first)</h2>
+<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr><td>10-24</td><td class="w">W 46-27</td><td><a href="norcal-force-14u.html">Norcal Force 14U</a></td><td>#62</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/273459/bam-x-gsg-halloween-havoc/teams/hoop-elite-14u?divisionteamid=5624117">BAM x GSG - Halloween Havoc - Schedule - Oct 24-25, 2026</a></td></tr>
+<tr><td>10-24</td><td class="w">W 57-28</td><td><a href="jbe-707-14u.html">JBE 707 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/273459/bam-x-gsg-halloween-havoc/teams/hoop-elite-14u?divisionteamid=5624117">BAM x GSG - Halloween Havoc - Schedule - Oct 24-25, 2026</a></td></tr>
+<tr><td>10-11</td><td class="l">L F-L</td><td><a href="the-grind-team-14u.html">The Grind Team 14u</a></td><td>-</td><td>Boys-14u American</td><td><a href="https://basketball.exposureevents.com/261730/norcal-chase-for-the-chain/teams/hoop-elite-14u?divisionteamid=5592158">NorCal Chase for the Chain - Schedule - Oct 10-11, 2026</a></td></tr>
+<tr><td>10-10</td><td class="l">L 23-35</td><td><a href="sj-spartans-14u.html">SJ Spartans 14u</a></td><td>#36</td><td>Boys-14u American</td><td><a href="https://basketball.exposureevents.com/261730/norcal-chase-for-the-chain/teams/hoop-elite-14u?divisionteamid=5592158">NorCal Chase for the Chain - Schedule - Oct 10-11, 2026</a></td></tr>
+<tr><td>10-10</td><td class="l">L 12-45</td><td><a href="we-x-swish-14u.html">We x Swish 14u</a></td><td>-</td><td>Boys-14u American</td><td><a href="https://basketball.exposureevents.com/261730/norcal-chase-for-the-chain/teams/hoop-elite-14u?divisionteamid=5592158">NorCal Chase for the Chain - Schedule - Oct 10-11, 2026</a></td></tr>
+<tr><td>09-20</td><td class="w">W 38-36</td><td><a href="sj-mavs-kelley-14u.html">SJ Mavs 14u Kelley</a></td><td>#76</td><td>Boys-14u American</td><td><a href="https://basketball.exposureevents.com/261729/sf-rumble-for-the-ring/teams/hoop-elite-14u?divisionteamid=5556862">SF Rumble for the Ring - Schedule - Sep 19-20, 2026</a></td></tr>
+<tr><td>09-19</td><td class="w">W 42-23</td><td><a href="sf-champs-14u.html">SF Champs 14u</a></td><td>#14</td><td>Boys-14u American</td><td><a href="https://basketball.exposureevents.com/261729/sf-rumble-for-the-ring/teams/hoop-elite-14u?divisionteamid=5556862">SF Rumble for the Ring - Schedule - Sep 19-20, 2026</a></td></tr>
+<tr><td>09-19</td><td class="w">W 40-27</td><td><a href="blueprint-blue-14u.html">Blueprint 14u Blue</a></td><td>#148</td><td>Boys-14u American</td><td><a href="https://basketball.exposureevents.com/261729/sf-rumble-for-the-ring/teams/hoop-elite-14u?divisionteamid=5556862">SF Rumble for the Ring - Schedule - Sep 19-20, 2026</a></td></tr>
+<tr><td>09-13</td><td class="l">L 54-55</td><td><a href="justhoop-rise-14u.html">Justhoop RISE</a></td><td>-</td><td>8th Grade (14U) Boys Yellow Division</td><td><a href="https://basketball.exposureevents.com/273130/the-tip-off-classic-powered-by-4ballers-only-x-bay-area-flight-x-gsg-hoops/teams/hoop-elite?divisionteamid=5545106">The Tip-Off Classic - Powered by 4Ballers Only x Bay Area Flight x GSG Hoops - Schedule - Sep 12-13, 2026</a></td></tr>
+<tr><td>09-13</td><td class="l">L 53-60</td><td><a href="oakland-soldiers-jason-14u.html">Oakland Soldiers-Jason</a></td><td>#119</td><td>8th Grade (14U) Boys Yellow Division</td><td><a href="https://basketball.exposureevents.com/273130/the-tip-off-classic-powered-by-4ballers-only-x-bay-area-flight-x-gsg-hoops/teams/hoop-elite?divisionteamid=5545106">The Tip-Off Classic - Powered by 4Ballers Only x Bay Area Flight x GSG Hoops - Schedule - Sep 12-13, 2026</a></td></tr>
+<tr><td>09-12</td><td class="l">L 56-66</td><td><a href="bay-city-eb-rr-14u.html">Bay City EB-RR</a></td><td>#30</td><td>8th Grade (14U) Boys Yellow Division</td><td><a href="https://basketball.exposureevents.com/273130/the-tip-off-classic-powered-by-4ballers-only-x-bay-area-flight-x-gsg-hoops/teams/hoop-elite?divisionteamid=5545106">The Tip-Off Classic - Powered by 4Ballers Only x Bay Area Flight x GSG Hoops - Schedule - Sep 12-13, 2026</a></td></tr>
+<tr><td>09-12</td><td class="l">L 27-56</td><td><a href="norcal-elite-taylor-14u.html">NorCal Elite 14U (Taylor)</a></td><td>#23</td><td>8th Grade (14U) Boys Yellow Division</td><td><a href="https://basketball.exposureevents.com/273130/the-tip-off-classic-powered-by-4ballers-only-x-bay-area-flight-x-gsg-hoops/teams/hoop-elite?divisionteamid=5545106">The Tip-Off Classic - Powered by 4Ballers Only x Bay Area Flight x GSG Hoops - Schedule - Sep 12-13, 2026</a></td></tr>
+<tr><td>03-01</td><td class="l">L 20-67</td><td><a href="swish-army-select-14u.html">Swish Army Select</a></td><td>#143</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250894/g365-golden-gate-classic/teams/hoop-elite?divisionteamid=4992679">G365 Golden Gate Classic - Schedule - Feb 28 - Mar 1, 2026</a></td></tr>
+<tr><td>03-01</td><td class="l">L 26-31</td><td><a href="berkeley-red-devils-14u.html">Berkeley Red Devils</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250894/g365-golden-gate-classic/teams/hoop-elite?divisionteamid=4992679">G365 Golden Gate Classic - Schedule - Feb 28 - Mar 1, 2026</a></td></tr>
+<tr><td>02-28</td><td class="l">L 32-67</td><td><a href="swish-army-select-14u.html">Swish Army Select</a></td><td>#143</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250894/g365-golden-gate-classic/teams/hoop-elite?divisionteamid=4992679">G365 Golden Gate Classic - Schedule - Feb 28 - Mar 1, 2026</a></td></tr>
+<tr><td>02-28</td><td class="l">L 24-60</td><td><a href="lakeshow-boyd-14u.html">Lakeshow 14u Boyd</a></td><td>#120</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/250894/g365-golden-gate-classic/teams/hoop-elite?divisionteamid=4992679">G365 Golden Gate Classic - Schedule - Feb 28 - Mar 1, 2026</a></td></tr>
+<tr><td>01-24</td><td class="l">L 8-51</td><td><a href="javstep-red-14u.html">JavStep Red 14U</a></td><td>#157</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/259691/gsg-x-bam-winter-shootout/teams/hoop-elite-14u?divisionteamid=4939308">GSG x BAM - Winter Shootout - Schedule - Jan 24-25, 2026</a></td></tr>
+<tr><td>01-24</td><td class="l">L 31-34</td><td><a href="just-respect-14u.html">Just Respect 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/259691/gsg-x-bam-winter-shootout/teams/hoop-elite-14u?divisionteamid=4939308">GSG x BAM - Winter Shootout - Schedule - Jan 24-25, 2026</a></td></tr>
+<tr><td>01-17</td><td class="w">W 34-29</td><td><a href="ptown-nilo-14u.html">PTown - Nilo 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/248678/gsg-x-bam-mlk-tournament/teams/hoop-elite-14u?divisionteamid=4929336">GSG x BAM - MLK Tournament - Schedule - Jan 17-18, 2026</a></td></tr>
+<tr><td>01-17</td><td class="l">L 28-44</td><td><a href="24-8-elite-14u.html">24/8 Elite 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/248678/gsg-x-bam-mlk-tournament/teams/hoop-elite-14u?divisionteamid=4929336">GSG x BAM - MLK Tournament - Schedule - Jan 17-18, 2026</a></td></tr>
+<tr><td>01-11</td><td class="l">L 12-58</td><td><a href="feba-8-blue-14u.html">FEBA 8 Blue</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/hoop-elite?divisionteamid=4914407">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-11</td><td class="w">W 29-26</td><td><a href="team-esface-hustlers-8th.html">Team Esface 8th Grade Hustlers</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/hoop-elite?divisionteamid=4914407">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="l">L 17-40</td><td><a href="swish-army-14u.html">Swish Army</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/hoop-elite?divisionteamid=4914407">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="l">L 40-51</td><td><a href="lakeshow-blaisdell-14u.html">Lakeshow 14u Blaisdell</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/hoop-elite?divisionteamid=4914407">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>08-24</td><td class="w">W 57-23</td><td><a href="tumakbo-bay-area-14u.html">Tumakbo Bay Area 14u</a></td><td>-</td><td>14u/8th Grade West</td><td><a href="https://basketball.exposureevents.com/252314/strictly-hoops-bay-areas-finest/teams/hoop-elite?divisionteamid=4707123">Strictly Hoops: Bay Area's Finest - Schedule - Aug 23-24, 2025</a></td></tr>
+<tr><td>08-24</td><td class="w">W 63-35</td><td><a href="kraken-basketball-14u.html">Kraken Basketball</a></td><td>-</td><td>14u/8th Grade West</td><td><a href="https://basketball.exposureevents.com/252314/strictly-hoops-bay-areas-finest/teams/hoop-elite?divisionteamid=4707123">Strictly Hoops: Bay Area's Finest - Schedule - Aug 23-24, 2025</a></td></tr>
+<tr><td>08-23</td><td class="w">W 77-54</td><td><a href="psa-west-coast-14u.html">PSA West Coast</a></td><td>-</td><td>14u/8th Grade West</td><td><a href="https://basketball.exposureevents.com/252314/strictly-hoops-bay-areas-finest/teams/hoop-elite?divisionteamid=4707123">Strictly Hoops: Bay Area's Finest - Schedule - Aug 23-24, 2025</a></td></tr>
+<tr><td>08-23</td><td class="w">W 63-52</td><td><a href="flight-academy-14u.html">Flight Academy</a></td><td>#115</td><td>14u/8th Grade West</td><td><a href="https://basketball.exposureevents.com/252314/strictly-hoops-bay-areas-finest/teams/hoop-elite?divisionteamid=4707123">Strictly Hoops: Bay Area's Finest - Schedule - Aug 23-24, 2025</a></td></tr>
+<tr><td>07-06</td><td class="w">W 51-49</td><td><a href="madera-kings-14u.html">Madera Kings</a></td><td>#185</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/239775/g365-fog-city/teams/hoop-elite?divisionteamid=4612218">G365 Fog City - Schedule - Jul 5-6, 2025</a></td></tr>
+<tr><td>07-06</td><td class="l">L 41-45</td><td><a href="bay-area-lakers-14u.html">Bay Area Lakers</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/239775/g365-fog-city/teams/hoop-elite?divisionteamid=4612218">G365 Fog City - Schedule - Jul 5-6, 2025</a></td></tr>
+<tr><td>07-05</td><td class="l">L 50-58</td><td><a href="bay-city-14u.html">Bay City</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/239775/g365-fog-city/teams/hoop-elite?divisionteamid=4612218">G365 Fog City - Schedule - Jul 5-6, 2025</a></td></tr>
+<tr><td>07-05</td><td class="w">W 55-46</td><td><a href="lakeshow-boyd-14u.html">Lakeshow Boyd</a></td><td>#120</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/239775/g365-fog-city/teams/hoop-elite?divisionteamid=4612218">G365 Fog City - Schedule - Jul 5-6, 2025</a></td></tr></tbody></table></section>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last last 12 games within 180 days; full record below spans all scored games.</footer>
+</div>
+</body>
+</html>

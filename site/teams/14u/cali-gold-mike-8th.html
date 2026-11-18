@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cali-gold:mike-8th (14u) NorCal AAU</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../14u.html">&larr; 14U/8th Grade board</a>
+<nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../14u.html">14U/8th Grade</a></nav>
+<div class="detail-head">
+<h2>#13 cali-gold:mike-8th</h2>
+<p class="sub">0.064 &middot; 48-26 all-time &middot; 52.3 PPG / 48.8 OPP / +3.6 DIFF / L1 STRK / 6-4 L10 &middot; tier mix gold &middot; window 8-4 (last 12) &middot; SOS 0.104 &middot; 2026-11-17</p>
+</div>
+<section class="note"><h2>Why #13</h2><ul><li>Form 8-4 in-band (gold, 8-4 overall); 60% sample kept (12g)</li><li>Best win #37 #4 NorCal United 14u North 37-35 (9/12, gold)</li><li>Hardest test lost to #3 Lakeshow 14U Duckett 51-67 (10/18)</li><li>Schedule gold-leaning (gold12), sos 0.104, no ghosts</li><li>Margin biggest +30 / closest -8 (window +3.6)</li></ul></section>
+<section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
+<section class="note"><h2>Full record (74 scored games, newest first)</h2>
+<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr><td>10-18</td><td class="l">L 51-67</td><td><a href="lakeshow-duckett-14u.html">Lakeshow 14U Duckett</a></td><td>#3</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/278257/bay-area-fall-classic/teams/cali-gold-8th-mike?divisionteamid=5608079">Bay Area Fall Classic - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-18</td><td class="w">W 64-55</td><td><a href="bay-city-2031-8th.html">Bay City 2031</a></td><td>#65</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/278257/bay-area-fall-classic/teams/cali-gold-8th-mike?divisionteamid=5608079">Bay Area Fall Classic - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-17</td><td class="w">W 65-35</td><td><a href="tarheels-white-8th.html">BA Tarheels 8th White</a></td><td>#41</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/278257/bay-area-fall-classic/teams/cali-gold-8th-mike?divisionteamid=5608079">Bay Area Fall Classic - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-17</td><td class="l">L 37-56</td><td><a href="bmg-prospects-14u.html">BMG 14u Prospects</a></td><td>#25</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/278257/bay-area-fall-classic/teams/cali-gold-8th-mike?divisionteamid=5608079">Bay Area Fall Classic - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-03</td><td class="w">W 59-54</td><td><a href="norcal-united-north-14u.html">NorCal United 14u North</a></td><td>#37</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/2-cali-gold-8th-mike?divisionteamid=5543630">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>10-03</td><td class="l">L 30-38</td><td><a href="renegades-14u.html">Renegades 14u</a></td><td>#5</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/2-cali-gold-8th-mike?divisionteamid=5543630">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-26</td><td class="w">W 61-50</td><td><a href="tarheels-white-8th.html">BA Tarheels 8th White</a></td><td>#41</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/2-cali-gold-8th-mike?divisionteamid=5543630">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-26</td><td class="w">W 78-49</td><td><a href="bay-city-2031-8th.html">Bay City 2031</a></td><td>#65</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/2-cali-gold-8th-mike?divisionteamid=5543630">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-19</td><td class="l">L 44-66</td><td><a href="norcal-united-north-14u.html">NorCal United 14u North</a></td><td>#37</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/2-cali-gold-8th-mike?divisionteamid=5543630">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-19</td><td class="w">W 57-46</td><td><a href="prowlers-8th-8th.html">Prowlers 8th</a></td><td>#139</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/2-cali-gold-8th-mike?divisionteamid=5543630">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-12</td><td class="w">W 37-35</td><td><a href="norcal-united-north-14u.html">NorCal United 14u North</a></td><td>#37</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/2-cali-gold-8th-mike?divisionteamid=5543630">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-12</td><td class="w">W 45-34</td><td><a href="tarheels-white-8th.html">BA Tarheels 8th White</a></td><td>#41</td><td>8th Boys Gold</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/2-cali-gold-8th-mike?divisionteamid=5543630">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>05-16</td><td class="w">W 51-12</td><td>DC Finest 10U/11U</td><td>-</td><td>5th Grade (11U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262164/king-of-norcal-powered-by-battleground-circuit/teams/cali-gold-mike-11u?divisionteamid=5280029">King of NorCal powered by Battleground Circuit - Schedule - May 16-17, 2026</a></td></tr>
+<tr><td>05-16</td><td class="w">W 27-24</td><td>Barnstormers 11U</td><td>-</td><td>5th Grade (11U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262164/king-of-norcal-powered-by-battleground-circuit/teams/cali-gold-mike-11u?divisionteamid=5280029">King of NorCal powered by Battleground Circuit - Schedule - May 16-17, 2026</a></td></tr>
+<tr><td>05-16</td><td class="w">W 54-50</td><td>Dublin United 13U</td><td>-</td><td>7th Grade (13U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262164/king-of-norcal-powered-by-battleground-circuit/teams/cali-gold-mike-13u?divisionteamid=5280087">King of NorCal powered by Battleground Circuit - Schedule - May 16-17, 2026</a></td></tr>
+<tr><td>05-16</td><td class="l">L 38-57</td><td>Vision (Edwards) Black 13U</td><td>-</td><td>7th Grade (13U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262164/king-of-norcal-powered-by-battleground-circuit/teams/cali-gold-mike-13u?divisionteamid=5280087">King of NorCal powered by Battleground Circuit - Schedule - May 16-17, 2026</a></td></tr>
+<tr><td>05-03</td><td class="w">W 31-20</td><td>MTB</td><td>-</td><td>5th Boys White</td><td><a href="https://basketball.exposureevents.com/268017/bulldawgs-darrell-hirashima-classic-2026/teams/cali-gold-mike?divisionteamid=5216658">BullDawgs &amp;quot;Darrell Hirashima Classic&amp;quot; 2026 - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>05-03</td><td class="w">W 63-46</td><td>SFBA</td><td>-</td><td>7th Boys Black</td><td><a href="https://basketball.exposureevents.com/268017/bulldawgs-darrell-hirashima-classic-2026/teams/cali-gold-mike?divisionteamid=5216675">BullDawgs &amp;quot;Darrell Hirashima Classic&amp;quot; 2026 - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>05-02</td><td class="l">L 21-58</td><td>Impact Brandon</td><td>-</td><td>5th Boys White</td><td><a href="https://basketball.exposureevents.com/268017/bulldawgs-darrell-hirashima-classic-2026/teams/cali-gold-mike?divisionteamid=5216658">BullDawgs &amp;quot;Darrell Hirashima Classic&amp;quot; 2026 - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>05-02</td><td class="w">W 38-13</td><td>Olympic Club Liam</td><td>-</td><td>5th Boys White</td><td><a href="https://basketball.exposureevents.com/268017/bulldawgs-darrell-hirashima-classic-2026/teams/cali-gold-mike?divisionteamid=5216658">BullDawgs &amp;quot;Darrell Hirashima Classic&amp;quot; 2026 - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>05-02</td><td class="w">W 62-23</td><td>Olympic Club Lukas</td><td>-</td><td>7th Boys Black</td><td><a href="https://basketball.exposureevents.com/268017/bulldawgs-darrell-hirashima-classic-2026/teams/cali-gold-mike?divisionteamid=5216675">BullDawgs &amp;quot;Darrell Hirashima Classic&amp;quot; 2026 - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>05-02</td><td class="w">W 41-38</td><td>Impact Blk Jarrod</td><td>-</td><td>7th Boys Black</td><td><a href="https://basketball.exposureevents.com/268017/bulldawgs-darrell-hirashima-classic-2026/teams/cali-gold-mike?divisionteamid=5216675">BullDawgs &amp;quot;Darrell Hirashima Classic&amp;quot; 2026 - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>04-26</td><td class="w">W 25-18</td><td>Lunardi's</td><td>-</td><td>5th Boys White</td><td><a href="https://basketball.exposureevents.com/267489/bulldawgs-bay-area-battle-2026/teams/cali-gold-mike?divisionteamid=5194583">BullDawgs &amp;quot;Bay Area BATTLE&amp;quot; 2026 - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-26</td><td class="w">W 77-36</td><td>Impact Blk  Jarrod</td><td>-</td><td>7th Boys Black</td><td><a href="https://basketball.exposureevents.com/267489/bulldawgs-bay-area-battle-2026/teams/cali-gold-mike?divisionteamid=5194597">BullDawgs &amp;quot;Bay Area BATTLE&amp;quot; 2026 - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-26</td><td class="w">W 49-35</td><td>Tarheels</td><td>-</td><td>7th Boys Black</td><td><a href="https://basketball.exposureevents.com/267489/bulldawgs-bay-area-battle-2026/teams/cali-gold-mike?divisionteamid=5194597">BullDawgs &amp;quot;Bay Area BATTLE&amp;quot; 2026 - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-25</td><td class="l">L 21-35</td><td>Ballers Blk  Isaiah</td><td>-</td><td>5th Boys White</td><td><a href="https://basketball.exposureevents.com/267489/bulldawgs-bay-area-battle-2026/teams/cali-gold-mike?divisionteamid=5194583">BullDawgs &amp;quot;Bay Area BATTLE&amp;quot; 2026 - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-25</td><td class="l">L 15-26</td><td>iSkill 11U</td><td>-</td><td>5th Boys White</td><td><a href="https://basketball.exposureevents.com/267489/bulldawgs-bay-area-battle-2026/teams/cali-gold-mike?divisionteamid=5194583">BullDawgs &amp;quot;Bay Area BATTLE&amp;quot; 2026 - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-25</td><td class="w">W 65-35</td><td>Ballers Blue  Isaiah</td><td>-</td><td>7th Boys Black</td><td><a href="https://basketball.exposureevents.com/267489/bulldawgs-bay-area-battle-2026/teams/cali-gold-mike?divisionteamid=5194597">BullDawgs &amp;quot;Bay Area BATTLE&amp;quot; 2026 - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>03-28</td><td class="l">L 23-36</td><td>PBH Select 11U</td><td>-</td><td>Boys - 5th Grade (11U) Division</td><td><a href="https://basketball.exposureevents.com/259700/bam-x-gsg-bay-area-hoop-cup/teams/cali-gold-mike-11u?divisionteamid=5078683">BAM x GSG - Bay Area Hoop Cup - Schedule - Mar 28-29, 2026</a></td></tr>
+<tr><td>03-28</td><td class="l">L 28-31</td><td>Vision (Torres) 11U</td><td>-</td><td>Boys - 5th Grade (11U) Division</td><td><a href="https://basketball.exposureevents.com/259700/bam-x-gsg-bay-area-hoop-cup/teams/cali-gold-mike-11u?divisionteamid=5078683">BAM x GSG - Bay Area Hoop Cup - Schedule - Mar 28-29, 2026</a></td></tr>
+<tr><td>03-28</td><td class="w">W 46-17</td><td>Vision (Gipson) Black 13U</td><td>-</td><td>Boys - 7th Grade (13U) Division</td><td><a href="https://basketball.exposureevents.com/259700/bam-x-gsg-bay-area-hoop-cup/teams/cali-gold-mike-13u?divisionteamid=5078728">BAM x GSG - Bay Area Hoop Cup - Schedule - Mar 28-29, 2026</a></td></tr>
+<tr><td>03-28</td><td class="l">L 36-48</td><td>Elevate Black 13U</td><td>-</td><td>Boys - 7th Grade (13U) Division</td><td><a href="https://basketball.exposureevents.com/259700/bam-x-gsg-bay-area-hoop-cup/teams/cali-gold-mike-13u?divisionteamid=5078728">BAM x GSG - Bay Area Hoop Cup - Schedule - Mar 28-29, 2026</a></td></tr>
+<tr><td>03-22</td><td class="w">W 38-30</td><td>Lunardis 5th</td><td>-</td><td>5th Boys Bronze West</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/cali-gold-5th-mike?divisionteamid=5051269">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-22</td><td class="w">W 33-19</td><td>24/8 Academy 11u Blue</td><td>-</td><td>5th Boys Bronze West</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/cali-gold-5th-mike?divisionteamid=5051269">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-22</td><td class="l">L 21-41</td><td><a href="tarheels-white-8th.html">BA Tarheels 7th White</a></td><td>#41</td><td>7th Boys Gold</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/cali-gold-7th-mike?divisionteamid=5051299">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-21</td><td class="w">W 38-16</td><td>Bay City EB 11u</td><td>-</td><td>5th Boys Bronze West</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/cali-gold-5th-mike?divisionteamid=5051269">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-21</td><td class="l">L 23-57</td><td>SV Soldiers 12u National</td><td>-</td><td>7th Boys Gold</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/cali-gold-7th-mike?divisionteamid=5051299">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-21</td><td class="l">L 64-73</td><td>Bay City EB 13u</td><td>-</td><td>7th Boys Gold</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/cali-gold-7th-mike?divisionteamid=5051299">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>10-19</td><td class="w">W 23-22</td><td>Westbay Ospreys 5th Black</td><td>-</td><td>5th Boys Silver East</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/cali-gold-5th-mike?divisionteamid=4784731">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-19</td><td class="w">W 55-52</td><td>Lakeshow 13U Duckett</td><td>-</td><td>7th Boys Gold West</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/cali-gold-7th-mike?divisionteamid=4784779">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="l">L 37-44</td><td>PBH Elite 11U</td><td>-</td><td>5th Boys Silver East</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/cali-gold-5th-mike?divisionteamid=4784731">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="l">L 20-36</td><td>SportStrong 11u Blue</td><td>-</td><td>5th Boys Silver East</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/cali-gold-5th-mike?divisionteamid=4784731">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="w">W 31-23</td><td>Bay City 2031</td><td>-</td><td>7th Boys Gold West</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/cali-gold-7th-mike?divisionteamid=4784779">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="l">L 36-48</td><td>SportStrong 13u Black</td><td>-</td><td>7th Boys Gold West</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/cali-gold-7th-mike?divisionteamid=4784779">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-05</td><td class="w">W 30-26</td><td>Bay City 5th Black</td><td>-</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-5th-mike?divisionteamid=4723626">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>10-05</td><td class="w">W 31-30</td><td>Westbay Ospreys 5th Black</td><td>-</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-5th-mike?divisionteamid=4723626">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>10-04</td><td class="l">L 38-41</td><td>SV Soldiers 13u Prospects</td><td>-</td><td>7th Boys Gold</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-7th-mike?divisionteamid=4723673">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>10-04</td><td class="w">W 45-43</td><td>Bay City 2031</td><td>-</td><td>7th Boys Gold</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-7th-mike?divisionteamid=4723673">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>10-04</td><td class="w">W 49-31</td><td><a href="tarheels-white-8th.html">BA Tarheels 7th White</a></td><td>#41</td><td>7th Boys Gold</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-7th-mike?divisionteamid=4723673">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-27</td><td class="l">L 33-37</td><td>Bay Area Impact 11u</td><td>-</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-5th-mike?divisionteamid=4723626">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-27</td><td class="w">W 42-23</td><td>Esface 4th Goers</td><td>-</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-5th-mike?divisionteamid=4723626">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-27</td><td class="w">W 60-31</td><td><a href="bulldogs-8th-cardinal-andre-8th.html">Bulldogs 8th Cardinal Andre</a></td><td>-</td><td>8th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-7th-mike?divisionteamid=4751449">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-27</td><td class="l">L 36-77</td><td><a href="tarheels-carolina-8th.html">BA Tarheels 8th Carolina</a></td><td>-</td><td>8th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-7th-mike?divisionteamid=4751449">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-20</td><td class="w">W 38-27</td><td>Westbay Ospreys 5th Black</td><td>-</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-5th-mike?divisionteamid=4723626">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-20</td><td class="w">W 33-20</td><td>Bay City 5th Black</td><td>-</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-5th-mike?divisionteamid=4723626">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-20</td><td class="w">W 63-36</td><td><a href="tarheels-white-8th.html">BA Tarheels 7th White</a></td><td>#41</td><td>7th Boys Gold</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-7th-mike?divisionteamid=4723673">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-20</td><td class="w">W 33-32</td><td>Bay Area Impact 13u Black</td><td>-</td><td>7th Boys Gold</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-7th-mike?divisionteamid=4723673">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-13</td><td class="w">W 46-36</td><td>Bay Area Impact 11u</td><td>-</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-5th-mike?divisionteamid=4723626">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-13</td><td class="w">W 33-32</td><td>Bulldogs 5th Cardinal Frank</td><td>-</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-5th-mike?divisionteamid=4723626">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-13</td><td class="w">W 68-33</td><td>Olympic Club 7th Lukas</td><td>-</td><td>7th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-7th-mike?divisionteamid=4732820">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-13</td><td class="w">W 63-18</td><td>Coastside 7th</td><td>-</td><td>7th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-7th-mike?divisionteamid=4732820">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-06</td><td class="w">W 39-12</td><td>NorCal United 4th/5th</td><td>-</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-5th-mike?divisionteamid=4723626">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-06</td><td class="l">L 20-38</td><td>SV Soldiers 11u Spearman</td><td>-</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-5th-mike?divisionteamid=4723626">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-06</td><td class="l">L 22-44</td><td>SV Soldiers 13u Prospects</td><td>-</td><td>7th Boys Gold</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-7th-mike?divisionteamid=4723673">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-06</td><td class="l">L 35-58</td><td>Prowlers 7th</td><td>-</td><td>7th Boys Gold</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/cali-gold-7th-mike?divisionteamid=4723673">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>06-22</td><td class="w">W 63-28</td><td>NorCal United 6th Green</td><td>-</td><td>6th Boys Silver</td><td><a href="https://basketball.exposureevents.com/242382/the-summer-championship/teams/cali-gold-6th-mike?divisionteamid=4573941">The Summer Championship - Schedule - Jun 21-22, 2025</a></td></tr>
+<tr><td>06-21</td><td class="l">L 36-42</td><td>Lakeshow 12U Duckett</td><td>-</td><td>6th Boys Silver</td><td><a href="https://basketball.exposureevents.com/242382/the-summer-championship/teams/cali-gold-6th-mike?divisionteamid=4573941">The Summer Championship - Schedule - Jun 21-22, 2025</a></td></tr>
+<tr><td>06-21</td><td class="w">W 39-36</td><td>Delta Heat 12u Red</td><td>-</td><td>6th Boys Silver</td><td><a href="https://basketball.exposureevents.com/242382/the-summer-championship/teams/cali-gold-6th-mike?divisionteamid=4573941">The Summer Championship - Schedule - Jun 21-22, 2025</a></td></tr>
+<tr><td>06-15</td><td class="w">W 45-41</td><td>LSGR</td><td>-</td><td>6th Boys Black</td><td><a href="https://basketball.exposureevents.com/238020/bulldawgs-summer-in-the-city-2025/teams/cali-gold-mike?divisionteamid=4557205">BullDawgs Summer in the City 2025 - Schedule - Jun 14-15, 2025</a></td></tr>
+<tr><td>06-15</td><td class="l">L 28-44</td><td>All Gas Elite</td><td>-</td><td>6th Boys Black</td><td><a href="https://basketball.exposureevents.com/238020/bulldawgs-summer-in-the-city-2025/teams/cali-gold-mike?divisionteamid=4557205">BullDawgs Summer in the City 2025 - Schedule - Jun 14-15, 2025</a></td></tr>
+<tr><td>06-15</td><td class="l">L 40-43</td><td>Flight 5</td><td>-</td><td>4th/5th Boys Black</td><td><a href="https://basketball.exposureevents.com/238020/bulldawgs-summer-in-the-city-2025/teams/cali-gold-mike-4?divisionteamid=4557192">BullDawgs Summer in the City 2025 - Schedule - Jun 14-15, 2025</a></td></tr>
+<tr><td>06-15</td><td class="w">W 28-26</td><td>Bay City Blk 4</td><td>-</td><td>4th/5th Boys Black</td><td><a href="https://basketball.exposureevents.com/238020/bulldawgs-summer-in-the-city-2025/teams/cali-gold-mike-4?divisionteamid=4557192">BullDawgs Summer in the City 2025 - Schedule - Jun 14-15, 2025</a></td></tr>
+<tr><td>06-14</td><td class="w">W 54-51</td><td>BullDawgs</td><td>-</td><td>6th Boys Black</td><td><a href="https://basketball.exposureevents.com/238020/bulldawgs-summer-in-the-city-2025/teams/cali-gold-mike?divisionteamid=4557205">BullDawgs Summer in the City 2025 - Schedule - Jun 14-15, 2025</a></td></tr>
+<tr><td>06-14</td><td class="w">W 29-18</td><td>Ospreys Blk 4 Tim</td><td>-</td><td>4th/5th Boys Black</td><td><a href="https://basketball.exposureevents.com/238020/bulldawgs-summer-in-the-city-2025/teams/cali-gold-mike-4?divisionteamid=4557192">BullDawgs Summer in the City 2025 - Schedule - Jun 14-15, 2025</a></td></tr></tbody></table></section>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last last 12 games within 180 days; full record below spans all scored games.</footer>
+</div>
+</body>
+</html>

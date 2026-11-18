@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stl 8th grey:8th (14u) NorCal AAU</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../14u.html">&larr; 14U/8th Grade board</a>
+<nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../14u.html">14U/8th Grade</a></nav>
+<div class="detail-head">
+<h2>#142 stl 8th grey:8th</h2>
+<p class="sub">0.007 &middot; 12-9 all-time &middot; 30.4 PPG / 34.4 OPP / -4.0 DIFF / W1 STRK / 3-5 L10 &middot; tier mix bronze &middot; window 3-5 (last 8) &middot; SOS 0.043 &middot; 2026-11-17</p>
+</div>
+<section class="note"><h2>Why #142</h2><ul><li>Form 3-5 in-band (bronze, 3-5 overall); 50% sample kept (8g)</li><li>Best win #112 #12 Cali Gold 8th Kaden 37-32 (9/19, bronze)</li><li>Hardest test lost to #69 #5 Coastside 8th 34-49 (9/26)</li><li>Schedule bronze-leaning (bronze8), sos 0.043, no ghosts</li><li>Margin biggest +11 / closest -1 (window -4.0)</li></ul></section>
+<section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
+<section class="note"><h2>Full record (21 scored games, newest first)</h2>
+<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr><td>10-03</td><td class="w">W 32-21</td><td><a href="np-force-7th-8th-8th.html">NP Force 7th/8th</a></td><td>#166</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/11-stl-8th-grey?divisionteamid=5543653">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>10-03</td><td class="l">L 25-27</td><td><a href="ba-sonics-black-14u.html">BA Sonics 14u Black</a></td><td>#151</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/11-stl-8th-grey?divisionteamid=5543653">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-26</td><td class="l">L 34-49</td><td><a href="coastside-8th-8th.html">Coastside 8th</a></td><td>#69</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/11-stl-8th-grey?divisionteamid=5543653">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-26</td><td class="l">L 18-44</td><td><a href="bay-area-impact-white-14u.html">Bay Area Impact 14u White</a></td><td>#58</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/11-stl-8th-grey?divisionteamid=5543653">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-19</td><td class="l">L 28-29</td><td><a href="sv-soldiers-prime-14u.html">SV Soldiers 14u Prime</a></td><td>#109</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/11-stl-8th-grey?divisionteamid=5543653">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-19</td><td class="w">W 37-32</td><td><a href="cali-gold-kaden-8th.html">Cali Gold 8th Kaden</a></td><td>#112</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/11-stl-8th-grey?divisionteamid=5543653">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-13</td><td class="w">W 39-28</td><td><a href="westbay-ospreys-8th-blue-8th.html">Westbay Ospreys 8th Blue</a></td><td>#140</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/11-stl-8th-grey?divisionteamid=5543653">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>09-13</td><td class="l">L 30-45</td><td>Peninsula Gold 13u UA Future</td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/277161/the-city-league/teams/11-stl-8th-grey?divisionteamid=5543653">The City League  - Schedule - Sep 12 - Oct 4, 2026</a></td></tr>
+<tr><td>03-22</td><td class="l">L 54-57</td><td><a href="hoopright-8th-wan-8th.html">Hoopright 8th Wan</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/stl-8th-grey?divisionteamid=5051335">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-21</td><td class="w">W 55-24</td><td><a href="24-8-academy-blue-14u.html">24/8 Academy 14u Blue</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/stl-8th-grey?divisionteamid=5051335">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-21</td><td class="w">W 57-53</td><td><a href="hoopright-8th-matt-8th.html">Hoopright 8th Matt</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/stl-8th-grey?divisionteamid=5051335">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>10-04</td><td class="w">W 48-26</td><td><a href="esface-8th-grader-hustlers-8th.html">Esface 8th Grader Hustlers</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/stl-8th-grey?divisionteamid=4723718">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>10-04</td><td class="w">W 49-33</td><td><a href="westbay-ospreys-8th-8th.html">Westbay Ospreys 8th</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/stl-8th-grey?divisionteamid=4723718">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-27</td><td class="w">W 60-25</td><td><a href="bay-city-8th-silver-8th.html">Bay City 8th Silver</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/stl-8th-grey?divisionteamid=4723718">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-27</td><td class="w">W 48-23</td><td><a href="esface-8th-grader-hustlers-8th.html">Esface 8th Grader Hustlers</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/stl-8th-grey?divisionteamid=4723718">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-21</td><td class="w">W 29-28</td><td><a href="westbay-ospreys-8th-8th.html">Westbay Ospreys 8th</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/stl-8th-grey?divisionteamid=4723718">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-21</td><td class="l">L 30-47</td><td><a href="olympic-club-8th-mike-8th.html">Olympic Club 8th Mike</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/stl-8th-grey?divisionteamid=4723718">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-14</td><td class="l">L 27-33</td><td><a href="flight-academy-blue-14u.html">Flight Academy 14u Blue</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/stl-8th-grey?divisionteamid=4723718">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-14</td><td class="w">W 44-35</td><td><a href="lunardis-8th-2-8th.html">Lunardis 8th 2</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/stl-8th-grey?divisionteamid=4723718">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-07</td><td class="l">L 19-27</td><td><a href="norcal-rush-14u.html">NorCal Rush 14u</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/stl-8th-grey?divisionteamid=4723718">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr>
+<tr><td>09-07</td><td class="w">W 46-33</td><td><a href="bay-city-8th-silver-8th.html">Bay City 8th Silver</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253428/the-city-league/teams/stl-8th-grey?divisionteamid=4723718">The City League - Schedule - Sep 6 - Oct 5, 2025</a></td></tr></tbody></table></section>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last last 8 games within 180 days; full record below spans all scored games.</footer>
+</div>
+</body>
+</html>

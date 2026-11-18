@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lakeshow blaisdell:14u (14u) NorCal AAU</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../14u.html">&larr; 14U/8th Grade board</a>
+<nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../14u.html">14U/8th Grade</a></nav>
+<div class="detail-head">
+<h2>Unranked lakeshow blaisdell:14u</h2>
+<p class="sub">unranked &middot; 22-12 all-time &middot; 36.1 PPG / 35.1 OPP / +1.0 DIFF / W1 STRK / 5-5 L10 &middot; tier mix bronze31/open3 &middot; window 22-12 (last 34) &middot; SOS - &middot; 2026-11-17</p>
+</div>
+
+<section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
+<section class="note"><h2>Full record (34 scored games, newest first)</h2>
+<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr><td>05-24</td><td class="w">W 27-26</td><td><a href="hayward-panthers-14u.html">Hayward Panthers</a></td><td>#51</td><td>14u Division 3</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-14u-blaisdell?divisionteamid=5299183">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-23</td><td class="l">L 16-19</td><td><a href="jso-spartans-14u.html">JSO Spartans</a></td><td>-</td><td>14u Division 3</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-14u-blaisdell?divisionteamid=5299183">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-23</td><td class="w">W 32-29</td><td>Reign City Silver 13U/14U</td><td>-</td><td>14u Division 3</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-14u-blaisdell?divisionteamid=5299183">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-10</td><td class="w">W 39-32</td><td><a href="sportstrong-white-8th.html">SportStrong - White</a></td><td>-</td><td>8th Grade D3</td><td><a href="https://basketball.exposureevents.com/265856/spring-live-tune-up/teams/lakeshow-14u-blaisdell?divisionteamid=5248830">Spring Live Tune Up - Schedule - May 9-10, 2026</a></td></tr>
+<tr><td>05-09</td><td class="w">W 30-19</td><td><a href="east-bay-bulldogs-8th.html">East Bay Bulldogs</a></td><td>-</td><td>8th Grade D3</td><td><a href="https://basketball.exposureevents.com/265856/spring-live-tune-up/teams/lakeshow-14u-blaisdell?divisionteamid=5248830">Spring Live Tune Up - Schedule - May 9-10, 2026</a></td></tr>
+<tr><td>05-09</td><td class="l">L 43-45</td><td><a href="bay-area-impact-black-14u.html">Bay Area Impact 14U Black</a></td><td>#82</td><td>8th Grade D3</td><td><a href="https://basketball.exposureevents.com/265856/spring-live-tune-up/teams/lakeshow-14u-blaisdell?divisionteamid=5248830">Spring Live Tune Up - Schedule - May 9-10, 2026</a></td></tr>
+<tr><td>02-15</td><td class="l">L 37-54</td><td><a href="norcal-elite-gray-jordan-14u.html">NorCal Elite 14u Gray (Jordan)</a></td><td>-</td><td>14u Division Yellow</td><td><a href="https://basketball.exposureevents.com/262895/presidents-day-shootout/teams/lakeshow-14u-blaisdell?divisionteamid=4970294">President's Day Shootout - Schedule - Feb 14-15, 2026</a></td></tr>
+<tr><td>02-14</td><td class="w">W 60-57</td><td><a href="fth-14u.html">FTH</a></td><td>-</td><td>14u Division Yellow</td><td><a href="https://basketball.exposureevents.com/262895/presidents-day-shootout/teams/lakeshow-14u-blaisdell?divisionteamid=4970294">President's Day Shootout - Schedule - Feb 14-15, 2026</a></td></tr>
+<tr><td>02-14</td><td class="l">L 31-34</td><td><a href="norcal-elite-gray-jordan-14u.html">NorCal Elite 14u Gray (Jordan)</a></td><td>-</td><td>14u Division Yellow</td><td><a href="https://basketball.exposureevents.com/262895/presidents-day-shootout/teams/lakeshow-14u-blaisdell?divisionteamid=4970294">President's Day Shootout - Schedule - Feb 14-15, 2026</a></td></tr>
+<tr><td>01-18</td><td class="l">L 31-36</td><td><a href="norcal-elite-black-jordan-14u.html">NorCal Elite Black-Jordan</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249868/mlk-showcase/teams/lakeshow-14u-blaisdell?divisionteamid=4925757">MLK Showcase - Schedule - Jan 17-18, 2026</a></td></tr>
+<tr><td>01-17</td><td class="w">W 49-40</td><td><a href="one-on-one-14u.html">One on One</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249868/mlk-showcase/teams/lakeshow-14u-blaisdell?divisionteamid=4925757">MLK Showcase - Schedule - Jan 17-18, 2026</a></td></tr>
+<tr><td>01-17</td><td class="l">L 32-37</td><td><a href="team-unlimited-14u.html">Team Unlimited</a></td><td>#99</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249868/mlk-showcase/teams/lakeshow-14u-blaisdell?divisionteamid=4925757">MLK Showcase - Schedule - Jan 17-18, 2026</a></td></tr>
+<tr><td>01-11</td><td class="l">L 28-56</td><td><a href="bay-area-impact-14u.html">Bay Area Impact</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/lakeshow-14u-blaisdell?divisionteamid=4914408">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-11</td><td class="w">W 32-23</td><td><a href="sbb-rebels-14u.html">SBB Rebels</a></td><td>#164</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/lakeshow-14u-blaisdell?divisionteamid=4914408">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="w">W 51-40</td><td><a href="hoop-elite-14u.html">Hoop Elite</a></td><td>#53</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/lakeshow-14u-blaisdell?divisionteamid=4914408">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="l">L 24-28</td><td><a href="sbb-rebels-14u.html">SBB Rebels</a></td><td>#164</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/252888/g365-new-years-bash/teams/lakeshow-14u-blaisdell?divisionteamid=4914408">G365 New Year's Bash - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>12-14</td><td class="l">L 55-60</td><td><a href="one-on-one-black-14u.html">One on One Black</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/lakeshow-14u-blaisdell?divisionteamid=4880646">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="w">W 45-43</td><td><a href="norcal-elite-silver-ellison-14u.html">NorCal Elite 14u Silver (Ellison)</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/lakeshow-14u-blaisdell?divisionteamid=4880646">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="w">W 25-24</td><td><a href="bay-area-knuckleheadz-14u.html">Bay Area Knuckleheadz</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/lakeshow-14u-blaisdell?divisionteamid=4880646">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-07</td><td class="w">W 38-32</td><td><a href="lakeshow-boyd-14u.html">Lakeshow 14U Boyd</a></td><td>#120</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-14u-blaisdell?divisionteamid=4870516">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-07</td><td class="w">W 31-30</td><td><a href="team-esface-8th-hustlers-14u.html">Team Esface 8th Hustlers</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-14u-blaisdell?divisionteamid=4870516">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-06</td><td class="w">W 42-34</td><td><a href="sbb-rebels-silver-14u.html">SBB Rebels Silver</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-14u-blaisdell?divisionteamid=4870516">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-06</td><td class="w">W 39-28</td><td><a href="team-esface-8th-hustlers-14u.html">Team Esface 8th Hustlers</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-14u-blaisdell?divisionteamid=4870516">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>11-09</td><td class="l">L 18-47</td><td><a href="bay-city-8th-black-14u.html">Bay City 8th Black</a></td><td>#180</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/lakeshow-14u-blaisdell?divisionteamid=4819483">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-09</td><td class="w">W 39-20</td><td><a href="sbb-rebels-14u.html">SBB Rebels</a></td><td>#164</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/lakeshow-14u-blaisdell?divisionteamid=4819483">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-08</td><td class="w">W 44-35</td><td><a href="team-esface-hustlers-8th.html">Team Esface 8th Grade Hustlers</a></td><td>-</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/lakeshow-14u-blaisdell?divisionteamid=4819483">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-08</td><td class="l">L 18-50</td><td><a href="hoops-n-dreams-14u.html">Hoops N Dreams</a></td><td>#61</td><td>14U/8th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249887/g365-rumble-in-the-town/teams/lakeshow-14u-blaisdell?divisionteamid=4819483">G365 Rumble in the Town - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>10-19</td><td class="w">W 47-42</td><td><a href="hoopright-8th-wan-8th.html">Hoopright 8th Wan</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/lakeshow-14u-blaisdell?divisionteamid=4784829">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="w">W 22-11</td><td><a href="hoopright-8th-dylan-8th.html">Hoopright 8th Dylan</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/lakeshow-14u-blaisdell?divisionteamid=4784829">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="w">W 43-29</td><td><a href="no-limit-8th-8th.html">No Limit 8th</a></td><td>-</td><td>8th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/lakeshow-14u-blaisdell?divisionteamid=4784829">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-12</td><td class="l">L 29-56</td><td><a href="lakeshow-boyd-14u.html">Lakeshow Boyd</a></td><td>#120</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-14u-blaisdell?divisionteamid=4772591">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>10-12</td><td class="w">W 43-33</td><td><a href="norcal-elite-black-jordan-14u.html">NorCal Elite 14u Black (Jordan)</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-14u-blaisdell?divisionteamid=4772591">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>10-11</td><td class="w">W 44-16</td><td><a href="fierce-empowered-14u.html">FIERCE Empowered</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-14u-blaisdell?divisionteamid=4772591">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>10-11</td><td class="w">W 44-30</td><td><a href="fth-14u.html">FTH</a></td><td>-</td><td>14u Divison 3</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-14u-blaisdell?divisionteamid=4772591">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr></tbody></table></section>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last last 34 games within 180 days; full record below spans all scored games.</footer>
+</div>
+</body>
+</html>

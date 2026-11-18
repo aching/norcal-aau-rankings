@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lakeshow bryant:11u 🏆 (11u) NorCal AAU</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../11u.html">&larr; 11U board</a>
+<nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../14u.html">14U/8th Grade</a></nav>
+<div class="detail-head">
+<h2>#53 lakeshow bryant:11u 🏆 [T]</h2>
+<p class="sub">0.012 &middot; 7-7 all-time &middot; 28.9 PPG / 29.9 OPP / -0.9 DIFF / L1 STRK / 4-6 L10 &middot; tier mix open,bronze &middot; window 7-7 (last 14) &middot; SOS 0.029 &middot; 2026-11-17</p>
+</div>
+<section class="note"><h2>Why #53</h2><ul><li>Form 6-3 in-band (bronze, 7-7 overall); 64% sample kept (14g)</li><li>Best win #34 Lakeshow 11U Jones 29-26 (10/11, bronze)</li><li>Hardest test lost to #7 Sportstrong 11U 27-41 (11/7) (step-up)</li><li>Schedule bronze-leaning (bronze9/open5), sos 0.029, 5 ghost</li><li>Margin biggest +23 / closest -2 (window -0.9)</li></ul></section>
+<section class="note"><h2>Titles (1)</h2><ul><li><span class="tbadge t-bronze">bronze</span> <a href="https://basketball.exposureevents.com/278257/bay-area-fall-classic/teams/lakeshow-11u-bryant?divisionteamid=5608022">champ 5th Boys Bronze [bronze] @ Bay Area Fall Classic - Schedule - Oct 17-18, 2026 (10/18/2026)</a></li></ul></section>
+<section class="note"><h2>Full record (14 scored games, newest first)</h2>
+<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr><td>11-15</td><td class="l">L 15-38</td><td><a href="team-unequal-11u.html">Team Unequal</a></td><td>#37</td><td>11u</td><td><a href="https://basketball.exposureevents.com/255460/bay-area-hoop-explosion/teams/lakeshow-bryant?divisionteamid=5661123">Bay Area Hoop Explosion - Schedule - Nov 14-15, 2026</a></td></tr>
+<tr><td>11-14</td><td class="w">W 19-18</td><td><a href="berkeley-red-devils-11u.html">Berkeley Red Devils</a></td><td>#85</td><td>11u</td><td><a href="https://basketball.exposureevents.com/255460/bay-area-hoop-explosion/teams/lakeshow-bryant?divisionteamid=5661123">Bay Area Hoop Explosion - Schedule - Nov 14-15, 2026</a></td></tr>
+<tr><td>11-14</td><td class="l">L 21-26</td><td><a href="iskill-11u.html">iSkill</a></td><td>#40</td><td>11u</td><td><a href="https://basketball.exposureevents.com/255460/bay-area-hoop-explosion/teams/lakeshow-bryant?divisionteamid=5661123">Bay Area Hoop Explosion - Schedule - Nov 14-15, 2026</a></td></tr>
+<tr><td>11-07</td><td class="l">L 27-41</td><td><a href="sportstrong-11u.html">Sportstrong 11U</a></td><td>#7</td><td>5th Grade (11U) Boys Division</td><td><a href="https://basketball.exposureevents.com/273461/bam-x-gsg-x-lakeshow-hardwood-showdown/teams/lakeshow-11u-bryant?divisionteamid=5650179">BAM x GSG x Lakeshow - Hardwood Showdown - Schedule - Nov 7-8, 2026</a></td></tr>
+<tr><td>11-07</td><td class="l">L 21-23</td><td><a href="norcal-elite-bruder-11u.html">NorCal Elite (Bruder) 11U</a></td><td>-</td><td>5th Grade (11U) Boys Division</td><td><a href="https://basketball.exposureevents.com/273461/bam-x-gsg-x-lakeshow-hardwood-showdown/teams/lakeshow-11u-bryant?divisionteamid=5650179">BAM x GSG x Lakeshow - Hardwood Showdown - Schedule - Nov 7-8, 2026</a></td></tr>
+<tr><td>10-18</td><td class="w">W 36-30</td><td><a href="bay-city-eb-red-11u.html">Bay City EB 11u Red</a></td><td>#77</td><td>5th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/278257/bay-area-fall-classic/teams/lakeshow-11u-bryant?divisionteamid=5608022">Bay Area Fall Classic - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-18</td><td class="l">L 35-44</td><td><a href="lakeshow-jones-11u.html">Lakeshow 11U Jones</a></td><td>#34</td><td>5th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/278257/bay-area-fall-classic/teams/lakeshow-11u-bryant?divisionteamid=5608022">Bay Area Fall Classic - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-17</td><td class="w">W 35-12</td><td>BA Regulators</td><td>-</td><td>5th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/278257/bay-area-fall-classic/teams/lakeshow-11u-bryant?divisionteamid=5608022">Bay Area Fall Classic - Schedule - Oct 17-18, 2026</a></td></tr>
+<tr><td>10-11</td><td class="l">L 22-48</td><td><a href="jso-spartans-11u.html">JSO Spartans</a></td><td>#47</td><td>11u Division 3</td><td><a href="https://basketball.exposureevents.com/275768/the-fall-extravaganza/teams/lakeshow-11u-bryant?divisionteamid=5594055">The Fall Extravaganza - Schedule - Oct 10-11, 2026</a></td></tr>
+<tr><td>10-11</td><td class="w">W 29-26</td><td><a href="lakeshow-jones-11u.html">Lakeshow 11U Jones</a></td><td>#34</td><td>11u Division 3</td><td><a href="https://basketball.exposureevents.com/275768/the-fall-extravaganza/teams/lakeshow-11u-bryant?divisionteamid=5594055">The Fall Extravaganza - Schedule - Oct 10-11, 2026</a></td></tr>
+<tr><td>10-10</td><td class="w">W 31-27</td><td><a href="east-bay-elements-11u.html">East Bay Elements</a></td><td>#79</td><td>11u Division 3</td><td><a href="https://basketball.exposureevents.com/275768/the-fall-extravaganza/teams/lakeshow-11u-bryant?divisionteamid=5594055">The Fall Extravaganza - Schedule - Oct 10-11, 2026</a></td></tr>
+<tr><td>10-10</td><td class="w">W 48-32</td><td><a href="just-respect-randy-11u.html">Just Respect-Randy</a></td><td>-</td><td>11u Division 3</td><td><a href="https://basketball.exposureevents.com/275768/the-fall-extravaganza/teams/lakeshow-11u-bryant?divisionteamid=5594055">The Fall Extravaganza - Schedule - Oct 10-11, 2026</a></td></tr>
+<tr><td>09-12</td><td class="l">L 16-24</td><td><a href="super-skills-elite-11u.html">Super Skills Elite</a></td><td>-</td><td>5th Grade (11U) Boys Division 3</td><td><a href="https://basketball.exposureevents.com/273130/the-tip-off-classic-powered-by-4ballers-only-x-bay-area-flight-x-gsg-hoops/teams/lakeshow-11u-bryant?divisionteamid=5545187">The Tip-Off Classic - Powered by 4Ballers Only x Bay Area Flight x GSG Hoops - Schedule - Sep 12-13, 2026</a></td></tr>
+<tr><td>09-12</td><td class="w">W 50-29</td><td><a href="delta-heat-red-11u.html">Delta Heat Red</a></td><td>-</td><td>5th Grade (11U) Boys Division 3</td><td><a href="https://basketball.exposureevents.com/273130/the-tip-off-classic-powered-by-4ballers-only-x-bay-area-flight-x-gsg-hoops/teams/lakeshow-11u-bryant?divisionteamid=5545187">The Tip-Off Classic - Powered by 4Ballers Only x Bay Area Flight x GSG Hoops - Schedule - Sep 12-13, 2026</a></td></tr></tbody></table></section>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last last 14 games within 180 days; full record below spans all scored games.</footer>
+</div>
+</body>
+</html>

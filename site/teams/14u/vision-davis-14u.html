@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>vision davis:14u (14u) NorCal AAU</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../14u.html">&larr; 14U/8th Grade board</a>
+<nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../14u.html">14U/8th Grade</a></nav>
+<div class="detail-head">
+<h2>Unranked vision davis:14u</h2>
+<p class="sub">unranked &middot; 30-6 all-time &middot; 49.3 PPG / 35.6 OPP / +13.7 DIFF / W3 STRK / 8-2 L10 &middot; tier mix open20/gold15/up1 &middot; window 30-6 (last 36) &middot; SOS - &middot; 2026-11-17</p>
+</div>
+
+<section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
+<section class="note"><h2>Full record (36 scored games, newest first)</h2>
+<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr><td>05-03</td><td class="w">W 56-50</td><td><a href="mvp-magic-14u.html">MVP Magic</a></td><td>-</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/261077/bay-area-spring-classic/teams/vision-davis?divisionteamid=5218620">Bay Area Spring Classic - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>05-03</td><td class="w">W 49-46</td><td><a href="mo-cali-royals-14u.html">Mo Cali Royals</a></td><td>-</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/261077/bay-area-spring-classic/teams/vision-davis?divisionteamid=5218620">Bay Area Spring Classic - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>05-02</td><td class="w">W W-F</td><td>Oakland Soldiers 13u (Ashton)</td><td>-</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/261077/bay-area-spring-classic/teams/vision-davis?divisionteamid=5218620">Bay Area Spring Classic - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>05-02</td><td class="l">L 43-45</td><td><a href="wolfpack-2030-14u.html">Wolfpack 2030</a></td><td>-</td><td>14u Division 1</td><td><a href="https://basketball.exposureevents.com/261077/bay-area-spring-classic/teams/vision-davis?divisionteamid=5218620">Bay Area Spring Classic - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>04-26</td><td class="l">L 50-63</td><td><a href="dream-team-14u.html">Dream Team</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/252010/g365-norcal-clash/teams/vision-davis?divisionteamid=5186720">G365 NorCal Clash - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-26</td><td class="w">W 35-32</td><td><a href="chosen-black-elite-14u.html">Chosen Black Elite</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/252010/g365-norcal-clash/teams/vision-davis?divisionteamid=5186720">G365 NorCal Clash - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-25</td><td class="w">W 60-47</td><td><a href="lakeshow-crawley-14u.html">Lakeshow 14u Crawley</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/252010/g365-norcal-clash/teams/vision-davis?divisionteamid=5186720">G365 NorCal Clash - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-25</td><td class="w">W 42-32</td><td><a href="bay-city-2030-14u.html">Bay City 2030</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/252010/g365-norcal-clash/teams/vision-davis?divisionteamid=5186720">G365 NorCal Clash - Schedule - Apr 25-26, 2026</a></td></tr>
+<tr><td>04-18</td><td class="w">W 43-30</td><td><a href="super-skills-elite-14u.html">Super Skills Elite 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262159/gsg-x-bam-bay-area-spring-jam/teams/vision-davis-14u?divisionteamid=5158709">GSG x BAM - Bay Area Spring Jam - Schedule - Apr 18-19, 2026</a></td></tr>
+<tr><td>04-18</td><td class="w">W 38-32</td><td><a href="tvb-blue-14u.html">TVB - Blue 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262159/gsg-x-bam-bay-area-spring-jam/teams/vision-davis-14u?divisionteamid=5158709">GSG x BAM - Bay Area Spring Jam - Schedule - Apr 18-19, 2026</a></td></tr>
+<tr><td>04-04</td><td class="w">W 55-12</td><td><a href="just-respect-black-14u.html">Just Respect Black 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262156/gsg-x-bam-easter-jam/teams/vision-davis-14u?divisionteamid=5100986">GSG x BAM - Easter Jam - Schedule - Apr 4, 2026</a></td></tr>
+<tr><td>04-04</td><td class="w">W 53-44</td><td><a href="mercado-basketball-orange-14u.html">Mercado Basketball Orange 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262156/gsg-x-bam-easter-jam/teams/vision-davis-14u?divisionteamid=5100986">GSG x BAM - Easter Jam - Schedule - Apr 4, 2026</a></td></tr>
+<tr><td>03-22</td><td class="w">W 28-25</td><td><a href="ca-storm-parham-14u.html">CA Storm (Parham) 14U</a></td><td>-</td><td>9th Grade (15U) Boys Division</td><td><a href="https://basketball.exposureevents.com/259699/king-of-sonoma-county-powered-by-battlegrounds-circuit/teams/vision-davis-14u?divisionteamid=5056237">King of Sonoma County powered by Battlegrounds Circuit - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-22</td><td class="w">W 41-30</td><td>CA Storm (Picard) 15U</td><td>-</td><td>9th Grade (15U) Boys Division</td><td><a href="https://basketball.exposureevents.com/259699/king-of-sonoma-county-powered-by-battlegrounds-circuit/teams/vision-davis-14u?divisionteamid=5056237">King of Sonoma County powered by Battlegrounds Circuit - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-21</td><td class="w">W 50-34</td><td>Bay Area Rebels 15U</td><td>-</td><td>9th Grade (15U) Boys Division</td><td><a href="https://basketball.exposureevents.com/259699/king-of-sonoma-county-powered-by-battlegrounds-circuit/teams/vision-davis-14u?divisionteamid=5056237">King of Sonoma County powered by Battlegrounds Circuit - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-21</td><td class="w">W 51-30</td><td>CA Storm (Septimo) 15U</td><td>-</td><td>9th Grade (15U) Boys Division</td><td><a href="https://basketball.exposureevents.com/259699/king-of-sonoma-county-powered-by-battlegrounds-circuit/teams/vision-davis-14u?divisionteamid=5056237">King of Sonoma County powered by Battlegrounds Circuit - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>11-30</td><td class="w">W 55-28</td><td><a href="east-county-hornets-black-14u.html">East County Hornets 14u Black</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/248003/free-team-registration-ftlotg-thanksgiving-tip-off/teams/vision-davis?divisionteamid=4858416">(Free Team Registration) FTLOTG: Thanksgiving Tip-Off - Schedule - Nov 29-30, 2025</a></td></tr>
+<tr><td>11-29</td><td class="l">L 35-93</td><td><a href="team-arsenal-14u.html">Team Arsenal</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/248003/free-team-registration-ftlotg-thanksgiving-tip-off/teams/vision-davis?divisionteamid=4858416">(Free Team Registration) FTLOTG: Thanksgiving Tip-Off - Schedule - Nov 29-30, 2025</a></td></tr>
+<tr><td>11-29</td><td class="w">W 46-36</td><td><a href="sfwhph-14u.html">SFWHPH 14U</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/248003/free-team-registration-ftlotg-thanksgiving-tip-off/teams/vision-davis?divisionteamid=4858416">(Free Team Registration) FTLOTG: Thanksgiving Tip-Off - Schedule - Nov 29-30, 2025</a></td></tr>
+<tr><td>11-15</td><td class="w">W 61-24</td><td><a href="east-bay-bulldogs-14u.html">East Bay Bulldogs</a></td><td>-</td><td>8th/9th Grade (14U/15U) Boys Division</td><td><a href="https://basketball.exposureevents.com/248668/gsg-x-bam-fall-showcase/teams/vision-davis?divisionteamid=4838828">GSG x BAM - Fall Showcase - Schedule - Nov 15-16, 2025</a></td></tr>
+<tr><td>11-15</td><td class="w">W 48-19</td><td><a href="pma-knights-14u.html">PMA Knights</a></td><td>-</td><td>8th/9th Grade (14U/15U) Boys Division</td><td><a href="https://basketball.exposureevents.com/248668/gsg-x-bam-fall-showcase/teams/vision-davis?divisionteamid=4838828">GSG x BAM - Fall Showcase - Schedule - Nov 15-16, 2025</a></td></tr>
+<tr><td>10-26</td><td class="l">L 58-61</td><td><a href="renegades-14u.html">Renegades</a></td><td>#5</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vision-davis?divisionteamid=4795352">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
+<tr><td>10-26</td><td class="w">W 53-44</td><td><a href="yba-elite-rize-14u.html">YBA Elite Rize</a></td><td>#102</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vision-davis?divisionteamid=4795352">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
+<tr><td>10-25</td><td class="l">L 35-49</td><td><a href="showtime-xvi-14u.html">Showtime XVI 14u</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vision-davis?divisionteamid=4795352">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
+<tr><td>10-25</td><td class="w">W 48-26</td><td><a href="team-unlimitted-14u.html">Team Unlimitted</a></td><td>-</td><td>14U/8th Grade Gold</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vision-davis?divisionteamid=4795352">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
+<tr><td>10-19</td><td class="w">W 56-28</td><td>Bay Area Rebels 15U</td><td>-</td><td>15U/9th Grade Boys Division</td><td><a href="https://basketball.exposureevents.com/248664/king-of-norcal-powered-by-battleground-circuit/teams/vision-davis-14u?divisionteamid=4785585">King of NorCal - Powered by Battleground Circuit - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-19</td><td class="l">L 34-41</td><td>California Storm (Richardson) 15U</td><td>-</td><td>16U/JV Boys Division</td><td><a href="https://basketball.exposureevents.com/248664/king-of-norcal-powered-by-battleground-circuit/teams/vision-davis-14u?divisionteamid=4785585">King of NorCal - Powered by Battleground Circuit - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="w">W 52-30</td><td><a href="california-storm-parham-14u.html">California Storm (Parham) 14U</a></td><td>-</td><td>15U/9th Grade Boys Division</td><td><a href="https://basketball.exposureevents.com/248664/king-of-norcal-powered-by-battleground-circuit/teams/vision-davis-14u?divisionteamid=4785585">King of NorCal - Powered by Battleground Circuit - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="w">W 51-20</td><td>California Storm (Picard) 15U</td><td>-</td><td>15U/9th Grade Boys Division</td><td><a href="https://basketball.exposureevents.com/248664/king-of-norcal-powered-by-battleground-circuit/teams/vision-davis-14u?divisionteamid=4785585">King of NorCal - Powered by Battleground Circuit - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-05</td><td class="w">W 44-22</td><td><a href="peninsula-gold-ua-future-14u.html">Peninsula Gold 14u UA Future</a></td><td>#11</td><td>14u Black Division</td><td><a href="https://basketball.exposureevents.com/234790/2025-october-hoop-fest/teams/vision-davis?divisionteamid=4760482">2025 October Hoop Fest - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>10-05</td><td class="w">W 67-40</td><td><a href="whph-14u.html">WHPH</a></td><td>#38</td><td>14u Black Division</td><td><a href="https://basketball.exposureevents.com/234790/2025-october-hoop-fest/teams/vision-davis?divisionteamid=4760482">2025 October Hoop Fest - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>10-04</td><td class="w">W 41-35</td><td><a href="one-on-one-basketball-gold-14u.html">One on one basketball Gold</a></td><td>-</td><td>14u Black Division</td><td><a href="https://basketball.exposureevents.com/234790/2025-october-hoop-fest/teams/vision-davis?divisionteamid=4760482">2025 October Hoop Fest - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>10-04</td><td class="w">W 68-27</td><td>Oakland Soldiers 13u (Ashton)</td><td>-</td><td>14u Black Division</td><td><a href="https://basketball.exposureevents.com/234790/2025-october-hoop-fest/teams/vision-davis?divisionteamid=4760482">2025 October Hoop Fest - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr><td>09-13</td><td class="w">W 54-29</td><td><a href="supreme-kourt-14u.html">Supreme Kourt 14U/15U</a></td><td>-</td><td>15U/9th Grade Boys Division</td><td><a href="https://basketball.exposureevents.com/248659/bam-x-gsg-norcal-shootout/teams/vision-davis-14u?divisionteamid=4733413">BAM x GSG - NorCal Shootout - Schedule - Sep 13-14, 2025</a></td></tr>
+<tr><td>09-06</td><td class="w">W 61-22</td><td><a href="cda-14u.html">CDA 14U</a></td><td>#159</td><td>14U/8th Grade Boys Division</td><td><a href="https://basketball.exposureevents.com/248658/bam-x-gsg-fall-tip-off/teams/vision-davis-14u?divisionteamid=4725009">BAM x GSG - Fall Tip-off - Schedule - Sep 6-7, 2025</a></td></tr>
+<tr><td>09-06</td><td class="w">W 66-20</td><td><a href="tvb-blue-14u.html">TVB Blue 14U</a></td><td>-</td><td>14U/8th Grade Boys Division</td><td><a href="https://basketball.exposureevents.com/248658/bam-x-gsg-fall-tip-off/teams/vision-davis-14u?divisionteamid=4725009">BAM x GSG - Fall Tip-off - Schedule - Sep 6-7, 2025</a></td></tr></tbody></table></section>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last last 36 games within 180 days; full record below spans all scored games.</footer>
+</div>
+</body>
+</html>
