@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lakeshow harris:13u (13u) NorCal AAU</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../13u.html">&larr; 13U/7th Grade board</a>
+<nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a></nav>
+<div class="detail-head">
+<h2>Unranked lakeshow harris:13u</h2>
+<p class="sub">unranked &middot; 14-21 all-time &middot; 32.3 PPG / 38.8 OPP / -6.5 DIFF / W2 STRK / 5-5 L10 &middot; tier mix bronze27/mix4/open4 &middot; window 14-21 (last 35) &middot; SOS - &middot; 2026-11-17</p>
+</div>
+
+<section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
+<section class="note"><h2>Full record (35 scored games, newest first)</h2>
+<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr><td>07-26</td><td class="w">W 50-49</td><td><a href="jph-elite-13u.html">JPH ELITE</a></td><td>-</td><td>13U/7th Grade Silver/Bronze</td><td><a href="https://basketball.exposureevents.com/252640/g365-summer-slam/teams/lakeshow-13u-harris?divisionteamid=5483849">G365 Summer Slam - Schedule - Jul 25-26, 2026</a></td></tr>
+<tr><td>07-26</td><td class="w">W 49-31</td><td><a href="team-locked-in-13u.html">Team Locked-In</a></td><td>-</td><td>13U/7th Grade Silver/Bronze</td><td><a href="https://basketball.exposureevents.com/252640/g365-summer-slam/teams/lakeshow-13u-harris?divisionteamid=5483849">G365 Summer Slam - Schedule - Jul 25-26, 2026</a></td></tr>
+<tr><td>07-25</td><td class="l">L 52-68</td><td><a href="jph-elite-13u.html">JPH ELITE</a></td><td>-</td><td>13U/7th Grade Silver/Bronze</td><td><a href="https://basketball.exposureevents.com/252640/g365-summer-slam/teams/lakeshow-13u-harris?divisionteamid=5483849">G365 Summer Slam - Schedule - Jul 25-26, 2026</a></td></tr>
+<tr><td>07-25</td><td class="l">L 17-58</td><td><a href="ballgame-academy-13u.html">Ballgame Academy</a></td><td>-</td><td>13U/7th Grade Silver/Bronze</td><td><a href="https://basketball.exposureevents.com/252640/g365-summer-slam/teams/lakeshow-13u-harris?divisionteamid=5483849">G365 Summer Slam - Schedule - Jul 25-26, 2026</a></td></tr>
+<tr><td>05-24</td><td class="l">L 25-39</td><td><a href="lakeshow-johnson-13u.html">Lakeshow 13U Johnson</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-13u-harris?divisionteamid=5299152">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-24</td><td class="l">L 26-41</td><td><a href="bay-wolves-13u.html">Bay Wolves</a></td><td>#143</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-13u-harris?divisionteamid=5299152">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-23</td><td class="w">W 39-33</td><td><a href="bay-wolves-13u.html">Bay Wolves</a></td><td>#143</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-13u-harris?divisionteamid=5299152">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-23</td><td class="l">L 22-30</td><td><a href="sv-soldiers-select-13u.html">SV Soldiers Select</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/261078/memorial-day-mayhem/teams/lakeshow-13u-harris?divisionteamid=5299152">Memorial Day Mayhem - Schedule - May 23-24, 2026</a></td></tr>
+<tr><td>05-03</td><td class="w">W 23-19</td><td><a href="norcal-elite-blue-13u.html">NorCal Elite - Blue</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/261077/bay-area-spring-classic/teams/lakeshow-13u-harris?divisionteamid=5218784">Bay Area Spring Classic - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>05-02</td><td class="w">W 36-9</td><td><a href="sportstrong-gold-13u.html">Sportstrong Gold</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/261077/bay-area-spring-classic/teams/lakeshow-13u-harris?divisionteamid=5218784">Bay Area Spring Classic - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>05-02</td><td class="w">W 30-29</td><td><a href="norcal-elite-black-13u.html">NorCal Elite - Black</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/261077/bay-area-spring-classic/teams/lakeshow-13u-harris?divisionteamid=5218784">Bay Area Spring Classic - Schedule - May 2-3, 2026</a></td></tr>
+<tr><td>02-15</td><td class="w">W 44-41</td><td><a href="norcal-elite-gold-jalen-13u.html">NorCal Elite 13u Gold (Jalen)</a></td><td>-</td><td>13u Division Yellow</td><td><a href="https://basketball.exposureevents.com/262895/presidents-day-shootout/teams/lakeshow-13u-harris?divisionteamid=4970304">President's Day Shootout - Schedule - Feb 14-15, 2026</a></td></tr>
+<tr><td>02-15</td><td class="w">W 44-36</td><td><a href="all-in-elite-nor-cal-13u.html">All In Elite Nor-Cal</a></td><td>-</td><td>13u Division Yellow</td><td><a href="https://basketball.exposureevents.com/262895/presidents-day-shootout/teams/lakeshow-13u-harris?divisionteamid=4970304">President's Day Shootout - Schedule - Feb 14-15, 2026</a></td></tr>
+<tr><td>02-14</td><td class="l">L 22-38</td><td><a href="trust-basketball-13u.html">Trust Basketball</a></td><td>-</td><td>13u Division Yellow</td><td><a href="https://basketball.exposureevents.com/262895/presidents-day-shootout/teams/lakeshow-13u-harris?divisionteamid=4970304">President's Day Shootout - Schedule - Feb 14-15, 2026</a></td></tr>
+<tr><td>02-14</td><td class="w">W 57-26</td><td><a href="cda-13u.html">CDA</a></td><td>#80</td><td>13u Division Yellow</td><td><a href="https://basketball.exposureevents.com/262895/presidents-day-shootout/teams/lakeshow-13u-harris?divisionteamid=4970304">President's Day Shootout - Schedule - Feb 14-15, 2026</a></td></tr>
+<tr><td>01-11</td><td class="l">L 32-35</td><td><a href="sportstrong-red-13u.html">Sportstrong Red</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/249867/mlk-tune-up/teams/lakeshow-harris?divisionteamid=4914824">MLK TUNE UP - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="l">L 26-38</td><td><a href="norcal-elite-silver-jalen-13u.html">NorCal Elite Silver-Jalen</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/249867/mlk-tune-up/teams/lakeshow-harris?divisionteamid=4914824">MLK TUNE UP - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>01-10</td><td class="l">L 28-66</td><td><a href="hoop-familia-rastafari-13u.html">Hoop Familia - Rastafari</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/249867/mlk-tune-up/teams/lakeshow-harris?divisionteamid=4914824">MLK TUNE UP - Schedule - Jan 10-11, 2026</a></td></tr>
+<tr><td>12-14</td><td class="w">W 40-29</td><td><a href="norcal-elite-gray-carter-13u.html">NorCal Elite 13u Gray (Carter)</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/lakeshow-13u-harris?divisionteamid=4880679">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="l">L 24-61</td><td><a href="sportstrong-gray-13u.html">Sportstrong-Gray</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/lakeshow-13u-harris?divisionteamid=4880679">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-13</td><td class="l">L 24-45</td><td><a href="sportstrong-white-13u.html">Sportstrong White</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/249877/jingle-jam/teams/lakeshow-13u-harris?divisionteamid=4880679">Jingle Jam - Schedule - Dec 13-14, 2025</a></td></tr>
+<tr><td>12-07</td><td class="l">L 22-25</td><td><a href="team-esface-7th-goers-13u.html">Team Esface 7th Goers</a></td><td>#17</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-13u-harris?divisionteamid=4870496">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-07</td><td class="l">L 25-27</td><td><a href="just-hoop-black-13u.html">Just Hoop Black</a></td><td>-</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-13u-harris?divisionteamid=4870496">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-06</td><td class="l">L 21-56</td><td><a href="wildcats-elite-13u.html">Wildcats Elite</a></td><td>-</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-13u-harris?divisionteamid=4870496">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>12-06</td><td class="l">L 34-41</td><td><a href="just-hoop-rise-13u.html">Just Hoop RISE</a></td><td>-</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249890/g365-holiday-classic/teams/lakeshow-13u-harris?divisionteamid=4870496">G365 Holiday Classic - Schedule - Dec 6-7, 2025</a></td></tr>
+<tr><td>11-09</td><td class="l">L 15-35</td><td><a href="trust-basketball-silver-13u.html">Trust Basketball 13u Silver</a></td><td>-</td><td>13u D3</td><td><a href="https://basketball.exposureevents.com/234792/bay-area-hoop-explosion/teams/lakeshow-13u-harris?divisionteamid=4819352">Bay Area Hoop Explosion - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-08</td><td class="l">L 31-47</td><td><a href="underdogs-eb-red-13u.html">Underdogs EB Red</a></td><td>-</td><td>13u D3</td><td><a href="https://basketball.exposureevents.com/234792/bay-area-hoop-explosion/teams/lakeshow-13u-harris?divisionteamid=4819352">Bay Area Hoop Explosion - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>11-08</td><td class="l">L 26-36</td><td><a href="norcal-elite-black-french-13u.html">NorCal Elite 13u Black (French)</a></td><td>-</td><td>13u D3</td><td><a href="https://basketball.exposureevents.com/234792/bay-area-hoop-explosion/teams/lakeshow-13u-harris?divisionteamid=4819352">Bay Area Hoop Explosion - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr><td>10-19</td><td class="l">L 26-36</td><td><a href="baas-dragons-7th-black-7th.html">BAAS Dragons 7th Black</a></td><td>-</td><td>7th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/lakeshow-13u-harris?divisionteamid=4784802">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-19</td><td class="w">W 42-22</td><td><a href="cali-gold-7th-timmy-7th.html">Cali Gold 7th Timmy</a></td><td>-</td><td>7th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/lakeshow-13u-harris?divisionteamid=4784802">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="w">W 45-35</td><td><a href="sportstrong-gold-13u.html">SportStrong 13u Gold</a></td><td>-</td><td>7th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/lakeshow-13u-harris?divisionteamid=4784802">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-18</td><td class="w">W 40-38</td><td><a href="hoopright-7th-dylan-7th.html">Hoopright 7th Dylan</a></td><td>-</td><td>7th Boys Bronze</td><td><a href="https://basketball.exposureevents.com/253746/fall-classic/teams/lakeshow-13u-harris?divisionteamid=4784802">Fall Classic - Schedule - Oct 18-19, 2025</a></td></tr>
+<tr><td>10-12</td><td class="l">L 38-69</td><td><a href="pvbc-mavericks-13u.html">PVBC Mavericks</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-13u-harris?divisionteamid=4772619">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>10-11</td><td class="w">W 34-32</td><td><a href="justhoop-black-t-13u.html">Justhoop Black-T</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-13u-harris?divisionteamid=4772619">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr><td>10-11</td><td class="l">L 22-37</td><td><a href="mba-triple-threat-phelps-13u.html">MBA Triple Threat-Phelps</a></td><td>-</td><td>13u Division 3</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/lakeshow-13u-harris?divisionteamid=4772619">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr></tbody></table></section>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last last 35 games within 180 days; full record below spans all scored games.</footer>
+</div>
+</body>
+</html>

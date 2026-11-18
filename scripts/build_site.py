@@ -28,6 +28,7 @@ OUT = REPO / "site"
 COHORTS = {
     "11u": ("11U", "11", "11U boys -- last-15 form, active-only"),
     "12u": ("12U/6th Grade", "12", "12U / 6th grade boys -- last-15 form, active-only"),
+    "13u": ("13U/7th Grade", "13", "13U / 7th grade boys -- last-15 form, active-only"),
     "14u": ("14U/8th Grade", "14", "14U / 8th grade boys -- last-15 form, active-only"),
 }
 
@@ -254,7 +255,7 @@ Ghosts (&lt;9g) give no opponent strength; only prelim top-10 confer credit; sco
 <th class="num" data-k="diff">DIFF</th><th data-k="strk">STRK</th><th data-k="l10">L10</th>
 <th class="num" data-k="sos">SOS</th>
 <th class="num" data-k="margin">Margin</th><th data-k="latest">Latest</th>
-</tr></thead></tr></thead>
+</tr></thead>
 <tbody id="rows"></tbody>
 </table>
 <section class="note"><h2>Titles (* = prestige Made Hoops/G365/OGP)</h2><ul>{titles}</ul></section>
@@ -535,8 +536,8 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of):
 
 
 def build_board(cohort, title, sub, gen):
-    num = {"11u": "11", "12u": "12", "14u": "14"}[cohort]
-    level_arg = {"11u": "11u", "12u": "12u,6th", "14u": "14u,8th"}[cohort]
+    num = {"11u": "11", "12u": "12", "13u": "13", "14u": "14"}[cohort]
+    level_arg = {"11u": "11u", "12u": "12u,6th", "13u": "13u,7th", "14u": "14u,8th"}[cohort]
     rows, titles, tmnote, meta, team_titles = parse_rep(f"/tmp/rep{num}.md")
     logs = game_logs(level_arg, cohort)
     data = []
