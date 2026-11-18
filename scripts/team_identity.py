@@ -86,6 +86,18 @@ OVERRIDES = [
     (("tm griffins 12u", None), "tm:griffins-12u"),
     (("tm basketball", "12u"), "tm:griffins-12u"),
     (("tm basketball", "6th"), "tm:griffins-12u"),
+    # TM Vipers rename (user-confirmed Nov 2026): bare "TM Basketball"
+    # 11U entries (year-round, latest 10/24 Soldiers Halloween) and
+    # explicit "TM Vipers 11U" entries (GSG x BAM Oct 31 + Nov 7) are
+    # the same squad -- the registration label gained "Vipers".
+    # Same program, adjacent windows, never co-occur. Merge into the
+    # history-carrying tm basketball:11u id. The age travels with the
+    # name ("TM Vipers 11U" in a 6th division = playing up, still the squad),
+    # consistent with the Griffins/BMG merges. Other TM 11U squads (Club,
+    # Dragons, Warriors, bare TM) which remain separate ids.
+    (("tm vipers 11u", "11u"), "tm basketball:11u"),
+    (("tm vipers 11u", "5th"), "tm basketball:11u"),
+    (("tm vipers 11u", None), "tm basketball:11u"),
     # Cali Gold ranked 8th squads
     (("cali gold", "mike"), "cali-gold:mike-8th"),
     (("cali gold", "brian"), "cali-gold:brian-8th"),
