@@ -156,7 +156,16 @@ OVERRIDES = [
     # the "8th/" remainder, so pin the rule on the division blob instead).
     (("norcal elite 14u (allocco) 8th/14u", "14u"), "norcal elite allocco:14u"),
     (("norcal elite 14u (allocco) 8th/14u", "8th"), "norcal elite allocco:14u"),
-    # BMG Prospects (user-confirmed Nov 2026): "BMG Prospects 14u 8th/14U"
+    # BMG 13U flagship (user-confirmed Nov 2026): "BMG 13u" (Oct Bay Area
+    # Fall Classic 7th Boys Gold, 4-0) and "BMG 13u Elite" (Sep G365 King
+    # of the Town + Nov Rumble, 5-2) are the same squad -- merge into
+    # bmg:13u. Verified: never co-occur in the same event. Prospects /
+    # Select / Premier / Prime / National / Soldiers Elite stay separate
+    # (different tiers/squads; Premier+Prime co-occur with Elite events).
+    (("bmg 13u elite", "13u"), "bmg:13u"),
+    (("bmg 13u elite", "7th"), "bmg:13u"),
+    (("bmg 13u elite", None), "bmg:13u"),
+    # BMG Prospects (user-confirmed Nov 2026): \"BMG Prospects 14u 8th/14U\"
     # (FB Fall Classic 9/19-20, 4-0 silver) is the same squad as
     # "BMG 14U/14u Prospects" (EE Aug-Nov). Same FastBreak-suffix split,
     # same program/level; never co-occur. 19 games combined.
