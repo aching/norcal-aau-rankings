@@ -98,6 +98,9 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
 table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
 table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+details { margin-top: 4px; }
+summary { cursor: pointer; color: var(--mut); font-size: 13px; }
+details div { margin: 3px 0 3px 12px; font-size: 13px; }
 .count { font-size: 12px; color: var(--mut); }
 @media (max-width: 700px) {
   table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
@@ -119,9 +122,9 @@ table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical
 <table class="hist">
 <thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
 <tbody>
-<tr><td style="white-space:nowrap">09/04</td><td><a href="https://basketball.exposureevents.com/276668/midnight-basketball-league">Midnight Basketball League</a><br><span class="count">Oakland</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">04/03</td><td><a href="https://basketball.exposureevents.com/266890/midnight-basketball-league">Midnight Basketball League</a><br><span class="count">Oakland</span></td><td>31</td></tr>
-<tr><td style="white-space:nowrap">09/05</td><td><a href="https://basketball.exposureevents.com/253451/midnight-basketball-league">Midnight Basketball League</a><br><span class="count">Oakland</span></td><td>31</td></tr>
+<tr><td style="white-space:nowrap">09/04</td><td><a href="https://basketball.exposureevents.com/276668/midnight-basketball-league">Midnight Basketball League</a> (<a href="https://basketball.exposureevents.com/276668/midnight-basketball-league/schedule">schedule/teams</a>)<br><span class="count">Oakland</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/03</td><td><a href="https://basketball.exposureevents.com/266890/midnight-basketball-league">Midnight Basketball League</a> <details><summary>who played (8 teams, 1 divisions)</summary><div><b>Midnight Basketball League</b> (8): MORE THAN FAMILY, PURPLE AND GOLD DOGS, TEAM RENZO, TEAM TROJAN SELECT, TIGER BASKETBALL, WEST COAST FIRE, WEST COAST FIRE BLACK, WOLVES</div></details><br><span class="count">Oakland</span></td><td>31</td></tr>
+<tr><td style="white-space:nowrap">09/05</td><td><a href="https://basketball.exposureevents.com/253451/midnight-basketball-league">Midnight Basketball League</a> <details><summary>who played (8 teams, 1 divisions)</summary><div><b>Midnight Basketball League</b> (8): More Than Family, NAVY BLUE WARRIORS, PARK STREET PUMAS, Purple &amp; Gold, RENZO, TIGER BASKETBALL, West Coast Fire, XOVER</div></details><br><span class="count">Oakland</span></td><td>31</td></tr>
 </tbody>
 </table>
 </div>

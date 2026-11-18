@@ -98,6 +98,9 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
 table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
 table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+details { margin-top: 4px; }
+summary { cursor: pointer; color: var(--mut); font-size: 13px; }
+details div { margin: 3px 0 3px 12px; font-size: 13px; }
 .count { font-size: 12px; color: var(--mut); }
 @media (max-width: 700px) {
   table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
@@ -119,19 +122,19 @@ table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical
 <table class="hist">
 <thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
 <tbody>
-<tr><td style="white-space:nowrap">10/31</td><td><a href="https://basketball.exposureevents.com/266767/fall-frenzy-tip-off-classic">FALL FRENZY TIP OFF CLASSIC</a><br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">09/19</td><td><a href="https://basketball.exposureevents.com/266766/coaches-vs-cancer-classic">COACHES VS CANCER CLASSIC</a><br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">08/08</td><td><a href="https://basketball.exposureevents.com/266765/the-champions-cup">THE CHAMPIONS CUP</a><br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">06/20</td><td><a href="https://basketball.exposureevents.com/266764/beat-the-heat-showcase">BEAT THE HEAT SHOWCASE</a><br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/266763/az-summer-jam">AZ SUMMER JAM</a><br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">04/11</td><td><a href="https://basketball.exposureevents.com/266761/the-battlegrounds">THE BATTLEGROUNDS</a><br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">01/03</td><td><a href="https://basketball.exposureevents.com/236797/holiday-hoopfest-2026">Holiday Hoopfest 2026</a><br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">11/29</td><td><a href="https://basketball.exposureevents.com/236796/the-hoopsgiving-classic">THE HOOPSGIVING CLASSIC</a><br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">11/01</td><td><a href="https://basketball.exposureevents.com/247884/salute-to-service-shootout">SALUTE TO SERVICE SHOOTOUT</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">10/11</td><td><a href="https://basketball.exposureevents.com/247883/fall-frenzy-tip-off-challenge">FALL FRENZY TIP OFF CHALLENGE</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">09/20</td><td><a href="https://basketball.exposureevents.com/236795/the-coaches-vs-cancer-classic">THE COACHES VS. CANCER CLASSIC</a><br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">08/09</td><td><a href="https://basketball.exposureevents.com/236794/the-champions-cup-series-regional-finale">THE CHAMPIONS CUP SERIES REGIONAL FINALE</a><br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">07/12</td><td><a href="https://basketball.exposureevents.com/247570/the-stage">The Stage</a><br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/31</td><td><a href="https://basketball.exposureevents.com/266767/fall-frenzy-tip-off-classic">FALL FRENZY TIP OFF CLASSIC</a> (<a href="https://basketball.exposureevents.com/266767/fall-frenzy-tip-off-classic/schedule">schedule/teams</a>)<br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/19</td><td><a href="https://basketball.exposureevents.com/266766/coaches-vs-cancer-classic">COACHES VS CANCER CLASSIC</a> (<a href="https://basketball.exposureevents.com/266766/coaches-vs-cancer-classic/schedule">schedule/teams</a>)<br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/08</td><td><a href="https://basketball.exposureevents.com/266765/the-champions-cup">THE CHAMPIONS CUP</a> (<a href="https://basketball.exposureevents.com/266765/the-champions-cup/schedule">schedule/teams</a>)<br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/20</td><td><a href="https://basketball.exposureevents.com/266764/beat-the-heat-showcase">BEAT THE HEAT SHOWCASE</a> (<a href="https://basketball.exposureevents.com/266764/beat-the-heat-showcase/schedule">schedule/teams</a>)<br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/266763/az-summer-jam">AZ SUMMER JAM</a> (<a href="https://basketball.exposureevents.com/266763/az-summer-jam/schedule">schedule/teams</a>)<br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/11</td><td><a href="https://basketball.exposureevents.com/266761/the-battlegrounds">THE BATTLEGROUNDS</a> (<a href="https://basketball.exposureevents.com/266761/the-battlegrounds/schedule">schedule/teams</a>)<br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/03</td><td><a href="https://basketball.exposureevents.com/236797/holiday-hoopfest-2026">Holiday Hoopfest 2026</a> (<a href="https://basketball.exposureevents.com/236797/holiday-hoopfest-2026/schedule">schedule/teams</a>)<br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/29</td><td><a href="https://basketball.exposureevents.com/236796/the-hoopsgiving-classic">THE HOOPSGIVING CLASSIC</a> (<a href="https://basketball.exposureevents.com/236796/the-hoopsgiving-classic/schedule">schedule/teams</a>)<br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/01</td><td><a href="https://basketball.exposureevents.com/247884/salute-to-service-shootout">SALUTE TO SERVICE SHOOTOUT</a> (<a href="https://basketball.exposureevents.com/247884/salute-to-service-shootout/schedule">schedule/teams</a>)<br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/11</td><td><a href="https://basketball.exposureevents.com/247883/fall-frenzy-tip-off-challenge">FALL FRENZY TIP OFF CHALLENGE</a> (<a href="https://basketball.exposureevents.com/247883/fall-frenzy-tip-off-challenge/schedule">schedule/teams</a>)<br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/20</td><td><a href="https://basketball.exposureevents.com/236795/the-coaches-vs-cancer-classic">THE COACHES VS. CANCER CLASSIC</a> (<a href="https://basketball.exposureevents.com/236795/the-coaches-vs-cancer-classic/schedule">schedule/teams</a>)<br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/09</td><td><a href="https://basketball.exposureevents.com/236794/the-champions-cup-series-regional-finale">THE CHAMPIONS CUP SERIES REGIONAL FINALE</a> (<a href="https://basketball.exposureevents.com/236794/the-champions-cup-series-regional-finale/schedule">schedule/teams</a>)<br><span class="count">PHOENIX</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/12</td><td><a href="https://basketball.exposureevents.com/247570/the-stage">The Stage</a> (<a href="https://basketball.exposureevents.com/247570/the-stage/schedule">schedule/teams</a>)<br><span class="count">Phoenix</span></td><td>&mdash;</td></tr>
 </tbody>
 </table>
 </div>

@@ -98,6 +98,9 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
 table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
 table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+details { margin-top: 4px; }
+summary { cursor: pointer; color: var(--mut); font-size: 13px; }
+details div { margin: 3px 0 3px 12px; font-size: 13px; }
 .count { font-size: 12px; color: var(--mut); }
 @media (max-width: 700px) {
   table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
@@ -119,25 +122,25 @@ table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical
 <table class="hist">
 <thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
 <tbody>
-<tr><td style="white-space:nowrap">09/26</td><td><a href="https://basketball.exposureevents.com/262935/fall-hoops-fest">Fall Hoops Fest</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">09/06</td><td><a href="https://basketball.exposureevents.com/262934/indoor-3-on-3">Indoor 3 on 3 </a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">07/24</td><td><a href="https://basketball.exposureevents.com/257362/summer-slam">Summer Slam</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">07/11</td><td><a href="https://basketball.exposureevents.com/271052/2026-summer-league">2026 Summer League</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">06/20</td><td><a href="https://basketball.exposureevents.com/257360/summer-sensational">Summer Sensational</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/257359/memorial-day-invitational">Memorial Day Invitational</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">01/24</td><td><a href="https://basketball.exposureevents.com/262896/2026-delta-winter-league">2026 Delta Winter League</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">01/17</td><td><a href="https://basketball.exposureevents.com/257357/king-of-hoops">King of Hoops</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">01/17</td><td><a href="https://basketball.exposureevents.com/261063/2026-winter-league">2026 Winter League</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">12/13</td><td><a href="https://basketball.exposureevents.com/238180/christmas-classic">Christmas Classic</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">11/29</td><td><a href="https://basketball.exposureevents.com/238179/thanksgiving-for-hoops">Thanksgiving For Hoops</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">10/04</td><td><a href="https://basketball.exposureevents.com/255553/2025-delta-fall-league">2025 Delta Fall League</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">09/27</td><td><a href="https://basketball.exposureevents.com/238177/fall-hoops-fest">Fall Hoops Fest</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">09/20</td><td><a href="https://basketball.exposureevents.com/252289/2025-fall-league">2025 Fall League</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">09/07</td><td><a href="https://basketball.exposureevents.com/238176/indoor-3-on-3">Indoor 3 on 3 </a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">08/02</td><td><a href="https://basketball.exposureevents.com/249734/2025-summer-delta-league">2025 Summer Delta League</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">07/25</td><td><a href="https://basketball.exposureevents.com/238174/international-games">International Games</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">07/12</td><td><a href="https://basketball.exposureevents.com/246975/2025-summer-league">2025 Summer League</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">06/21</td><td><a href="https://basketball.exposureevents.com/238173/summer-sensational">Summer Sensational</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/26</td><td><a href="https://basketball.exposureevents.com/262935/fall-hoops-fest">Fall Hoops Fest</a> (<a href="https://basketball.exposureevents.com/262935/fall-hoops-fest/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/06</td><td><a href="https://basketball.exposureevents.com/262934/indoor-3-on-3">Indoor 3 on 3 </a> (<a href="https://basketball.exposureevents.com/262934/indoor-3-on-3/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/24</td><td><a href="https://basketball.exposureevents.com/257362/summer-slam">Summer Slam</a> (<a href="https://basketball.exposureevents.com/257362/summer-slam/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/11</td><td><a href="https://basketball.exposureevents.com/271052/2026-summer-league">2026 Summer League</a> (<a href="https://basketball.exposureevents.com/271052/2026-summer-league/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/20</td><td><a href="https://basketball.exposureevents.com/257360/summer-sensational">Summer Sensational</a> (<a href="https://basketball.exposureevents.com/257360/summer-sensational/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/257359/memorial-day-invitational">Memorial Day Invitational</a> (<a href="https://basketball.exposureevents.com/257359/memorial-day-invitational/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/24</td><td><a href="https://basketball.exposureevents.com/262896/2026-delta-winter-league">2026 Delta Winter League</a> (<a href="https://basketball.exposureevents.com/262896/2026-delta-winter-league/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/17</td><td><a href="https://basketball.exposureevents.com/257357/king-of-hoops">King of Hoops</a> (<a href="https://basketball.exposureevents.com/257357/king-of-hoops/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/17</td><td><a href="https://basketball.exposureevents.com/261063/2026-winter-league">2026 Winter League</a> (<a href="https://basketball.exposureevents.com/261063/2026-winter-league/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">12/13</td><td><a href="https://basketball.exposureevents.com/238180/christmas-classic">Christmas Classic</a> (<a href="https://basketball.exposureevents.com/238180/christmas-classic/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/29</td><td><a href="https://basketball.exposureevents.com/238179/thanksgiving-for-hoops">Thanksgiving For Hoops</a> (<a href="https://basketball.exposureevents.com/238179/thanksgiving-for-hoops/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/04</td><td><a href="https://basketball.exposureevents.com/255553/2025-delta-fall-league">2025 Delta Fall League</a> (<a href="https://basketball.exposureevents.com/255553/2025-delta-fall-league/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/27</td><td><a href="https://basketball.exposureevents.com/238177/fall-hoops-fest">Fall Hoops Fest</a> (<a href="https://basketball.exposureevents.com/238177/fall-hoops-fest/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/20</td><td><a href="https://basketball.exposureevents.com/252289/2025-fall-league">2025 Fall League</a> (<a href="https://basketball.exposureevents.com/252289/2025-fall-league/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/07</td><td><a href="https://basketball.exposureevents.com/238176/indoor-3-on-3">Indoor 3 on 3 </a> (<a href="https://basketball.exposureevents.com/238176/indoor-3-on-3/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/02</td><td><a href="https://basketball.exposureevents.com/249734/2025-summer-delta-league">2025 Summer Delta League</a> (<a href="https://basketball.exposureevents.com/249734/2025-summer-delta-league/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/25</td><td><a href="https://basketball.exposureevents.com/238174/international-games">International Games</a> (<a href="https://basketball.exposureevents.com/238174/international-games/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/12</td><td><a href="https://basketball.exposureevents.com/246975/2025-summer-league">2025 Summer League</a> (<a href="https://basketball.exposureevents.com/246975/2025-summer-league/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/21</td><td><a href="https://basketball.exposureevents.com/238173/summer-sensational">Summer Sensational</a> (<a href="https://basketball.exposureevents.com/238173/summer-sensational/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
 </tbody>
 </table>
 </div>

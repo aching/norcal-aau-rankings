@@ -98,6 +98,9 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
 table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
 table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+details { margin-top: 4px; }
+summary { cursor: pointer; color: var(--mut); font-size: 13px; }
+details div { margin: 3px 0 3px 12px; font-size: 13px; }
 .count { font-size: 12px; color: var(--mut); }
 @media (max-width: 700px) {
   table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
@@ -119,16 +122,16 @@ table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical
 <table class="hist">
 <thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
 <tbody>
-<tr><td style="white-space:nowrap">10/10</td><td><a href="https://basketball.exposureevents.com/272497/hoop-nation-circle-city-fall-classic">Hoop Nation Circle City Fall Classic</a><br><span class="count">Corona</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">09/12</td><td><a href="https://basketball.exposureevents.com/272104/hoop-nation-circle-city-run">Hoop Nation Circle City Run</a><br><span class="count">Corona</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">09/05</td><td><a href="https://basketball.exposureevents.com/272103/hoop-nation-central-cal-labor-day-classic">Hoop Nation Central Cal Labor Day Classic</a><br><span class="count">Fresno</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">07/04</td><td><a href="https://basketball.exposureevents.com/271370/hoop-nation-road-to-vegas">Hoop Nation Road to Vegas</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/269865/hoop-nation-may-mayhem-giveaway">Hoop Nation May Mayhem Giveaway</a><br><span class="count">Colton</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">05/16</td><td><a href="https://basketball.exposureevents.com/266792/hoop-nation-all-roads-lead-to-vegas-stop-3">Hoop Nation All Roads Lead to Vegas Stop #3</a><br><span class="count">Colton</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">05/16</td><td><a href="https://basketball.exposureevents.com/268707/all-roads-lead-to-vegas-los-angeles-qualifier">All Roads Lead to Vegas Los Angeles Qualifier</a><br><span class="count">Glendora</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">04/18</td><td><a href="https://basketball.exposureevents.com/263452/hoop-nation-2nd-annual-circle-city-classic--rigorer-session-1">Hoop Nation 2nd Annual Circle City Classic- Rigorer Session 1</a><br><span class="count">Corona</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">08/30</td><td><a href="https://basketball.exposureevents.com/248632/hoop-nation-labor-day-mid-state-run-invitational">Hoop Nation Labor Day Mid State Run Invitational</a><br><span class="count">Fresno</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">06/07</td><td><a href="https://basketball.exposureevents.com/235496/hoop-nation-battle-at-the-beach">Hoop Nation Battle at The Beach</a><br><span class="count">San Luis Obispo</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/10</td><td><a href="https://basketball.exposureevents.com/272497/hoop-nation-circle-city-fall-classic">Hoop Nation Circle City Fall Classic</a> (<a href="https://basketball.exposureevents.com/272497/hoop-nation-circle-city-fall-classic/schedule">schedule/teams</a>)<br><span class="count">Corona</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/12</td><td><a href="https://basketball.exposureevents.com/272104/hoop-nation-circle-city-run">Hoop Nation Circle City Run</a> (<a href="https://basketball.exposureevents.com/272104/hoop-nation-circle-city-run/schedule">schedule/teams</a>)<br><span class="count">Corona</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">09/05</td><td><a href="https://basketball.exposureevents.com/272103/hoop-nation-central-cal-labor-day-classic">Hoop Nation Central Cal Labor Day Classic</a> (<a href="https://basketball.exposureevents.com/272103/hoop-nation-central-cal-labor-day-classic/schedule">schedule/teams</a>)<br><span class="count">Fresno</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/04</td><td><a href="https://basketball.exposureevents.com/271370/hoop-nation-road-to-vegas">Hoop Nation Road to Vegas</a> (<a href="https://basketball.exposureevents.com/271370/hoop-nation-road-to-vegas/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/269865/hoop-nation-may-mayhem-giveaway">Hoop Nation May Mayhem Giveaway</a> (<a href="https://basketball.exposureevents.com/269865/hoop-nation-may-mayhem-giveaway/schedule">schedule/teams</a>)<br><span class="count">Colton</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/16</td><td><a href="https://basketball.exposureevents.com/266792/hoop-nation-all-roads-lead-to-vegas-stop-3">Hoop Nation All Roads Lead to Vegas Stop #3</a> (<a href="https://basketball.exposureevents.com/266792/hoop-nation-all-roads-lead-to-vegas-stop-3/schedule">schedule/teams</a>)<br><span class="count">Colton</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/16</td><td><a href="https://basketball.exposureevents.com/268707/all-roads-lead-to-vegas-los-angeles-qualifier">All Roads Lead to Vegas Los Angeles Qualifier</a> (<a href="https://basketball.exposureevents.com/268707/all-roads-lead-to-vegas-los-angeles-qualifier/schedule">schedule/teams</a>)<br><span class="count">Glendora</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/18</td><td><a href="https://basketball.exposureevents.com/263452/hoop-nation-2nd-annual-circle-city-classic--rigorer-session-1">Hoop Nation 2nd Annual Circle City Classic- Rigorer Session 1</a> (<a href="https://basketball.exposureevents.com/263452/hoop-nation-2nd-annual-circle-city-classic--rigorer-session-1/schedule">schedule/teams</a>)<br><span class="count">Corona</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/30</td><td><a href="https://basketball.exposureevents.com/248632/hoop-nation-labor-day-mid-state-run-invitational">Hoop Nation Labor Day Mid State Run Invitational</a> (<a href="https://basketball.exposureevents.com/248632/hoop-nation-labor-day-mid-state-run-invitational/schedule">schedule/teams</a>)<br><span class="count">Fresno</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/07</td><td><a href="https://basketball.exposureevents.com/235496/hoop-nation-battle-at-the-beach">Hoop Nation Battle at The Beach</a> (<a href="https://basketball.exposureevents.com/235496/hoop-nation-battle-at-the-beach/schedule">schedule/teams</a>)<br><span class="count">San Luis Obispo</span></td><td>&mdash;</td></tr>
 </tbody>
 </table>
 </div>

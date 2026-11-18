@@ -28,6 +28,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from build_site import CSS
+from team_identity import resolve
 from build_upcoming import load_events as load_upcoming, region_of
 
 EE_BASE = "https://basketball.exposureevents.com"
@@ -92,6 +93,76 @@ def corpus_game_counts():
     return counts
 
 
+def corpus_participants():
+    """tournament_id -> {division: [team names]} from scraped corpus games.
+
+    EE: HomeTeamName/AwayTeamName grouped by _division_name. BT: home_team/
+    away_team grouped by division (or _division_name). Names are raw
+    registration strings, deduped, sorted.
+    """
+    parts = {}
+    for f in glob.glob(str(HERE.parent / "data" / "[0-9]*.json")):
+        is_bt = Path(f).name.startswith("bt_")
+        try:
+            d = json.load(open(f))
+        except Exception:
+            continue
+        if is_bt:
+            tid = d.get("event_id")
+        else:
+            tid = d.get("tournament_id") or int(Path(f).stem.lstrip("bt_") or 0)
+        divs = {}
+        for g in d.get("games", []) or []:
+            if is_bt:
+                div = g.get("division") or g.get("_division_name") or "?"
+                names = [g.get("home_team"), g.get("away_team")]
+            else:
+                div = g.get("_division_name") or g.get("DivisionName") or "?"
+                names = [g.get("HomeTeamName"), g.get("AwayTeamName")]
+            bucket = divs.setdefault(div, set())
+            for n in names:
+                if n and str(n).strip():
+                    bucket.add(str(n).strip())
+        if divs:
+            parts[tid] = {k: sorted(v) for k, v in divs.items()}
+    return parts
+
+
+_page_map = None
+
+
+def team_page_map():
+    """team_id -> organizer-relative team page path (../teams/<cohort>/<f>).
+
+    Replicates build_site.build_board's deterministic slug loop over
+    game_logs() order, so links match including -1 dedupe suffixes.
+    Computed once, cached.
+    """
+    global _page_map
+    if _page_map is not None:
+        return _page_map
+    from build_site import game_logs, slug_of
+    level_arg = {"11u": "11u", "12u": "12u,6th", "13u": "13u,7th", "14u": "14u,8th"}
+    _page_map = {}
+    for cohort, lv in level_arg.items():
+        try:
+            logs = game_logs(lv, cohort)
+        except Exception:
+            continue
+        seen = set()
+        for tid in logs.keys():
+            base = slug_of(tid)
+            n, cand = 0, ""
+            while True:
+                cand = (base if n == 0 else f"{base}-{n}") + ".html"
+                if cand not in seen:
+                    break
+                n += 1
+            seen.add(cand)
+            _page_map[tid] = f"../teams/{cohort}/{cand}"
+    return _page_map
+
+
 def esc(s):
     return str(s).replace("&", "&amp;").replace("<", "&lt;")
 
@@ -107,6 +178,9 @@ PAGE = """<!doctype html>
 table.hist {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
 table.hist th {{ text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }}
 table.hist td {{ padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }}
+details {{ margin-top: 4px; }}
+summary {{ cursor: pointer; color: var(--mut); font-size: 13px; }}
+details div {{ margin: 3px 0 3px 12px; font-size: 13px; }}
 .count {{ font-size: 12px; color: var(--mut); }}
 @media (max-width: 700px) {{
   table.hist {{ display: block; overflow-x: auto; font-size: 12.5px; }}
@@ -141,6 +215,7 @@ def main():
     sys.path.insert(0, str(HERE))
     orgs = load_ee_history()
     counts = corpus_game_counts()
+    participants = corpus_participants()
     upcoming = load_upcoming()
     up_by_org = defaultdict(list)
     for e in upcoming:
@@ -185,19 +260,46 @@ def main():
             items = "".join(
                 f"<li>{esc(u['date'][5:].replace('-', '/'))} &mdash; "
                 f"<a href=\"{esc(u['url'])}\">{esc(u['name'])}</a> "
-                f"<span class=\"count\">{esc(u['status'])}</span></li>" for u in up)
+                f"(<a href=\"{esc(u['url'])}/schedule\">schedule/teams</a>) "
+                f"<span class=\"count\">{esc(u['status'])}</span></li>" for u in up
+                if u["src"] == "EE") + "".join(
+                f"<li>{esc(u['date'][5:].replace('-', '/'))} &mdash; "
+                f"<a href=\"{esc(u['url'])}\">{esc(u['name'])}</a> "
+                f"<span class=\"count\">{esc(u['status'])}</span></li>" for u in up
+                if u["src"] != "EE")
             upcoming_section = (f"<section class=\"note\"><h2>Upcoming ({len(up)})</h2>"
                                 f"<ul>{items}</ul></section>")
         else:
             upcoming_section = ""
         rows = []
+        pmap = team_page_map()
         for h in past:
             gc = counts.get(h["id"], 0)
             url = f"{EE_BASE}/{h['id']}/{h['slug']}"
             city = h["city"] or h["loc"]
+            who = ""
+            divs = participants.get(h["id"])
+            if divs:
+                n_teams = sum(len(v) for v in divs.values())
+                groups = []
+                for div in sorted(divs):
+                    chips = []
+                    for raw in divs[div]:
+                        tid, _ = resolve(raw, div)
+                        if tid and tid in pmap:
+                            chips.append(f"<a href=\"{pmap[tid]}\">{esc(raw)}</a>")
+                        else:
+                            chips.append(esc(raw))
+                    groups.append(f"<div><b>{esc(div)}</b> ({len(divs[div])}): " +
+                                  ", ".join(chips) + "</div>")
+                who = (f"<details><summary>who played ({n_teams} teams, "
+                       f"{len(divs)} divisions)</summary>" +
+                       "".join(groups) + "</details>")
+            else:
+                who = (f"(<a href=\"{esc(url)}/schedule\">schedule/teams</a>)")
             rows.append(
                 f"<tr><td style=\"white-space:nowrap\">{esc((h['start'] or '')[5:].replace('-', '/'))}</td>"
-                f"<td><a href=\"{esc(url)}\">{esc(h['name'])}</a><br>"
+                f"<td><a href=\"{esc(url)}\">{esc(h['name'])}</a> {who}<br>"
                 f"<span class=\"count\">{esc(city)}</span></td>"
                 f"<td>{gc if gc else '&mdash;'}</td></tr>")
         if not rows:

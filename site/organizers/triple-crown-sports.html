@@ -98,6 +98,9 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
 table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
 table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+details { margin-top: 4px; }
+summary { cursor: pointer; color: var(--mut); font-size: 13px; }
+details div { margin: 3px 0 3px 12px; font-size: 13px; }
 .count { font-size: 12px; color: var(--mut); }
 @media (max-width: 700px) {
   table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
@@ -119,23 +122,23 @@ table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical
 <table class="hist">
 <thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
 <tbody>
-<tr><td style="white-space:nowrap">08/05</td><td><a href="https://basketball.exposureevents.com/272650/pathway-prospect-games">Pathway Prospect Games</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">07/13</td><td><a href="https://basketball.exposureevents.com/269571/world-series-san-diego">World Series San Diego</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/268750/zoom-into-june">Zoom Into June</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/269931/zoom-juniors">Zoom Juniors</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">02/21</td><td><a href="https://basketball.exposureevents.com/264104/early-bird-bld-manteca">Early Bird-BLD Manteca</a><br><span class="count">Manteca</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">02/21</td><td><a href="https://basketball.exposureevents.com/264102/early-bird-sacramento">Early Bird-Sacramento</a><br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">02/21</td><td><a href="https://basketball.exposureevents.com/264558/early-bird-salinas">Early Bird-Salinas</a><br><span class="count">Salinas</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">02/14</td><td><a href="https://basketball.exposureevents.com/263829/mardi-gras">Mardi Gras</a><br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">02/07</td><td><a href="https://basketball.exposureevents.com/263349/superbowl-saturday-sacramento">SuperBowl Saturday-Sacramento</a><br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">02/07</td><td><a href="https://basketball.exposureevents.com/263826/superbowl-saturday-south-bay">SuperBowl Saturday-South Bay</a><br><span class="count">Fremont</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">01/31</td><td><a href="https://basketball.exposureevents.com/263345/bownet-challenge">Bownet Challenge</a><br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">01/24</td><td><a href="https://basketball.exposureevents.com/263013/winter-warmup">Winter Warmup</a><br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">11/21</td><td><a href="https://basketball.exposureevents.com/256466/the-don-battles-on">The Don Battles On</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">08/06</td><td><a href="https://basketball.exposureevents.com/249246/pathway-prospect-games">Pathway Prospect Games</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">07/14</td><td><a href="https://basketball.exposureevents.com/244730/world-series-san-diego">World Series San Diego</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">06/07</td><td><a href="https://basketball.exposureevents.com/245072/zoom-juniors">Zoom Juniors</a><br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">06/07</td><td><a href="https://basketball.exposureevents.com/241020/zoom-into-june">Zoom Into June</a><br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/05</td><td><a href="https://basketball.exposureevents.com/272650/pathway-prospect-games">Pathway Prospect Games</a> (<a href="https://basketball.exposureevents.com/272650/pathway-prospect-games/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/13</td><td><a href="https://basketball.exposureevents.com/269571/world-series-san-diego">World Series San Diego</a> (<a href="https://basketball.exposureevents.com/269571/world-series-san-diego/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/268750/zoom-into-june">Zoom Into June</a> (<a href="https://basketball.exposureevents.com/268750/zoom-into-june/schedule">schedule/teams</a>)<br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/06</td><td><a href="https://basketball.exposureevents.com/269931/zoom-juniors">Zoom Juniors</a> (<a href="https://basketball.exposureevents.com/269931/zoom-juniors/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/21</td><td><a href="https://basketball.exposureevents.com/264104/early-bird-bld-manteca">Early Bird-BLD Manteca</a> (<a href="https://basketball.exposureevents.com/264104/early-bird-bld-manteca/schedule">schedule/teams</a>)<br><span class="count">Manteca</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/21</td><td><a href="https://basketball.exposureevents.com/264102/early-bird-sacramento">Early Bird-Sacramento</a> (<a href="https://basketball.exposureevents.com/264102/early-bird-sacramento/schedule">schedule/teams</a>)<br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/21</td><td><a href="https://basketball.exposureevents.com/264558/early-bird-salinas">Early Bird-Salinas</a> (<a href="https://basketball.exposureevents.com/264558/early-bird-salinas/schedule">schedule/teams</a>)<br><span class="count">Salinas</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/14</td><td><a href="https://basketball.exposureevents.com/263829/mardi-gras">Mardi Gras</a> (<a href="https://basketball.exposureevents.com/263829/mardi-gras/schedule">schedule/teams</a>)<br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/07</td><td><a href="https://basketball.exposureevents.com/263349/superbowl-saturday-sacramento">SuperBowl Saturday-Sacramento</a> (<a href="https://basketball.exposureevents.com/263349/superbowl-saturday-sacramento/schedule">schedule/teams</a>)<br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/07</td><td><a href="https://basketball.exposureevents.com/263826/superbowl-saturday-south-bay">SuperBowl Saturday-South Bay</a> (<a href="https://basketball.exposureevents.com/263826/superbowl-saturday-south-bay/schedule">schedule/teams</a>)<br><span class="count">Fremont</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/31</td><td><a href="https://basketball.exposureevents.com/263345/bownet-challenge">Bownet Challenge</a> (<a href="https://basketball.exposureevents.com/263345/bownet-challenge/schedule">schedule/teams</a>)<br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/24</td><td><a href="https://basketball.exposureevents.com/263013/winter-warmup">Winter Warmup</a> (<a href="https://basketball.exposureevents.com/263013/winter-warmup/schedule">schedule/teams</a>)<br><span class="count">Sacramento</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/21</td><td><a href="https://basketball.exposureevents.com/256466/the-don-battles-on">The Don Battles On</a> (<a href="https://basketball.exposureevents.com/256466/the-don-battles-on/schedule">schedule/teams</a>)<br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/06</td><td><a href="https://basketball.exposureevents.com/249246/pathway-prospect-games">Pathway Prospect Games</a> (<a href="https://basketball.exposureevents.com/249246/pathway-prospect-games/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/14</td><td><a href="https://basketball.exposureevents.com/244730/world-series-san-diego">World Series San Diego</a> (<a href="https://basketball.exposureevents.com/244730/world-series-san-diego/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/07</td><td><a href="https://basketball.exposureevents.com/245072/zoom-juniors">Zoom Juniors</a> (<a href="https://basketball.exposureevents.com/245072/zoom-juniors/schedule">schedule/teams</a>)<br><span class="count">San Diego</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">06/07</td><td><a href="https://basketball.exposureevents.com/241020/zoom-into-june">Zoom Into June</a> (<a href="https://basketball.exposureevents.com/241020/zoom-into-june/schedule">schedule/teams</a>)<br><span class="count">Riverside</span></td><td>&mdash;</td></tr>
 </tbody>
 </table>
 </div>

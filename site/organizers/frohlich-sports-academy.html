@@ -98,6 +98,9 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 table.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
 table.hist th { text-align: left; padding: 8px; border-bottom: 2px solid var(--line); }
 table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+details { margin-top: 4px; }
+summary { cursor: pointer; color: var(--mut); font-size: 13px; }
+details div { margin: 3px 0 3px 12px; font-size: 13px; }
 .count { font-size: 12px; color: var(--mut); }
 @media (max-width: 700px) {
   table.hist { display: block; overflow-x: auto; font-size: 12.5px; }
@@ -119,23 +122,23 @@ table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical
 <table class="hist">
 <thead><tr><th>Date</th><th>Event</th><th>Games</th></tr></thead>
 <tbody>
-<tr><td style="white-space:nowrap">11/07</td><td><a href="https://basketball.exposureevents.com/277894/pros-for-fros">PROS FOR FROS</a><br><span class="count">Rancho Cuacmonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">08/14</td><td><a href="https://basketball.exposureevents.com/274658/fro-friday-night-league">FRO Friday Night League</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">07/11</td><td><a href="https://basketball.exposureevents.com/272208/redlands-summer-fro-league-26">Redlands Summer FRO League 26</a><br><span class="count">Redlands</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/250603/west-coast-classic">West Coast Classic</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/250602/the-battlegrounds">The Battlegrounds</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">05/02</td><td><a href="https://basketball.exposureevents.com/250574/pros-for-fros">PROS FOR FROS</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">04/11</td><td><a href="https://basketball.exposureevents.com/250601/spring-time-classic">Spring Time Classic</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">03/28</td><td><a href="https://basketball.exposureevents.com/250600/linda-frohlich-invitational">Linda Frohlich Invitational</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">03/14</td><td><a href="https://basketball.exposureevents.com/250573/pros-for-fros">PROS FOR FROS</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">02/14</td><td><a href="https://basketball.exposureevents.com/250572/pros-for-fros">PROS FOR FROS</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">01/31</td><td><a href="https://basketball.exposureevents.com/263454/redlands-fro-league">Redlands FRO League</a><br><span class="count">Redlands</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">11/15</td><td><a href="https://basketball.exposureevents.com/250599/hustle-harder">Hustle Harder</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">11/08</td><td><a href="https://basketball.exposureevents.com/250571/pros-for-fros">PROS FOR FROS</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">10/04</td><td><a href="https://basketball.exposureevents.com/250570/pros-for-fros">PROS FOR FROS</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">08/30</td><td><a href="https://basketball.exposureevents.com/252621/fro-redlands-vs-fro-rancho">FRO Redlands vs FRO Rancho </a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">08/08</td><td><a href="https://basketball.exposureevents.com/249957/frohlich-league-rancho-cucamonga">Frohlich League Rancho Cucamonga</a><br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
-<tr><td style="white-space:nowrap">07/19</td><td><a href="https://basketball.exposureevents.com/248553/fro-redlands-league-summer-25">FRO Redlands League Summer 25</a><br><span class="count">Redlands</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/07</td><td><a href="https://basketball.exposureevents.com/277894/pros-for-fros">PROS FOR FROS</a> (<a href="https://basketball.exposureevents.com/277894/pros-for-fros/schedule">schedule/teams</a>)<br><span class="count">Rancho Cuacmonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/14</td><td><a href="https://basketball.exposureevents.com/274658/fro-friday-night-league">FRO Friday Night League</a> (<a href="https://basketball.exposureevents.com/274658/fro-friday-night-league/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/11</td><td><a href="https://basketball.exposureevents.com/272208/redlands-summer-fro-league-26">Redlands Summer FRO League 26</a> (<a href="https://basketball.exposureevents.com/272208/redlands-summer-fro-league-26/schedule">schedule/teams</a>)<br><span class="count">Redlands</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/30</td><td><a href="https://basketball.exposureevents.com/250603/west-coast-classic">West Coast Classic</a> (<a href="https://basketball.exposureevents.com/250603/west-coast-classic/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/23</td><td><a href="https://basketball.exposureevents.com/250602/the-battlegrounds">The Battlegrounds</a> (<a href="https://basketball.exposureevents.com/250602/the-battlegrounds/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">05/02</td><td><a href="https://basketball.exposureevents.com/250574/pros-for-fros">PROS FOR FROS</a> (<a href="https://basketball.exposureevents.com/250574/pros-for-fros/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">04/11</td><td><a href="https://basketball.exposureevents.com/250601/spring-time-classic">Spring Time Classic</a> (<a href="https://basketball.exposureevents.com/250601/spring-time-classic/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/28</td><td><a href="https://basketball.exposureevents.com/250600/linda-frohlich-invitational">Linda Frohlich Invitational</a> (<a href="https://basketball.exposureevents.com/250600/linda-frohlich-invitational/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">03/14</td><td><a href="https://basketball.exposureevents.com/250573/pros-for-fros">PROS FOR FROS</a> (<a href="https://basketball.exposureevents.com/250573/pros-for-fros/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">02/14</td><td><a href="https://basketball.exposureevents.com/250572/pros-for-fros">PROS FOR FROS</a> (<a href="https://basketball.exposureevents.com/250572/pros-for-fros/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">01/31</td><td><a href="https://basketball.exposureevents.com/263454/redlands-fro-league">Redlands FRO League</a> (<a href="https://basketball.exposureevents.com/263454/redlands-fro-league/schedule">schedule/teams</a>)<br><span class="count">Redlands</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/15</td><td><a href="https://basketball.exposureevents.com/250599/hustle-harder">Hustle Harder</a> (<a href="https://basketball.exposureevents.com/250599/hustle-harder/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">11/08</td><td><a href="https://basketball.exposureevents.com/250571/pros-for-fros">PROS FOR FROS</a> (<a href="https://basketball.exposureevents.com/250571/pros-for-fros/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">10/04</td><td><a href="https://basketball.exposureevents.com/250570/pros-for-fros">PROS FOR FROS</a> (<a href="https://basketball.exposureevents.com/250570/pros-for-fros/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/30</td><td><a href="https://basketball.exposureevents.com/252621/fro-redlands-vs-fro-rancho">FRO Redlands vs FRO Rancho </a> (<a href="https://basketball.exposureevents.com/252621/fro-redlands-vs-fro-rancho/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">08/08</td><td><a href="https://basketball.exposureevents.com/249957/frohlich-league-rancho-cucamonga">Frohlich League Rancho Cucamonga</a> (<a href="https://basketball.exposureevents.com/249957/frohlich-league-rancho-cucamonga/schedule">schedule/teams</a>)<br><span class="count">Rancho Cucamonga</span></td><td>&mdash;</td></tr>
+<tr><td style="white-space:nowrap">07/19</td><td><a href="https://basketball.exposureevents.com/248553/fro-redlands-league-summer-25">FRO Redlands League Summer 25</a> (<a href="https://basketball.exposureevents.com/248553/fro-redlands-league-summer-25/schedule">schedule/teams</a>)<br><span class="count">Redlands</span></td><td>&mdash;</td></tr>
 </tbody>
 </table>
 </div>
