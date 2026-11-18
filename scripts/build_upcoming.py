@@ -247,7 +247,7 @@ def main():
     tabs = "".join(
         f'<a href="{c}.html">{t}</a>' for c, (t, _, _) in
         {"11u": ("11U", 0, 0), "12u": ("12U/6th Grade", 0, 0),
-         "13u": ("13U/7th Grade", 0, 0), "14u": ("14U/8th Grade", 0, 0)}.items())
+         "13u": ("13U/7th Grade", 0, 0), "14u": ("14U/8th Grade", 0, 0), "15u": ("15U/9th Grade", 0, 0)}.items())
     tabs += '<a href="upcoming.html" class="on">Upcoming</a><a href="organizers.html">Organizers</a>'
     present = [r for r in REGION_ORDER if any(e["region"] == r for e in events)]
     region_buttons = "".join(f'<button data-r="{r}">{r}</button>' for r in present)

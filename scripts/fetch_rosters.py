@@ -31,7 +31,7 @@ DATA = HERE.parent / "data"
 def ranked_ids():
     import re
     ranked = {}
-    for cohort in ("11u", "12u", "13u", "14u"):
+    for cohort in ("11u", "12u", "13u", "14u", "15u"):
         p = HERE.parent / "site" / f"{cohort}.html"
         if not p.exists():
             continue

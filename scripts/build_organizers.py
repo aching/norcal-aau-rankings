@@ -142,7 +142,7 @@ def team_page_map():
     if _page_map is not None:
         return _page_map
     from build_site import game_logs, slug_of
-    level_arg = {"11u": "11u", "12u": "12u,6th", "13u": "13u,7th", "14u": "14u,8th"}
+    level_arg = {"11u": "11u", "12u": "12u,6th", "13u": "13u,7th", "14u": "14u,8th", "15u": "15u,9th"}
     _page_map = {}
     for cohort, lv in level_arg.items():
         try:
@@ -240,7 +240,7 @@ def main():
     tabs = "".join(
         f'<a href="../{c}.html">{t}</a>' for c, (t, _, _) in
         {"11u": ("11U", 0, 0), "12u": ("12U/6th Grade", 0, 0),
-         "13u": ("13U/7th Grade", 0, 0), "14u": ("14U/8th Grade", 0, 0)}.items())
+         "13u": ("13U/7th Grade", 0, 0), "14u": ("14U/8th Grade", 0, 0), "15u": ("15U/9th Grade", 0, 0)}.items())
     slugs = {}
     today = date.today().isoformat()
     for org in sorted(set(list(orgs.keys()) + list(up_by_org.keys()))):
@@ -365,7 +365,7 @@ def main():
     tabs_idx = "".join(
         f'<a href="{c}.html">{t}</a>' for c, (t, _, _) in
         {"11u": ("11U", 0, 0), "12u": ("12U/6th Grade", 0, 0),
-         "13u": ("13U/7th Grade", 0, 0), "14u": ("14U/8th Grade", 0, 0)}.items())
+         "13u": ("13U/7th Grade", 0, 0), "14u": ("14U/8th Grade", 0, 0), "15u": ("15U/9th Grade", 0, 0)}.items())
     idx_html = f"""<!doctype html>
 <html lang="en">
 <head>

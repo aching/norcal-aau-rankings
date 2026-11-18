@@ -30,6 +30,7 @@ COHORTS = {
     "12u": ("12U/6th Grade", "12", "12U / 6th grade boys -- last-15 form, active-only"),
     "13u": ("13U/7th Grade", "13", "13U / 7th grade boys -- last-15 form, active-only"),
     "14u": ("14U/8th Grade", "14", "14U / 8th grade boys -- last-15 form, active-only"),
+    "15u": ("15U/9th Grade", "15", "15U / 9th grade boys -- last-15 form, active-only"),
 }
 
 CSS = """
@@ -576,8 +577,8 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None):
 
 
 def build_board(cohort, title, sub, gen):
-    num = {"11u": "11", "12u": "12", "13u": "13", "14u": "14"}[cohort]
-    level_arg = {"11u": "11u", "12u": "12u,6th", "13u": "13u,7th", "14u": "14u,8th"}[cohort]
+    num = {"11u": "11", "12u": "12", "13u": "13", "14u": "14", "15u": "15"}[cohort]
+    level_arg = {"11u": "11u", "12u": "12u,6th", "13u": "13u,7th", "14u": "14u,8th", "15u": "15u,9th"}[cohort]
     rows, titles, tmnote, meta, team_titles = parse_rep(f"/tmp/rep{num}.md")
     logs = game_logs(level_arg, cohort)
     data = []
