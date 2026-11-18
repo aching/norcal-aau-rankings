@@ -109,6 +109,8 @@ def load_events():
             "date": (e.get("StartDate") or "")[:10],
             "end": (e.get("EndDate") or "")[:10],
             "name": e.get("Name", "?"),
+            "org": (e.get("OrganizationName") or "").strip(),
+            "org_url": f"{EE_BASE}/organizations/{e['OrganizationId']}" if e.get("OrganizationId") else "",
             "city": e.get("City") or e.get("Location") or "",
             "region": region_of([e.get("City") or "", e.get("Location") or ""]),
             "src": "EE",
@@ -135,10 +137,15 @@ def load_events():
             status = "announced, teams/schedule TBA"
         teams = f"{paid} paid teams" if paid else "no teams listed yet"
         pub = (e.get("public_url") or {}).get("absolute") or f"https://bracketteam.com/event/{e.get('id')}"
+        admins = e.get("administrators") or []
+        orgs = sorted({(a.get("organization_name") or "").strip() for a in admins
+                       if isinstance(a, dict) and (a.get("organization_name") or "").strip()})
         events.append({
             "date": str(e.get("start_date") or "")[:10],
             "end": str(e.get("end_date") or "")[:10],
             "name": e.get("event_name", "?"),
+            "org": "; ".join(orgs),
+            "org_url": "",
             "city": city,
             "region": region_of(cities),
             "src": "BT",
@@ -191,7 +198,7 @@ EE teams/schedule detail needs the event page until the refresh pipeline records
 </div>
 </header>
 <table class="upcoming">
-<thead><tr><th>Date</th><th>Event</th><th>Area</th><th>Status</th><th>Teams</th></tr></thead>
+<thead><tr><th>Date</th><th>Event</th><th>Organizer</th><th>Area</th><th>Status</th><th>Teams</th></tr></thead>
 <tbody>
 {rows}
 </tbody>
@@ -229,11 +236,15 @@ def main():
     for e in events:
         st_cls = "st-posted" if "schedule posted" in e["status"] else ("st-tba" if "TBA" in e["status"] else "")
         d = e["date"][5:].replace("-", "/")
+        org = esc(e.get("org", ""))
+        if org and e.get("org_url"):
+            org = f'<a href="{esc(e["org_url"])}">{org}</a>'
         rows.append(
             f'<tr data-region="{esc(e["region"])}">'
             f'<td style="white-space:nowrap">{d}</td>'
             f'<td><a href="{esc(e["url"])}">{esc(e["name"])}</a> <span class="src">{e["src"]}</span><br>'
             f'<span style="color:var(--mut);font-size:12.5px">{esc(e["city"])}</span></td>'
+            f'<td>{org}</td>'
             f'<td>{esc(e["region"])}</td>'
             f'<td class="{st_cls}">{esc(e["status"])}</td>'
             f'<td>{esc(e["teams"])}</td></tr>')
