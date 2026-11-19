@@ -116,6 +116,27 @@ def show_status():
         except Exception as e:
             print(f"\ndb: present but unreadable ({e})")
         con.close()
+    # event backlog: what's downloaded/processed vs waiting on retry.
+    # Scoped to NorCal (project scope) to keep the list actionable --
+    # SoCal/Vegas discovery rows are tracked but not our work queue.
+    try:
+        from scrape_state import event_stats, event_backlog
+        from batch_scrape import is_norcal
+        print("\nevent ledger:", json.dumps(event_stats()))
+        due = [e for e in event_backlog(only_due=True)
+               if is_norcal(e.get("city") or "")]
+        if due:
+            print(f"NorCal backlog due now: {len(due)}")
+            for e in due[:20]:
+                print(f"  {e.get('status'):<11}{e.get('source')}:{e.get('eid'):<10}"
+                      f"{(e.get('start') or '????-??-??'):<12}{e.get('name', '')[:50]:50}"
+                      f"attempts={e.get('attempts', 0)} next={e.get('next_retry') or 'now'}")
+            if len(due) > 20:
+                print(f"  ... +{len(due) - 20} more")
+        else:
+            print("NorCal backlog due now: 0 -- all caught up")
+    except ImportError:
+        pass
 
 
 def parse_log_progress(path):

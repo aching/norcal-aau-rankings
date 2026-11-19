@@ -101,6 +101,104 @@ def update_content(source, watermark):
     return entry
 
 
+# ---- Per-event tracking (added Nov 2026) ----
+# Every discovered event gets a record keyed "<source>:<id>" (ee:123,
+# bt:456, fb:789) with a lifecycle status:
+#   pending    -- in discovery, never attempted
+#   downloaded -- JSON on disk (games count recorded, may be 0)
+#   processed  -- loaded into aau.db by build_db (set on rebuild sweep)
+#   empty      -- scraped, 0 games; recheck_after date (schedules fill in)
+#   failed     -- error (throttle/HTTP/parse); retry_after date
+#   gone       -- HTTP 410, terminal; recheck_after ~90d
+# Fields: name, city, start, org, status, games, attempts, last_attempt,
+# next_retry (ISO date or ""), detail. Writers: scrapers set
+# downloaded/empty/failed/gone; build_db marks processed; backfill seeds
+# pending from discovery snapshots. Readers: refresh.py status backlog.
+EVENT_RETRY_DAYS = {"failed": 3, "empty": 14, "gone": 90, "downloaded": 7}
+
+
+def _today():
+    return time.strftime("%Y-%m-%d")
+
+
+def _retry_after(status, days=None):
+    from datetime import date, timedelta
+    d = days if days is not None else EVENT_RETRY_DAYS.get(status, 7)
+    return (date.today() + timedelta(days=d)).isoformat()
+
+
+def record_event(source, eid, status, games=None, name=None, city=None,
+                 start=None, org=None, detail=None, retry_days=None):
+    """Upsert one event record. Attempts increment on every call except
+    pure processed-marking (status='processed' preserves attempts)."""
+    state = load()
+    events = state.setdefault("events", {})
+    key = f"{source}:{eid}"
+    e = events.get(key, {})
+    now = time.strftime("%Y-%m-%dT%H:%M:%S")
+    if status != "processed":
+        e["attempts"] = (e.get("attempts") or 0) + 1
+        e["last_attempt"] = now
+    e.update({"source": source, "eid": str(eid), "status": status})
+    for k, v in (("name", name), ("city", city), ("start", start),
+                 ("org", org), ("detail", detail)):
+        if v is not None:
+            e[k] = v
+    if games is not None:
+        e["games"] = games
+    if status == "downloaded":
+        # downloaded but not yet in DB; processed set by build_db sweep
+        e["next_retry"] = ""
+    elif status == "processed":
+        e["next_retry"] = ""
+        e["processed_at"] = now
+    elif status == "pending":
+        # never attempted: due immediately
+        e["next_retry"] = ""
+    else:
+        e["next_retry"] = _retry_after(status, retry_days)
+    events[key] = e
+    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    STATE_PATH.write_text(json.dumps(state, indent=2))
+    return e
+
+
+def mark_processed(source, eid, games):
+    """Idempotent processed-marking (no attempt increment)."""
+    return record_event(source, eid, "processed", games=games)
+
+
+def event_backlog(source=None, only_due=False):
+    """Events needing work: pending/failed past retry, empty/gone past
+    recheck. Returns list sorted by (start, key)."""
+    from datetime import date
+    today = date.today().isoformat()
+    out = []
+    for key, e in load().get("events", {}).items():
+        if source and e.get("source") != source:
+            continue
+        st = e.get("status")
+        if st in ("downloaded", "processed"):
+            continue
+        if only_due and (e.get("next_retry") or "") > today:
+            continue
+        out.append(e)
+    out.sort(key=lambda e: (e.get("start") or "", e.get("source") or "",
+                            e.get("eid") or ""))
+    return out
+
+
+def event_stats(source=None):
+    """Counter of statuses, optionally per source."""
+    from collections import Counter
+    c = Counter()
+    for e in load().get("events", {}).values():
+        if source and e.get("source") != source:
+            continue
+        c[e.get("status", "?")] += 1
+    return dict(c)
+
+
 class Progress:
     """Minimal stdlib-only progress meter for batch scrape loops.
 

@@ -61,16 +61,36 @@ def extract_metadata(html):
     return meta
 
 
+def _note(tid, status, **kw):
+    try:
+        from scrape_state import record_event
+        record_event("ee", str(tid), status, **kw)
+    except Exception:
+        pass
+
+
 def scrape_tournament(tid, slug, out_dir="data"):
     opener = make_opener()
     sched_url = f"{BASE}/{tid}/{slug}/schedule"
     games_url = f"{BASE}/{tid}/{slug}/eventgames"
 
-    print(f"[{tid}] GET schedule …")
-    html = get(opener, sched_url)
+    print(f"[{tid}] GET schedule ...")
+    try:
+        html = get(opener, sched_url)
+    except Exception as e:
+        code = getattr(getattr(e, "fp", None), "status", None) or getattr(e, "code", None)
+        if code == 410 or "410" in str(e):
+            print(f"[{tid}] GONE (410) -- marking terminal")
+            _note(tid, "gone", detail="HTTP 410 on schedule page")
+        else:
+            print(f"[{tid}] schedule fetch ERROR: {e}")
+            _note(tid, "failed", detail=f"schedule fetch: {e}"[:200])
+        raise
     divisions = extract_divisions(html)
     meta = extract_metadata(html)
     print(f"[{tid}] {len(divisions)} divisions — {meta.get('title','')}")
+    _note(tid, "downloaded", games=0, name=meta.get("title") or slug,
+          detail=f"{len(divisions)} divisions listed")
 
     all_games = []
     slowed = False
@@ -126,6 +146,12 @@ def scrape_tournament(tid, slug, out_dir="data"):
     out = Path(out_dir) / f"{tid}.json"
     out.write_text(json.dumps(payload, indent=2))
     print(f"[{tid}] -> {out} ({len(all_games)} total games)")
+    if len(all_games) == 0:
+        _note(tid, "empty", games=0, name=meta.get("title") or slug,
+              detail=f"{len(divisions)} divisions, no games posted")
+    else:
+        _note(tid, "downloaded", games=len(all_games),
+              name=meta.get("title") or slug)
     return payload
 
 

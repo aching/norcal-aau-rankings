@@ -218,16 +218,37 @@ def main(db_path="data/aau.db"):
     for f in ee_files:
         try:
             n, s = load_ee(cur, f); ee_n += n; ee_skip += s
+            try:
+                from scrape_state import mark_processed
+                mark_processed("ee", Path(f).stem, n)
+            except Exception:
+                pass
         except Exception as e:
             print(f"EE FAIL {f}: {e}")
     for f in bt_files:
         try:
             bt_n += load_bt(cur, f)
+            try:
+                from scrape_state import mark_processed
+                import re as _re
+                _m = _re.match(r"bt_(.+)\.json$", Path(f).name)
+                if _m:
+                    mark_processed("bt", _m.group(1), None)
+            except Exception:
+                pass
         except Exception as e:
             print(f"BT FAIL {f}: {e}")
     for f in fb_files:
         try:
             fb_n += load_fb(cur, f)
+            try:
+                from scrape_state import mark_processed
+                import re as _re
+                _m = _re.match(r"fb_(.+)\.json$", Path(f).name)
+                if _m:
+                    mark_processed("fb", _m.group(1), None)
+            except Exception:
+                pass
         except Exception as e:
             print(f"FB FAIL {f}: {e}")
     state = load_state()
