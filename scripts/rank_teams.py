@@ -278,7 +278,8 @@ def prestige_events(cur):
     try:
         for eid, name in cur.execute("SELECT event_id, name FROM bt_events"):
             if any(rx.search(name or "") for rx in _PRESTIGE_RES):
-                prestige_bt.add(eid)
+                # str to match the g[4] ID INVARIANT (games_for_team).
+                prestige_bt.add(str(eid))
     except Exception:
         pass
     return prestige_ee, prestige_bt
@@ -403,7 +404,11 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
                     _xtra = {"slug": hslug if is_home else aslug,
                              "dt": hdt if is_home else adt,
                              "divid": divid, "gid": gid}
-                    out.append((iso, won, weight, band, tid, divname,
+                    # ID INVARIANT: g[4] is always str (EE tournament_id may
+                    # be int or str on disk depending on scraper vintage;
+                    # normalize here so every downstream comparison --
+                    # prestige, circuit, gates, H2H -- is type-safe).
+                    out.append((iso, won, weight, band, str(tid), divname,
                                 ht if is_home else at,
                                 at if is_home else ht, pf, pa, gtype,
                                 _xtra))
@@ -711,11 +716,11 @@ def main():
             for g in games:
                 m = 1.0
                 gtype = g[10] if len(g) > 10 else None
-                # layer 1: prestige -- any win in a big event (EE + BT)
+                # layer 1: prestige -- any win in a big event (EE + BT).
+                # g[4], prestige_ee, prestige_bt are all str (see the
+                # ID INVARIANT at games_for_team and prestige_events).
                 if g[1] and use_prestige:
-                    if (isinstance(g[4], str) and g[4] in prestige_ee) or \
-                       (not isinstance(g[4], str) and g[4] in prestige_bt) or \
-                       (str(g[4]) in prestige_ee):
+                    if g[4] in prestige_ee or g[4] in prestige_bt:
                         m *= PM
                 # layer 2: title -- champ-bracket wins that closed a title.
                 # Boost pays only at gold and above (national/up/gold):

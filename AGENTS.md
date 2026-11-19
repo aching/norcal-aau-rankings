@@ -50,6 +50,8 @@ Pipeline: **discovery → scrape → JSON corpus → SQLite**. No app layer.
 
 Key invariants: `divisionteamid` is the durable per-team-per-tournament key (PRD App. C) — use it, not the team slug (tier inconsistently encoded). Never derive division/tier from slugs; parse the division string. Team names are noisy (`Program – Coach – AgeU`); regex matching needs an age-division filter or cohorts collide (see `DIV_*` in `scout.py`).
 
+**ID-type convention (hardened Nov 2026 after a silent-drop bug):** EE `tournament_id` may be int or str on disk depending on scraper vintage (`scrape_tournament.py` now writes int; older files vary). BT `event_id` is int; FB ids are `fb`-prefixed strings (separate namespace, no collision with EE/BT numerics). Rule: **normalize at the boundary, never compare raw JSON ids.** `rank_teams.games_for_team` guarantees `g[4]` is str (ID INVARIANT); `build_db` coerces (`str()` EE/FB, `int()` BT); site builders (`build_organizers`, `compute_org_strength`) coerce to int at load. New loaders/comparisons must do the same -- an un-normalized int-vs-str dict lookup fails silently and drops data with no error.
+
 ## 4. Tech stack & key dependencies
 
 Python 3 stdlib only (`urllib` + `http.cookiejar`; the `/eventgames` XHR spike made the PRD's suggested Playwright unnecessary). Sources: `basketball.exposureevents.com` (HTML + JSON XHR) and `bracketteam.com` (public JSON API, Angular SPA with empty HTML shell). Store: flat JSON (immutable cache per PRD) + SQLite (`data/aau.db`, rebuilt from scratch by `build_db.py`). No framework yet.
