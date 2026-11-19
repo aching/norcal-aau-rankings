@@ -123,6 +123,13 @@ OVERRIDES = [
     # check: "prospects" in "sv soldiers 12u prospect" -> False). Safe.
     (("sv soldiers 12u", "prospects"), "bmg prospects:12u"),
     (("silicon soldiers - prospects", "14u"), "bmg prospects:14u"),
+    # "Silicon Valley Soldiers" 12u (Hoop Explosion Nov 14 2026, 2-0):
+    # same squad as BMG 12u Prospects (user-confirmed Nov 2026) -- same
+    # program relationship as the 14U alias above, same active window
+    # (Prospects latest 11/7). Pinned to the full program name so the
+    # 2025 "SV Soldiers"/"SV SOLDIERS" Gold/Platinum rows (a different
+    # era/squad, sv soldiers:12u) never match.
+    (("silicon valley soldiers", "12u"), "bmg prospects:12u"),
     # WeCompete 14U flagship (user-confirmed Nov 2026): "WeCompete 14u
     # Grizzlies Gold", "We Compete Grizzlies gold" (Nov 7-8 Rumble),
     # "WeCompete Nation Grizzles Elite" (one-S typo) and the bare

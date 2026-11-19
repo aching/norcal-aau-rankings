@@ -289,6 +289,7 @@ TEAM_TMPL = """<!DOCTYPE html>
 {why_section}
 <section class="note"><h2>Titles ({ntitles})</h2><ul>{titlelist}</ul></section>
 {upcoming_section}
+{club_section}
 <section class="note"><h2>Full record ({ngames} scored games, newest first)</h2>
 <table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
 <tbody>{gamerows}</tbody></table></section>
@@ -445,6 +446,95 @@ def slug_of(team):
     return s or "team"
 
 
+# Club families: team_id core prefix -> display name. Longest prefix wins.
+# Falls back to first-two-tokens title-cased (with junk-drawer fixes).
+CLUB_PREFIXES = [
+    ("silicon valley soldiers", "Soldiers"),
+    ("east bay soldiers", "Soldiers"),
+    ("oakland soldiers", "Soldiers"),
+    ("sv soldiers", "Soldiers"),
+    ("bmg soldiers", "BMG"),
+    ("bmg", "BMG"),
+    ("tm", "TM"),
+    ("peninsula gold", "Peninsula Gold"),
+    ("ball game", "Ball Game"),
+    ("norcal elite", "NorCal Elite"),
+    ("norcal united", "NorCal United"),
+    ("east bay elite", "East Bay Elite"),
+    ("east bay bulldogs", "East Bay Bulldogs"),
+    ("bay city", "Bay City"),
+    ("top performance", "Top Performance"),
+    ("top flight", "Top Flight"),
+    ("team arsenal", "Team Arsenal"),
+    ("team locked in", "Team Locked In"),
+    ("team unequal", "Team Unequal"),
+    ("lakeshow", "Lakeshow"),
+    ("stl", "STL"),
+    ("javstep", "JavStep"),
+    ("esface", "Esface"),
+    ("justhoop", "JustHoop"),
+    ("flight", "Flight"),
+    ("fury", "Fury"),
+    ("bulldawgs", "Bulldawgs"),
+    ("underdogs", "Underdogs"),
+    ("sportstrong", "SportStrong"),
+    ("payton's place", "Payton's Place"),
+    ("yba", "YBA"),
+    ("esface", "Esface"),
+]
+# First tokens too generic alone -- need two-token keys.
+CLUB_SPLIT = {"bay", "team", "top", "sf", "san", "santa", "south", "north",
+              "west", "east", "elite", "premier", "select"}
+
+
+def club_of(team_id):
+    core = team_id.split(":")[0].lower().strip()
+    for prefix, club in CLUB_PREFIXES:
+        if core == prefix or core.startswith(prefix + " ") or core.startswith(prefix + "-"):
+            return club
+    toks = core.split()
+    if not toks:
+        return "Other"
+    if toks[0] in CLUB_SPLIT and len(toks) > 1:
+        return " ".join(toks[:2]).title()
+    return toks[0].title()
+
+
+_all_pages = None
+
+
+def all_pages_map():
+    """team_id -> (cohort, filename) for every cohort, deterministic slugs.
+
+    Replicates build_board's slug loop over game_logs() order so links
+    match including -1 dedupe suffixes. Computed once, cached. Missing
+    game logs for a cohort -> skipped (club links just omit it).
+    """
+    global _all_pages
+    if _all_pages is not None:
+        return _all_pages
+    level_arg = {"11u": "11u", "12u": "12u,6th", "13u": "13u,7th",
+                 "14u": "14u,8th", "15u": "15u,9th"}
+    _all_pages = {}
+    for cohort, lv in level_arg.items():
+        try:
+            logs = game_logs(lv, cohort)
+        except Exception:
+            continue
+        seen = set()
+        for tid in logs.keys():
+            base = slug_of(tid)
+            n, cand = 0, ""
+            while True:
+                cand = (base if n == 0 else f"{base}-{n}") + ".html"
+                if cand not in seen:
+                    break
+                n += 1
+            seen.add(cand)
+            _all_pages[tid] = (cohort, cand)
+    return _all_pages
+
+
 def upcoming_rosters():
     """Load data/upcoming_rosters.json -> {team_id: [(date, event, url, raw, div)]}.
 
@@ -540,6 +630,9 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None):
     tabs = ""
     for c, (t, _, _) in COHORTS.items():
         tabs += f'<a href="../../{c}.html">{t}</a>'
+    tabs += ('<a href="../../upcoming.html">Upcoming</a>'
+             '<a href="../../organizers.html">Organizers</a>'
+             '<a href="../../clubs.html">Clubs</a>')
     why_html = (f"<section class=\"note\"><h2>Why #{r['rank']}</h2>"
                 f"<ul>{why}</ul></section>" if r.get("rank") and why else "")
     up_list = (upcoming or {}).get(r["team"], [])
@@ -554,6 +647,42 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None):
                             f"({len(up_list)})</h2><ul>{up_items}</ul></section>")
     else:
         upcoming_section = ""
+    # Club section: same-club squads, same cohort first then other ages.
+    # Links via the global pages map (cross-cohort where needed).
+    club_section = ""
+    try:
+        pmap = all_pages_map()
+        club = club_of(r["team"])
+        same, other = [], []
+        for tid, (coh, fn) in pmap.items():
+            if tid == r["team"] or club_of(tid) != club:
+                continue
+            if coh == cohort:
+                same.append((tid, f"{fn}"))
+            else:
+                other.append((tid, f"../../teams/{coh}/{fn}", coh))
+        if same or other:
+            try:
+                cslugs = json.load(open(REPO / "data" / "club_slugs.json"))
+                chead = (f"<a href=\"../../clubs/{cslugs[club]}.html\">"
+                         f"{esc(club)}</a>" if club in cslugs else esc(club))
+            except (FileNotFoundError, json.JSONDecodeError):
+                chead = esc(club)
+            items = "".join(
+                f'<li><a href="{f}">{esc(t)}</a> (same age)</li>'
+                for t, f in sorted(same))
+            # group other-ages by cohort in board order
+            order = ["11u", "12u", "13u", "14u", "15u"]
+            for coh in order:
+                grp = sorted(t for t, f, c in other if c == coh)
+                for t in grp:
+                    fn = next(f for x, f, c in other if x == t)
+                    items += (f'<li><a href="{fn}">{esc(t)}</a> '
+                              f'({coh})</li>')
+            club_section = (f"<section class=\"note\"><h2>More {chead} "
+                            f"({len(same) + len(other)})</h2><ul>{items}</ul></section>")
+    except Exception:
+        club_section = ""
     page = TEAM_TMPL.format(
         team=esc(r["team"]) + marks, cohort=esc(cohort),
         cohort_title=esc(cohort_title), tabs=tabs, css=CSS,
@@ -569,6 +698,7 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None):
         gen=esc(gen), why=why, why_section=why_html, ngames=len(log),
         titlelist=titlelist, ntitles=len(_titles),
         upcoming_section=upcoming_section,
+        club_section=club_section,
         gamerows=gamerows, lastn=esc(lastn),
     )
     # filename decided by caller (two-pass dedup); return the HTML,
@@ -669,6 +799,7 @@ def build_board(cohort, title, sub, gen):
         tabs += f'<a href="{c}.html"{on}>{t}</a>'
     tabs += '<a href="upcoming.html">Upcoming</a>'
     tabs += '<a href="organizers.html">Organizers</a>'
+    tabs += '<a href="clubs.html">Clubs</a>'
     titles_html = "".join(f"<li>{esc(t)}</li>" for t in titles) or "<li>None</li>"
     upcoming = upcoming_rosters()
     # team detail pages: two passes (slugs first so opponent links

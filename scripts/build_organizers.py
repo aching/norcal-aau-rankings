@@ -241,6 +241,9 @@ def main():
         f'<a href="../{c}.html">{t}</a>' for c, (t, _, _) in
         {"11u": ("11U", 0, 0), "12u": ("12U/6th Grade", 0, 0),
          "13u": ("13U/7th Grade", 0, 0), "14u": ("14U/8th Grade", 0, 0), "15u": ("15U/9th Grade", 0, 0)}.items())
+    tabs += ('<a href="../upcoming.html">Upcoming</a>'
+             '<a href="../organizers.html">Organizers</a>'
+             '<a href="../clubs.html">Clubs</a>')
     slugs = {}
     today = date.today().isoformat()
     for org in sorted(set(list(orgs.keys()) + list(up_by_org.keys()))):
@@ -391,7 +394,7 @@ table.hist td {{ padding: 9px 8px; border-bottom: 1px solid var(--line); vertica
 <p>Ranked by avg strength of field: mean ranked-team score over resolved
 ranked appearances in scraped events (last 365d, min 20 appearances).
 {len(strength)} ranked, {len(unranked)} with insufficient data.</p>
-<nav class="tabs">{tabs_idx}<a href="upcoming.html">Upcoming</a><a href="organizers.html" class="on">Organizers</a></nav>
+<nav class="tabs">{tabs_idx}<a href="upcoming.html">Upcoming</a><a href="organizers.html" class="on">Organizers</a><a href="clubs.html">Clubs</a></nav>
 </header>
 <table class="hist">
 <thead><tr><th>#</th><th>Organizer</th><th>Strength</th><th>Appearances</th><th>Events</th><th>Top division</th></tr></thead>
