@@ -87,7 +87,7 @@ def scrape_tournament(tid, slug, out_dir="data"):
                 all_games.append(g)
 
     payload = {
-        "tournament_id": tid,
+        "tournament_id": int(tid),
         "tournament_slug": slug,
         "metadata": meta,
         "divisions": divisions,

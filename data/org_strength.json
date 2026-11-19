@@ -1,23 +1,85 @@
 {
+ "Attitude of Gratitude Events": {
+  "avg": 0.026775862068965515,
+  "n": 116,
+  "events": 7,
+  "divisions": [
+   {
+    "div": "14u Jr Power 32",
+    "avg": 0.059199999999999996,
+    "n": 5
+   },
+   {
+    "div": "12u National",
+    "avg": 0.05499999999999999,
+    "n": 5
+   },
+   {
+    "div": "14u National",
+    "avg": 0.054636363636363636,
+    "n": 11
+   },
+   {
+    "div": "12u American",
+    "avg": 0.02930769230769231,
+    "n": 13
+   },
+   {
+    "div": "13u National",
+    "avg": 0.027857142857142858,
+    "n": 7
+   },
+   {
+    "div": "14u American",
+    "avg": 0.02277777777777778,
+    "n": 18
+   },
+   {
+    "div": "11u American",
+    "avg": 0.01946153846153846,
+    "n": 13
+   },
+   {
+    "div": "13u International",
+    "avg": 0.014285714285714287,
+    "n": 7
+   },
+   {
+    "div": "12u International",
+    "avg": 0.013777777777777778,
+    "n": 9
+   },
+   {
+    "div": "13u American",
+    "avg": 0.012714285714285714,
+    "n": 7
+   },
+   {
+    "div": "14u International",
+    "avg": 0.010363636363636365,
+    "n": 11
+   }
+  ]
+ },
  "Grassroots 365": {
-  "avg": 0.03503703703703704,
-  "n": 81,
-  "events": 10,
+  "avg": 0.03451748251748252,
+  "n": 143,
+  "events": 14,
   "divisions": [
    {
     "div": "14U/8th Grade Silver",
-    "avg": 0.061,
-    "n": 8
+    "avg": 0.059,
+    "n": 12
    },
    {
     "div": "14U/8th Grade Gold",
-    "avg": 0.0503,
-    "n": 10
+    "avg": 0.050777777777777776,
+    "n": 18
    },
    {
-    "div": "13U/7th Grade Silver",
-    "avg": 0.0446,
-    "n": 5
+    "div": "11U/5th Grade Gold",
+    "avg": 0.046,
+    "n": 7
    },
    {
     "div": "12U/6th Grade Silver",
@@ -25,36 +87,76 @@
     "n": 5
    },
    {
-    "div": "12U/6th Grade Gold",
-    "avg": 0.029833333333333333,
-    "n": 6
+    "div": "13U/7th Grade Gold",
+    "avg": 0.03673333333333333,
+    "n": 15
    },
    {
-    "div": "13U/7th Grade Gold",
-    "avg": 0.029333333333333333,
+    "div": "13U/7th Grade Silver",
+    "avg": 0.032100000000000004,
+    "n": 10
+   },
+   {
+    "div": "12U/6th Grade",
+    "avg": 0.0308,
+    "n": 5
+   },
+   {
+    "div": "12U/6th Grade Gold",
+    "avg": 0.0305,
+    "n": 8
+   },
+   {
+    "div": "13U/7th Grade Bronze",
+    "avg": 0.026333333333333334,
     "n": 6
    },
    {
     "div": "14U/8th Grade Bronze",
-    "avg": 0.02033333333333333,
-    "n": 15
+    "avg": 0.0189,
+    "n": 20
+   },
+   {
+    "div": "13U/7th Grade Silver/Bronze",
+    "avg": 0.016999999999999998,
+    "n": 5
+   },
+   {
+    "div": "11U/5th Grade Silver/Bronze",
+    "avg": 0.010333333333333333,
+    "n": 6
    }
   ]
  },
  "GSG Hoops": {
-  "avg": 0.015345360824742268,
-  "n": 194,
-  "events": 22,
+  "avg": 0.01637717908082409,
+  "n": 631,
+  "events": 43,
   "divisions": [
+   {
+    "div": "8th Grade (14U) Boys Division 1",
+    "avg": 0.0412,
+    "n": 5
+   },
+   {
+    "div": "6th Grade (12U) Boys Division 1",
+    "avg": 0.04,
+    "n": 5
+   },
+   {
+    "div": "8th Grade (14U) Boys Yellow Division",
+    "avg": 0.0205,
+    "n": 8
+   },
    {
     "div": "5th Grade (11U) Division",
     "avg": 0.020200000000000003,
     "n": 5
    },
    {
-    "div": "6th Grade (12U) Boys Division",
-    "avg": 0.01854761904761905,
-    "n": 42
+    "div": "6th Grade (12U) Boys Division 2",
+    "avg": 0.017666666666666667,
+    "n": 6
    },
    {
     "div": "6th Grade (12U) Division",
@@ -62,19 +164,49 @@
     "n": 6
    },
    {
-    "div": "5th Grade (11U) Boys Division",
-    "avg": 0.017615384615384616,
-    "n": 26
+    "div": "6th Grade (12U) Boys Division",
+    "avg": 0.017296296296296296,
+    "n": 108
    },
    {
-    "div": "7th Grade (13U) Boys Division",
-    "avg": 0.014326530612244898,
-    "n": 49
+    "div": "5th Grade (11U) Boys Division",
+    "avg": 0.01614102564102564,
+    "n": 78
+   },
+   {
+    "div": "8th Grade (14U) Boys Black Division",
+    "avg": 0.0155,
+    "n": 14
    },
    {
     "div": "8th Grade (14U) Boys Division",
-    "avg": 0.011770833333333333,
-    "n": 48
+    "avg": 0.015337662337662337,
+    "n": 154
+   },
+   {
+    "div": "7th Grade (13U) Boys Division",
+    "avg": 0.015248322147651006,
+    "n": 149
+   },
+   {
+    "div": "14U Boys Division",
+    "avg": 0.014285714285714287,
+    "n": 7
+   },
+   {
+    "div": "11U Boys Division",
+    "avg": 0.013666666666666667,
+    "n": 6
+   },
+   {
+    "div": "7th Grade (13U) Boys Division 3",
+    "avg": 0.013,
+    "n": 7
+   },
+   {
+    "div": "6th Grade (12U) Boys Division 3",
+    "avg": 0.0124,
+    "n": 5
    },
    {
     "div": "8th Grade (14U) Division",
@@ -82,150 +214,405 @@
     "n": 8
    },
    {
+    "div": "8th Grade (14U) Boys Red Division",
+    "avg": 0.009857142857142856,
+    "n": 7
+   },
+   {
     "div": "7th Grade (13U) Division",
     "avg": 0.0098,
     "n": 5
+   },
+   {
+    "div": "13U Boys Division",
+    "avg": 0.009625,
+    "n": 8
    }
   ]
  },
  "Hoop 121": {
-  "avg": 0.026604651162790694,
-  "n": 86,
-  "events": 11,
+  "avg": 0.024283746556473827,
+  "n": 363,
+  "events": 22,
   "divisions": [
+   {
+    "div": "11U Black",
+    "avg": 0.041800000000000004,
+    "n": 5
+   },
+   {
+    "div": "14u Division 1",
+    "avg": 0.03966666666666666,
+    "n": 6
+   },
+   {
+    "div": "11u Black",
+    "avg": 0.0385,
+    "n": 6
+   },
+   {
+    "div": "13u D1",
+    "avg": 0.03516666666666667,
+    "n": 6
+   },
+   {
+    "div": "12u Black",
+    "avg": 0.03014285714285714,
+    "n": 14
+   },
    {
     "div": "11u White - Boys",
     "avg": 0.0298,
     "n": 5
    },
    {
-    "div": "11u",
-    "avg": 0.02823076923076923,
-    "n": 13
-   },
-   {
-    "div": "13u",
-    "avg": 0.026,
+    "div": "12u White",
+    "avg": 0.026222222222222223,
     "n": 9
    },
    {
-    "div": "12u White",
-    "avg": 0.0216,
+    "div": "11u",
+    "avg": 0.024142857142857143,
+    "n": 28
+   },
+   {
+    "div": "12u",
+    "avg": 0.023952380952380954,
+    "n": 21
+   },
+   {
+    "div": "13u",
+    "avg": 0.023363636363636364,
+    "n": 33
+   },
+   {
+    "div": "11u/12u",
+    "avg": 0.023333333333333334,
+    "n": 6
+   },
+   {
+    "div": "13u Black",
+    "avg": 0.0232,
     "n": 5
    },
    {
     "div": "14u",
-    "avg": 0.0215,
-    "n": 10
+    "avg": 0.022518518518518518,
+    "n": 27
+   },
+   {
+    "div": "14u D1",
+    "avg": 0.0214,
+    "n": 5
+   },
+   {
+    "div": "14u White",
+    "avg": 0.020666666666666667,
+    "n": 6
+   },
+   {
+    "div": "14u Black",
+    "avg": 0.019692307692307693,
+    "n": 13
+   },
+   {
+    "div": "13U Orange",
+    "avg": 0.0196,
+    "n": 5
+   },
+   {
+    "div": "14U Black",
+    "avg": 0.0186,
+    "n": 5
+   },
+   {
+    "div": "14u D2",
+    "avg": 0.013999999999999999,
+    "n": 5
+   },
+   {
+    "div": "14u Red",
+    "avg": 0.013600000000000001,
+    "n": 5
+   },
+   {
+    "div": "14u Division 2",
+    "avg": 0.013333333333333334,
+    "n": 6
+   },
+   {
+    "div": "14u Division 3",
+    "avg": 0.0102,
+    "n": 5
+   },
+   {
+    "div": "12u D3",
+    "avg": 0.0078,
+    "n": 5
+   },
+   {
+    "div": "11u D3",
+    "avg": 0.0076,
+    "n": 5
+   },
+   {
+    "div": "14u D3",
+    "avg": 0.006833333333333334,
+    "n": 6
    }
   ]
  },
  "NorCal Sports TV": {
-  "avg": 0.0202,
-  "n": 20,
-  "events": 6,
+  "avg": 0.016127272727272726,
+  "n": 55,
+  "events": 10,
   "divisions": [
    {
     "div": "14U Boys",
-    "avg": 0.022799999999999997,
-    "n": 10
+    "avg": 0.018782608695652174,
+    "n": 23
+   },
+   {
+    "div": "13U Boys",
+    "avg": 0.01442857142857143,
+    "n": 14
    },
    {
     "div": "11U Boys",
-    "avg": 0.0154,
-    "n": 5
+    "avg": 0.013000000000000001,
+    "n": 10
    }
   ]
  },
  "4BallersOnly": {
-  "avg": 0.023715151515151515,
-  "n": 165,
-  "events": 10,
+  "avg": 0.025343042071197412,
+  "n": 309,
+  "events": 13,
   "divisions": [
    {
     "div": "11u Division 1",
-    "avg": 0.04278571428571428,
-    "n": 14
-   },
-   {
-    "div": "14u Division 1",
-    "avg": 0.0391,
-    "n": 10
-   },
-   {
-    "div": "13u Division 1",
-    "avg": 0.03133333333333333,
-    "n": 12
-   },
-   {
-    "div": "12u Division 1",
-    "avg": 0.02866666666666667,
-    "n": 12
-   },
-   {
-    "div": "14u Division 2",
-    "avg": 0.024833333333333332,
-    "n": 18
-   },
-   {
-    "div": "13u Division 2",
-    "avg": 0.018923076923076924,
-    "n": 13
-   },
-   {
-    "div": "11u Division 3",
-    "avg": 0.018000000000000002,
-    "n": 11
-   },
-   {
-    "div": "12u Division 2",
-    "avg": 0.017904761904761906,
+    "avg": 0.04304761904761905,
     "n": 21
    },
    {
-    "div": "14u Divison 3",
-    "avg": 0.016555555555555556,
-    "n": 9
+    "div": "14u Division 1",
+    "avg": 0.03665,
+    "n": 20
    },
    {
-    "div": "12u Division 3",
-    "avg": 0.01635714285714286,
-    "n": 14
+    "div": "12u Division 1",
+    "avg": 0.035470588235294115,
+    "n": 17
    },
    {
-    "div": "14u Division 3",
-    "avg": 0.016166666666666666,
+    "div": "13u Division 1",
+    "avg": 0.031629629629629626,
+    "n": 27
+   },
+   {
+    "div": "13u Division 2",
+    "avg": 0.02575,
+    "n": 28
+   },
+   {
+    "div": "13u Division",
+    "avg": 0.024999999999999998,
     "n": 6
    },
    {
+    "div": "11u Yellow Division",
+    "avg": 0.021777777777777778,
+    "n": 9
+   },
+   {
+    "div": "14u Division 2",
+    "avg": 0.021093749999999998,
+    "n": 32
+   },
+   {
+    "div": "12u Division 2",
+    "avg": 0.02003448275862069,
+    "n": 29
+   },
+   {
+    "div": "11u Division 3",
+    "avg": 0.01633333333333333,
+    "n": 15
+   },
+   {
     "div": "13u Division 3",
-    "avg": 0.008400000000000001,
-    "n": 5
+    "avg": 0.015882352941176472,
+    "n": 17
+   },
+   {
+    "div": "14u Division 3",
+    "avg": 0.014769230769230769,
+    "n": 13
+   },
+   {
+    "div": "14u Divison 3",
+    "avg": 0.014538461538461538,
+    "n": 13
+   },
+   {
+    "div": "12u Division 3",
+    "avg": 0.014047619047619047,
+    "n": 21
    }
   ]
  },
+ "BullDawgs Basketball Club": {
+  "avg": 0.014758620689655172,
+  "n": 29,
+  "events": 11,
+  "divisions": []
+ },
  "Bay City Basketball": {
-  "avg": 0.01954285714285714,
-  "n": 70,
-  "events": 6,
+  "avg": 0.022245833333333336,
+  "n": 240,
+  "events": 8,
   "divisions": [
    {
+    "div": "6th Boys Gold",
+    "avg": 0.04369230769230769,
+    "n": 13
+   },
+   {
+    "div": "8th Boys Gold",
+    "avg": 0.04121428571428572,
+    "n": 14
+   },
+   {
+    "div": "7th Boys Gold",
+    "avg": 0.03407142857142857,
+    "n": 14
+   },
+   {
+    "div": "8th Boys Silver West",
+    "avg": 0.027,
+    "n": 6
+   },
+   {
     "div": "7th Boys Silver",
-    "avg": 0.02542857142857143,
+    "avg": 0.025,
+    "n": 30
+   },
+   {
+    "div": "6th Boys Silver",
+    "avg": 0.02353846153846154,
+    "n": 13
+   },
+   {
+    "div": "8th Boys Silver",
+    "avg": 0.022083333333333333,
+    "n": 12
+   },
+   {
+    "div": "6th Boys Bronze East",
+    "avg": 0.0166,
+    "n": 5
+   },
+   {
+    "div": "5th Boys Bronze",
+    "avg": 0.013857142857142858,
     "n": 7
    },
    {
+    "div": "7th Boys Bronze West",
+    "avg": 0.013285714285714286,
+    "n": 7
+   },
+   {
+    "div": "6th Boys Bronze West",
+    "avg": 0.013142857142857142,
+    "n": 7
+   },
+   {
+    "div": "6th Boys Bronze",
+    "avg": 0.01188235294117647,
+    "n": 17
+   },
+   {
+    "div": "8th Boys Bronze",
+    "avg": 0.010933333333333333,
+    "n": 15
+   },
+   {
+    "div": "7th Boys Bronze",
+    "avg": 0.009999999999999998,
+    "n": 17
+   },
+   {
     "div": "7th Boys Bronze East",
-    "avg": 0.0056,
+    "avg": 0.0079,
+    "n": 10
+   }
+  ]
+ },
+ "Sacramento Yellow Jackets": {
+  "avg": 0.022137254901960786,
+  "n": 51,
+  "events": 7,
+  "divisions": [
+   {
+    "div": "14U Gold",
+    "avg": 0.04114285714285714,
+    "n": 7
+   },
+   {
+    "div": "14U Silver",
+    "avg": 0.028199999999999996,
     "n": 5
+   },
+   {
+    "div": "14U",
+    "avg": 0.0255,
+    "n": 8
+   },
+   {
+    "div": "13U",
+    "avg": 0.01757142857142857,
+    "n": 14
+   },
+   {
+    "div": "12U",
+    "avg": 0.014499999999999999,
+    "n": 6
+   }
+  ]
+ },
+ "Mid Valley Premiere": {
+  "avg": 0.015272727272727273,
+  "n": 22,
+  "events": 12,
+  "divisions": [
+   {
+    "div": "13U",
+    "avg": 0.02025,
+    "n": 8
+   },
+   {
+    "div": "11U",
+    "avg": 0.0135,
+    "n": 6
    }
   ]
  },
  "BAMTOURNAMENTS": {
-  "avg": 0.011363636363636364,
-  "n": 33,
-  "events": 4,
+  "avg": 0.011255813953488372,
+  "n": 43,
+  "events": 5,
   "divisions": [
+   {
+    "div": "13U/7TH GRADE - BOYS",
+    "avg": 0.016,
+    "n": 5
+   },
+   {
+    "div": "14U/8TH GRADE - BOYS",
+    "avg": 0.0084,
+    "n": 5
+   },
    {
     "div": "14U/8TH GRADE (RED / WHITE) - BOYS",
     "avg": 0.005,

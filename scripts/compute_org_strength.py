@@ -62,7 +62,7 @@ def main():
     for f in glob.glob(str(HERE.parent / "data" / "[0-9]*.json")):
         try:
             d = json.load(open(f))
-            tid = d.get("tournament_id") or int(Path(f).stem)
+            tid = int(d.get("tournament_id") or Path(f).stem)
             corp[tid] = d.get("games", [])
         except Exception:
             pass

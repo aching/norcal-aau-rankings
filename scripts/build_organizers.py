@@ -86,7 +86,7 @@ def corpus_game_counts():
     for f in glob.glob(str(HERE.parent / "data" / "[0-9]*.json")):
         try:
             d = json.load(open(f))
-            tid = d.get("tournament_id") or int(Path(f).stem)
+            tid = int(d.get("tournament_id") or Path(f).stem)
             counts[tid] = len(d.get("games", []))
         except Exception:
             pass
@@ -110,7 +110,7 @@ def corpus_participants():
         if is_bt:
             tid = d.get("event_id")
         else:
-            tid = d.get("tournament_id") or int(Path(f).stem.lstrip("bt_") or 0)
+            tid = int(str(d.get("tournament_id") or Path(f).stem).lstrip("bt_") or 0)
         divs = {}
         for g in d.get("games", []) or []:
             if is_bt:
