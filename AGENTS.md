@@ -31,7 +31,7 @@ Freshness ledger: `data/scrape_state.json` is the source of truth (mirrored into
 
 Verify scraper changes by re-running a single-tournament scrape and inspecting the JSON.
 
-Scraping etiquette (PRD §6): 1 concurrent request, ≥2s EE / ≥1.5s BT delay, honest UA `AAU-Basketball-Aggregator/0.1 (avery@aptoslabs.com)`, back off on 429/5xx, stop on IP block/takedown. Never store games with `HideScores: true` (filtered at load). BT auth: public app key in `scrape_bracketteam.py:API_KEY` (embedded in their JS bundle), sent as `X-Authorization`; robots.txt is fully open. Circuit events (Jr. EYBL, 3SSB/3Stripes, UA) carry the prestige multiplier when scraped — most are SoCal-based but NorCal teams travel; camps/tryouts have no bracket games, skip those.
+Scraping etiquette (PRD §6): 1 concurrent request, ≥2s EE / ≥1.5s BT delay, honest UA `AAU-Basketball-Aggregator/0.1 (avery@aptoslabs.com)`, exponential backoff on 429/5xx (30s x 2^attempt, max 3 retries per division, then slow to 2x delay -- see `scrape_tournament.py`), throttle cooldown (30m recorded in `scrape_state.json` `throttle` section; entry points wait it out via `throttled_since()`), stop on IP block/takedown. Never store games with `HideScores: true` (filtered at load). BT auth: public app key in `scrape_bracketteam.py:API_KEY` (embedded in their JS bundle), sent as `X-Authorization`; robots.txt is fully open. Circuit events (Jr. EYBL, 3SSB/3Stripes, UA) carry the prestige multiplier when scraped — most are SoCal-based but NorCal teams travel; camps/tryouts have no bracket games, skip those.
 
 ## 3. Architecture & code layout
 

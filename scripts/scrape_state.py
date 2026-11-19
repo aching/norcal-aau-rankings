@@ -55,6 +55,39 @@ def last_run(source, job=None):
     return runs[0] if runs else None
 
 
+THROTTLE_COOLDOWN_SECONDS = 30 * 60  # don't start new scrapes within 30m of a 429/5xx
+
+
+def record_throttle(source, job, note=None):
+    """Log that `source` throttled us (429/5xx). Scrapers call this on
+    backoff; scrape entry points should check throttled_since() first."""
+    state = load()
+    now = time.strftime("%Y-%m-%dT%H:%M:%S")
+    entry = state.setdefault("throttle", {}).get(source, {})
+    entry.update({"source": source, "job": job, "throttled_at": now,
+                  "note": note or ""})
+    state["throttle"][source] = entry
+    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    STATE_PATH.write_text(json.dumps(state, indent=2))
+    return entry
+
+
+def throttled_since(source, cooldown=THROTTLE_COOLDOWN_SECONDS):
+    """Seconds since `source` last throttled us, or None if beyond cooldown
+    (or never). Callers: if not None, wait it out or abort instead of
+    burning more budget against a hot throttle."""
+    state = load()
+    entry = state.get("throttle", {}).get(source)
+    if not entry or not entry.get("throttled_at"):
+        return None
+    try:
+        ts = time.mktime(time.strptime(entry["throttled_at"], "%Y-%m-%dT%H:%M:%S"))
+    except Exception:
+        return None
+    age = time.time() - ts
+    return None if age >= cooldown else cooldown - age
+
+
 def update_content(source, watermark):
     """Merge a content watermark for a source. Keys: last_event_end,
     last_event_id, last_game_date (all optional)."""

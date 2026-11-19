@@ -7,12 +7,16 @@ Usage:
 
 Writes: <out_dir>/<tournament_id>.json
 """
-import json, re, sys, time, urllib.parse, urllib.request, http.cookiejar
+import json, re, sys, time, urllib.parse, urllib.request, http.cookiejar, random
 from pathlib import Path
 
 UA = "AAU-Basketball-Aggregator/0.1 (avery@aptoslabs.com)"
 BASE = "https://basketball.exposureevents.com"
 RATE_LIMIT_SECONDS = 2.0
+# Backoff on 429/5xx (added Nov 2026 after ad-hoc probing got the IP
+# throttled mid-scrape): sleep, retry same division, slow down after.
+BACKOFF_BASE = 30
+BACKOFF_MAX_RETRIES = 3
 
 
 def make_opener():
@@ -69,10 +73,34 @@ def scrape_tournament(tid, slug, out_dir="data"):
     print(f"[{tid}] {len(divisions)} divisions — {meta.get('title','')}")
 
     all_games = []
+    slowed = False
     for d in divisions:
-        time.sleep(RATE_LIMIT_SECONDS)
+        time.sleep(RATE_LIMIT_SECONDS * (2 if slowed else 1))
+        raw = None
+        for attempt in range(BACKOFF_MAX_RETRIES + 1):
+            try:
+                raw = post_xhr(opener, games_url, {"divisionid": d["Id"], "eventid": tid}, sched_url)
+                break
+            except Exception as e:
+                code = getattr(getattr(e, "fp", None), "status", None) or getattr(e, "code", None)
+                throttled = code in (429, 500, 502, 503, 504) or "429" in str(e) or "Too Many" in str(e)
+                if throttled and attempt < BACKOFF_MAX_RETRIES:
+                    wait = BACKOFF_BASE * (2 ** attempt) + random.uniform(0, 5)
+                    print(f"  [{d['Id']}] throttled ({e}) -- waiting {wait:.0f}s (try {attempt + 2}/{BACKOFF_MAX_RETRIES + 1})")
+                    try:
+                        from scrape_state import record_throttle
+                        record_throttle("ee", f"tournament:{tid}",
+                                        note=f"429/5xx on division {d['Id']}")
+                    except Exception:
+                        pass
+                    time.sleep(wait)
+                    slowed = True
+                    continue
+                print(f"  [{d['Id']}] {d['Name']} — ERROR: {e}")
+                break
+        if raw is None:
+            continue
         try:
-            raw = post_xhr(opener, games_url, {"divisionid": d["Id"], "eventid": tid}, sched_url)
             day_groups = json.loads(raw)
         except Exception as e:
             print(f"  [{d['Id']}] {d['Name']} — ERROR: {e}")
@@ -108,4 +136,14 @@ if __name__ == "__main__":
     tid = sys.argv[1]
     slug = sys.argv[2]
     out_dir = sys.argv[3] if len(sys.argv) > 3 else "data"
+    try:
+        from scrape_state import throttled_since
+        remaining = throttled_since("ee")
+        if remaining:
+            print(f"[throttle] EE throttled us recently -- "
+                  f"cooldown ends in {remaining / 60:.0f}m. "
+                  f"Waiting it out instead of burning budget...")
+            time.sleep(remaining + 5)
+    except ImportError:
+        pass
     scrape_tournament(tid, slug, out_dir)
