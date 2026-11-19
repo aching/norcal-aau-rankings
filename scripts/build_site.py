@@ -289,10 +289,10 @@ TEAM_TMPL = """<!DOCTYPE html>
 {why_section}
 <section class="note"><h2>Titles ({ntitles})</h2><ul>{titlelist}</ul></section>
 {upcoming_section}
-{club_section}
 <section class="note"><h2>Full record ({ngames} scored games, newest first)</h2>
 <table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
 <tbody>{gamerows}</tbody></table></section>
+{club_section}
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last {lastn} games within 180 days; full record below spans all scored games.</footer>
 </div>
 </body>
