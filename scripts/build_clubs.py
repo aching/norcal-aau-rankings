@@ -19,15 +19,13 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from build_site import CSS, club_of, all_pages_map
+from html_utils import esc
 
 OUT = HERE.parent / "site" / "clubs"
 COHORT_ORDER = ["11u", "12u", "13u", "14u", "15u"]
 COHORT_LABEL = {"11u": "11U", "12u": "12U/6th", "13u": "13U/7th",
                 "14u": "14U/8th", "15u": "15U/9th"}
 
-
-def esc(s):
-    return str(s).replace("&", "&amp;").replace("<", "&lt;")
 
 
 def slugify(name):

@@ -19,7 +19,7 @@ def main(start_date=None, end_date=None, out_name="events_ca.json"):
     opener.addheaders = [("User-Agent", UA)]
 
     # Get token + cookies
-    with opener.open(urllib.request.Request(PAGE_URL, headers={"User-Agent": UA})) as r:
+    with opener.open(urllib.request.Request(PAGE_URL, headers={"User-Agent": UA}), timeout=30) as r:
         html = r.read().decode("utf-8", errors="replace")
     m = re.search(r"tokenValue:\s*'([^']+)'", html)
     token = m.group(1)

@@ -23,6 +23,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from build_site import CSS
+from html_utils import esc, external_link, safe_url
 
 EE_BASE = "https://basketball.exposureevents.com"
 
@@ -110,11 +111,11 @@ def load_events():
             "end": (e.get("EndDate") or "")[:10],
             "name": e.get("Name", "?"),
             "org": canon_org(e.get("OrganizationName") or ""),
-            "org_url": f"{EE_BASE}/organizations/{e['OrganizationId']}" if e.get("OrganizationId") else "",
+            "org_url": safe_url(f"{EE_BASE}/organizations/{e['OrganizationId']}") if e.get("OrganizationId") else "",
             "city": e.get("City") or e.get("Location") or "",
             "region": region_of([e.get("City") or "", e.get("Location") or ""]),
             "src": "EE",
-            "url": f"{EE_BASE}/{tid}/{slug}",
+            "url": safe_url(f"{EE_BASE}/{tid}/{slug}"),
             "status": status,
             "teams": teams,
         })
@@ -149,7 +150,7 @@ def load_events():
             "city": city,
             "region": region_of(cities),
             "src": "BT",
-            "url": pub,
+            "url": safe_url(pub),
             "status": status,
             "teams": teams,
         })
@@ -219,9 +220,6 @@ btns.forEach(b => b.addEventListener('click', () => {{
 """
 
 
-def esc(s):
-    return str(s).replace("&", "&amp;").replace("<", "&lt;")
-
 
 ORG_CANONICAL = {
     "bay area roaddawgs": "Bay Area Roaddawgs",
@@ -263,14 +261,15 @@ def main():
             if o in slugs:
                 parts.append(f'<a href="organizers/{slugs[o]}.html">{esc(o)}</a>')
             elif e.get("org_url"):
-                parts.append(f'<a href="{esc(e["org_url"])}">{esc(o)}</a>')
+                parts.append(external_link(e["org_url"], o))
             else:
                 parts.append(esc(o))
         org = "; ".join(parts)
+        event = external_link(e["url"], e["name"])
         rows.append(
             f'<tr data-region="{esc(e["region"])}">'
             f'<td style="white-space:nowrap">{d}</td>'
-            f'<td><a href="{esc(e["url"])}">{esc(e["name"])}</a> <span class="src">{e["src"]}</span><br>'
+            f'<td>{event} <span class="src">{e["src"]}</span><br>'
             f'<span style="color:var(--mut);font-size:12.5px">{esc(e["city"])}</span></td>'
             f'<td>{org}</td>'
             f'<td>{esc(e["region"])}</td>'

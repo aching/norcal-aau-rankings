@@ -14,12 +14,14 @@ renders as a stacked list per team.
 
 Usage: python3 scripts/build_site.py  (run after build_reports.py)
 """
-import html
+
 import json
 import re
 import subprocess
 import sys
 from pathlib import Path
+
+from html_utils import esc, external_link, json_for_script
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
@@ -401,9 +403,6 @@ def parse_rep(path):
     return rows, titles, tmnote.strip(), meta, team_titles
 
 
-def esc(s):
-    return html.escape(s, quote=False)
-
 
 def game_logs(level_arg, cohort):
     """Full per-team game logs.
@@ -584,9 +583,7 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None):
     if log:
         gamerows = []
         for g in log:
-            ev = esc(g.get("event", ""))
-            if g.get("event_url"):
-                ev = f'<a href="{esc(g["event_url"])}">{ev}</a>'
+            ev = external_link(g.get("event_url"), g.get("event", ""))
             cls = "w" if g.get("w") else "l"
             res = f'{"W" if g.get("w") else "L"} {esc(g.get("score", ""))}'
             opp, oid = esc(g.get("opp", "")), g.get("opp_id")
@@ -623,8 +620,7 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None):
         _badge = (f'<span class="tbadge t-{_band}">{_band}</span> '
                   if _band in ("national", "up", "gold", "silver",
                                "bronze", "open") else "")
-        _items.append(f'<li>{_badge}<a href="{esc(_url)}">{esc(_txt)}</a></li>'
-                      if _url else f"<li>{_badge}{esc(_txt)}</li>")
+        _items.append(f'<li>{_badge}{external_link(_url, _txt)}</li>')
     titlelist = "".join(_items) or "<li>No titles held.</li>"
     marks = " 🏆" * min(r["titles"], 2) if r["titles"] else ""
     tabs = ""
@@ -639,7 +635,7 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None):
     if up_list:
         up_items = "".join(
             f"<li>{esc(u['date'][5:].replace('-', '/'))} &mdash; "
-            f"<a href=\"{esc(u['url'])}\">{esc(u['event'])}</a>"
+            f"{external_link(u['url'], u['event'])}"
             f" <span style=\"color:var(--mut)\">({esc(u['div'])}"
             f"{' as ' + esc(u['raw']) if u['raw'].lower() != r['team'].lower() else ''})</span></li>"
             for u in up_list)
@@ -844,7 +840,7 @@ def build_board(cohort, title, sub, gen):
                                  items=ulist, gen=esc(gen)))
     n_ranked = sum(1 for r in data if r["rank"])
     slim = [{k: v for k, v in r.items() if k != "log"} for r in data if r["rank"]]
-    js = JS.replace("__DATA__", json.dumps(slim))
+    js = JS.replace("__DATA__", json_for_script(slim))
     page = BOARD_TMPL.format(
         title=esc(title), sub=esc(sub), gen=esc(gen), css=CSS, tabs=tabs,
         titles=titles_html, tmnote=esc(tmnote),

@@ -30,6 +30,7 @@ sys.path.insert(0, str(HERE))
 from build_site import CSS
 from team_identity import resolve
 from build_upcoming import load_events as load_upcoming, region_of
+from html_utils import esc, external_link, safe_url
 
 EE_BASE = "https://basketball.exposureevents.com"
 OUT = HERE.parent / "site" / "organizers"
@@ -163,9 +164,6 @@ def team_page_map():
     return _page_map
 
 
-def esc(s):
-    return str(s).replace("&", "&amp;").replace("<", "&lt;")
-
 
 PAGE = """<!doctype html>
 <html lang="en">
@@ -209,6 +207,19 @@ details div {{ margin: 3px 0 3px 12px; font-size: 13px; }}
 </body>
 </html>
 """
+
+
+def upcoming_item(u):
+    url = safe_url(u.get("url"))
+    item = (f"<li>{esc(u['date'][5:].replace('-', '/'))} &mdash; "
+            f"{external_link(url, u.get('name', '?'))} ")
+    if url:
+        if u["src"] == "EE":
+            item += (f"[{external_link(url + '/schedule', 'schedule')}] "
+                     f"[{external_link(url + '/teams', 'teams')}] ")
+        else:
+            item += f"[{external_link(url, 'schedule/teams')}] "
+    return item + f'<span class="count">{esc(u["status"])}</span></li>'
 
 
 def main():
@@ -260,22 +271,13 @@ def main():
             parts.append(f"{len(up)} upcoming")
         summary = " &middot; ".join(parts) + "."
         if org_id:
-            summary += f' <a href="{EE_BASE}/organizations/{org_id}">EE organization page &rarr;</a>'
+            summary += " " + external_link(
+                f"{EE_BASE}/organizations/{org_id}", "EE organization page →")
         if org in up_by_org and org not in orgs:
             summary += " BT organizer (EE history coming)."
         if up:
-            items = "".join(
-                f"<li>{esc(u['date'][5:].replace('-', '/'))} &mdash; "
-                f"<a href=\"{esc(u['url'])}\">{esc(u['name'])}</a> "
-                f"[<a href=\"{esc(u['url'])}/schedule\">schedule</a>] "
-                f"[<a href=\"{esc(u['url'])}/teams\">teams</a>] "
-                f"<span class=\"count\">{esc(u['status'])}</span></li>" for u in up
-                if u["src"] == "EE") + "".join(
-                f"<li>{esc(u['date'][5:].replace('-', '/'))} &mdash; "
-                f"<a href=\"{esc(u['url'])}\">{esc(u['name'])}</a> "
-                f"[<a href=\"{esc(u['url'])}\">schedule/teams</a>] "
-                f"<span class=\"count\">{esc(u['status'])}</span></li>" for u in up
-                if u["src"] != "EE")
+            items = ("".join(upcoming_item(u) for u in up if u["src"] == "EE")
+                     + "".join(upcoming_item(u) for u in up if u["src"] != "EE"))
             upcoming_section = (f"<section class=\"note\"><h2>Upcoming ({len(up)})</h2>"
                                 f"<ul>{items}</ul></section>")
         else:
@@ -321,11 +323,11 @@ def main():
                        f"{len(divs)} divisions)</summary>" +
                        "".join(groups) + "</details>")
             else:
-                who = (f"[<a href=\"{esc(url)}/schedule\">schedule</a>] "
-                       f"[<a href=\"{esc(url)}/teams\">teams</a>]")
+                who = (f"[{external_link(url + '/schedule', 'schedule')}] "
+                       f"[{external_link(url + '/teams', 'teams')}]")
             rows.append(
                 f"<tr><td style=\"white-space:nowrap\">{esc((h['start'] or '')[5:].replace('-', '/'))}</td>"
-                f"<td><a href=\"{esc(url)}\">{esc(h['name'])}</a> {who}<br>"
+                f"<td>{external_link(url, h['name'])} {who}<br>"
                 f"<span class=\"count\">{esc(city)}</span></td>"
                 f"<td>{gc if gc else '&mdash;'}</td></tr>")
         if not rows:

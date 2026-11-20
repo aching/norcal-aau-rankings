@@ -2,11 +2,11 @@
 
 ## 1. Project overview
 
-NorCal AAU basketball opponent-research project (spec owner: Avery). Goal per `PRD.md` (Draft v0.2): a web app where you type a Bay Area/NorCal team name and get tournament history, game results, season record, and program affiliation. **No app exists yet** — the repo is a data pipeline: ~440 exposureevents tournaments + ~80 bracketteam events in `data/`, queryable via `data/aau.db` (SQLite), plus a one-off scouting report. Next work is team-identity normalization (§6–7 of PRD) and the V1 web app.
+NorCal AAU basketball opponent-research project (spec owner: Avery). Goal per `PRD.md` (Draft v0.2): a web app where you type a Bay Area/NorCal team name and get tournament history, game results, season record, and program affiliation. The repo contains the ingestion pipeline and a generated static rankings site, backed by `data/aau.db` (SQLite). Next work is the full V1 web app.
 
 ## 2. Commands
 
-No manifest, Makefile, CI, tests, or linters. Stdlib-only Python 3 — **no install step**. Run everything from the repo root (scripts use relative `data/` paths).
+No manifest, Makefile, or linters. CI is GitHub Pages deployment only. Tests use stdlib `unittest`; otherwise stdlib-only Python 3 — **no install step**. Run everything from the repo root (scripts use relative `data/` paths).
 
 ```bash
 # Full refresh: discovery -> scrape -> database (all stages by default)
@@ -20,6 +20,9 @@ python3 scripts/scrape_bracketteam.py <event_id> [out_dir]              # bracke
 
 # Rebuild the database from all JSON (default: data/aau.db)
 python3 scripts/build_db.py [db_path]
+
+# Regression tests (no network or corpus writes)
+python3 -m unittest discover -s tests -v
 
 # One-off scouting report -> data/scout_257525.md
 python3 scripts/scout.py
@@ -35,7 +38,7 @@ Scraping etiquette (PRD §6): 1 concurrent request, ≥2s EE / ≥1.5s BT delay,
 
 ## 3. Architecture & code layout
 
-Pipeline: **discovery → scrape → JSON corpus → SQLite**. No app layer.
+Pipeline: **discovery → scrape → JSON corpus → SQLite → generated static site**. No server app layer.
 
 - `PRD.md` — the spec: scope (NorCal, 7U–17U/grade/HS, boys+girls), data model, scraping ground rules, Appendices B–D with reverse-engineered exposureevents API findings. Read before touching scrapers.
 - `scripts/refresh.py` — orchestrator: EE discovery (`list_events.py` over `[since, today]`) → scrape new NorCal tournaments → BT batch → `build_db.py`. Computes content watermarks (`last_event_end/id`, `last_game_date`) from JSON on disk.

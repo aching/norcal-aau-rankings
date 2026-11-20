@@ -23,7 +23,7 @@ Schema:
            winner ('H'/'A'/NULL), forfeit_winner, is_exhibition, unscheduled,
            has_result, venue, court, home_team_id, away_team_id)
 """
-import json, glob, sqlite3, sys
+import json, glob, os, sqlite3, stat, sys, tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -204,78 +204,166 @@ def build_teams(cur):
     return len(pairs)
 
 
+def _prepare_existing_db_for_replace(db_path):
+    """Quiesce an old WAL database and return its permission bits."""
+    if not db_path.exists():
+        return None
+    mode = stat.S_IMODE(db_path.stat().st_mode)
+    old_con = sqlite3.connect(db_path)
+    was_wal = False
+    try:
+        row = old_con.execute("PRAGMA journal_mode").fetchone()
+        was_wal = bool(row and row[0].lower() == "wal")
+        if was_wal:
+            try:
+                checkpoint = old_con.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()
+                if checkpoint and checkpoint[0]:
+                    raise RuntimeError("active WAL readers or writers")
+                changed = old_con.execute("PRAGMA journal_mode=DELETE").fetchone()
+                if not changed or changed[0].lower() != "delete":
+                    raise RuntimeError("could not leave WAL mode")
+            except sqlite3.Error as e:
+                raise RuntimeError(
+                    f"could not quiesce existing database: {e}; "
+                    "close active connections; database left unchanged") from e
+    finally:
+        old_con.close()
+
+    if was_wal:
+        # Once checkpointed and converted, no old sidecar may accompany the
+        # replacement inode. Switching journal modes normally removes both.
+        for suffix in ("-wal", "-shm"):
+            try:
+                db_path.with_name(db_path.name + suffix).unlink()
+            except FileNotFoundError:
+                pass
+    return mode
+
+
 def main(db_path="data/aau.db"):
     db_path = Path(db_path)
-    if db_path.exists():
-        db_path.unlink()
-    con = sqlite3.connect(db_path)
-    cur = con.cursor()
-    cur.executescript(SCHEMA)
-    ee_n = ee_skip = bt_n = fb_n = 0
     ee_files = sorted(glob.glob("data/[0-9]*.json"))
     bt_files = sorted(glob.glob("data/bt_*.json"))
     fb_files = sorted(glob.glob("data/fb_*.json"))
-    for f in ee_files:
-        try:
-            n, s = load_ee(cur, f); ee_n += n; ee_skip += s
+    if not (ee_files or bt_files or fb_files):
+        raise RuntimeError("no source tournament files found; database left unchanged")
+
+    fd, tmp_name = tempfile.mkstemp(
+        dir=str(db_path.parent), prefix=db_path.name + ".", suffix=".tmp")
+    os.close(fd)
+    tmp_path = Path(tmp_name)
+    con = None
+    try:
+        con = sqlite3.connect(tmp_path)
+        cur = con.cursor()
+        cur.executescript(SCHEMA)
+        cur.execute("BEGIN")
+        ee_n = ee_skip = bt_n = fb_n = 0
+        failures = []
+        processed = []
+
+        for f in ee_files:
+            cur.execute("SAVEPOINT source_file")
+            try:
+                n, s = load_ee(cur, f)
+            except Exception as e:
+                cur.execute("ROLLBACK TO source_file")
+                cur.execute("RELEASE source_file")
+                failures.append(f)
+                print(f"EE FAIL {f}: {e}", file=sys.stderr)
+            else:
+                cur.execute("RELEASE source_file")
+                ee_n += n
+                ee_skip += s
+                processed.append(("ee", Path(f).stem, n))
+
+        for f in bt_files:
+            cur.execute("SAVEPOINT source_file")
+            try:
+                n = load_bt(cur, f)
+            except Exception as e:
+                cur.execute("ROLLBACK TO source_file")
+                cur.execute("RELEASE source_file")
+                failures.append(f)
+                print(f"BT FAIL {f}: {e}", file=sys.stderr)
+            else:
+                cur.execute("RELEASE source_file")
+                bt_n += n
+                processed.append(("bt", Path(f).stem[3:], None))
+
+        for f in fb_files:
+            cur.execute("SAVEPOINT source_file")
+            try:
+                n = load_fb(cur, f)
+            except Exception as e:
+                cur.execute("ROLLBACK TO source_file")
+                cur.execute("RELEASE source_file")
+                failures.append(f)
+                print(f"FB FAIL {f}: {e}", file=sys.stderr)
+            else:
+                cur.execute("RELEASE source_file")
+                fb_n += n
+                processed.append(("fb", Path(f).stem[3:], None))
+
+        if failures:
+            raise RuntimeError(
+                f"{len(failures)} source file(s) failed to load; database left unchanged")
+
+        state = load_state()
+        for key, r in state.get("runs", {}).items():
+            cur.execute("INSERT OR REPLACE INTO scrape_runs VALUES (?,?,?,?,?,?,?)",
+                        (r.get("source"), r.get("job"), r.get("started_at"),
+                         r.get("finished_at"), r.get("status"),
+                         json.dumps(r.get("stats", {})), r.get("note")))
+        for source, c in state.get("content", {}).items():
+            cur.execute("INSERT OR REPLACE INTO scrape_content VALUES (?,?,?,?,?)",
+                        (source, c.get("last_event_end"), str(c.get("last_event_id"))
+                         if c.get("last_event_id") is not None else None,
+                         c.get("last_game_date"), c.get("updated_at")))
+        n_pairs = build_teams(cur)
+        distinct_home_teams = {
+            source: cur.execute(
+                f"SELECT COUNT(DISTINCT home_team) FROM {source}_games").fetchone()[0]
+            for source in ("ee", "bt", "fb")
+        }
+
+        integrity = cur.execute("PRAGMA integrity_check").fetchone()
+        if not integrity or integrity[0] != "ok":
+            raise RuntimeError(f"SQLite integrity check failed: {integrity}")
+        foreign_keys = cur.execute("PRAGMA foreign_key_check").fetchall()
+        if foreign_keys:
+            raise RuntimeError(f"SQLite foreign key check failed: {foreign_keys[:3]}")
+
+        con.commit()
+        con.close()
+        con = None
+        existing_mode = _prepare_existing_db_for_replace(db_path)
+        if existing_mode is not None:
+            os.chmod(tmp_path, existing_mode)
+        os.replace(tmp_path, db_path)
+
+        # Essential side effects happen before optional console reporting.
+        for source, eid, games in processed:
             try:
                 from scrape_state import mark_processed
-                mark_processed("ee", Path(f).stem, n)
+                mark_processed(source, eid, games)
             except Exception:
                 pass
-        except Exception as e:
-            print(f"EE FAIL {f}: {e}")
-    for f in bt_files:
+
+        print(f"teams: {n_pairs} (raw name, division) pairs resolved")
+        print(f"ee: {len(ee_files)} tournaments, {ee_n} games loaded ({ee_skip} HideScores skipped)")
+        print(f"bt: {len(bt_files)} events, {bt_n} games loaded")
+        print(f"fb: {len(fb_files)} events, {fb_n} games loaded")
+        for source in ("ee", "bt", "fb"):
+            print(f"{source} distinct home teams:", distinct_home_teams[source])
+        print(f"-> {db_path}")
+    finally:
+        if con is not None:
+            con.close()
         try:
-            bt_n += load_bt(cur, f)
-            try:
-                from scrape_state import mark_processed
-                import re as _re
-                _m = _re.match(r"bt_(.+)\.json$", Path(f).name)
-                if _m:
-                    mark_processed("bt", _m.group(1), None)
-            except Exception:
-                pass
-        except Exception as e:
-            print(f"BT FAIL {f}: {e}")
-    for f in fb_files:
-        try:
-            fb_n += load_fb(cur, f)
-            try:
-                from scrape_state import mark_processed
-                import re as _re
-                _m = _re.match(r"fb_(.+)\.json$", Path(f).name)
-                if _m:
-                    mark_processed("fb", _m.group(1), None)
-            except Exception:
-                pass
-        except Exception as e:
-            print(f"FB FAIL {f}: {e}")
-    state = load_state()
-    for key, r in state.get("runs", {}).items():
-        cur.execute("INSERT OR REPLACE INTO scrape_runs VALUES (?,?,?,?,?,?,?)",
-                    (r.get("source"), r.get("job"), r.get("started_at"),
-                     r.get("finished_at"), r.get("status"),
-                     json.dumps(r.get("stats", {})), r.get("note")))
-    for source, c in state.get("content", {}).items():
-        cur.execute("INSERT OR REPLACE INTO scrape_content VALUES (?,?,?,?,?)",
-                    (source, c.get("last_event_end"), str(c.get("last_event_id"))
-                     if c.get("last_event_id") is not None else None,
-                     c.get("last_game_date"), c.get("updated_at")))
-    n_pairs = build_teams(cur)
-    con.commit()
-    print(f"teams: {n_pairs} (raw name, division) pairs resolved")
-    print(f"ee: {len(ee_files)} tournaments, {ee_n} games loaded ({ee_skip} HideScores skipped)")
-    print(f"bt: {len(bt_files)} events, {bt_n} games loaded")
-    print(f"fb: {len(fb_files)} events, {fb_n} games loaded")
-    for row in cur.execute("SELECT COUNT(DISTINCT home_team) FROM ee_games"):
-        print("ee distinct home teams:", row[0])
-    for row in cur.execute("SELECT COUNT(DISTINCT home_team) FROM bt_games"):
-        print("bt distinct home teams:", row[0])
-    for row in cur.execute("SELECT COUNT(DISTINCT home_team) FROM fb_games"):
-        print("fb distinct home teams:", row[0])
-    con.close()
-    print(f"-> {db_path}")
+            tmp_path.unlink()
+        except FileNotFoundError:
+            pass
 
 
 if __name__ == "__main__":
