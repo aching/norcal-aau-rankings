@@ -110,6 +110,8 @@ details{margin:18px 0;line-height:1.6}details p,details li{color:var(--mut)}
 <p class="intro">UAA / Rise, Nike EYBL / EYCL / PIT, Junior EYBL, and West 3SSB.
 <strong>8,325 games</strong>; 8,306 finals and 19 scheduled or unscored rows.
 Generated 2026-11-20.</p>
+<p class="intro"><strong>7,052 of 16,650 team appearances</strong> match an AAU identity in the same age/grade cohort;
+<strong>3,294</strong> link directly to an existing AAU team profile.</p>
 <div class="circuit-stats"><span><strong>3SSB</strong> 2,131 games</span><span><strong>EYBL</strong> 2,317 games</span><span><strong>UAA</strong> 3,877 games</span></div>
 <div class="circuit-controls">
 <label class="search">Team or event search<input id="q" type="search" placeholder="e.g. Oakland Soldiers"></label>
@@ -120,7 +122,7 @@ Generated 2026-11-20.</p>
 <label>Result<select id="statusFilter"><option value="">All</option><option value="final">Final</option><option value="scheduled">Scheduled/unscored</option></select></label>
 <label>From<input type="date" id="from"></label><label>To<input type="date" id="to"></label>
 </div><div class="buttons"><button id="reset">Reset filters</button><button id="sort">Newest first</button>
-<a href="games.csv" download>Download games CSV</a><a href="events.csv" download>Download events CSV</a><a href="games.json" download>Download JSON</a></div>
+<a href="games.csv" download>Download games CSV</a><a href="events.csv" download>Download events CSV</a><a href="games.json" download>Download JSON</a><a href="team-matches.csv" download>AAU team matches CSV</a></div>
 <p id="status" role="status">Loading game data…</p><p id="empty" hidden>No matching games.</p>
 <div class="table-wrap"><table id="circuits"><thead><tr><th>Date / time</th><th>Teams</th><th>Score</th><th>Event / division</th><th>Venue / court</th><th>Source</th></tr></thead><tbody id="gamesBody"></tbody></table></div>
 <div class="buttons"><button id="more" hidden>Show 100 more</button></div>
@@ -128,6 +130,7 @@ Generated 2026-11-20.</p>
 <li>Nike's official public Event Hub provides 1,570 main-session games and 258 Peach Jam/PIT games. EYBL, EYCL, and PIT are separate series.</li>
 <li>UAA's official pages provide 3,720 deduplicated records. The combined page substitutes the fuller 846-game girls UAA aggregate schedule for 689 overlapping webpage rows.</li>
 <li>3SSB is the verified West circuit only (2,131 games), not a complete nationwide archive.</li>
+<li>AAU matches use normalized name plus age/grade cohort, never name alone. Bare or age-less labels remain unlinked. Team-page tooltips show the canonical identity and cohort.</li>
 <li>Unavailable times and courts remain blank. Source scores and statuses are preserved without silently correcting anomalies.</li>
 </ul></details>
 </main></div><noscript><p>Enable JavaScript to filter games, or use the CSV/JSON downloads above.</p></noscript>

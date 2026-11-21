@@ -11,6 +11,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from build_site import CSS
+from circuit_identity import IDENTITY_FIELDS
 from export_circuits_2026 import FIELDS
 from html_utils import esc, safe_url
 
@@ -18,7 +19,7 @@ DATA = HERE.parent / "data"
 OUT = HERE.parent / "site" / "circuits"
 SLIM_FIELDS = ["circuit", "series", "division", "event", "date", "time",
                "home_team", "away_team", "home_score", "away_score", "status",
-               "venue", "court", "url", "game_id", "game_type"]
+               "venue", "court", "url", "game_id", "game_type"] + IDENTITY_FIELDS
 
 EXTRA_CSS = """
 main{max-width:1500px;margin:auto}.intro{color:var(--mut);line-height:1.6}
@@ -40,7 +41,9 @@ APP_JS = r"""(() => {
 'use strict';
 const C = {circuit:0, series:1, division:2, event:3, date:4, time:5,
   home:6, away:7, homeScore:8, awayScore:9, status:10, venue:11, court:12,
-  url:13, id:14, type:15};
+  url:13, id:14, type:15, homeCanonical:16, homeAge:17, homeResolution:18,
+  homeMatch:19, homeProfile:20, awayCanonical:21, awayAge:22, awayResolution:23,
+  awayMatch:24, awayProfile:25};
 const $ = id => document.getElementById(id);
 let games = [], filtered = [], shown = 100, newestFirst = true;
 const controls = ['circuit', 'series', 'division', 'event', 'statusFilter'];
@@ -64,6 +67,20 @@ function sourceLink(game, label) {
   } else span.textContent = label;
   return span;
 }
+function teamLabel(game, side) {
+  const isHome = side === 'home';
+  const label = game[isHome ? C.home : C.away];
+  const profile = game[isHome ? C.homeProfile : C.awayProfile];
+  if (!profile || !profile.startsWith('../teams/')) return document.createTextNode(label);
+  const a = document.createElement('a');
+  a.href = profile;
+  const team = game[isHome ? C.homeCanonical : C.awayCanonical];
+  const age = game[isHome ? C.homeAge : C.awayAge];
+  const resolution = game[isHome ? C.homeResolution : C.awayResolution];
+  a.title = `AAU profile · ${team} · age cohort ${age} · ${resolution} match`;
+  a.textContent = label + ' ↗';
+  return a;
+}
 function gameMatch(game) {
   if ($('circuit').value && game[C.circuit] !== $('circuit').value) return false;
   if ($('series').value && game[C.series] !== $('series').value) return false;
@@ -85,8 +102,8 @@ function render(reset) {
     const tr = document.createElement('tr');
     const date = document.createElement('td'); date.textContent = game[C.date] + (game[C.time] ? ' ' + game[C.time] : '');
     const teams = document.createElement('td');
-    teams.appendChild(sourceLink(game, game[C.home])); teams.appendChild(document.createElement('br'));
-    teams.appendChild(document.createTextNode(game[C.away]));
+    teams.appendChild(teamLabel(game, 'home')); teams.appendChild(document.createElement('br'));
+    teams.appendChild(teamLabel(game, 'away'));
     const score = document.createElement('td'); score.className = 'score';
     score.textContent = game[C.homeScore] !== '' && game[C.awayScore] !== '' ?
       game[C.homeScore] + '–' + game[C.awayScore] : 'Scheduled';
@@ -135,12 +152,17 @@ fetch('games.json').then(response => {
 """
 
 
-def export_site(games, event_csv, out_dir=OUT):
+def export_site(games, event_csv, out_dir=OUT, match_csv=None):
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     slim = [[r.get(field, "") for field in SLIM_FIELDS] for r in games]
     for game in slim:
         game[SLIM_FIELDS.index("url")] = safe_url(game[SLIM_FIELDS.index("url")])
+        for side in ("home", "away"):
+            field = f"{side}_aau_team_url"
+            value = game[SLIM_FIELDS.index(field)]
+            game[SLIM_FIELDS.index(field)] = (
+                "../" + value if value.startswith("teams/") and ".." not in value else "")
     (out_dir / "games.json").write_text(
         json.dumps(slim, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     with (out_dir / "games.csv").open("w", newline="") as f:
@@ -148,10 +170,19 @@ def export_site(games, event_csv, out_dir=OUT):
         writer.writeheader()
         writer.writerows(games)
     shutil.copyfile(event_csv, out_dir / "events.csv")
+    if match_csv:
+        shutil.copyfile(match_csv, out_dir / "team-matches.csv")
     (out_dir / "app.js").write_text(APP_JS, encoding="utf-8")
 
     counts = Counter(r["circuit"] for r in games)
     finals = sum(r["status"].lower() == "final" for r in games)
+    matched_appearances = sum(r.get(f"{side}_match_status") == "matched"
+                              for r in games for side in ("home", "away"))
+    linked_appearances = sum(
+        bool(game[SLIM_FIELDS.index(f"{side}_aau_team_url")])
+        for game in slim for side in ("home", "away"))
+    match_download = ('<a href="team-matches.csv" download>AAU team matches CSV</a>'
+                      if match_csv else "")
     stats = "".join(f"<span><strong>{esc(circuit)}</strong> {counts[circuit]:,} games</span>"
                     for circuit in sorted(counts))
     nav = "".join(f'<a href="../{slug}.html">{label}</a>' for slug, label in
@@ -167,6 +198,8 @@ def export_site(games, event_csv, out_dir=OUT):
 <p class="intro">UAA / Rise, Nike EYBL / EYCL / PIT, Junior EYBL, and West 3SSB.
 <strong>{len(games):,} games</strong>; {finals:,} finals and {len(games)-finals:,} scheduled or unscored rows.
 Generated {dt.date.today().isoformat()}.</p>
+<p class="intro"><strong>{matched_appearances:,} of {2*len(games):,} team appearances</strong> match an AAU identity in the same age/grade cohort;
+<strong>{linked_appearances:,}</strong> link directly to an existing AAU team profile.</p>
 <div class="circuit-stats">{stats}</div>
 <div class="circuit-controls">
 <label class="search">Team or event search<input id="q" type="search" placeholder="e.g. Oakland Soldiers"></label>
@@ -177,7 +210,7 @@ Generated {dt.date.today().isoformat()}.</p>
 <label>Result<select id="statusFilter"><option value="">All</option><option value="final">Final</option><option value="scheduled">Scheduled/unscored</option></select></label>
 <label>From<input type="date" id="from"></label><label>To<input type="date" id="to"></label>
 </div><div class="buttons"><button id="reset">Reset filters</button><button id="sort">Newest first</button>
-<a href="games.csv" download>Download games CSV</a><a href="events.csv" download>Download events CSV</a><a href="games.json" download>Download JSON</a></div>
+<a href="games.csv" download>Download games CSV</a><a href="events.csv" download>Download events CSV</a><a href="games.json" download>Download JSON</a>{match_download}</div>
 <p id="status" role="status">Loading game data…</p><p id="empty" hidden>No matching games.</p>
 <div class="table-wrap"><table id="circuits"><thead><tr><th>Date / time</th><th>Teams</th><th>Score</th><th>Event / division</th><th>Venue / court</th><th>Source</th></tr></thead><tbody id="gamesBody"></tbody></table></div>
 <div class="buttons"><button id="more" hidden>Show 100 more</button></div>
@@ -185,6 +218,7 @@ Generated {dt.date.today().isoformat()}.</p>
 <li>Nike's official public Event Hub provides 1,570 main-session games and 258 Peach Jam/PIT games. EYBL, EYCL, and PIT are separate series.</li>
 <li>UAA's official pages provide 3,720 deduplicated records. The combined page substitutes the fuller 846-game girls UAA aggregate schedule for 689 overlapping webpage rows.</li>
 <li>3SSB is the verified West circuit only (2,131 games), not a complete nationwide archive.</li>
+<li>AAU matches use normalized name plus age/grade cohort, never name alone. Bare or age-less labels remain unlinked. Team-page tooltips show the canonical identity and cohort.</li>
 <li>Unavailable times and courts remain blank. Source scores and statuses are preserved without silently correcting anomalies.</li>
 </ul></details>
 </main></div><noscript><p>Enable JavaScript to filter games, or use the CSV/JSON downloads above.</p></noscript>
@@ -196,7 +230,8 @@ Generated {dt.date.today().isoformat()}.</p>
 def main():
     with (DATA / "circuits_2026_all.csv").open() as f:
         games = list(csv.DictReader(f))
-    export_site(games, DATA / "circuits_2026_events.csv")
+    export_site(games, DATA / "circuits_2026_events.csv",
+                match_csv=DATA / "circuit_team_matches_2026.csv")
 
 
 if __name__ == "__main__":

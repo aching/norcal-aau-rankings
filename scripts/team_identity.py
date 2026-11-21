@@ -215,6 +215,38 @@ SUCCESSORS = {
 }
 
 
+def division_age(division):
+    """Return the age/grade suffix encoded in a division label, if any."""
+    m = PAREN_AGE.search(division or "")
+    if m:
+        return m.group(1) + "u"
+    m = BARE_AGE.search(division or "")
+    if m:
+        return m.group(1) + "u"
+    # Circuit shorthand such as "EYCL 17'S" means 17U.
+    m = re.search(r"\b(1[0-8])\s*['’]s\b", division or "", re.I)
+    if m:
+        return m.group(1) + "u"
+    m = GRADE.search(division or "")
+    if m:
+        return m.group(1) + "th"
+    m = re.search(r"\b([5-9]|1[0-2])\s*(?:th|st|nd|rd)\b", division or "", re.I)
+    if m:
+        return m.group(1) + "th"
+    return ""
+
+
+def age_cohort(age):
+    """Return a comparable age-group number (8th == 14U, 11th == 17U)."""
+    m = re.fullmatch(r"([5-9]|1[0-8])u", (age or "").lower())
+    if m:
+        return int(m.group(1))
+    m = re.fullmatch(r"([5-9]|1[0-2])(?:th|st|nd|rd)", (age or "").lower())
+    if m:
+        return int(m.group(1)) + 6
+    return None
+
+
 def normalize(name):
     """Return dict(program, age, grade, girls, rank, key)."""
     raw = name.strip()
@@ -303,32 +335,11 @@ def resolve(name, division=""):
         # Girls divisions ALWAYS split, even when the name has no age
         # (user-confirmed Nov 2026: bare "Team Legree 14U" in a girls
         # division is the girls squad, never the boys id).
-        m = PAREN_AGE.search(division or "")
-        if m:
-            age = m.group(1) + "u"
+        level = division_age(division)
+        if level:
             if div_girls or n["girls"]:
-                return f"{n['program']}:{age} girls", "normalized"
-            return f"{n['program']}:{age}", "normalized"
-        m = BARE_AGE.search(division or "")
-        if m:
-            age = m.group(1) + "u"
-            if div_girls or n["girls"]:
-                return f"{n['program']}:{age} girls", "normalized"
-            return f"{n['program']}:{age}", "normalized"
-        m = GRADE.search(division or "")
-        if m:
-            grade = m.group(1) + "th"
-            if div_girls or n["girls"]:
-                return f"{n['program']}:{grade} girls", "normalized"
-            return f"{n['program']}:{grade}", "normalized"
-        # Bare ordinal without "grade" ("6th Boys", "8th Boys Gold",
-        # "BOYS 1U/12U" handled by BARE_AGE above; this catches the rest)
-        m = re.search(r"\b([5-9]|1[0-2])\s*(?:th|st|nd|rd)\b", division or "", re.I)
-        if m:
-            grade = m.group(1) + "th"
-            if div_girls or n["girls"]:
-                return f"{n['program']}:{grade} girls", "normalized"
-            return f"{n['program']}:{grade}", "normalized"
+                return f"{n['program']}:{level} girls", "normalized"
+            return f"{n['program']}:{level}", "normalized"
         if div_girls or n["girls"]:
             return f"prog:{n['program'] or 'unknown'} girls", "bare"
         return f"prog:{n['program'] or 'unknown'}", "bare"

@@ -2,7 +2,9 @@
 'use strict';
 const C = {circuit:0, series:1, division:2, event:3, date:4, time:5,
   home:6, away:7, homeScore:8, awayScore:9, status:10, venue:11, court:12,
-  url:13, id:14, type:15};
+  url:13, id:14, type:15, homeCanonical:16, homeAge:17, homeResolution:18,
+  homeMatch:19, homeProfile:20, awayCanonical:21, awayAge:22, awayResolution:23,
+  awayMatch:24, awayProfile:25};
 const $ = id => document.getElementById(id);
 let games = [], filtered = [], shown = 100, newestFirst = true;
 const controls = ['circuit', 'series', 'division', 'event', 'statusFilter'];
@@ -26,6 +28,20 @@ function sourceLink(game, label) {
   } else span.textContent = label;
   return span;
 }
+function teamLabel(game, side) {
+  const isHome = side === 'home';
+  const label = game[isHome ? C.home : C.away];
+  const profile = game[isHome ? C.homeProfile : C.awayProfile];
+  if (!profile || !profile.startsWith('../teams/')) return document.createTextNode(label);
+  const a = document.createElement('a');
+  a.href = profile;
+  const team = game[isHome ? C.homeCanonical : C.awayCanonical];
+  const age = game[isHome ? C.homeAge : C.awayAge];
+  const resolution = game[isHome ? C.homeResolution : C.awayResolution];
+  a.title = `AAU profile · ${team} · age cohort ${age} · ${resolution} match`;
+  a.textContent = label + ' ↗';
+  return a;
+}
 function gameMatch(game) {
   if ($('circuit').value && game[C.circuit] !== $('circuit').value) return false;
   if ($('series').value && game[C.series] !== $('series').value) return false;
@@ -47,8 +63,8 @@ function render(reset) {
     const tr = document.createElement('tr');
     const date = document.createElement('td'); date.textContent = game[C.date] + (game[C.time] ? ' ' + game[C.time] : '');
     const teams = document.createElement('td');
-    teams.appendChild(sourceLink(game, game[C.home])); teams.appendChild(document.createElement('br'));
-    teams.appendChild(document.createTextNode(game[C.away]));
+    teams.appendChild(teamLabel(game, 'home')); teams.appendChild(document.createElement('br'));
+    teams.appendChild(teamLabel(game, 'away'));
     const score = document.createElement('td'); score.className = 'score';
     score.textContent = game[C.homeScore] !== '' && game[C.awayScore] !== '' ?
       game[C.homeScore] + '–' + game[C.awayScore] : 'Scheduled';

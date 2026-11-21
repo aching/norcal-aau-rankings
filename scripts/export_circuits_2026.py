@@ -7,11 +7,15 @@ import json
 from collections import Counter
 from pathlib import Path
 
+from build_site import all_pages_map
+from circuit_identity import (IDENTITY_FIELDS, enrich_games,
+                              export_match_report, load_aau_entries)
+
 FIELDS = ["source", "circuit", "series", "gender", "division", "event_id",
           "event", "session", "date", "time", "game_type", "home_team",
           "away_team", "home_score", "away_score", "home_won", "away_won",
           "status", "venue", "court", "game_id", "home_team_id",
-          "away_team_id", "url", "source_pages"]
+          "away_team_id", "url", "source_pages"] + IDENTITY_FIELDS
 
 
 def row(**values):
@@ -109,6 +113,14 @@ def load_uaa():
 
 def main():
     rows = load_west() + load_nike() + load_uaa()
+    entries, appearances = load_aau_entries("data/aau.db")
+    report = enrich_games(rows, entries, all_pages_map(), appearances)
+    export_match_report(report, "data/circuit_team_matches_2026.csv")
+    matched_variants = sum(r["match_status"] == "matched" for r in report)
+    matched_appearances = sum(r["circuit_appearances"] for r in report
+                              if r["match_status"] == "matched")
+    print(f"AAU identity: {matched_variants}/{len(report)} variants matched; "
+          f"{matched_appearances}/{2*len(rows)} team appearances cohort-matched")
     rows.sort(key=lambda r: (r["date"], r["circuit"], r["series"], r["event_id"],
                              r["division"], r["time"], str(r["game_id"])))
     out = Path("data/circuits_2026_all.csv")
