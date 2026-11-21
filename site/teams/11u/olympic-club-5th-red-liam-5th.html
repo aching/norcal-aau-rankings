@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>olympic club 5th red liam:5th (11u) NorCal AAU</title>
+<style>
+:root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --line: #e2e2e2;
+        --acc: #0b5fff; --gold: #8a6d00; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+       background: var(--bg); color: var(--fg); margin: 0; padding: 0 16px 64px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header.top { padding: 28px 0 8px; }
+header.top h1 { margin: 0 0 4px; font-size: 26px; }
+header.top p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+nav.tabs { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+             text-decoration: none; color: var(--fg); background: #fff; font-size: 14px; }
+nav.tabs a.on { background: var(--fg); color: #fff; border-color: var(--fg); }
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0;
+           flex-wrap: wrap; position: sticky; top: 0; background: var(--bg);
+           padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.toolbar input[type=search] { flex: 1 1 220px; padding: 9px 12px; font-size: 15px;
+           border: 1px solid var(--line); border-radius: 8px; }
+.toolbar select { padding: 9px 10px; font-size: 14px; border: 1px solid var(--line);
+           border-radius: 8px; background: #fff; }
+.toolbar .count { color: var(--mut); font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: #fff; }
+thead th { position: sticky; top: 61px; background: #f2f2f2; cursor: pointer;
+           text-align: left; padding: 9px 8px; border-bottom: 2px solid #ccc;
+           white-space: nowrap; user-select: none; }
+thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover td { background: #f7faff; }
+td.team { font-weight: 600; white-space: nowrap; }
+td.team a { color: inherit; }
+td.team a:hover { color: var(--acc); }
+.tbadge { display: inline-block; font-size: 10.5px; font-weight: 700;
+          padding: 1px 8px; border-radius: 999px; margin-right: 8px;
+          text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; }
+.t-national { background: #1a1a1a; color: #ffd700; }
+.t-up { background: #4b2e83; color: #fff; }
+.t-gold { background: #b8860b; color: #fff; }
+.t-silver { background: #6c757d; color: #fff; }
+.t-bronze { background: #8c5a2b; color: #fff; }
+.t-open { background: #e2e2e2; color: #333; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+         background: #eee; margin-left: 6px; vertical-align: 1px; }
+.badge.t { background: #fff3bf; color: var(--gold); border: 1px solid #e6cf5c; }
+ul.why { margin: 2px 0; padding-left: 18px; }
+ul.why li { margin: 1px 0; }
+.detail-head { background: #fff; border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 24px; margin: 16px 0; }
+.detail-head h2 { margin: 0 0 4px; font-size: 22px; }
+.detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+table.detail { font-size: 13.5px; }
+td.w { font-weight: 700; color: #0a7a2e; }
+td.l { font-weight: 700; color: #b3261e; }
+.back { display: inline-block; margin-top: 4px; font-size: 14px; }
+section.note { margin-top: 28px; }
+section.note h2 { font-size: 17px; margin-bottom: 6px; }
+section.note p, section.note li { font-size: 14px; }
+footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+         gap: 16px; margin-top: 20px; }
+.cards a { display: block; background: #fff; border: 1px solid var(--line);
+           border-radius: 12px; padding: 20px; text-decoration: none; color: var(--fg); }
+.cards a:hover { border-color: var(--acc); }
+.cards h2 { margin: 0 0 6px; font-size: 20px; }
+.cards p { margin: 4px 0; color: var(--mut); font-size: 14px; }
+.cards .big { font-size: 30px; font-weight: 700; }
+/* MOBILE */
+@media (max-width: 700px) {
+  body { padding: 0 10px 48px; }
+  header.top h1 { font-size: 22px; }
+  .toolbar { position: static; }
+  /* board tables: scroll sideways, keep key columns (#, Team, Score, W-L, Tier, STRK, L10) */
+  table:not(.detail) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12.5px; }
+  table:not(.detail) thead th { top: 0; padding: 7px 6px; }
+  table:not(.detail) tbody td { padding: 7px 6px; }
+  table:not(.detail) th:nth-child(6), table:not(.detail) td:nth-child(6),
+  table:not(.detail) th:nth-child(7), table:not(.detail) td:nth-child(7),
+  table:not(.detail) th:nth-child(8), table:not(.detail) td:nth-child(8),
+  table:not(.detail) th:nth-child(11), table:not(.detail) td:nth-child(11),
+  table:not(.detail) th:nth-child(12), table:not(.detail) td:nth-child(12),
+  table:not(.detail) th:nth-child(13), table:not(.detail) td:nth-child(13) { display: none; }
+  td.team { white-space: normal; }
+  /* team detail tables: scroll sideways */
+  table.detail { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 12px; }
+  table.detail thead th { top: 0; }
+  .detail-head { padding: 16px; }
+  .detail-head h2 { font-size: 19px; }
+}
+/* /MOBILE */
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../11u.html">&larr; 11U board</a>
+<nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
+<div class="detail-head">
+<h2>Unranked olympic club 5th red liam:5th</h2>
+<p class="sub">unranked &middot; 0-3 all-time &middot; 23.7 PPG / 46.7 OPP / -23.0 DIFF / L3 STRK / 0-3 L10 &middot; tier mix silver3 &middot; window 0-3 (last 3) &middot; SOS - &middot; 2026-11-20</p>
+</div>
+
+<section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
+
+<section class="note"><h2>Full record (3 scored games, newest first)</h2>
+<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr><td>03-22</td><td class="l">L 20-41</td><td><a href="bay-city-5th-red-5th.html">Bay City 5th Red</a></td><td>#52</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/olympic-club-5th-red-liam?divisionteamid=5051261">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-21</td><td class="l">L 24-53</td><td><a href="bay-city-5th-black-5th.html">Bay City 5th Black</a></td><td>#37</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/olympic-club-5th-red-liam?divisionteamid=5051261">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr>
+<tr><td>03-21</td><td class="l">L 27-46</td><td><a href="hoopright-5th-larry-5th.html">Hoopright 5th Larry</a></td><td>-</td><td>5th Boys Silver</td><td><a href="https://basketball.exposureevents.com/266100/spring-tip-off/teams/olympic-club-5th-red-liam?divisionteamid=5051261">Spring Tip-Off - Schedule - Mar 21-22, 2026</a></td></tr></tbody></table></section>
+<section class="note"><h2>More <a href="../../clubs/olympic.html">Olympic</a> (38)</h2><ul><li><a href="olympic-club-4th-5th-5th-girls.html">olympic club 4th/5th:5th girls</a> (same age)</li><li><a href="olympic-club-5th-daniel-5th.html">olympic club 5th daniel:5th</a> (same age)</li><li><a href="olympic-club-5th-ian-5th.html">olympic club 5th ian:5th</a> (same age)</li><li><a href="olympic-club-5th-robbie-5th-girls.html">olympic club 5th robbie:5th girls</a> (same age)</li><li><a href="olympic-club-5th-white-liam-5th.html">olympic club 5th white liam:5th</a> (same age)</li><li><a href="olympic-club-5th-white-5th.html">olympic club 5th white:5th</a> (same age)</li><li><a href="olympic-club-5th-5th.html">olympic club 5th:5th</a> (same age)</li><li><a href="olympic-club-6th-robbie-5th-girls.html">olympic club 6th robbie:5th girls</a> (same age)</li><li><a href="olympic-club-liam-5th.html">olympic club liam:5th</a> (same age)</li><li><a href="olympic-club-robbie-6-5th-girls.html">olympic club robbie 6:5th girls</a> (same age)</li><li><a href="../../teams/12u/olympic-club-6th-2-manny-6th.html">olympic club 6th 2 manny:6th</a> (12u)</li><li><a href="../../teams/12u/olympic-club-6th-liam-6th.html">olympic club 6th liam:6th</a> (12u)</li><li><a href="../../teams/12u/olympic-club-6th-manny-6th.html">olympic club 6th manny:6th</a> (12u)</li><li><a href="../../teams/12u/olympic-club-6th-michael-6th.html">olympic club 6th michael:6th</a> (12u)</li><li><a href="../../teams/12u/olympic-club-6th-robbie-6th-girls.html">olympic club 6th robbie:6th girls</a> (12u)</li><li><a href="../../teams/12u/olympic-club-manny-6th.html">olympic club manny:6th</a> (12u)</li><li><a href="../../teams/12u/olympic-club-6th.html">olympic club:6th</a> (12u)</li><li><a href="../../teams/13u/olympic-club-7th-bill-tessa-7th-girls.html">olympic club 7th bill/tessa:7th girls</a> (13u)</li><li><a href="../../teams/13u/olympic-club-7th-bill-7th-girls.html">olympic club 7th bill:7th girls</a> (13u)</li><li><a href="../../teams/13u/olympic-club-7th-lukas-7th.html">olympic club 7th lukas:7th</a> (13u)</li><li><a href="../../teams/13u/olympic-club-7th-manny-7th.html">olympic club 7th manny:7th</a> (13u)</li><li><a href="../../teams/13u/olympic-club-7th-mike-7th.html">olympic club 7th mike:7th</a> (13u)</li><li><a href="../../teams/13u/olympic-club-7th-naji-7th.html">olympic club 7th naji:7th</a> (13u)</li><li><a href="../../teams/13u/olympic-club-7th-robbie-7th-girls.html">olympic club 7th robbie:7th girls</a> (13u)</li><li><a href="../../teams/13u/olympic-club-7th-tessa-7th-girls.html">olympic club 7th tessa:7th girls</a> (13u)</li><li><a href="../../teams/13u/olympic-club-8th-tessa-7th-girls.html">olympic club 8th tessa:7th girls</a> (13u)</li><li><a href="../../teams/13u/olympic-club-lukas-7th.html">olympic club lukas:7th</a> (13u)</li><li><a href="../../teams/13u/olympic-club-mike-7th.html">olympic club mike:7th</a> (13u)</li><li><a href="../../teams/13u/olympic-club-7th-girls.html">olympic club:7th girls</a> (13u)</li><li><a href="../../teams/14u/olympic-club-8th-bill-8th-girls.html">olympic club 8th bill:8th girls</a> (14u)</li><li><a href="../../teams/14u/olympic-club-8th-lukas-8th.html">olympic club 8th lukas:8th</a> (14u)</li><li><a href="../../teams/14u/olympic-club-8th-mike-8th.html">olympic club 8th mike:8th</a> (14u)</li><li><a href="../../teams/14u/olympic-club-8th-red-8th.html">olympic club 8th red:8th</a> (14u)</li><li><a href="../../teams/14u/olympic-club-8th-tessa-8th-girls.html">olympic club 8th tessa:8th girls</a> (14u)</li><li><a href="../../teams/14u/olympic-club-8th-white-8th.html">olympic club 8th white:8th</a> (14u)</li><li><a href="../../teams/14u/olympic-club-lukas-8th.html">olympic club lukas:8th</a> (14u)</li><li><a href="../../teams/14u/olympic-club-mike-8th.html">olympic club mike:8th</a> (14u)</li><li><a href="../../teams/14u/olympic-club-8th-girls.html">olympic club:8th girls</a> (14u)</li></ul></section>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 3 games within 365 days; full record below spans all scored games.</footer>
+</div>
+</body>
+</html>

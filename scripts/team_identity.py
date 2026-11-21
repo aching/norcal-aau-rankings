@@ -20,6 +20,13 @@ are different team_ids linked by successor_of.
 """
 import re
 
+# Exact squad/year aliases where age/grade naming splits one squad into two
+# identities. These intentionally do not generalize across grades or years.
+SQUAD_ALIASES = {
+    ("oakland soldiers camo", "8th grade boys (2030)"):
+        "oakland soldiers camo:14u",
+}
+
 RANK_PREFIX = re.compile(r"^#\d+\s*")
 PAREN_AGE = re.compile(r"\(\s*(\d{1,2})\s*[uU]\s*(?:/\s*\d{1,2}\s*[uU])?\s*(?:girls?)?\s*\)")
 BARE_AGE = re.compile(r"\b(1[0-8]|[5-9])\s*[uU]\b")
@@ -291,6 +298,9 @@ def resolve(name, division=""):
     'bare' (program label only, ambiguous across ages — caller must qualify
     with division or treat as unknown).
     """
+    alias_key = (name.strip().casefold(), " ".join((division or "").split()).casefold())
+    if alias_key in SQUAD_ALIASES:
+        return SQUAD_ALIASES[alias_key], "curated"
     low = name.lower()
     div_girls = bool(GIRLS.search(division or ""))
     # Girls divisions never hit the boys overrides (user-confirmed Nov

@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
-"""Build the three ranking report .md files (11u / 12u / 14u) from fresh boards.
+"""Build ranking board and per-team JSON reports for all five age groups.
 
-Usage: python3 scripts/build_reports.py
+By default this renders existing /tmp/rankings/*.md files. With --refresh it
+also runs the same model twice per cohort: board Markdown to
+/tmp/rankings/<cohort>.md and per-team JSON to /tmp/games_<cohort>.jsonl.
+Then it writes /tmp/rep{11,12,13,14,15}.md for the static-site builder.
+The fresh ranking engine's Why lines are used rather than stale narratives.
 
-Reads /tmp/rankings/{11u,12u,14u}.md (output of rank_teams.py), takes the
-top 15 per board with hand-written Why lines, appends the rest as
-volume/tier rows, then Titles + TM-note sections, and writes
-/tmp/rep{11,12,14}.md ready for make_pdf.py.
-
-WHYS is keyed by team (not rank) so boards can reshuffle without the
-narrative detaching. Always verify a Why against the game log before
-reusing it for a new window -- records, margins, and H2H go stale.
+Usage: python3 scripts/build_reports.py --refresh [--cohort 14u]
 """
+import argparse
 import re
 import sqlite3
+import subprocess
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from rank_teams import tier_of
+from rank_teams import DEFAULT_WINDOW_DAYS, tier_of
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -273,15 +272,19 @@ WHYS = {
 }
 
 COHORTS = {
-    "11u": ("11U", "11u"),
+    "11u": ("11U/5th Grade", "11u,5th"),
     "12u": ("12U/6th Grade", "12u,6th"),
+    "13u": ("13U/7th Grade", "13u,7th"),
     "14u": ("14U/8th Grade", "14u,8th"),
+    "15u": ("15U/9th Grade", "15u,9th"),
 }
 
 TM_NOTES = {
     "12u": "TM Griffins (tm:griffins-12u): 32-23 all-time (+1.0), latest 10/24 (21-42 NBBA Turner, 50-57 Ashton). H2H statement over BMG Prospects (63-25, 9/12) but 0-2 in fall gold/silver finals brackets; prestige games 0-2. Separate squad from TM Falcons (14U) -- never blend.",
     "14u": "TM Falcons (tm:falcons-14u): 17-18 all-time (+2.7), latest 11/7: two 14U Gold losses (33-35 Sportstrong Blue, 27-40 Just Respect) + 10/31 Arsenal/WHPH-style split (Dom 39-30 W, Trust 32-28 W). No titles; the Legree burial (54-22, 10/10) is their best win. Separate squad from TM Griffins (12U) -- never blend.",
     "11u": "No curated TM squad at 11U -- Bay City Select (#6) and B Bay City Select (#21) are separate squads; never blend. Team United (#7) is the girls-side outlier: 14-1 vs soft fields, fresh 11/7 loss to Team Elite Academy.",
+    "13u": "",
+    "15u": "",
 }
 
 
@@ -320,7 +323,7 @@ def build(cohort):
     md = []
     md.append(f"# {title} NorCal AAU Rankings")
     md.append("")
-    md.append(f"Active-only (game in last 60 days), last-15 form -- {h_n} ranked.")
+    md.append(f"Form: last 15 games within {DEFAULT_WINDOW_DAYS} days -- {h_n} ranked.")
     md.append("Score = per-game credit (tier x decay x margin x title x prestige) x opponent strength, iterated 15x.")
     md.append("Tiers nat 1.0 / up .85 / gold .75 / open .5 / silver .5 / bronze .25. Title x1.5 champ wins; prestige x1.25 EVERY win at Made Hoops/G365/OGP.")
     md.append("Margin (new): log curve capped at 25 -- squeaker ~0.85x, median game ~1.0x, 20pts ~1.15x; close losses keep consolation, blowout losses keep ~0.2x.")
@@ -356,12 +359,46 @@ def build(cohort):
     md.append("")
     md.append(TM_NOTES[cohort])
     md.append("")
-    names = {"11u": "11", "12u": "12", "14u": "14"}
+    names = {"11u": "11", "12u": "12", "13u": "13", "14u": "14", "15u": "15"}
     out = Path(f"/tmp/rep{names[cohort]}.md")
     out.write_text("\n".join(md))
     print(f"wrote {out} ({len(rows)} ranked)")
 
 
+def refresh_rankings(cohorts=None, workdir="/tmp"):
+    """Refresh JSON and Markdown from matching model runs for each cohort."""
+    root = Path(workdir)
+    (root / "rankings").mkdir(parents=True, exist_ok=True)
+    for cohort, (_title, level) in (cohorts or COHORTS).items():
+        base = [sys.executable, str(HERE / "rank_teams.py"),
+                "--level", level, "--last", "15"]
+        outputs = [
+            (base + ["--dump-games"], root / f"games_{cohort}.jsonl"),
+            (base, root / "rankings" / f"{cohort}.md"),
+        ]
+        for command, destination in outputs:
+            result = subprocess.run(command, check=True, stdout=subprocess.PIPE)
+            if not result.stdout.strip():
+                raise RuntimeError(f"empty ranking output for {cohort}")
+            destination.write_bytes(result.stdout)
+        print(f"refreshed board and games for {cohort}: {level}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--refresh", action="store_true",
+                        help="rerun rank_teams and refresh both cache formats")
+    parser.add_argument("--cohort", choices=sorted(COHORTS),
+                        help="refresh/render just one cohort")
+    args = parser.parse_args()
+    cohorts = ([args.cohort] if args.cohort
+               else list(COHORTS))
+    selected = {c: COHORTS[c] for c in cohorts}
+    if args.refresh:
+        refresh_rankings(selected)
+    for cohort in cohorts:
+        build(cohort)
+
+
 if __name__ == "__main__":
-    for c in ("11u", "12u", "14u"):
-        build(c)
+    main()

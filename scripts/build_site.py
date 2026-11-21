@@ -23,6 +23,7 @@ import sys
 from pathlib import Path
 
 from html_utils import esc, external_link, json_for_script, safe_url
+from rank_teams import DEFAULT_WINDOW_DAYS
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
@@ -136,7 +137,7 @@ const count = document.getElementById("count");
 const tbody = document.getElementById("rows");
 
 function tiers() {
-  const s = new Set(DATA.map(r => r.tier.replace(/ STALE.*/, "")));
+  const s = new Set(DATA.map(r => r.tier.replace(/ STALE.*/, "")).filter(Boolean));
   return [...s].sort();
 }
 tiers().forEach(t => {
@@ -148,6 +149,7 @@ function filtered() {
   const needle = (q.value || "").toLowerCase();
   const tier = tierSel.value;
   return DATA.filter(r =>
+    (needle || r.rank) &&
     (!tier || r.tier.replace(/ STALE.*/, "") === tier) &&
     (!needle || r.team.toLowerCase().includes(needle)));
 }
@@ -161,15 +163,16 @@ function cmp(a, b) {
 function render() {
   const rows = filtered().sort(cmp);
   const ranked = (sortKey === "rank" && sortDir === 1);
-  count.textContent = rows.length + " of " + DATA.length + " teams";
+  const searchTotal = q.value ? DATA.length : DATA.filter(r => r.rank).length;
+  count.textContent = rows.length + " of " + searchTotal + " teams";
   tbody.innerHTML = "";
   const frag = document.createDocumentFragment();
   rows.forEach((r, i) => {
     const tr = document.createElement("tr");
     const tds = [
-      ["num", "#" + (ranked ? r.rank : (i + 1))],
+      ["num", r.rank ? "#" + (ranked ? r.rank : (i + 1)) : "UR"],
       ["team", ""],
-      ["num", r.score.toFixed(3)],
+      ["num", r.rank ? r.score.toFixed(3) : "-"],
       ["", r.wl],
       ["", r.tier],
       ["num", r.ppg == null ? "-" : r.ppg.toFixed(1)],
@@ -177,8 +180,8 @@ function render() {
       ["num", r.diff == null ? "-" : (r.diff >= 0 ? "+" : "") + r.diff.toFixed(1)],
       ["", r.strk || "-"],
       ["", r.l10 || "-"],
-      ["num", r.sos.toFixed(3)],
-      ["num", (r.margin >= 0 ? "+" : "") + r.margin.toFixed(1)],
+      ["num", r.rank ? r.sos.toFixed(3) : "-"],
+      ["num", r.rank ? (r.margin >= 0 ? "+" : "") + r.margin.toFixed(1) : "-"],
       ["", r.latest],
     ];
     tds.forEach(([cls, txt]) => {
@@ -242,7 +245,7 @@ BOARD_TMPL = """<!DOCTYPE html>
 Tiers nat 1.0 / up .85 / gold .75 / open .5 / silver .5 / bronze .25.
 Title x1.5 champ wins; prestige x1.25 every win at Made Hoops/G365/OGP.
 Ghosts (&lt;9g) give no opponent strength; only prelim top-10 confer credit; scores shrink by n/(n+8).
-[T] = title holder. Click a column header to sort.</p>
+[T] = title holder. Search includes unranked teams (marked UR). Click a column header to sort.</p>
 <nav class="tabs">{tabs}</nav>
 </header>
 <div class="toolbar">
@@ -296,7 +299,7 @@ TEAM_TMPL = """<!DOCTYPE html>
 <table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
 <tbody>{gamerows}</tbody></table></section>
 {circuit_section}{club_section}
-<footer class="gen">Source: data/aau.db via rank_teams.py. Window = last {lastn} games within 180 days; full record below spans all scored games.</footer>
+<footer class="gen">Source: data/aau.db via rank_teams.py. Window = {lastn} games within {window_days} days; full record below spans all scored games.</footer>
 </div>
 </body>
 </html>
@@ -751,7 +754,7 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
         upcoming_section=upcoming_section,
         club_section=club_section,
         circuit_section=render_circuit_games(circuit_log),
-        gamerows=gamerows, lastn=esc(lastn),
+        gamerows=gamerows, lastn=esc(lastn), window_days=DEFAULT_WINDOW_DAYS,
     )
     # filename decided by caller (two-pass dedup); return the HTML,
     # caller writes it to teams/<cohort>/<file>.
@@ -897,7 +900,9 @@ def build_board(cohort, title, sub, gen):
                                  css=CSS, tabs=tabs, count=len(unranked),
                                  items=ulist, gen=esc(gen)))
     n_ranked = sum(1 for r in data if r["rank"])
-    slim = [{k: v for k, v in r.items() if k != "log"} for r in data if r["rank"]]
+    # Ranked rows fill the board by default; unranked rows stay embedded so
+    # the same search box can find them and link to their game logs.
+    slim = [{k: v for k, v in r.items() if k != "log"} for r in data]
     js = JS.replace("__DATA__", json_for_script(slim))
     page = BOARD_TMPL.format(
         title=esc(title), sub=esc(sub), gen=esc(gen), css=CSS, tabs=tabs,

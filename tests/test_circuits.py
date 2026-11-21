@@ -84,6 +84,8 @@ class CircuitIdentityTests(unittest.TestCase):
     def test_scoped_camo_2030_alias_does_not_merge_other_grades(self):
         self.assertEqual(identity_parts("Oakland Soldiers Camo", "8th Grade Boys (2030)")[:3],
                          ("oakland soldiers camo:14u", "curated", 14))
+        self.assertEqual(identity_parts("Oakland Soldiers Camo", "8th Grade Boys (2030)", "boys")[:3],
+                         ("oakland soldiers camo:14u", "curated", 14))
         self.assertEqual(identity_parts("Oakland Soldiers Camo", "7th Grade Boys (2031)")[:3],
                          ("oakland soldiers camo:7th", "normalized", 13))
         self.assertEqual(identity_parts("Oakland Soldiers Camo", "6th Grade Boys (2032)")[:3],

@@ -133,6 +133,27 @@ _TIER_RES = [(b, w, [_re.compile(p) for p in ps]) for b, w, ps in TIER_PATTERNS]
 BAND_ORDER = ["national", "up", "gold", "open", "silver", "bronze", "mix"]
 
 
+DEFAULT_WINDOW_DAYS = 365
+
+
+def is_circuit_event_game(game, circuit_event_ids):
+    """Match curated EE event IDs without colliding with BT/FB namespaces."""
+    metadata = game[11] if len(game) > 11 and isinstance(game[11], dict) else {}
+    if metadata.get("source") not in (None, "ee"):
+        return False
+    return str(game[4]) in circuit_event_ids
+
+
+def apply_circuit_tier(games, circuit_event_ids):
+    """Use the national tier for verified shoe-circuit event games only."""
+    result = []
+    for game in games:
+        if is_circuit_event_game(game, circuit_event_ids):
+            game = game[:2] + (tier_of("national")[1], "national") + game[4:]
+        result.append(game)
+    return result
+
+
 def tier_of(division):
     """Return (band, weight) for a division string."""
     s = (division or "").lower()
@@ -401,7 +422,7 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
                         iso = f"{y}-{int(m):02d}-{int(dd):02d}"
                     except Exception:
                         iso = "0000-00-00"
-                    _xtra = {"slug": hslug if is_home else aslug,
+                    _xtra = {"source": "ee", "slug": hslug if is_home else aslug,
                              "dt": hdt if is_home else adt,
                              "divid": divid, "gid": gid}
                     # ID INVARIANT: g[4] is always str (EE tournament_id may
@@ -429,7 +450,7 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
                     pf = hs if is_home else aws
                     pa = aws if is_home else hs
                     iso = (d or "")[:10]
-                    _xtra = {"divid": divid, "mid": mid}
+                    _xtra = {"source": "bt", "divid": divid, "mid": mid}
                     out.append((iso, won, weight, band, str(eid), divname,
                                 ht if is_home else at,
                                 at if is_home else ht, pf, pa, None,
@@ -482,13 +503,15 @@ def main():
                          "labels in the DB, so combine them explicitly)")
     ap.add_argument("--last", type=int, default=15,
                     help="games of form per team (default 15)")
-    ap.add_argument("--window-days", type=int, default=180,
-                    help="hard recency floor: games older than this are out "
-                         "of the window entirely, not just decayed "
-                         "(default 180; 0 disables)")
+    ap.add_argument("--window-days", type=int, default=DEFAULT_WINDOW_DAYS,
+                     help="hard recency floor: games older than this are out "
+                          "of the window entirely, not just decayed "
+                          "(default 365; 0 disables; 180 restores the former window)")
     ap.add_argument("--min-games", type=int, default=4,
                     help="minimum games to rank (default 4; shrinkage "
                          "discounts thin teams so the floor can stay low)")
+    ap.add_argument("--no-circuit-tier", action="store_true",
+                     help="keep division-label tiers for vetted shoe circuits instead of the default national tier")
     ap.add_argument("--region", default=None,
                     help="region center, e.g. 'Palo Alto'")
     ap.add_argument("--miles", type=float, default=50,
@@ -631,13 +654,11 @@ def main():
         "259196",  # 3Stripes Gold West Championships (Finals)
         "275133",  # Fall 2026 Season (surname house league, not club)
     }
-    # Shoe-circuit vetted events (subset of NON_NORCAL_EVENTS minus the
-    # house league): Nike Jr. EYBL, adidas 3SSB / 3Stripes. Selection
-    # into these circuits is itself a credential (user-confirmed Nov
-    # 2026): a circuit team must rank above any silver team. Applied
-    # as a floor on published score (see below), not a win bonus --
-    # circuit games are mostly losses vs ghosts, so bonuses can't
-    # reach them; the floor prices the vetting directly.
+    # Verified shoe-circuit events: Nike Jr. EYBL and adidas 3SSB/3Stripes.
+    # Their games use the national tier below unless --no-circuit-tier is
+    # set. Selection itself also carries a separate circuit floor when an
+    # eligible silver-modal score exists. This is a uniform event-level rule,
+    # not a team-specific score adjustment.
     CIRCUIT_EVENTS = (NON_NORCAL_EVENTS - {"275133"}) | {
         "273271",  # Jr. 3SSB West Open Qualifier (Anaheim, Oct 3-4 2026)
         "250214",  # Jr. 3SSB West Tip-Off (Oct 2025)
@@ -691,6 +712,8 @@ def main():
             elif games:
                 thin.append((team_id, len(games)))
             continue
+        if not args.no_circuit_tier:
+            games = apply_circuit_tier(games, CIRCUIT_EVENTS)
         team_games[team_id] = games
 
     # Championship + prestige multipliers ("big-event wins count more").
@@ -907,6 +930,8 @@ def main():
     # score opponents outside the ranked set (their games unfiltered)
     for oid in need:
         og = games_for_team(cur, oid, None, gender)[:args.last]
+        if not args.no_circuit_tier:
+            og = apply_circuit_tier(og, CIRCUIT_EVENTS)
         seed.setdefault(oid, seed_of(og, [1.0] * len(og)) * shrink(len(og)))
         # NB: outside-ranked opponents get title_mult=1 (their titles are
         # out-of-scope) but DO get margin_mult via seed_of.
@@ -1151,7 +1176,7 @@ def main():
                 _silver_max = r[0]
         if _silver_max > 0:
             for tid, games in team_games.items():
-                if any(str(g[4]) in CIRCUIT_EVENTS for g in games):
+                if any(is_circuit_event_game(g, CIRCUIT_EVENTS) for g in games):
                     i = _pos.get(tid)
                     if i is not None and ranked[i][0] < _silver_max:
                         old = ranked[i][0]
@@ -1546,6 +1571,10 @@ def main():
             # full record: every scored game in the DB, newest first
             # (window slice team_games[tid] is what the score used)
             full = games_for_team(cur, tid, None, gender)
+            # Don't show a generic open band in the detail log when the
+            # scoring engine used the verified circuit's national tier.
+            if not args.no_circuit_tier:
+                full = apply_circuit_tier(full, CIRCUIT_EVENTS)
             log = []
             for g in full:
                 try:
