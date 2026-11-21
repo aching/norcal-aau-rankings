@@ -37787,6 +37787,17 @@
       "games": 214,
       "next_retry": "",
       "processed_at": "2026-11-19T13:20:15"
+    },
+    "ee:265832": {
+      "attempts": 2,
+      "last_attempt": "2026-11-20T00:40:41",
+      "source": "ee",
+      "eid": "265832",
+      "status": "downloaded",
+      "name": "Girls Under Armour Association 2026 - Schedule - Apr 17 - Jul 27, 2026",
+      "detail": "4 divisions listed",
+      "games": 846,
+      "next_retry": ""
     }
   }
 }

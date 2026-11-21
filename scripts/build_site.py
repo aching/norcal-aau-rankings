@@ -873,6 +873,9 @@ def main():
         cards += (f'<a href="{cohort}.html"><h2>{esc(title)}</h2>'
                   f'<p class="big">{counts[cohort]}</p>'
                   f'<p>ranked teams &middot; #1 {first}</p></a>')
+    cards += ('<a href="circuits/"><h2>Circuits 2026</h2>'
+              '<p class="big">UAA &middot; EYBL &middot; 3SSB</p>'
+              '<p>Schedules and results</p></a>')
     (OUT / "index.html").write_text(
         INDEX_TMPL.format(css=CSS, gen=esc(gen), cards=cards))
     print("wrote index.html")

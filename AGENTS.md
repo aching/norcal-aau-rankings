@@ -24,6 +24,11 @@ python3 scripts/build_db.py [db_path]
 # Regression tests (no network or corpus writes)
 python3 -m unittest discover -s tests -v
 
+# Rebuild the one-off 2026 circuit archive and website from cached data
+python3 scripts/scrape_uaa.py --offline
+python3 scripts/export_circuits_2026.py
+python3 scripts/build_circuits_site.py
+
 # One-off scouting report -> data/scout_257525.md
 python3 scripts/scout.py
 ```
