@@ -27,6 +27,7 @@ python3 -m unittest discover -s tests -v
 # Rebuild the one-off 2026 circuit archive and website from cached data
 python3 scripts/scrape_uaa.py --offline
 python3 scripts/export_circuits_2026.py
+python3 scripts/build_site.py  # refresh linked profile circuit supplements
 python3 scripts/build_circuits_site.py
 
 # One-off scouting report -> data/scout_257525.md

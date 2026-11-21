@@ -15,13 +15,14 @@ renders as a stacked list per team.
 Usage: python3 scripts/build_site.py  (run after build_reports.py)
 """
 
+import csv
 import json
 import re
 import subprocess
 import sys
 from pathlib import Path
 
-from html_utils import esc, external_link, json_for_script
+from html_utils import esc, external_link, json_for_script, safe_url
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
@@ -294,7 +295,7 @@ TEAM_TMPL = """<!DOCTYPE html>
 <section class="note"><h2>Full record ({ngames} scored games, newest first)</h2>
 <table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
 <tbody>{gamerows}</tbody></table></section>
-{club_section}
+{circuit_section}{club_section}
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last {lastn} games within 180 days; full record below spans all scored games.</footer>
 </div>
 </body>
@@ -402,6 +403,57 @@ def parse_rep(path):
             meta["flips"] = s
     return rows, titles, tmnote.strip(), meta, team_titles
 
+
+
+def circuit_team_games(path=REPO / "data" / "circuits_2026_all.csv"):
+    """Index resolved circuit appearances by existing AAU profile path."""
+    if not path.exists():
+        return {}
+    by_page = {}
+    with path.open() as f:
+        for game in csv.DictReader(f):
+            for side, other in (("home", "away"), ("away", "home")):
+                profile = game.get(f"{side}_aau_team_url", "")
+                if not profile.startswith("teams/") or ".." in profile:
+                    continue
+                by_page.setdefault(profile, []).append((game, side, other))
+    return by_page
+
+
+def render_circuit_games(games):
+    if not games:
+        return ""
+    rows = []
+    ordered = sorted(games, key=lambda item: (
+        item[0].get("date", ""), item[0].get("time", ""),
+        str(item[0].get("game_id", ""))), reverse=True)
+    for game, side, other in ordered:
+        own_score = game.get(f"{side}_score", "")
+        opp_score = game.get(f"{other}_score", "")
+        won = game.get(f"{side}_won", "")
+        score = f"{own_score}–{opp_score}" if own_score != "" and opp_score != "" else ""
+        outcome = "W " if str(won) == "1" else "L " if str(won) == "0" else ""
+        if not score:
+            outcome = ""
+            score = game.get("status", "Scheduled")
+        source = safe_url(game.get("url"))
+        event = esc(game.get("event", ""))
+        if source:
+            event = external_link(source, game.get("event", ""))
+        rows.append(
+            f"<tr><td>{esc(game.get('date', ''))}"
+            f"{' ' + esc(game['time']) if game.get('time') else ''}</td>"
+            f"<td>{esc(game.get('circuit', ''))} / {esc(game.get('series', ''))}</td>"
+            f"<td>{esc(game.get('division', ''))}</td>"
+            f"<td>{esc(game.get(f'{other}_team', ''))}</td>"
+            f"<td>{esc(outcome + score)}</td><td>{event}</td></tr>")
+    return (f'<section id="circuit-games"><h2>Circuit schedules &amp; results '
+            f'<span style="font-size:14px;color:var(--mut)">({len(games)} games)</span></h2>'
+            '<p style="color:var(--mut);font-size:13px">Circuit archive supplement; '
+            'not included in AAU record or ranking totals.</p>'
+            '<table class="detail"><thead><tr><th>Date</th><th>Circuit / series</th>'
+            '<th>Division</th><th>Opponent</th><th>Result</th><th>Event</th></tr></thead><tbody>'
+            + "".join(rows) + "</tbody></table></section>\n")
 
 
 def game_logs(level_arg, cohort):
@@ -560,7 +612,8 @@ def upcoming_rosters():
     return by_team
 
 
-def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None):
+def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
+              circuit_log=None):
     """Write site/teams/<cohort>/<slug>.html -- full detail page.
 
     page_of: team_id -> relative page path (for opponent links).
@@ -629,6 +682,8 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None):
     tabs += ('<a href="../../upcoming.html">Upcoming</a>'
              '<a href="../../organizers.html">Organizers</a>'
              '<a href="../../clubs.html">Clubs</a>')
+    if circuit_log:
+        tabs += f'<a href="#circuit-games">Circuits ({len(circuit_log)})</a>'
     why_html = (f"<section class=\"note\"><h2>Why #{r['rank']}</h2>"
                 f"<ul>{why}</ul></section>" if r.get("rank") and why else "")
     up_list = (upcoming or {}).get(r["team"], [])
@@ -695,6 +750,7 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None):
         titlelist=titlelist, ntitles=len(_titles),
         upcoming_section=upcoming_section,
         club_section=club_section,
+        circuit_section=render_circuit_games(circuit_log),
         gamerows=gamerows, lastn=esc(lastn),
     )
     # filename decided by caller (two-pass dedup); return the HTML,
@@ -809,6 +865,7 @@ def build_board(cohort, title, sub, gen):
         shutil.rmtree(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     seen, page_of, rank_of = set(), {}, {}
+    circuit_games = circuit_team_games()
     unranked = []  # dumped teams not on the board (rank 0 in logs)
     for r in data:
         base = slug_of(r["team"])
@@ -827,7 +884,8 @@ def build_board(cohort, title, sub, gen):
     for r in data:
         rel = page_of[r["team"]]
         (outdir / rel.split("/")[-1]).write_text(
-            team_page(cohort, title, r, gen, page_of, rank_of, upcoming))
+            team_page(cohort, title, r, gen, page_of, rank_of, upcoming,
+                      circuit_games.get(rel)))
         r["page"] = rel
     if unranked:
         ulist = "\n".join(

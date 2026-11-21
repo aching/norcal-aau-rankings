@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from build_circuits_site import APP_JS, SLIM_FIELDS, export_site
+from build_site import render_circuit_games
 from export_circuits_2026 import FIELDS
 from scrape_uaa import parse_page
 from circuit_identity import enrich_games, identity_parts
@@ -80,11 +81,37 @@ class CircuitIdentityTests(unittest.TestCase):
                          ("soldiers camo:15u", "normalized"))
         self.assertEqual(identity_parts("Example Elite 15U", "9th Grade")[2], 15)
 
+    def test_scoped_camo_2030_alias_does_not_merge_other_grades(self):
+        self.assertEqual(identity_parts("Oakland Soldiers Camo", "8th Grade Boys (2030)")[:3],
+                         ("oakland soldiers camo:14u", "curated", 14))
+        self.assertEqual(identity_parts("Oakland Soldiers Camo", "7th Grade Boys (2031)")[:3],
+                         ("oakland soldiers camo:7th", "normalized", 13))
+        self.assertEqual(identity_parts("Oakland Soldiers Camo", "6th Grade Boys (2032)")[:3],
+                         ("oakland soldiers camo:6th", "normalized", 12))
+        self.assertEqual(identity_parts("Other Soldiers Camo", "8th Grade Boys (2030)")[:3],
+                         ("other soldiers camo:8th", "normalized", 14))
+
+    def test_profile_circuit_renderer_escapes_names_and_shows_results(self):
+        game = {
+            "date": "2026-04-17", "time": "9:10 AM", "circuit": "EYBL",
+            "series": "Junior EYBL", "division": "8th Grade Boys (2030)",
+            "home_team": "Oakland Soldiers Camo", "away_team": "Gen <Team>",
+            "home_score": "77", "away_score": "50", "home_won": "1", "away_won": "0",
+            "event": "2026 Jr. EYBL - West", "url": "https://peachjam.nikeeyb.com/peach-jam",
+            "status": "Final", "game_id": "eybl-camo-1",
+        }
+        page = render_circuit_games([(game, "home", "away")])
+        self.assertIn('id="circuit-games"', page)
+        self.assertIn("W 77–50", page)
+        self.assertIn("Gen &lt;Team&gt;", page)
+        self.assertIn("not included in AAU record or ranking totals", page)
+        self.assertIn('href="https://peachjam.nikeeyb.com/peach-jam"', page)
+
     def test_camo_matches_respect_cohort_and_unknown_age(self):
         camo8 = "oakland soldiers camo:8th"
         camo6 = "oakland soldiers camo:6th"
         entries = [
-            {"raw_name": "Oakland Soldiers Camo", "division_hint": "8th Grade Boys (2030)",
+            {"raw_name": "Oakland Soldiers Camo", "division_hint": "8th Grade Boys (2031)",
              "team_id": camo8, "resolution": "normalized"},
             {"raw_name": "Oakland Soldiers Camo", "division_hint": "6th Grade Boys (2032)",
              "team_id": camo6, "resolution": "normalized"},
@@ -102,7 +129,7 @@ class CircuitIdentityTests(unittest.TestCase):
              "team_id": "fro ca:13u", "resolution": "normalized"},
         ]
         games = [
-            {"circuit": "EYBL", "division": "8th Grade Boys (2030)",
+            {"circuit": "EYBL", "division": "8th Grade Boys (2031)",
              "home_team": "Oakland Soldiers Camo", "away_team": "Other Team"},
             {"circuit": "EYBL", "division": "6th Grade Boys (2032)",
              "home_team": "Oakland Soldiers Camo", "away_team": "Other Team"},
@@ -128,7 +155,7 @@ class CircuitIdentityTests(unittest.TestCase):
             page_of = {camo8: ("14u", "camo8.html"), camo6: ("12u", "camo6.html"),
                        "tm:falcons-14u": ("14u", "tm.html"),
                        "fro ca:13u": ("14u", "fro.html")}
-            appearances = Counter({("Oakland Soldiers Camo", "8th Grade Boys (2030)"): 37})
+            appearances = Counter({("Oakland Soldiers Camo", "8th Grade Boys (2031)"): 37})
             report = enrich_games(games, entries, page_of, appearances, site_root=tmp)
 
         self.assertEqual(games[0]["home_canonical_team"], camo8)

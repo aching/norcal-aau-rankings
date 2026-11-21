@@ -12,9 +12,21 @@ IDENTITY_SIDES = ("canonical_team", "age_cohort", "resolution", "match_status",
 IDENTITY_FIELDS = [f"{side}_{field}" for side in ("home", "away")
                    for field in IDENTITY_SIDES]
 
+# Scoped aliases verified against squad/year and an existing AAU profile.
+# Never extend these across other grades or graduation cohorts.
+CIRCUIT_ALIASES = {
+    ("oakland soldiers camo", "8th grade boys (2030)"):
+        ("oakland soldiers camo:14u", 14, "curated"),
+}
+
 
 def identity_parts(name, division, gender=""):
     """Resolve using supplied gender as well as the source division label."""
+    alias_key = (name.strip().casefold(), " ".join((division or "").split()).casefold())
+    if alias_key in CIRCUIT_ALIASES:
+        team_id, cohort, resolution = CIRCUIT_ALIASES[alias_key]
+        identity_division = f"{division or ''} {gender or ''}".strip()
+        return team_id, resolution, cohort, identity_division
     identity_division = f"{division or ''} {gender or ''}".strip()
     n = normalize(name)
     team_id, resolution = resolve(name, identity_division)
