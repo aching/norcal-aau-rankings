@@ -14,6 +14,8 @@ Etiquette: 1 concurrent request, >=1.5s delay, honest UA -- same as
 the BracketTeam scraper (AGENTS.md).
 """
 
+import argparse
+import datetime as dt
 import html as ihtml
 import json
 import re
@@ -76,62 +78,90 @@ def parse_divisions(html):
 
 
 def parse_games(html, division_name):
+    """Parse both legacy and current FastBreak server-rendered game cards."""
     games = []
-    parts = re.split(
-        r'<div[^>]*class="card divisions-and-teams-card card-game"[^>]*'
-        r'data-game-id="(\d+)"[^>]*>', html)
-    # parts[0] = prelude; then alternating (game_id, card) pairs
-    for k in range(1, len(parts), 2):
-        gid, card = parts[k], parts[k + 1] if k + 1 < len(parts) else ""
-        hdr = re.search(
-            r'<div class="card-header">(.*?)</div>\s*<div class="card-body',
-            card, re.S)
-        when = venue = court = ""
-        if hdr:
-            bits = re.findall(r'title="([^"]+)"', hdr.group(1))
-            when = bits[0] if len(bits) > 0 else ""
-            venue = bits[1] if len(bits) > 1 else ""
-            court = bits[2].strip("()") if len(bits) > 2 else ""
+    cards = list(re.finditer(
+        r'<div\b[^>]*class="card divisions-and-teams-card card-game"[^>]*'
+        r'data-game-id="(\d+)"[^>]*>', html, re.S))
+    for index, match in enumerate(cards):
+        gid = match.group(1)
+        end = cards[index + 1].start() if index + 1 < len(cards) else len(html)
+        card = html[match.end():end]
+        hdr = re.search(r'<div class="card-header">(.*?)</div>\s*'
+                        r'<div class="card-body', card, re.S)
+        bits = re.findall(r'title="([^"]+)"', hdr.group(1)) if hdr else []
+        when = ihtml.unescape(bits[0]).strip() if bits else ""
+        venue = ihtml.unescape(bits[1]).strip() if len(bits) > 1 else ""
+        court = ihtml.unescape(bits[2]).strip("()") if len(bits) > 2 else ""
         teams = re.findall(
             r'<div class="card-team-container([^"]*)">.*?'
-            r'data-team-name="([^"]+)".*?'
-            r'<div class="card-team-score">\s*(\d*)\s*</div>',
-            card, re.S)
+            r'data-team-id="([^"]*)"\s+data-team-name="([^"]+)"', card, re.S)
+        if len(teams) != 2:
+            # Older cards may not carry a provider team id.
+            teams = re.findall(
+                r'<div class="card-team-container([^"]*)">.*?'
+                r'data-team-name="([^"]+)"', card, re.S)
+            if len(teams) == 2:
+                teams = [(cls, "", name) for cls, name in teams]
         if len(teams) != 2:
             continue
-        (cls_h, home, hs), (cls_a, away, aws) = teams
         status = "FINAL" if "card-info-final" in card else "Scheduled"
-        dm = re.search(
-            r'card-info-final">FINAL</div>\s*<div>([^<]+)</div>\s*<div>([^<]+)</div>',
-            card)
-        weekday, datestr = (dm.group(1), dm.group(2)) if dm else ("", "")
-        pm = re.search(r'card-footer-info">.*?<div[^>]*title="([^"]+)"',
-                       card, re.S)
-        pool = pm.group(1) if pm else ""
+        scores = re.findall(r'card-team-score[^>]*>\s*(\d*)\s*</div>', card, re.S)
+        if len(scores) < 2:
+            scores = re.findall(
+                r'card-team-info[^>]*>\s*([0-9]+)\s*-\s*([0-9]+)\s*</div>',
+                card, re.S)
+            scores = list(scores[0]) if scores else []
+        home_score = int(scores[0]) if len(scores) > 0 and scores[0] else None
+        away_score = int(scores[1]) if len(scores) > 1 and scores[1] else None
+        if status != "FINAL" and home_score == away_score == 0:
+            home_score = away_score = None
+        preceding = list(re.finditer(r'<h2>Games on ([^<]+)</h2>', html[:match.start()]))
+        datestr = preceding[-1].group(1).strip() if preceding else ""
+        if not datestr:
+            dm = re.search(
+                r'card-info-final">FINAL</div>\s*<div>([^<]+)</div>\s*<div>([^<]+)</div>',
+                card)
+            datestr = dm.group(2).strip() if dm else ""
+        info = re.search(
+            r'card-info-container[^>]*>\s*<div>([^<]+)</div>\s*<div>([^<]+)</div>',
+            card, re.S)
+        weekday = info.group(1).strip() if info else ""
+        if not weekday:
+            dm = re.search(
+                r'card-info-final">FINAL</div>\s*<div>([^<]+)</div>\s*<div>([^<]+)</div>',
+                card)
+            weekday = dm.group(1).strip() if dm else ""
+        pool = ""
+        for title in re.findall(r'title="([^"]+)"', card):
+            if title.startswith("Pool "):
+                pool = ihtml.unescape(title)
+                break
+        (cls_h, home_id, home), (cls_a, away_id, away) = teams
         games.append({
-            "game_id": gid,
-            "division_name": division_name,
-            "pool": pool,
-            "date": datestr.strip(),
-            "weekday": weekday.strip(),
-            "time": when.strip(),
-            "venue": venue.strip(),
-            "court": court.strip(),
-            "home_team": ihtml.unescape(home.strip()),
-            "home_score": int(hs) if hs else None,
-            "home_winner": "winner" in cls_h,
-            "away_team": ihtml.unescape(away.strip()),
-            "away_score": int(aws) if aws else None,
-            "away_winner": "winner" in cls_a,
+            "game_id": gid, "division_name": division_name, "pool": pool,
+            "date": datestr, "weekday": weekday, "time": when,
+            "venue": venue, "court": court,
+            "home_team": ihtml.unescape(home.strip()), "home_team_id": home_id,
+            "home_score": home_score, "home_winner": status == "FINAL" and "winner" in cls_h,
+            "away_team": ihtml.unescape(away.strip()), "away_team_id": away_id,
+            "away_score": away_score, "away_winner": status == "FINAL" and "winner" in cls_a,
             "status": status,
         })
     return games
 
 
-def main():
-    event_id, slug = sys.argv[1], sys.argv[2]
-    out_dir = Path(sys.argv[3]) if len(sys.argv) > 3 else Path("data")
-    url0 = f"{BASE}/event/{event_id}-{slug}"
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("event_id")
+    parser.add_argument("slug")
+    parser.add_argument("out_dir", nargs="?", default="data")
+    parser.add_argument("--base-url", default=BASE,
+                        help="event host, including a tenant-specific FastBreak host")
+    args = parser.parse_args(argv)
+    event_id, slug = args.event_id, args.slug
+    out_dir = Path(args.out_dir)
+    url0 = f"{args.base_url.rstrip('/')}/event/{event_id}-{slug}"
     stub = fetch(url0)
     divs = json_blob(stub, "divisions") or []
     if not divs:
@@ -143,7 +173,8 @@ def main():
             "end_date": info.get("endDate"),
             "city": info.get("city"),
             "tenant": info.get("tenant"),
-            "published": info.get("published")}
+            "published": info.get("published"),
+            "url": url0}
     print(f"{meta['title']}: {len(divs)} divisions")
     all_games, div_list = [], []
     for d in divs:
@@ -158,6 +189,7 @@ def main():
         time.sleep(DELAY)
     out = {"metadata": {"event_id": event_id, "slug": slug,
                         "source": "fastbreak", **meta},
+           "scraped_at": dt.datetime.now(dt.timezone.utc).isoformat(),
            "divisions": div_list, "games": all_games}
     path = out_dir / f"fb_{event_id}.json"
     path.write_text(json.dumps(out, indent=1))

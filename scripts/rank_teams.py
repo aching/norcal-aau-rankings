@@ -47,6 +47,7 @@ import sqlite3
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
+from upcoming_games import fastbreak_date
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE.parent / "data"
@@ -470,18 +471,20 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
                     (raw, div, raw, div)).fetchall()
                 for (d, ht, at, hs, aws, hw, aw, st,
                         eid, divname, pool, sdate) in rows:
+                    # Do not turn missing scores, draws, or unclear winner
+                    # flags into an automatic loss.
+                    if hs is None or aws is None or bool(hw) == bool(aw):
+                        continue
                     is_home = (ht == raw)
                     won = bool(hw) if is_home else bool(aw)
                     pf = hs if is_home else aws
                     pa = aws if is_home else hs
-                    year = (sdate or "2026-01-01")[:4]
-                    iso = f"{year}-{(d or '')[4:]}"
-                    try:
-                        import datetime as _dt
-                        iso = _dt.datetime.strptime(
-                            f"{d} {year}", "%b %d %Y").strftime("%Y-%m-%d")
-                    except Exception:
-                        iso = f"{year}-01-01"
+                    # Full-year and legacy month/day cards both use the
+                    # event's own date metadata. Never invent 2026-01-01.
+                    game_date = fastbreak_date(d, sdate)
+                    if game_date is None:
+                        continue
+                    iso = game_date.isoformat()
                     gtype = ("pool" if (pool or "").startswith("Pool")
                              else "bracket")
                     out.append((iso, won, weight, band, f"fb{eid}",

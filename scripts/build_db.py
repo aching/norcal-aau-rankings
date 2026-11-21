@@ -28,7 +28,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from scrape_state import load as load_state
-from team_identity import resolve as resolve_team, SUCCESSORS
+from team_identity import event_provider_alias, resolve as resolve_team, SUCCESSORS
 
 SCHEMA = """
 CREATE TABLE ee_tournaments(tournament_id TEXT PRIMARY KEY, slug TEXT, title TEXT, scraped_at TEXT);
@@ -61,7 +61,7 @@ CREATE TABLE bt_games(event_id INTEGER, match_id INTEGER, date TEXT, start_hour 
   has_result INTEGER, venue TEXT, court TEXT, home_team_id INTEGER, away_team_id INTEGER,
   PRIMARY KEY(event_id, match_id));
 CREATE TABLE fb_events(event_id TEXT PRIMARY KEY, slug TEXT, title TEXT,
-  start_date TEXT, end_date TEXT, city TEXT, tenant INTEGER, scraped_at TEXT);
+  start_date TEXT, end_date TEXT, city TEXT, tenant INTEGER, url TEXT, scraped_at TEXT);
 CREATE TABLE fb_divisions(event_id TEXT, division_id INTEGER, name TEXT,
   games INTEGER, scored INTEGER, PRIMARY KEY(event_id, division_id));
 CREATE TABLE fb_games(event_id TEXT, game_id INTEGER, date TEXT, weekday TEXT,
@@ -69,6 +69,9 @@ CREATE TABLE fb_games(event_id TEXT, game_id INTEGER, date TEXT, weekday TEXT,
   home_score INTEGER, away_score INTEGER, home_won INTEGER, away_won INTEGER,
   status TEXT, venue TEXT, court TEXT,
   PRIMARY KEY(event_id, game_id));
+CREATE TABLE fb_team_links(event_id TEXT, game_id INTEGER, side TEXT,
+  provider_team_id TEXT, team_id TEXT, confidence TEXT,
+  PRIMARY KEY(event_id, game_id, side));
 CREATE INDEX idx_ee_team_home ON ee_games(home_team);
 CREATE INDEX idx_ee_team_away ON ee_games(away_team);
 CREATE INDEX idx_ee_date ON ee_games(date);
@@ -149,10 +152,12 @@ def load_fb(cur, path):
     d = json.load(open(path))
     meta = d.get("metadata", {})
     eid = str(meta.get("event_id"))
-    cur.execute("INSERT OR REPLACE INTO fb_events VALUES (?,?,?,?,?,?,?,?)",
+    event_url = meta.get("url") or (
+        f"https://events.fastbreakcompete.ai/event/{eid}-{meta.get('slug', '')}")
+    cur.execute("INSERT OR REPLACE INTO fb_events VALUES (?,?,?,?,?,?,?,?,?)",
                 (eid, meta.get("slug"), meta.get("title"),
                  meta.get("start_date"), meta.get("end_date"),
-                 meta.get("city"), meta.get("tenant"),
+                 meta.get("city"), meta.get("tenant"), event_url,
                  d.get("scraped_at")))
     for dv in d.get("divisions", []):
         cur.execute("INSERT OR REPLACE INTO fb_divisions VALUES (?,?,?,?,?)",
@@ -160,16 +165,20 @@ def load_fb(cur, path):
                      dv.get("scored")))
     n = 0
     for g in d.get("games", []):
-        if g.get("home_score") is None and g.get("away_score") is None:
-            continue
         hw = 1 if g.get("home_winner") else (0 if g.get("away_winner") else None)
         aw = 1 if g.get("away_winner") else (0 if g.get("home_winner") else None)
         cur.execute("""INSERT OR REPLACE INTO fb_games VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", (
             eid, int(g.get("game_id") or 0), g.get("date"),
             g.get("weekday"), g.get("time"), g.get("division_name"),
             g.get("pool"), g.get("home_team"), g.get("away_team"),
-            g.get("home_score"), g.get("away_score"), hw, aw,
+            g.get("home_score"),             g.get("away_score"), hw, aw,
             g.get("status"), g.get("venue"), g.get("court")))
+        for side in ("home", "away"):
+            team_id = event_provider_alias(eid, g.get(side + "_team_id"))
+            if team_id:
+                cur.execute("INSERT OR REPLACE INTO fb_team_links VALUES (?,?,?,?,?,?)",
+                            (eid, int(g["game_id"]), side,
+                             str(g.get(side + "_team_id") or ""), team_id, "curated"))
         n += 1
     return n
 

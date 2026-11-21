@@ -27,6 +27,18 @@ SQUAD_ALIASES = {
         "oakland soldiers camo:14u",
 }
 
+# Provider/event-scoped roster aliases supplied by explicit squad evidence.
+# These never make a program-wide label globally equivalent to one squad.
+EVENT_PROVIDER_ALIASES = {
+    # Thanksgiving HoopFest 2026: TM Falcons Black, 14u Silver Sat Only.
+    ("11535", "280786"): "tm:falcons-black-14u",
+}
+
+
+def event_provider_alias(event_id, provider_team_id):
+    return EVENT_PROVIDER_ALIASES.get((str(event_id), str(provider_team_id or "")))
+
+
 RANK_PREFIX = re.compile(r"^#\d+\s*")
 PAREN_AGE = re.compile(r"\(\s*(\d{1,2})\s*[uU]\s*(?:/\s*\d{1,2}\s*[uU])?\s*(?:girls?)?\s*\)")
 BARE_AGE = re.compile(r"\b(1[0-8]|[5-9])\s*[uU]\b")
@@ -278,7 +290,9 @@ def normalize(name):
     core = BARE_AGE.sub("", core)
     core = GRADE.sub("", core)
     core = GIRLS.sub("", core)
-    core = re.sub(r"[-–—:;,.()]+", " ", core)
+    # Treat slash as a separator too. FastBreak grade/age suffixes
+    # (e.g. "8th/14U") must not leave a dangling "/" in canonical ids.
+    core = re.sub(r"[-–—:;,.()/]+", " ", core)
     core = WS.sub(" ", core).strip().lower()
     key = core
     if age:

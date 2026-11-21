@@ -18,12 +18,14 @@ Usage: python3 scripts/build_site.py  (run after build_reports.py)
 import csv
 import json
 import re
+import sqlite3
 import subprocess
 import sys
 from pathlib import Path
 
 from html_utils import esc, external_link, json_for_script, safe_url
 from rank_teams import DEFAULT_WINDOW_DAYS
+from upcoming_games import render_upcoming_games, upcoming_by_team
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
@@ -294,7 +296,7 @@ TEAM_TMPL = """<!DOCTYPE html>
 </div>
 {why_section}
 <section class="note"><h2>Titles ({ntitles})</h2><ul>{titlelist}</ul></section>
-{upcoming_section}
+{upcoming_section}{scheduled_section}
 <section class="note"><h2>Full record ({ngames} scored games, newest first)</h2>
 <table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
 <tbody>{gamerows}</tbody></table></section>
@@ -615,8 +617,25 @@ def upcoming_rosters():
     return by_team
 
 
+def load_upcoming_games():
+    """Load next month's FastBreak fixtures without requiring a mutable DB."""
+    db = REPO / "data" / "aau.db"
+    if not db.exists():
+        return {}
+    con = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+    try:
+        return upcoming_by_team(con.cursor())
+    except sqlite3.OperationalError as exc:
+        # Older databases predate the FastBreak tables.
+        if "no such table" in str(exc):
+            return {}
+        raise
+    finally:
+        con.close()
+
+
 def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
-              circuit_log=None):
+              circuit_log=None, scheduled_games=None):
     """Write site/teams/<cohort>/<slug>.html -- full detail page.
 
     page_of: team_id -> relative page path (for opponent links).
@@ -687,6 +706,8 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
              '<a href="../../clubs.html">Clubs</a>')
     if circuit_log:
         tabs += f'<a href="#circuit-games">Circuits ({len(circuit_log)})</a>'
+    if scheduled_games:
+        tabs += f'<a href="#scheduled-games">Schedule ({len(scheduled_games)})</a>'
     why_html = (f"<section class=\"note\"><h2>Why #{r['rank']}</h2>"
                 f"<ul>{why}</ul></section>" if r.get("rank") and why else "")
     up_list = (upcoming or {}).get(r["team"], [])
@@ -752,6 +773,7 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
         gen=esc(gen), why=why, why_section=why_html, ngames=len(log),
         titlelist=titlelist, ntitles=len(_titles),
         upcoming_section=upcoming_section,
+        scheduled_section=render_upcoming_games(scheduled_games, page_of),
         club_section=club_section,
         circuit_section=render_circuit_games(circuit_log),
         gamerows=gamerows, lastn=esc(lastn), window_days=DEFAULT_WINDOW_DAYS,
@@ -761,7 +783,7 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
     return page
 
 
-def build_board(cohort, title, sub, gen):
+def build_board(cohort, title, sub, gen, scheduled_by_team=None):
     num = {"11u": "11", "12u": "12", "13u": "13", "14u": "14", "15u": "15"}[cohort]
     level_arg = {"11u": "11u", "12u": "12u,6th", "13u": "13u,7th", "14u": "14u,8th", "15u": "15u,9th"}[cohort]
     rows, titles, tmnote, meta, team_titles = parse_rep(f"/tmp/rep{num}.md")
@@ -888,7 +910,8 @@ def build_board(cohort, title, sub, gen):
         rel = page_of[r["team"]]
         (outdir / rel.split("/")[-1]).write_text(
             team_page(cohort, title, r, gen, page_of, rank_of, upcoming,
-                      circuit_games.get(rel)))
+                      circuit_games.get(rel),
+                      (scheduled_by_team or {}).get(r["team"])))
         r["page"] = rel
     if unranked:
         ulist = "\n".join(
@@ -920,10 +943,11 @@ def main():
     from datetime import date
     gen = date.today().isoformat()
     OUT.mkdir(parents=True, exist_ok=True)
+    scheduled_games = load_upcoming_games()
     cards = ""
     counts = {}
     for cohort, (title, num, sub) in COHORTS.items():
-        n, _ = build_board(cohort, title, sub, gen)
+        n, _ = build_board(cohort, title, sub, gen, scheduled_by_team=scheduled_games)
         counts[cohort] = n
     for cohort, (title, num, sub) in COHORTS.items():
         first = ""
