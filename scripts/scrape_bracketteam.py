@@ -15,6 +15,8 @@ Rate limit: >=1.5s between requests (we only read public schedule endpoints).
 import json, sys, time, urllib.parse, urllib.request
 from pathlib import Path
 
+from storage import atomic_write_json
+
 UA = "AAU-Basketball-Aggregator/0.1 (avery@aptoslabs.com)"
 # Public app API key embedded in bracketteam.com's JS bundle (apiKey in environment config).
 API_KEY = "fB0SC4jghlUrszbzgFmHyAPeWvzwc5kWV3yhdP9xhs8ysLRkDDGpomh5gmqoZdAc"
@@ -126,7 +128,7 @@ def main():
     payload = scrape_event(event_id)
     Path(out_dir).mkdir(parents=True, exist_ok=True)
     out = Path(out_dir) / f"bt_{event_id}.json"
-    out.write_text(json.dumps(payload, indent=2))
+    atomic_write_json(out, payload)
     print(f"[{event_id}] -> {out} ({len(payload['games'])} total games)")
 
 

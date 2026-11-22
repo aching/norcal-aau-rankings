@@ -58,7 +58,7 @@ class BuildDbTests(unittest.TestCase):
                   mock.patch.object(build_db, f"load_{source}",
                                     side_effect=fail_after_insert),
                   mock.patch.object(build_db.os, "replace", wraps=build_db.os.replace) as replace,
-                  mock.patch("scrape_state.mark_processed") as mark_processed,
+                  mock.patch("scrape_state.mark_processed_many") as mark_processed,
                   contextlib.redirect_stderr(io.StringIO())):
                 with self.assertRaisesRegex(RuntimeError, "database left unchanged"):
                     build_db.main(str(db_path))
@@ -92,7 +92,7 @@ class BuildDbTests(unittest.TestCase):
             with (mock.patch.object(build_db.glob, "glob", side_effect=fake_glob),
                   mock.patch.object(build_db, "load_ee", side_effect=load_one),
                   mock.patch.object(build_db, "load_state", return_value={}),
-                  mock.patch("scrape_state.mark_processed",
+                  mock.patch("scrape_state.mark_processed_many",
                              side_effect=lambda *args: side_effects.append("ledger")) as mark_processed,
                   mock.patch("builtins.print",
                              side_effect=lambda *args, **kwargs: side_effects.append("print"))):
@@ -105,7 +105,7 @@ class BuildDbTests(unittest.TestCase):
                     [("123", "Event")])
                 self.assertEqual(con.execute(
                     "SELECT count(*) FROM sqlite_master WHERE name='existing_marker'").fetchone()[0], 0)
-            mark_processed.assert_called_once_with("ee", "123", 0)
+            mark_processed.assert_called_once_with([("ee", "123", 0)])
             self.assertEqual(side_effects[0], "ledger")
             self.assertEqual(stat.S_IMODE(db_path.stat().st_mode), 0o640)
             self.assertEqual(list(root.glob("*.tmp")), [])
@@ -132,7 +132,7 @@ class BuildDbTests(unittest.TestCase):
                                         if pattern == "data/[0-9]*.json" else []),
                       mock.patch.object(build_db, "load_ee", side_effect=load_one),
                       mock.patch.object(build_db, "load_state", return_value={}),
-                      mock.patch("scrape_state.mark_processed"),
+                      mock.patch("scrape_state.mark_processed_many"),
                       contextlib.redirect_stdout(io.StringIO()),
                       contextlib.redirect_stderr(io.StringIO())):
                     build_db.main(str(db_path))

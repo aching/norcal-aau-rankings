@@ -5,6 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from scrape_state import record
+from storage import atomic_write_json
 
 UA = "AAU-Basketball-Aggregator/0.1 (avery@aptoslabs.com)"
 BASE = "https://basketball.exposureevents.com"
@@ -77,7 +78,7 @@ def main(start_date=None, end_date=None, out_name="events_ca.json"):
 
     Path("data").mkdir(exist_ok=True)
     out = Path("data") / out_name
-    out.write_text(json.dumps(compact, indent=2))
+    atomic_write_json(out, compact)
     print(f"Saved {len(compact)} events -> {out}")
     record("exposureevents", "discovery",
            {"window": [start_date, end_date], "out_file": out_name, "events": len(compact)},

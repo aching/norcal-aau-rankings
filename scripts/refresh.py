@@ -3,17 +3,23 @@
 Full refresh pipeline: discovery -> scrape -> database, for both sources.
 
 Usage:
-  python3 refresh.py status            # run nothing; report freshness per source
+  python3 refresh.py [status]          # run nothing; report freshness per source
   python3 refresh.py progress          # run nothing; report live progress of running jobs
-  python3 refresh.py [--no-bt] [--no-ee] [--no-db] [--since YYYY-MM-DD]
-                                      # run the pipeline (all stages by default)
+  python3 refresh.py run [--no-bt] [--no-ee] [--no-db] [--since YYYY-MM-DD]
+                                      # full pipeline (all stages by default)
+
+The legacy flag-only pipeline invocation remains supported. Unknown flags are
+rejected without making network requests. EE and BT run in independent parallel
+branches with unchanged per-host delays; both must finish before the database
+rebuild. Each run prints per-stage and total timings.
 
 Stages:
   1. discovery — re-poll listings. EE: list_events.py over [since, today] into a
-     dated snapshot (events_ca_<date>.json). BT: search is folded into the
-     scrape step (its index only surfaces current events; no snapshot kept).
+     dated snapshot (events_ca_<date>.json). BT: search is folded into its
+     parallel scrape branch (its index only surfaces current events).
   2. scrape — diff snapshot/index against data/*.json and scrape what's new.
-  3. database — rebuild data/aau.db from all JSON (mirrors ledger + watermarks).
+  3. database — compute each watermark once, then rebuild data/aau.db from all
+     JSON (mirrors ledger + watermarks).
 
 Freshness model (per source), stored in data/scrape_state.json:
   runs.<source>.<job>.finished_at  — when did the job last run
@@ -22,15 +28,19 @@ Freshness model (per source), stored in data/scrape_state.json:
 
 `status` prints both, so "last run" vs "last data" are never confused.
 """
+import argparse
 import glob, json, os, re, sqlite3, sys, time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from scrape_state import load, update_content
+from storage import LockUnavailable, file_lock
 
 DATA = HERE.parent / "data"
+RUN_LOCK_PATH = DATA / "_refresh.lock"
 
 
 def ee_watermark():
@@ -221,118 +231,182 @@ def show_progress():
               f"last_game_date={c.get('last_game_date')} checked={c.get('updated_at')}")
 
 
-def run_pipeline(do_ee=True, do_bt=True, do_db=True, since=None):
-    from list_events import main as discover
-    from batch_scrape import main as scrape_ee_batch, is_norcal, is_circuit
-    from scrape_tournament import scrape_tournament
-    from batch_scrape_bracketteam import discover_events, main as scrape_bt_batch
+def _watermark(label, calculate):
+    started = time.monotonic()
+    calculate()
+    print(f"== {label} watermark finished in {time.monotonic() - started:.1f}s ==", flush=True)
 
-    today = date.today().isoformat()
-    if do_ee:
-        since = since or "2026-05-30"
-        # discovery window extends past today: the EE listing omits events
-        # spanning the window edge, so `end=today` misses tournaments ending
-        # this weekend (e.g. 273462, 255460 absent from the 11/14 snapshot).
-        # The StartDate<=today scrape gate below decides what's actionable.
-        from datetime import timedelta
-        discover_end = (date.today() + timedelta(days=3)).isoformat()
-        snap = f"events_ca_refresh_{today}.json"
-        print(f"== discovery (EE {since} -> {discover_end}) ==")
-        discover(since, discover_end, snap)
-        # scrape new NorCal tournaments started by today (includes multi-day
-        # events in progress -- Saturday games of a Sat-Sun event are final
-        # and scrapable on Saturday; EndDate<=today waited until Monday).
-        # Circuit events (Jr EYBL / 3SSB / 3Stripes / UAA) bypass the city
-        # gate: SoCal-based but NorCal teams travel (user-confirmed Nov
-        # 2026). Camps/tryouts never match is_circuit (no bracket games).
-        have = {Path(p).stem for p in glob.glob(str(DATA / "[0-9]*.json"))}
-        evs = json.load(open(DATA / snap))
-        new = [e for e in evs
-               if (is_norcal(e.get("City")) or is_circuit(e.get("Name")))
-               and (e.get("StartDate") or "") <= today
-               and str(e["Id"]) not in have]
-        # re-scrape in-progress tournaments already on disk (Sunday scores
-        # post after Saturday's scrape; skip unless event ends today+)
-        have_in_progress = [e for e in evs
-               if (is_norcal(e.get("City")) or is_circuit(e.get("Name")))
-               and (e.get("StartDate") or "") <= today
-               and (e.get("EndDate") or "") >= today
-               and str(e["Id"]) in have]
-        new.sort(key=lambda e: e["EndDate"] or "")
-        # in-progress re-scrapes, oldest-end first (Sunday scores land after
-        # Saturday's scrape); attempted with the same politeness, failures
-        # (e.g. 429) logged not fatal
-        have_in_progress.sort(key=lambda e: e["EndDate"] or "")
-        from scrape_state import record as rec, Progress
-        started = time.strftime("%Y-%m-%dT%H:%M:%S")
-        done = failed = 0
-        rescraped = resfailed = 0
-        ee_log = DATA / "_refresh_ee_progress.log"
-        prog = Progress(len(new), label="EE refresh")
-        print(f"== scrape ({len(new)} new EE tournaments) ==")
-        with open(ee_log, "a") as lf:
-            def log(msg):
-                line = f"[{time.strftime('%H:%M:%S')}] {msg}\n"
-                lf.write(line); lf.flush(); print(line, end="", flush=True)
-            log(f"START - {len(new)} new + {len(have_in_progress)} in-progress NorCal tournaments from refresh discovery")
-            for i, e in enumerate(new, 1):
+
+def _run_ee(since, today, interactive=True):
+    from list_events import main as discover
+    from batch_scrape import is_norcal, is_circuit
+    from scrape_tournament import scrape_tournament
+
+    pipeline_started = time.monotonic()
+    since = since or "2026-05-30"
+    # Discovery extends past today because the EE listing omits events spanning
+    # the window edge. StartDate<=today below decides what is actionable.
+    from datetime import timedelta
+    discover_end = (date.today() + timedelta(days=3)).isoformat()
+    snap = f"events_ca_refresh_{today}.json"
+    print(f"== discovery (EE {since} -> {discover_end}) ==", flush=True)
+    discovery_started = time.monotonic()
+    discover(since, discover_end, snap)
+    print(f"== EE discovery finished in {time.monotonic() - discovery_started:.1f}s ==", flush=True)
+
+    # Scrape new NorCal tournaments already started, including multi-day events
+    # in progress. Circuit events bypass the city gate; camps have no brackets.
+    have = {Path(p).stem for p in glob.glob(str(DATA / "[0-9]*.json"))}
+    evs = json.load(open(DATA / snap))
+    new = [e for e in evs
+           if (is_norcal(e.get("City")) or is_circuit(e.get("Name")))
+           and (e.get("StartDate") or "") <= today
+           and str(e["Id"]) not in have]
+    have_in_progress = [e for e in evs
+           if (is_norcal(e.get("City")) or is_circuit(e.get("Name")))
+           and (e.get("StartDate") or "") <= today
+           and (e.get("EndDate") or "") >= today
+           and str(e["Id"]) in have]
+    new.sort(key=lambda e: e["EndDate"] or "")
+    have_in_progress.sort(key=lambda e: e["EndDate"] or "")
+
+    from scrape_state import record as rec, Progress
+    scrape_started = time.monotonic()
+    ledger_started = time.strftime("%Y-%m-%dT%H:%M:%S")
+    done = failed = 0
+    rescraped = resfailed = 0
+    ee_log = DATA / "_refresh_ee_progress.log"
+    prog = Progress(len(new), label="EE refresh", interactive=interactive)
+    print(f"== scrape ({len(new)} new EE tournaments) ==", flush=True)
+    with open(ee_log, "a") as lf:
+        def log(msg):
+            line = f"[{time.strftime('%H:%M:%S')}] {msg}\n"
+            lf.write(line); lf.flush(); print(line, end="", flush=True)
+        log(f"START - {len(new)} new + {len(have_in_progress)} in-progress NorCal tournaments from refresh discovery")
+        for i, e in enumerate(new, 1):
+            tid = str(e["Id"])
+            slug = e.get("Slug") or e["Name"].lower().replace(" ", "-")
+            try:
+                log(f"[{i}/{len(new)}] SCRAPE {tid} {slug[:40]:40} "
+                    f"({(e.get('City') or '?')[:18]:18}) ending {e.get('EndDate', '?')}")
+                prog.render(f"SCRAPE {tid} {slug[:40]}")
+                scrape_tournament(tid, slug, str(DATA))
+                done += 1
+                prog.tick(msg=f"SCRAPE {tid}")
+            except Exception as ex:
+                log(f"[{i}/{len(new)}] FAIL {tid} {ex}")
+                failed += 1
+                prog.tick(failed=1, msg=f"FAIL {tid}")
+        prog.finish(f"scraped {done}, skipped 0, failed {failed}")
+        log(f"DONE - scraped {done}, skipped 0, failed {failed}")
+        if have_in_progress:
+            log(f"RESCRAPE - {len(have_in_progress)} in-progress tournaments (scores may have posted since last scrape)")
+            for i, e in enumerate(have_in_progress, 1):
                 tid = str(e["Id"])
                 slug = e.get("Slug") or e["Name"].lower().replace(" ", "-")
                 try:
-                    log(f"[{i}/{len(new)}] SCRAPE {tid} {slug[:40]:40} "
-                        f"({(e.get('City') or '?')[:18]:18}) ending {e.get('EndDate', '?')}")
-                    prog.render(f"SCRAPE {tid} {slug[:40]}")
+                    log(f"[re {i}/{len(have_in_progress)}] RESCRAPE {tid} {slug[:40]:40} "
+                        f"ending {e.get('EndDate', '?')}")
                     scrape_tournament(tid, slug, str(DATA))
-                    done += 1
-                    prog.tick(msg=f"SCRAPE {tid}")
+                    rescraped += 1
                 except Exception as ex:
-                    log(f"[{i}/{len(new)}] FAIL {tid} {ex}")
-                    failed += 1
-                    prog.tick(failed=1, msg=f"FAIL {tid}")
-            prog.finish(f"scraped {done}, skipped 0, failed {failed}")
-            log(f"DONE - scraped {done}, skipped 0, failed {failed}")
-            if have_in_progress:
-                log(f"RESCRAPE - {len(have_in_progress)} in-progress tournaments (scores may have posted since last scrape)")
-                for i, e in enumerate(have_in_progress, 1):
-                    tid = str(e["Id"])
-                    slug = e.get("Slug") or e["Name"].lower().replace(" ", "-")
-                    try:
-                        log(f"[re {i}/{len(have_in_progress)}] RESCRAPE {tid} {slug[:40]:40} "
-                            f"ending {e.get('EndDate', '?')}")
-                        scrape_tournament(tid, slug, str(DATA))
-                        rescraped += 1
-                    except Exception as ex:
-                        log(f"[re {i}/{len(have_in_progress)}] RE-FAIL {tid} {ex}")
-                        resfailed += 1
-                log(f"RE-DONE - rescraped {rescraped}, failed {resfailed}")
-        rec("exposureevents", "refresh",
-            {"queued": len(new), "scraped": done, "failed": failed,
-             "rescraped": rescraped, "rescrape_failed": resfailed},
-            status="ok" if not failed and not resfailed else "failed", started_at=started)
-        ee_watermark()
-    if do_bt:
-        print("== scrape (bracketteam) ==")
-        scrape_bt_batch(str(DATA))
-        bt_watermark()
+                    log(f"[re {i}/{len(have_in_progress)}] RE-FAIL {tid} {ex}")
+                    resfailed += 1
+            log(f"RE-DONE - rescraped {rescraped}, failed {resfailed}")
+    print(f"== EE scraping finished in {time.monotonic() - scrape_started:.1f}s ==", flush=True)
+    rec("exposureevents", "refresh",
+        {"queued": len(new), "scraped": done, "failed": failed,
+         "rescraped": rescraped, "rescrape_failed": resfailed},
+        status="ok" if not failed and not resfailed else "failed", started_at=ledger_started)
+    _watermark("EE", ee_watermark)
+    print(f"== EE pipeline finished in {time.monotonic() - pipeline_started:.1f}s ==", flush=True)
+
+
+def _run_bt(interactive=True, out_dir=None):
+    from batch_scrape_bracketteam import main as scrape_bt_batch
+
+    started = time.monotonic()
+    print("== scrape (bracketteam) ==", flush=True)
+    scrape_bt_batch(str(out_dir or DATA), interactive=interactive)
+    _watermark("BT", bt_watermark)
+    print(f"== BT pipeline finished in {time.monotonic() - started:.1f}s ==", flush=True)
+
+
+def _run_pipeline(do_ee=True, do_bt=True, do_db=True, since=None):
+    pipeline_started = time.monotonic()
+    today = date.today().isoformat()
+    parallel = do_ee and do_bt
+    with ThreadPoolExecutor(max_workers=2, thread_name_prefix="refresh") as pool:
+        branches = []
+        if do_ee:
+            branches.append(("EE", pool.submit(_run_ee, since, today, not parallel)))
+        if do_bt:
+            branches.append(("BT", pool.submit(_run_bt, not parallel)))
+        # In parallel mode both progress meters are append-only: competing
+        # carriage-return displays would erase each other's terminal lines.
+        failures = []
+        for name, branch in branches:
+            try:
+                branch.result()
+            except Exception as exc:
+                failures.append((name, exc))
+    # Barrier: watermarks and the DB are reached only after every branch has
+    # completed successfully. Observe every future so dual failures aren't lost.
+    if failures:
+        if len(failures) == 1:
+            raise failures[0][1]
+        detail = "; ".join(f"{name}: {type(exc).__name__}: {exc}"
+                           for name, exc in failures)
+        raise RuntimeError(f"Refresh branches failed: {detail}")
+
     if do_db:
-        print("== database ==")
-        ee_watermark()
-        bt_watermark()
+        # Selected sources already watermarked their own successful output.
+        # Scan an unselected source only when a DB rebuild still includes it.
+        if not do_ee:
+            _watermark("EE", ee_watermark)
+        if not do_bt:
+            _watermark("BT", bt_watermark)
+        print("== database ==", flush=True)
+        database_started = time.monotonic()
         from build_db import main as build
         build(str(DATA / "aau.db"))
+        print(f"== database finished in {time.monotonic() - database_started:.1f}s ==", flush=True)
     show_status()
+    print(f"== refresh finished in {time.monotonic() - pipeline_started:.1f}s ==", flush=True)
+
+
+def run_pipeline(do_ee=True, do_bt=True, do_db=True, since=None):
+    """Run one whole refresh while excluding overlapping refresh processes."""
+    with file_lock(RUN_LOCK_PATH, blocking=False):
+        return _run_pipeline(do_ee=do_ee, do_bt=do_bt, do_db=do_db, since=since)
+
+
+def main(argv=None):
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if not argv or argv == ["status"]:
+        show_status()
+        return 0
+    if argv == ["progress"]:
+        show_progress()
+        return 0
+    if argv and argv[0] == "run":
+        argv = argv[1:]
+
+    parser = argparse.ArgumentParser(description="Refresh EE/BT JSON and rebuild SQLite")
+    parser.add_argument("--no-ee", action="store_true", help="skip ExposureEvents")
+    parser.add_argument("--no-bt", action="store_true", help="skip BracketTeam")
+    parser.add_argument("--no-db", action="store_true", help="skip SQLite rebuild")
+    parser.add_argument("--since", help="EE discovery start date (YYYY-MM-DD)")
+    args = parser.parse_args(argv)
+    try:
+        run_pipeline(do_ee=not args.no_ee, do_bt=not args.no_bt,
+                     do_db=not args.no_db, since=args.since)
+    except LockUnavailable:
+        print("Another refresh is already running; not starting a duplicate.",
+              file=sys.stderr)
+        return 2
+    return 0
 
 
 if __name__ == "__main__":
-    args = set(sys.argv[1:])
-    if not args or args == {"status"}:
-        show_status()
-    elif args == {"progress"}:
-        show_progress()
-    else:
-        since = None
-        for a in sys.argv[1:]:
-            if a.startswith("--since="):
-                since = a.split("=", 1)[1]
-        run_pipeline(do_ee="--no-ee" not in args, do_bt="--no-bt" not in args,
-                     do_db="--no-db" not in args, since=since)
+    sys.exit(main())

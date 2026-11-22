@@ -9,10 +9,11 @@ NorCal AAU basketball opponent-research project (spec owner: Avery). Goal per `P
 No manifest, Makefile, or linters. CI is GitHub Pages deployment only. Tests use stdlib `unittest`; otherwise stdlib-only Python 3 — **no install step**. Run everything from the repo root (scripts use relative `data/` paths).
 
 ```bash
-# Full refresh: discovery -> scrape -> database (all stages by default)
-python3 scripts/refresh.py status                                    # report only: last run vs last data per source
-python3 scripts/refresh.py progress                                  # live progress of running jobs (window + current item)
-python3 scripts/refresh.py [--no-ee] [--no-bt] [--no-db] [--since=YYYY-MM-DD]
+# Status/reporting only (no arguments is also status)
+python3 scripts/refresh.py status                                    # last run vs last data per source
+python3 scripts/refresh.py progress                                  # live progress (window + current item)
+# Full refresh: EE and BT in parallel, then one watermark pass and database rebuild
+python3 scripts/refresh.py run [--no-ee] [--no-bt] [--no-db] [--since=YYYY-MM-DD]
 ```
 # Single-tournament scrapes (write data/<id>.json / data/bt_<id>.json / data/fb_<id>.json)
 python3 scripts/scrape_tournament.py <tournament_id> <slug> [out_dir]   # exposureevents
@@ -39,9 +40,9 @@ python3 scripts/build_circuits_site.py
 python3 scripts/scout.py
 ```
 
-`refresh.py status` is the freshness dashboard: per source it shows **last run** (when each job ran) vs **last data** (newest tournament/game on disk). `batch_scrape.py` (EE backfill over a fixed events file) and `rescrape_empty.py` are legacy one-shots — prefer `refresh.py`.
+`refresh.py status` is the freshness dashboard: per source it shows **last run** (when each job ran) vs **last data** (newest tournament/game on disk). `batch_scrape.py` (EE backfill over a fixed events file) and `rescrape_empty.py` are legacy one-shots — prefer `refresh.py run` (legacy flag-only invocations still work). A global `data/_refresh.lock` rejects overlapping refreshes. EE and BT branches overlap, but their per-host request rules are unchanged; both branches must succeed before the DB rebuild starts. Stage timings are printed for benchmarking.
 
-Freshness ledger: `data/scrape_state.json` is the source of truth (mirrored into the DB's `scrape_runs` + `scrape_content` tables by `build_db.py`). Every batch/discovery script records its run via `scripts/scrape_state.py:record()`.
+Freshness ledger: `data/scrape_state.json` is the source of truth (mirrored into the DB's `scrape_runs` + `scrape_content` tables by `build_db.py`). Every batch/discovery script records its run via `scripts/scrape_state.py:record()`. All ledger mutations use one `data/scrape_state.lock` transaction lock plus durable atomic replacement; source JSON is also written atomically. The DB's processed-event sweep uses one batched ledger transaction, not hundreds of file rewrites. Do not bypass these guards when adding pipeline concurrency. Parallel progress output is append-only to avoid competing carriage-return terminal displays.
 
 Verify scraper changes by re-running a single-tournament scrape and inspecting the JSON.
 
@@ -52,7 +53,8 @@ Scraping etiquette (PRD §6): 1 concurrent request, ≥2s EE / ≥1.5s BT delay,
 Pipeline: **discovery → scrape → JSON corpus → SQLite → generated static site**. No server app layer.
 
 - `PRD.md` — the spec: scope (NorCal, 7U–17U/grade/HS, boys+girls), data model, scraping ground rules, Appendices B–D with reverse-engineered exposureevents API findings. Read before touching scrapers.
-- `scripts/refresh.py` — orchestrator: EE discovery (`list_events.py` over `[since, today]`) → scrape new NorCal tournaments → BT batch → `build_db.py`. Computes content watermarks (`last_event_end/id`, `last_game_date`) from JSON on disk.
+- `scripts/refresh.py` — orchestrator: EE discovery/scrape and BT discovery/scrape run in two thread branches, join at a barrier, compute each content watermark once, then `build_db.py`. A held refresh lock prevents duplicate runs.
+- `scripts/storage.py` — stdlib file locks (thread + `fcntl`) and sibling-tempfile JSON writes with `os.replace`; used by the refresh lock, ledger, discovery snapshots, and EE/BT tournament files.
 - `scripts/list_events.py` — pages the CA events listing (`/youth-basketball-events/california`), extracts `X-Exposure-Token` from page HTML, POSTs paged JSON → `events_ca*.json`.
 - `scripts/scrape_tournament.py` — EE core: GETs `{BASE}/{tid}/{slug}/schedule`, regex-extracts embedded `divisions: [...]` JS, POSTs per-division to `/eventgames` XHR, stamps games with `_division_id/_division_name/_day_group` → `<tid>.json`.
 - `scripts/scrape_bracketteam.py` + `batch_scrape_bracketteam.py` — BT side: paged `advanced-events-search` (sport_id=2) filtered by `is_norcal()`, then per-division `get-division-schedule` → `bt_<eid>.json`. BT index only surfaces recent/upcoming events (oldest ~Aug 2026 as of Oct 2026) — it's the going-forward source; history lives in EE.

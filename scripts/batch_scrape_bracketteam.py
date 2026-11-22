@@ -18,6 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from scrape_bracketteam import api_get, unwrap, scrape_event, is_norcal
 from scrape_state import Progress, record
+from storage import atomic_write_json
 
 SPORT_BASKETBALL = 2
 
@@ -41,7 +42,7 @@ def discover_events():
     return events
 
 
-def main(out_dir="data"):
+def main(out_dir="data", interactive=True):
     out_dir = Path(out_dir); out_dir.mkdir(parents=True, exist_ok=True)
     progress = out_dir / "_batch_bt_progress.log"
 
@@ -54,7 +55,7 @@ def main(out_dir="data"):
     norcal = [e for e in events if is_norcal(e)]
     log(f"START — {len(events)} basketball events found, {len(norcal)} NorCal")
     started = time.strftime("%Y-%m-%dT%H:%M:%S")
-    prog = Progress(len(norcal), label="BT backfill")
+    prog = Progress(len(norcal), label="BT backfill", interactive=interactive)
     done = skipped = failed = 0
     for i, e in enumerate(norcal, 1):
         eid = e["id"]
@@ -69,7 +70,7 @@ def main(out_dir="data"):
             prog.render(f"SCRAPE {eid} {e.get('event_name','?')[:45]}")
             time.sleep(1.5)
             payload = scrape_event(eid)
-            (out_path).write_text(json.dumps(payload, indent=2))
+            atomic_write_json(out_path, payload)
             log(f"[{i}/{len(norcal)}]   -> {len(payload['games'])} games, {len(payload['divisions'])} divisions")
             done += 1
             prog.tick(msg=f"SCRAPE {eid}")

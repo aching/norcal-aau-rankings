@@ -10,6 +10,8 @@ Writes: <out_dir>/<tournament_id>.json
 import json, re, sys, time, urllib.parse, urllib.request, http.cookiejar, random
 from pathlib import Path
 
+from storage import atomic_write_json
+
 UA = "AAU-Basketball-Aggregator/0.1 (avery@aptoslabs.com)"
 BASE = "https://basketball.exposureevents.com"
 RATE_LIMIT_SECONDS = 2.0
@@ -144,7 +146,7 @@ def scrape_tournament(tid, slug, out_dir="data"):
     }
     Path(out_dir).mkdir(parents=True, exist_ok=True)
     out = Path(out_dir) / f"{tid}.json"
-    out.write_text(json.dumps(payload, indent=2))
+    atomic_write_json(out, payload)
     print(f"[{tid}] -> {out} ({len(all_games)} total games)")
     if len(all_games) == 0:
         _note(tid, "empty", games=0, name=meta.get("title") or slug,

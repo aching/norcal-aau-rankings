@@ -13,13 +13,27 @@ Shape:
                              "last_game_date": ..., "updated_at": ...}}}
 The "runs" section answers "when did the job last run"; the "content" section
 answers "how fresh is the data" (newest event/game actually on disk).
-Content watermarks are computed by `refresh.py status` from the JSON files;
-jobs never write them directly.
+Content watermarks are computed by the refresh pipeline from the JSON files.
+Every writer uses `edit_state()` so each read-modify-write is serialized across
+threads/processes; atomic replacement keeps lock-free readers consistent.
 """
 import json, sys, time
+from contextlib import contextmanager
 from pathlib import Path
 
+from storage import atomic_write_json, file_lock
+
 STATE_PATH = Path(__file__).resolve().parent.parent / "data" / "scrape_state.json"
+LOCK_PATH = STATE_PATH.with_suffix(".lock")
+
+
+@contextmanager
+def edit_state():
+    """Serialize one read-modify-write transaction across threads/processes."""
+    with file_lock(LOCK_PATH):
+        state = load()
+        yield state
+        atomic_write_json(STATE_PATH, state)
 
 
 def load():
@@ -32,19 +46,17 @@ def load():
 
 
 def record(source, job, stats=None, status="ok", started_at=None, note=None):
-    state = load()
-    now = time.strftime("%Y-%m-%dT%H:%M:%S")
-    entry = state["runs"].get(f"{source}:{job}", {})
-    entry.update({
-        "source": source, "job": job,
-        "started_at": started_at or entry.get("started_at") or now,
-        "finished_at": now, "status": status,
-        "stats": stats or {}, "note": note,
-    })
-    state["runs"][f"{source}:{job}"] = entry
-    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STATE_PATH.write_text(json.dumps(state, indent=2))
-    return entry
+    with edit_state() as state:
+        now = time.strftime("%Y-%m-%dT%H:%M:%S")
+        entry = state["runs"].get(f"{source}:{job}", {})
+        entry.update({
+            "source": source, "job": job,
+            "started_at": started_at or entry.get("started_at") or now,
+            "finished_at": now, "status": status,
+            "stats": stats or {}, "note": note,
+        })
+        state["runs"][f"{source}:{job}"] = entry
+        return entry
 
 
 def last_run(source, job=None):
@@ -61,15 +73,13 @@ THROTTLE_COOLDOWN_SECONDS = 30 * 60  # don't start new scrapes within 30m of a 4
 def record_throttle(source, job, note=None):
     """Log that `source` throttled us (429/5xx). Scrapers call this on
     backoff; scrape entry points should check throttled_since() first."""
-    state = load()
-    now = time.strftime("%Y-%m-%dT%H:%M:%S")
-    entry = state.setdefault("throttle", {}).get(source, {})
-    entry.update({"source": source, "job": job, "throttled_at": now,
-                  "note": note or ""})
-    state["throttle"][source] = entry
-    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STATE_PATH.write_text(json.dumps(state, indent=2))
-    return entry
+    with edit_state() as state:
+        now = time.strftime("%Y-%m-%dT%H:%M:%S")
+        entry = state.setdefault("throttle", {}).get(source, {})
+        entry.update({"source": source, "job": job, "throttled_at": now,
+                      "note": note or ""})
+        state["throttle"][source] = entry
+        return entry
 
 
 def throttled_since(source, cooldown=THROTTLE_COOLDOWN_SECONDS):
@@ -91,14 +101,12 @@ def throttled_since(source, cooldown=THROTTLE_COOLDOWN_SECONDS):
 def update_content(source, watermark):
     """Merge a content watermark for a source. Keys: last_event_end,
     last_event_id, last_game_date (all optional)."""
-    state = load()
-    entry = state["content"].get(source, {})
-    entry.update({k: v for k, v in watermark.items() if v is not None})
-    entry["updated_at"] = time.strftime("%Y-%m-%dT%H:%M:%S")
-    state["content"][source] = entry
-    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STATE_PATH.write_text(json.dumps(state, indent=2))
-    return entry
+    with edit_state() as state:
+        entry = state["content"].get(source, {})
+        entry.update({k: v for k, v in watermark.items() if v is not None})
+        entry["updated_at"] = time.strftime("%Y-%m-%dT%H:%M:%S")
+        state["content"][source] = entry
+        return entry
 
 
 # ---- Per-event tracking (added Nov 2026) ----
@@ -127,18 +135,19 @@ def _retry_after(status, days=None):
     return (date.today() + timedelta(days=d)).isoformat()
 
 
-def record_event(source, eid, status, games=None, name=None, city=None,
-                 start=None, org=None, detail=None, retry_days=None):
-    """Upsert one event record. Attempts increment on every call except
-    pure processed-marking (status='processed' preserves attempts)."""
-    state = load()
+def _record_event(state, source, eid, status, games=None, name=None, city=None,
+                  start=None, org=None, detail=None, retry_days=None,
+                  count_attempt=True):
+    """Apply an event update to state already owned by edit_state()."""
     events = state.setdefault("events", {})
     key = f"{source}:{eid}"
     e = events.get(key, {})
     now = time.strftime("%Y-%m-%dT%H:%M:%S")
-    if status != "processed":
+    if status != "processed" and count_attempt:
         e["attempts"] = (e.get("attempts") or 0) + 1
         e["last_attempt"] = now
+    elif status != "processed":
+        e.setdefault("attempts", 0)
     e.update({"source": source, "eid": str(eid), "status": status})
     for k, v in (("name", name), ("city", city), ("start", start),
                  ("org", org), ("detail", detail)):
@@ -158,14 +167,39 @@ def record_event(source, eid, status, games=None, name=None, city=None,
     else:
         e["next_retry"] = _retry_after(status, retry_days)
     events[key] = e
-    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STATE_PATH.write_text(json.dumps(state, indent=2))
     return e
+
+
+def record_event(source, eid, status, games=None, name=None, city=None,
+                 start=None, org=None, detail=None, retry_days=None):
+    """Upsert one event record, counting attempts except for processed rows."""
+    with edit_state() as state:
+        return _record_event(state, source, eid, status, games=games, name=name,
+                             city=city, start=start, org=org, detail=detail,
+                             retry_days=retry_days)
+
+
+def seed_pending_event(source, eid, **metadata):
+    """Seed a missing pending event atomically; never displace real progress."""
+    with edit_state() as state:
+        if f"{source}:{eid}" in state.setdefault("events", {}):
+            return None
+        return _record_event(state, source, eid, "pending", count_attempt=False,
+                             **metadata)
 
 
 def mark_processed(source, eid, games):
     """Idempotent processed-marking (no attempt increment)."""
     return record_event(source, eid, "processed", games=games)
+
+
+def mark_processed_many(rows):
+    """Mark (source, event_id, games) rows with one locked ledger rewrite."""
+    if not rows:
+        return []
+    with edit_state() as state:
+        return [_record_event(state, source, eid, "processed", games=games)
+                for source, eid, games in rows]
 
 
 def event_backlog(source=None, only_due=False):
@@ -209,7 +243,8 @@ class Progress:
     Per-item detail still goes to the caller's own log lines + file.
     """
 
-    def __init__(self, total, label="", width=24, min_interval=0.15):
+    def __init__(self, total, label="", width=24, min_interval=0.15,
+                 interactive=True):
         self.total = max(int(total or 0), 0)
         self.label = (label + " ") if label else ""
         self.width = width
@@ -225,7 +260,7 @@ class Progress:
         except Exception:
             self.cols = 100
         try:
-            self.tty = sys.stdout.isatty()
+            self.tty = interactive and sys.stdout.isatty()
         except Exception:
             self.tty = False
 

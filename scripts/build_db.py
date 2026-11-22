@@ -351,13 +351,15 @@ def main(db_path="data/aau.db"):
             os.chmod(tmp_path, existing_mode)
         os.replace(tmp_path, db_path)
 
-        # Essential side effects happen before optional console reporting.
-        for source, eid, games in processed:
-            try:
-                from scrape_state import mark_processed
-                mark_processed(source, eid, games)
-            except Exception:
-                pass
+                # Essential side effects happen before optional console reporting.
+        # One locked/atomic ledger write avoids hundreds of full-file rewrites.
+        try:
+            from scrape_state import mark_processed_many
+
+            mark_processed_many(processed)
+        except Exception:
+            pass
+
 
         print(f"teams: {n_pairs} (raw name, division) pairs resolved")
         print(f"ee: {len(ee_files)} tournaments, {ee_n} games loaded ({ee_skip} HideScores skipped)")

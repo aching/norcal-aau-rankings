@@ -57,16 +57,12 @@ def main():
         for eid, meta in discovery_events().items():
             key = f"ee:{eid}"
             if key not in events:
-                r = record_event("ee", eid, "pending", games=None, **meta,
-                                 detail="seeded from discovery snapshot")
-                # seeding is not an attempt: reset the counter/expiry
-                from scrape_state import load as _load, STATE_PATH as _SP
-                _s = _load()
-                _s["events"][key]["attempts"] = 0
-                _s["events"][key].pop("last_attempt", None)
-                _s["events"][key]["next_retry"] = ""
-                _SP.write_text(json.dumps(_s, indent=2))
-                made["pending"] += 1
+                # Absence check and pending creation happen against the same
+                # locked latest state, so a concurrent scrape cannot be reset.
+                from scrape_state import seed_pending_event
+                r = seed_pending_event("ee", eid, games=None, **meta,
+                                       detail="seeded from discovery snapshot")
+                made["pending" if r is not None else "skipped"] += 1
             else:
                 made["skipped"] += 1
 
