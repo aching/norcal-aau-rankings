@@ -192,6 +192,11 @@ OVERRIDES = [
     # Verified: no co-occurrence (corpus scan 11/16) -- same teams,
     # different source labels.
     (("lakeshow 14u fuca 8th/14u", None), "lakeshow fuca:14u"),
+    # Parenthesized-coach spelling (user-confirmed Nov 2026): Thanksgiving
+    # HoopFest uses this label for the same 14U squad above. Keep the merge
+    # scoped to this exact FastBreak label, not other Lakeshow cohorts.
+    (("lakeshow 14u (fuca) 8th/14u", "14u"), "lakeshow fuca:14u"),
+    (("lakeshow 14u (fuca) 8th/14u", "8th"), "lakeshow fuca:14u"),
     # NorCal Elite Allocco (user-confirmed Nov 2026): "NorCal Elite 14u
     # (Allocco) 8th/14U" (FB Fall Classic 9/19-20: NBBA/Fuca/Flow Elite
     # + WeCompete Black) is the same squad as "NorCal Elite 14U
