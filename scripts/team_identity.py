@@ -216,6 +216,17 @@ OVERRIDES = [
     # same program/level; never co-occur. 19 games combined.
     (("bmg prospects 14u 8th/14u", "14u"), "bmg prospects:14u"),
     (("bmg prospects 14u 8th/14u", "8th"), "bmg prospects:14u"),
+    # Team UNEQLD Marques (user-confirmed Nov 2026 for 14U; same pattern
+    # at 13U): FastBreak "Team UNEQLD (Marques) 8th/14U" (Thanksgiving
+    # HoopFest, 14u Gold) is the same squad as EE "Team Unequal -
+    # Marques" (14u Division 1) -- same coach, UNEQLD/Unequal spelling
+    # plus the FastBreak full-grade suffix split the identity. Merge
+    # into the history-carrying EE ids; the coach name keeps other
+    # UNEQLD squads (Reggie/Trey/bare) untouched.
+    (("team uneqld (marques) 8th/14u", "14u"), "team unequal marques:14u"),
+    (("team uneqld (marques) 8th/14u", "8th"), "team unequal marques:14u"),
+    (("team uneqld (marques) 7th/13u", "13u"), "team unequal marques:13u"),
+    (("team uneqld (marques) 7th/13u", "7th"), "team unequal marques:13u"),
 ]
 
 # team_id -> successor team_id (grade-up / rename continuity)

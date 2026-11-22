@@ -267,6 +267,24 @@ def champ_family(game_type):
     return "main"
 
 
+_TIME_RE = _re.compile(r"(\d{1,2}):(\d{2})\s*([AaPp])\.?[Mm]\.?")
+
+
+def _time_key(t):
+    """Chronological key for EE time strings like '2:30 PM PDT'.
+
+    Lexicographic string order is NOT chronological across 12-hour
+    AM/PM times ('8:30 AM' > '2:30 PM' as strings) -- that bug crowned
+    the winner of an 8:30 AM quarterfinal as champion over the 2:30 PM
+    final (Fall Extravaganza 275768, user-confirmed Nov 2026)."""
+    m = _TIME_RE.search(t or "")
+    if not m:
+        return (1, 0, t or "")  # unparseable/TBD sorts after real times
+    hh, mm, ap = int(m.group(1)), int(m.group(2)), m.group(3).lower()
+    hh = (hh % 12) + (12 if ap == "p" else 0)
+    return (0, hh * 60 + mm, t or "")
+
+
 def prestige_events(cur):
     """Return set of prestige tournament_ids (EE) + prestige BT event_ids.
 
@@ -343,7 +361,7 @@ def title_events(cur, min_teams=8, prestige_boost=1.5):
         if not fams:
             continue
         for fam, fg in fams.items():
-            fg.sort(key=lambda g: (g[5], g[6] or ""))
+            fg.sort(key=lambda g: (g[5], _time_key(g[6])))
             last = fg[-1]
             hw, aw = last[9], last[10]
             if hw == 1 and aw == 1:
