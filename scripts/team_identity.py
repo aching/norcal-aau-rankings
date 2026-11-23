@@ -197,6 +197,10 @@ OVERRIDES = [
     # scoped to this exact FastBreak label, not other Lakeshow cohorts.
     (("lakeshow 14u (fuca) 8th/14u", "14u"), "lakeshow fuca:14u"),
     (("lakeshow 14u (fuca) 8th/14u", "8th"), "lakeshow fuca:14u"),
+    # Lakeshow Duckett 14U (user-confirmed Nov 2026): same squad as the
+    # bare Lakeshow Duckett 14U label. Explicit 13U play-ups stay separate.
+    (("lakeshow 14u duckett 8th/14u", "14u"), "lakeshow duckett:14u"),
+    (("lakeshow 14u duckett 8th/14u", "8th"), "lakeshow duckett:14u"),
     # LGSR 8th (user-confirmed Nov 2026): FastBreak's grade-qualified label
     # belongs to the same 14U squad as bare LGSR, not other LGSR cohorts.
     (("lgsr 8th", "14u"), "lgsr:14u"),

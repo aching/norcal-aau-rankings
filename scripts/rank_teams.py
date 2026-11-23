@@ -48,6 +48,7 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 from upcoming_games import fastbreak_date
+from rank_confidence import rate_confidence
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE.parent / "data"
@@ -1628,7 +1629,11 @@ def main():
                             "opp_id": _oppid,
                             "div": g[5], "band": g[3].split(":")[0],
                             "event": _ename, "event_url": _eurl})
-            print(_json.dumps({"rank": rank, "team": tid, "games": log}))
+            confidence = (rate_confidence(team_games[tid], opp_ids[tid],
+                                           team_games, today)
+                          if tid in _ranked_ids else None)
+            print(_json.dumps({"rank": rank, "team": tid,
+                               "confidence": confidence, "games": log}))
         return
     print("| # | team_id | score | W-L (last N) | tier | sos | vs ranked | avg margin | latest | why |")
     print("|---|---------|-------|--------------|------|-----|-----------|------------|--------|-----|")

@@ -56,6 +56,12 @@ ul.why li { margin: 1px 0; }
 .detail-head h2 { margin: 0 0 4px; font-size: 22px; }
 .detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
 .aliases summary { cursor: pointer; font-weight: 600; font-size: 15px; }
+.confidence { font-size: 14px; margin: 7px 0; }
+.confidence strong { margin-right: 0.35em; }
+.confidence-high strong { color: #267046; }
+.confidence-medium strong { color: #7d6311; }
+.confidence-low strong { color: #a04d15; }
+.confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
 td.w { font-weight: 700; color: #0a7a2e; }
@@ -120,11 +126,11 @@ table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical
 <tbody>
 <tr><td>3</td><td><a href="../teams/15u/stl-9th-black-15u.html">stl 9th black:15u</a></td><td>0.028</td><td>7-1 (last 8)</td><td>silver</td><td>15U/9th</td></tr>
 <tr><td>6</td><td><a href="../teams/12u/stl-grey-12u.html">stl grey:12u</a></td><td>0.061</td><td>8-0 (last 8)</td><td>open</td><td>12U/6th</td></tr>
-<tr><td>8</td><td><a href="../teams/12u/stl-black-12u.html">stl black:12u</a></td><td>0.057</td><td>7-1 (last 8)</td><td>open</td><td>12U/6th</td></tr>
-<tr><td>9</td><td><a href="../teams/12u/stl-6th-black-6th.html">stl 6th black:6th</a></td><td>0.056</td><td>7-5 (last 12)</td><td>gold</td><td>12U/6th</td></tr>
+<tr><td>9</td><td><a href="../teams/12u/stl-black-12u.html">stl black:12u</a></td><td>0.057</td><td>7-1 (last 8)</td><td>open</td><td>12U/6th</td></tr>
+<tr><td>10</td><td><a href="../teams/12u/stl-6th-black-6th.html">stl 6th black:6th</a></td><td>0.056</td><td>7-5 (last 12)</td><td>gold</td><td>12U/6th</td></tr>
 <tr><td>13</td><td><a href="../teams/12u/stl-6th-grey-6th.html">stl 6th grey:6th</a></td><td>0.050</td><td>7-1 (last 8)</td><td>silver</td><td>12U/6th</td></tr>
 <tr><td>20</td><td><a href="../teams/11u/stl-5th-black-5th.html">stl 5th black:5th</a></td><td>0.032</td><td>5-2 (last 7)</td><td>silver</td><td>11U</td></tr>
-<tr><td>27</td><td><a href="../teams/14u/stl-8th-black-8th.html">stl 8th black:8th</a></td><td>0.047</td><td>6-1 (last 7)</td><td>silver</td><td>14U/8th</td></tr>
+<tr><td>28</td><td><a href="../teams/14u/stl-8th-black-8th.html">stl 8th black:8th</a></td><td>0.047</td><td>6-1 (last 7)</td><td>silver</td><td>14U/8th</td></tr>
 <tr><td>29</td><td><a href="../teams/15u/stl-black-15u.html">stl black:15u</a></td><td>0.014</td><td>2-2 (last 4)</td><td>open</td><td>15U/9th</td></tr>
 <tr><td>30</td><td><a href="../teams/11u/stl-black-11u.html">stl black:11u</a></td><td>0.029</td><td>6-2 (last 8)</td><td>open</td><td>11U</td></tr>
 <tr><td>55</td><td><a href="../teams/13u/stl-7th-black-7th.html">stl 7th black:7th</a></td><td>0.027</td><td>7-7 (last 14)</td><td>gold,open</td><td>13U/7th</td></tr>
@@ -135,7 +141,7 @@ table.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical
 <tr><td>142</td><td><a href="../teams/11u/stl-5th-grey-5th.html">stl 5th grey:5th</a></td><td>0.005</td><td>2-6 (last 8)</td><td>bronze</td><td>11U</td></tr>
 <tr><td>148</td><td><a href="../teams/13u/stl-8th-black-7th.html">stl 8th black:7th</a></td><td>0.013</td><td>5-0 (last 5)</td><td>open</td><td>13U/7th</td></tr>
 <tr><td>154</td><td><a href="../teams/12u/stl-6th-white-6th.html">stl 6th white:6th</a></td><td>0.004</td><td>2-6 (last 8)</td><td>bronze</td><td>12U/6th</td></tr>
-<tr><td>207</td><td><a href="../teams/14u/stl-8th-grey-8th.html">stl 8th grey:8th</a></td><td>0.008</td><td>5-6 (last 11)</td><td>bronze</td><td>14U/8th</td></tr>
+<tr><td>205</td><td><a href="../teams/14u/stl-8th-grey-8th.html">stl 8th grey:8th</a></td><td>0.008</td><td>5-6 (last 11)</td><td>bronze</td><td>14U/8th</td></tr>
 </tbody>
 </table>
 <section class="note"><h2>Unranked squads (21)</h2><ul><li><a href="../teams/11u/stl-5-5th.html">stl 5:5th</a> (11U, unranked)</li><li><a href="../teams/12u/stl-5th-black-6th.html">stl 5th black:6th</a> (12U/6th, unranked)</li><li><a href="../teams/12u/stl-6-6th.html">stl 6:6th</a> (12U/6th, unranked)</li><li><a href="../teams/12u/stl-7-6th.html">stl 7:6th</a> (12U/6th, unranked)</li><li><a href="../teams/14u/stl-black-14u.html">stl black:14u</a> (14U/8th, unranked)</li><li><a href="../teams/12u/stl-gray-12u.html">stl gray:12u</a> (12U/6th, unranked)</li><li><a href="../teams/13u/stl-grey-jesse-7th.html">stl grey jesse:7th</a> (13U/7th, unranked)</li><li><a href="../teams/13u/stl-grey-13u.html">stl grey:13u</a> (13U/7th, unranked)</li><li><a href="../teams/15u/stl-grey-15u.html">stl grey:15u</a> (15U/9th, unranked)</li><li><a href="../teams/14u/stl-grey-8th.html">stl grey:8th</a> (14U/8th, unranked)</li><li><a href="../teams/11u/stl-white-11u.html">stl white:11u</a> (11U, unranked)</li><li><a href="../teams/12u/stl-white-12u.html">stl white:12u</a> (12U/6th, unranked)</li><li><a href="../teams/11u/stl-11u.html">stl:11u</a> (11U, unranked)</li><li><a href="../teams/12u/stl-12u.html">stl:12u</a> (12U/6th, unranked)</li><li><a href="../teams/13u/stl-13u.html">stl:13u</a> (13U/7th, unranked)</li><li><a href="../teams/14u/stl-14u.html">stl:14u</a> (14U/8th, unranked)</li><li><a href="../teams/15u/stl-15u.html">stl:15u</a> (15U/9th, unranked)</li><li><a href="../teams/11u/stl-5th.html">stl:5th</a> (11U, unranked)</li><li><a href="../teams/12u/stl-6th.html">stl:6th</a> (12U/6th, unranked)</li><li><a href="../teams/13u/stl-7th.html">stl:7th</a> (13U/7th, unranked)</li><li><a href="../teams/14u/stl-8th.html">stl:8th</a> (14U/8th, unranked)</li></ul></section>

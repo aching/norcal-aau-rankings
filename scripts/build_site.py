@@ -26,6 +26,7 @@ from pathlib import Path
 from html_utils import esc, external_link, json_for_script, safe_url
 from profile_aliases import profile_aliases, render_aliases
 from rank_teams import DEFAULT_WINDOW_DAYS
+from rank_confidence import render_confidence
 from upcoming_games import render_upcoming_games, upcoming_by_team
 
 HERE = Path(__file__).resolve().parent
@@ -91,6 +92,12 @@ ul.why li { margin: 1px 0; }
 .detail-head h2 { margin: 0 0 4px; font-size: 22px; }
 .detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
 .aliases summary { cursor: pointer; font-weight: 600; font-size: 15px; }
+.confidence { font-size: 14px; margin: 7px 0; }
+.confidence strong { margin-right: 0.35em; }
+.confidence-high strong { color: #267046; }
+.confidence-medium strong { color: #7d6311; }
+.confidence-low strong { color: #a04d15; }
+.confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
 td.w { font-weight: 700; color: #0a7a2e; }
@@ -465,12 +472,14 @@ def render_circuit_games(games):
             + "".join(rows) + "</tbody></table></section>\n")
 
 
-def game_logs(level_arg, cohort):
+def game_logs(level_arg, cohort, with_metadata=False):
     """Full per-team game logs.
 
     Reads /tmp/games_<cohort>.jsonl (produced by rank_teams.py --dump-games
     with the same flags), falling back to running the dump inline.
-    Cache it because each dump re-runs the full ranking pipeline (~4 min).
+    Default returns team_id -> game rows. with_metadata=True instead returns
+    {games: [...], confidence: {...}} bundles for active ranked profiles.
+    Cache the dump because each run recomputes the full ranking pipeline.
     Refresh with:
       python3 scripts/rank_teams.py --level <lv> --last 15 --boys-only \\
         --dump-games 2>/dev/null | grep '^{' > /tmp/games_<cohort>.jsonl
@@ -495,7 +504,9 @@ def game_logs(level_arg, cohort):
             continue
         try:
             o = json.loads(line)
-            logs[o["team"]] = o["games"]
+            logs[o["team"]] = (
+                {"games": o["games"], "confidence": o.get("confidence")}
+                if with_metadata else o["games"])
         except Exception:
             continue
     return logs
@@ -712,8 +723,10 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
         tabs += f'<a href="#circuit-games">Circuits ({len(circuit_log)})</a>'
     if scheduled_games:
         tabs += f'<a href="#scheduled-games">Schedule ({len(scheduled_games)})</a>'
+    confidence_html = render_confidence(r.get("confidence"))
     why_html = (f"<section class=\"note\"><h2>Why #{r['rank']}</h2>"
-                f"<ul>{why}</ul></section>" if r.get("rank") and why else "")
+                f"{confidence_html}<ul>{why}</ul></section>"
+                if r.get("rank") and (why or confidence_html) else "")
     up_list = (upcoming or {}).get(r["team"], [])
     if up_list:
         up_items = "".join(
@@ -792,9 +805,11 @@ def build_board(cohort, title, sub, gen, scheduled_by_team=None, aliases=None):
     num = {"11u": "11", "12u": "12", "13u": "13", "14u": "14", "15u": "15"}[cohort]
     level_arg = {"11u": "11u", "12u": "12u,6th", "13u": "13u,7th", "14u": "14u,8th", "15u": "15u,9th"}[cohort]
     rows, titles, tmnote, meta, team_titles = parse_rep(f"/tmp/rep{num}.md")
-    logs = game_logs(level_arg, cohort)
+    logs = game_logs(level_arg, cohort, with_metadata=True)
     data = []
-    for tid, log in logs.items():
+    for tid, item in logs.items():
+        log = item["games"] if isinstance(item, dict) else item
+        confidence = item.get("confidence") if isinstance(item, dict) else None
         # ranked teams carry the board row; unranked teams (rank 0 in
         # the dump) get a page from the log alone, using the same
         # window/stat math with the full log as the window.
@@ -821,6 +836,7 @@ def build_board(cohort, title, sub, gen, scheduled_by_team=None, aliases=None):
                 "log": log,
                 "wlog": wlog,
                 "titlelist": team_titles.get(tid, []),
+                "confidence": confidence,
             })
         else:
             wlog = log
@@ -840,6 +856,7 @@ def build_board(cohort, title, sub, gen, scheduled_by_team=None, aliases=None):
                 "log": log,
                 "wlog": wlog,
                 "titlelist": team_titles.get(tid, []),
+                "confidence": confidence,
             })
     # shared stat math over the chosen window slice (wlog was set per
     # team in the build loop above: ranked = last-N slice, unranked =
