@@ -49,6 +49,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from upcoming_games import fastbreak_date
 from rank_confidence import rate_confidence
+from team_identity import GIRLS
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE.parent / "data"
@@ -399,6 +400,11 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
     """Return list of (date_iso, won_bool, weight, band, tid, div, self,
     opp, pf, pa, game_type). game_type is None for BT games (no bracket
     labels there). EE game_type marks pool vs championship-bracket play."""
+    # Explicit girls squads stay off boys boards even when a source division
+    # is mixed or omits its gender marker. The girls-only/mixed CLI paths keep
+    # the same source records; no data are removed or relabeled.
+    if gender_filter == "boys" and team_id.lower().endswith(" girls"):
+        return []
     names = cur.execute(
         "SELECT raw_name, division_hint FROM team_names WHERE team_id = ?",
         (team_id,)).fetchall()
@@ -406,11 +412,12 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
         return []
     out = []
     for raw, div in names:
-        if gender_filter == "boys" and ("girl" in (div or "").lower()
-                                        or "\u2640" in (div or "")):
+        # Providers may retain the girls marker in the raw team name even
+        # when a mixed division or an older canonical id does not carry it.
+        girls_row = GIRLS.search(raw or "") or GIRLS.search(div or "")
+        if gender_filter == "boys" and girls_row:
             continue
-        if gender_filter == "girls" and not ("girl" in (div or "").lower()
-                                             or "\u2640" in (div or "")):
+        if gender_filter == "girls" and not girls_row:
             continue
         band, weight = tier_of(div)
         for tbl in ("ee_games", "bt_games", "fb_games"):

@@ -250,6 +250,18 @@ OVERRIDES = [
     (("team uneqld (marques) 7th/13u", "7th"), "team unequal marques:13u"),
 ]
 
+# Exact, whole-label overrides for cases where a prefix rule could merge
+# unconfirmed sibling rosters. Labels are normalized only for punctuation,
+# whitespace, and case; age/grade still comes from name + division context.
+EXACT_TEAM_OVERRIDES = {
+    # All In Elite UAA (user-confirmed Nov 2026): the 14U UAA spelling is the
+    # same squad as ALL IN ELITE 14U. The 13U UAA identity stays separate.
+    (("all in elite uaa", "14u"), "all in elite:14u"),
+    (("all in elite uaa", "8th"), "all in elite:14u"),
+    (("all in elite uaa 14u", "14u"), "all in elite:14u"),
+    (("all in elite uaa 14u", "8th"), "all in elite:14u"),
+}
+
 # team_id -> successor team_id (grade-up / rename continuity)
 SUCCESSORS = {
     "tm:falcons-13u": "tm:falcons-14u",
@@ -354,6 +366,14 @@ def resolve(name, division=""):
     # not tm:falcons-14u. Girls programs have no curated overrides --
     # they fall through to the normalized girls ids below.
     if not div_girls:
+        # Exact aliases normalize separators but require the complete team
+        # label, so an extra coach/color/squad word never triggers a merge.
+        normalized_name = WS.sub(
+            " ", re.sub(r"[-\u2013\u2014:;,.()/]+", " ", low)).strip()
+        blob = f"{name} {division}".lower()
+        for (full_name, age_kw), team_id in EXACT_TEAM_OVERRIDES:
+            if normalized_name == full_name and age_kw in blob:
+                return team_id, "override"
         for (prog_kw, age_kw), team_id in OVERRIDES:
             if prog_kw not in low:
                 continue

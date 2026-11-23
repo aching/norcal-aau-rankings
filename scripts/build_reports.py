@@ -370,8 +370,10 @@ def refresh_rankings(cohorts=None, workdir="/tmp"):
     root = Path(workdir)
     (root / "rankings").mkdir(parents=True, exist_ok=True)
     for cohort, (_title, level) in (cohorts or COHORTS).items():
+        # Website boards are boys boards, not the ranker's default mixed view.
+        # Keep both output formats on the same explicitly filtered run.
         base = [sys.executable, str(HERE / "rank_teams.py"),
-                "--level", level, "--last", "15"]
+                "--level", level, "--last", "15", "--boys-only"]
         outputs = [
             (base + ["--dump-games"], root / f"games_{cohort}.jsonl"),
             (base, root / "rankings" / f"{cohort}.md"),

@@ -66,6 +66,7 @@ class CircuitTierTests(unittest.TestCase):
         for command in calls:
             self.assertEqual(command[command.index("--level") + 1], "14u,8th")
             self.assertEqual(command[command.index("--last") + 1], "15")
+            self.assertIn("--boys-only", command)
         self.assertIn("--dump-games", calls[0])
         self.assertNotIn("--dump-games", calls[1])
 
