@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,19 +113,21 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked gold:8th</h2>
-<p class="sub">unranked &middot; 2-1 all-time &middot; 37.0 PPG / 32.7 OPP / +4.3 DIFF / W1 STRK / 2-1 L10 &middot; tier mix open3 &middot; window 2-1 (last 3) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 2-1 all-time &middot; 37.0 PPG / 32.7 OPP / +4.3 DIFF / W2 STRK / 2-1 L10 &middot; tier mix open3 &middot; window 2-1 (last 3) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (3 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>04-12</td><td class="w">W 38-21</td><td><a href="lunardi-s-8th.html">Lunardi&#x27;s</a></td><td>-</td><td>8th Boys Blue</td><td><a href="https://basketball.exposureevents.com/266592/spring-shootout-ii/teams/gold?divisionteamid=5132117">Spring Shootout II - Schedule - Apr 11-12, 2026</a></td></tr>
-<tr><td>04-11</td><td class="l">L 34-47</td><td><a href="no-limit-8th.html">No Limit</a></td><td>-</td><td>8th Boys Blue</td><td><a href="https://basketball.exposureevents.com/266592/spring-shootout-ii/teams/gold?divisionteamid=5132117">Spring Shootout II - Schedule - Apr 11-12, 2026</a></td></tr>
-<tr><td>04-11</td><td class="w">W 39-30</td><td><a href="wc-hustle-isaiah-8th.html">WC Hustle Isaiah</a></td><td>-</td><td>8th Boys Blue</td><td><a href="https://basketball.exposureevents.com/266592/spring-shootout-ii/teams/gold?divisionteamid=5132117">Spring Shootout II - Schedule - Apr 11-12, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1776019200000" data-source-date="2026-04-12" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">04-12</td><td data-cell="tipoff"><time datetime="2026-04-12T18:40:00Z" title="Source clock: 11:40 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">18:40 UTC</time></td><td class="w">W 38-21</td><td><a href="lunardi-s-8th.html">Lunardi&#x27;s</a></td><td>-</td><td>8th Boys Blue</td><td><a href="https://basketball.exposureevents.com/266592/spring-shootout-ii/teams/gold?divisionteamid=5132117">Spring Shootout II - Schedule - Apr 11-12, 2026</a></td></tr>
+<tr data-utc-ms="1775949300000" data-source-date="2026-04-11" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">04-11</td><td data-cell="tipoff"><time datetime="2026-04-11T23:15:00Z" title="Source clock: 4:15 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">23:15 UTC</time></td><td class="w">W 39-30</td><td><a href="wc-hustle-isaiah-8th.html">WC Hustle Isaiah</a></td><td>-</td><td>8th Boys Blue</td><td><a href="https://basketball.exposureevents.com/266592/spring-shootout-ii/teams/gold?divisionteamid=5132117">Spring Shootout II - Schedule - Apr 11-12, 2026</a></td></tr>
+<tr data-utc-ms="1775936100000" data-source-date="2026-04-11" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">04-11</td><td data-cell="tipoff"><time datetime="2026-04-11T19:35:00Z" title="Source clock: 12:35 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">19:35 UTC</time></td><td class="l">L 34-47</td><td><a href="no-limit-8th.html">No Limit</a></td><td>-</td><td>8th Boys Blue</td><td><a href="https://basketball.exposureevents.com/266592/spring-shootout-ii/teams/gold?divisionteamid=5132117">Spring Shootout II - Schedule - Apr 11-12, 2026</a></td></tr></tbody></table></section>
 <section class="note"><h2>More Gold (3)</h2><ul><li><a href="../../teams/11u/gold-5th.html">gold:5th</a> (11u)</li><li><a href="../../teams/12u/gold-rally-6th.html">gold rally:6th</a> (12u)</li><li><a href="../../teams/13u/gold-rally-7th.html">gold rally:7th</a> (13u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 3 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

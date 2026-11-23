@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,18 +113,20 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked f o a:14u</h2>
-<p class="sub">unranked &middot; 0-2 all-time &middot; 24.0 PPG / 46.5 OPP / -22.5 DIFF / L2 STRK / 0-2 L10 &middot; tier mix open2 &middot; window 0-2 (last 2) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 0-2 all-time &middot; 24.0 PPG / 46.5 OPP / -22.5 DIFF / L2 STRK / 0-2 L10 &middot; tier mix open2 &middot; window 0-2 (last 2) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (2 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>04-18</td><td class="l">L 23-47</td><td><a href="pve-mambas-14u.html">PVE Mambas 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262159/gsg-x-bam-bay-area-spring-jam/teams/foa-14u?divisionteamid=5145818">GSG x BAM - Bay Area Spring Jam - Schedule - Apr 18-19, 2026</a></td></tr>
-<tr><td>04-18</td><td class="l">L 25-46</td><td><a href="ca-storm-eng-14u.html">CA Storm (Eng) 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262159/gsg-x-bam-bay-area-spring-jam/teams/foa-14u?divisionteamid=5145818">GSG x BAM - Bay Area Spring Jam - Schedule - Apr 18-19, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1776554400000" data-source-date="2026-04-18" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">04-18</td><td data-cell="tipoff"><time datetime="2026-04-18T23:20:00Z" title="Source clock: 4:20 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">23:20 UTC</time></td><td class="l">L 25-46</td><td><a href="ca-storm-eng-14u.html">CA Storm (Eng) 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262159/gsg-x-bam-bay-area-spring-jam/teams/foa-14u?divisionteamid=5145818">GSG x BAM - Bay Area Spring Jam - Schedule - Apr 18-19, 2026</a></td></tr>
+<tr data-utc-ms="1776545400000" data-source-date="2026-04-18" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">04-18</td><td data-cell="tipoff"><time datetime="2026-04-18T20:50:00Z" title="Source clock: 1:50 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">20:50 UTC</time></td><td class="l">L 23-47</td><td><a href="pve-mambas-14u.html">PVE Mambas 14U</a></td><td>-</td><td>8th Grade (14U) Boys Division</td><td><a href="https://basketball.exposureevents.com/262159/gsg-x-bam-bay-area-spring-jam/teams/foa-14u?divisionteamid=5145818">GSG x BAM - Bay Area Spring Jam - Schedule - Apr 18-19, 2026</a></td></tr></tbody></table></section>
 <section class="note"><h2>More <a href="../../clubs/f.html">F</a> (8)</h2><ul><li><a href="../../teams/11u/f-o-a-5-5th.html">f o a 5:5th</a> (11u)</li><li><a href="../../teams/11u/f-o-a-11u.html">f o a:11u</a> (11u)</li><li><a href="../../teams/12u/f-o-a-basketball-academy-12u.html">f o a basketball academy:12u</a> (12u)</li><li><a href="../../teams/12u/f-o-a-basketball-12u.html">f o a basketball:12u</a> (12u)</li><li><a href="../../teams/12u/f-o-a-black-12u.html">f o a black:12u</a> (12u)</li><li><a href="../../teams/12u/f-o-a-12u.html">f o a:12u</a> (12u)</li><li><a href="../../teams/13u/f-o-a-black-13u.html">f o a black:13u</a> (13u)</li><li><a href="../../teams/13u/f-o-a-13u.html">f o a:13u</a> (13u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 2 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

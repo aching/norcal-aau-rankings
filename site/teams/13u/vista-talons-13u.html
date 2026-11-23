@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,22 +113,24 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked vista talons:13u</h2>
-<p class="sub">unranked &middot; 4-2 all-time &middot; 41.3 PPG / 35.3 OPP / +6.0 DIFF / W3 STRK / 4-2 L10 &middot; tier mix bronze4/silver2 &middot; window 4-2 (last 6) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 4-2 all-time &middot; 41.3 PPG / 35.3 OPP / +6.0 DIFF / W2 STRK / 4-2 L10 &middot; tier mix bronze4/silver2 &middot; window 4-2 (last 6) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (6 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>02-07</td><td class="w">W 40-27</td><td><a href="mudville-elite-13u.html">Mudville Elite</a></td><td>-</td><td>13U Silver</td><td><a href="https://basketball.exposureevents.com/256061/yellow-jackets-winter-madness/teams/vista-talons?divisionteamid=4959258">Yellow Jackets Winter Madness - Schedule - Feb 7, 2026</a></td></tr>
-<tr><td>02-07</td><td class="w">W 36-34</td><td><a href="feba-white-13u.html">FEBA White</a></td><td>-</td><td>13U Silver</td><td><a href="https://basketball.exposureevents.com/256061/yellow-jackets-winter-madness/teams/vista-talons?divisionteamid=4959258">Yellow Jackets Winter Madness - Schedule - Feb 7, 2026</a></td></tr>
-<tr><td>10-26</td><td class="w">W 40-18</td><td><a href="hoopright-larry-13u.html">HoopRight Larry</a></td><td>-</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vista-talons?divisionteamid=4795332">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
-<tr><td>10-26</td><td class="l">L 37-38</td><td><a href="team-daily-13u.html">Team Daily</a></td><td>-</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vista-talons?divisionteamid=4795332">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
-<tr><td>10-25</td><td class="l">L 47-51</td><td><a href="team-daily-13u.html">Team Daily</a></td><td>-</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vista-talons?divisionteamid=4795332">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
-<tr><td>10-25</td><td class="w">W 48-44</td><td><a href="ema-l-e-a-d-e-r-s-blue-13u.html">EMA L.E.A.D.E.R.S. 13u Blue</a></td><td>-</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vista-talons?divisionteamid=4795332">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1770501000000" data-source-date="2026-02-07" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">02-07</td><td data-cell="tipoff"><time datetime="2026-02-07T21:50:00Z" title="Source clock: 1:50 PM PST; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">21:50 UTC</time></td><td class="w">W 36-34</td><td><a href="feba-white-13u.html">FEBA White</a></td><td>-</td><td>13U Silver</td><td><a href="https://basketball.exposureevents.com/256061/yellow-jackets-winter-madness/teams/vista-talons?divisionteamid=4959258">Yellow Jackets Winter Madness - Schedule - Feb 7, 2026</a></td></tr>
+<tr data-utc-ms="1770492000000" data-source-date="2026-02-07" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">02-07</td><td data-cell="tipoff"><time datetime="2026-02-07T19:20:00Z" title="Source clock: 11:20 AM PST; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">19:20 UTC</time></td><td class="w">W 40-27</td><td><a href="mudville-elite-13u.html">Mudville Elite</a></td><td>-</td><td>13U Silver</td><td><a href="https://basketball.exposureevents.com/256061/yellow-jackets-winter-madness/teams/vista-talons?divisionteamid=4959258">Yellow Jackets Winter Madness - Schedule - Feb 7, 2026</a></td></tr>
+<tr data-utc-ms="1761510600000" data-source-date="2025-10-26" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-26</td><td data-cell="tipoff"><time datetime="2025-10-26T20:30:00Z" title="Source clock: 1:30 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">20:30 UTC</time></td><td class="l">L 37-38</td><td><a href="team-daily-13u.html">Team Daily</a></td><td>-</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vista-talons?divisionteamid=4795332">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
+<tr data-utc-ms="1761504000000" data-source-date="2025-10-26" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-26</td><td data-cell="tipoff"><time datetime="2025-10-26T18:40:00Z" title="Source clock: 11:40 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">18:40 UTC</time></td><td class="w">W 40-18</td><td><a href="hoopright-larry-13u.html">HoopRight Larry</a></td><td>-</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vista-talons?divisionteamid=4795332">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
+<tr data-utc-ms="1761411000000" data-source-date="2025-10-25" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-25</td><td data-cell="tipoff"><time datetime="2025-10-25T16:50:00Z" title="Source clock: 9:50 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">16:50 UTC</time></td><td class="w">W 48-44</td><td><a href="ema-l-e-a-d-e-r-s-blue-13u.html">EMA L.E.A.D.E.R.S. 13u Blue</a></td><td>-</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vista-talons?divisionteamid=4795332">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr>
+<tr data-utc-ms="1761404400000" data-source-date="2025-10-25" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-25</td><td data-cell="tipoff"><time datetime="2025-10-25T15:00:00Z" title="Source clock: 8:00 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">15:00 UTC</time></td><td class="l">L 47-51</td><td><a href="team-daily-13u.html">Team Daily</a></td><td>-</td><td>13U/7th Grade Bronze</td><td><a href="https://basketball.exposureevents.com/249875/g365-capital-clash/teams/vista-talons?divisionteamid=4795332">G365 Capital Clash - Schedule - Oct 25-26, 2025</a></td></tr></tbody></table></section>
 <section class="note"><h2>More Vista (2)</h2><ul><li><a href="vista-talons-blue-13u.html">vista talons blue:13u</a> (same age)</li><li><a href="../../teams/14u/vista-talons-14u.html">vista talons:14u</a> (14u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 6 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

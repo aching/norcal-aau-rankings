@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,20 +113,22 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked sa legacy:8th</h2>
-<p class="sub">unranked &middot; 0-4 all-time &middot; 34.5 PPG / 50.2 OPP / -15.8 DIFF / L4 STRK / 0-4 L10 &middot; tier mix open4 &middot; window 0-4 (last 4) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 0-4 all-time &middot; 34.5 PPG / 50.2 OPP / -15.8 DIFF / L4 STRK / 0-4 L10 &middot; tier mix open4 &middot; window 0-4 (last 4) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (4 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>05-31</td><td class="l">L 50-58</td><td><a href="1891-basketball-pat-8th.html">1891 Basketball - Pat</a></td><td>-</td><td>8th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/sa-legacy?divisionteamid=5289631">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
-<tr><td>05-30</td><td class="l">L 31-48</td><td><a href="txb-prince-elite-2030-8th.html">TXB Prince Elite 2030</a></td><td>-</td><td>8th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/sa-legacy?divisionteamid=5289631">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
-<tr><td>05-30</td><td class="l">L 35-48</td><td><a href="athletics-basketball-club-8th.html">ATHLETICS BASKETBALL CLUB</a></td><td>-</td><td>8th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/sa-legacy?divisionteamid=5289631">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
-<tr><td>05-29</td><td class="l">L 22-47</td><td><a href="jp-elite-nxtpro-8th.html">JP Elite NXTPRO</a></td><td>-</td><td>8th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/sa-legacy?divisionteamid=5289631">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1780239600000" data-source-date="2026-05-31" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-31</td><td data-cell="tipoff"><time datetime="2026-05-31T15:00:00Z" title="Source clock: 10:00 AM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">15:00 UTC</time></td><td class="l">L 50-58</td><td><a href="1891-basketball-pat-8th.html">1891 Basketball - Pat</a></td><td>-</td><td>8th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/sa-legacy?divisionteamid=5289631">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
+<tr data-utc-ms="1780185600000" data-source-date="2026-05-30" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-31</td><td data-cell="tipoff"><time datetime="2026-05-31T00:00:00Z" title="Source clock: 7:00 PM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">00:00 UTC</time></td><td class="l">L 35-48</td><td><a href="athletics-basketball-club-8th.html">ATHLETICS BASKETBALL CLUB</a></td><td>-</td><td>8th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/sa-legacy?divisionteamid=5289631">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
+<tr data-utc-ms="1780164000000" data-source-date="2026-05-30" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-30</td><td data-cell="tipoff"><time datetime="2026-05-30T18:00:00Z" title="Source clock: 1:00 PM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">18:00 UTC</time></td><td class="l">L 31-48</td><td><a href="txb-prince-elite-2030-8th.html">TXB Prince Elite 2030</a></td><td>-</td><td>8th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/sa-legacy?divisionteamid=5289631">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
+<tr data-utc-ms="1780092000000" data-source-date="2026-05-29" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-29</td><td data-cell="tipoff"><time datetime="2026-05-29T22:00:00Z" title="Source clock: 5:00 PM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">22:00 UTC</time></td><td class="l">L 22-47</td><td><a href="jp-elite-nxtpro-8th.html">JP Elite NXTPRO</a></td><td>-</td><td>8th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/sa-legacy?divisionteamid=5289631">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr></tbody></table></section>
 <section class="note"><h2>More Sa (11)</h2><ul><li><a href="sa-bearcubs-14u.html">sa bearcubs:14u</a> (same age)</li><li><a href="sa-finest-14u.html">sa finest:14u</a> (same age)</li><li><a href="sa-swish-norcal-14u.html">sa swish norcal:14u</a> (same age)</li><li><a href="sa-swish-norcal-8th.html">sa swish norcal:8th</a> (same age)</li><li><a href="../../teams/11u/sa-blue-devils-2033-5th.html">sa blue devils 2033:5th</a> (11u)</li><li><a href="../../teams/11u/sa-legacy-5th.html">sa legacy:5th</a> (11u)</li><li><a href="../../teams/13u/sa-swish-norcal-7th.html">sa swish norcal:7th</a> (13u)</li><li><a href="../../teams/15u/sa-basketball-15u.html">sa basketball:15u</a> (15u)</li><li><a href="../../teams/15u/sa-bearcubs-15u.html">sa bearcubs:15u</a> (15u)</li><li><a href="../../teams/15u/sa-finest-15u.html">sa finest:15u</a> (15u)</li><li><a href="../../teams/15u/sa-swish-norcal-15u.html">sa swish norcal:15u</a> (15u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 4 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

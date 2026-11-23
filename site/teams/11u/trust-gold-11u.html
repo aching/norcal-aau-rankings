@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,18 +113,20 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked trust gold:11u</h2>
-<p class="sub">unranked &middot; 0-2 all-time &middot; 18.5 PPG / 35.0 OPP / -16.5 DIFF / L2 STRK / 0-2 L10 &middot; tier mix open2 &middot; window 0-2 (last 2) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 0-2 all-time &middot; 18.5 PPG / 35.0 OPP / -16.5 DIFF / L2 STRK / 0-2 L10 &middot; tier mix open2 &middot; window 0-2 (last 2) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (2 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>08-16</td><td class="l">L 23-33</td><td><a href="ptown-anthony-11u.html">PTOWN - ANTHONY (11U)</a></td><td>-</td><td>11U/5TH GRADE (BLACK) - BOYS</td><td><a href="https://basketball.exposureevents.com/246921/bam-x-gsg-bay-area-summer-showcase/teams/trust-gold-11u?divisionteamid=4696826">BAM X GSG - BAY AREA SUMMER SHOWCASE - Schedule - Aug 16, 2025</a></td></tr>
-<tr><td>08-16</td><td class="l">L 14-37</td><td><a href="bay-area-mambas-black-10-11u.html">BAY AREA MAMBAS - BLACK (10/11U)</a></td><td>-</td><td>11U/5TH GRADE (BLACK) - BOYS</td><td><a href="https://basketball.exposureevents.com/246921/bam-x-gsg-bay-area-summer-showcase/teams/trust-gold-11u?divisionteamid=4696826">BAM X GSG - BAY AREA SUMMER SHOWCASE - Schedule - Aug 16, 2025</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1755362400000" data-source-date="2025-08-16" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">08-16</td><td data-cell="tipoff"><time datetime="2025-08-16T16:40:00Z" title="Source clock: 9:40 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">16:40 UTC</time></td><td class="l">L 14-37</td><td><a href="bay-area-mambas-black-10-11u.html">BAY AREA MAMBAS - BLACK (10/11U)</a></td><td>-</td><td>11U/5TH GRADE (BLACK) - BOYS</td><td><a href="https://basketball.exposureevents.com/246921/bam-x-gsg-bay-area-summer-showcase/teams/trust-gold-11u?divisionteamid=4696826">BAM X GSG - BAY AREA SUMMER SHOWCASE - Schedule - Aug 16, 2025</a></td></tr>
+<tr data-utc-ms="1755356400000" data-source-date="2025-08-16" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">08-16</td><td data-cell="tipoff"><time datetime="2025-08-16T15:00:00Z" title="Source clock: 8:00 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">15:00 UTC</time></td><td class="l">L 23-33</td><td><a href="ptown-anthony-11u.html">PTOWN - ANTHONY (11U)</a></td><td>-</td><td>11U/5TH GRADE (BLACK) - BOYS</td><td><a href="https://basketball.exposureevents.com/246921/bam-x-gsg-bay-area-summer-showcase/teams/trust-gold-11u?divisionteamid=4696826">BAM X GSG - BAY AREA SUMMER SHOWCASE - Schedule - Aug 16, 2025</a></td></tr></tbody></table></section>
 <section class="note"><h2>More <a href="../../clubs/trust.html">Trust</a> (21)</h2><ul><li><a href="trust-basketball-11u.html">trust basketball:11u</a> (same age)</li><li><a href="trust-basketball-5th.html">trust basketball:5th</a> (same age)</li><li><a href="trust-white-11u.html">trust white:11u</a> (same age)</li><li><a href="trust-11u.html">trust:11u</a> (same age)</li><li><a href="../../teams/12u/trust-basketball-gold-12u.html">trust basketball gold:12u</a> (12u)</li><li><a href="../../teams/12u/trust-basketball-silver-12u.html">trust basketball silver:12u</a> (12u)</li><li><a href="../../teams/12u/trust-basketball-12u.html">trust basketball:12u</a> (12u)</li><li><a href="../../teams/12u/trust-basketball-6th.html">trust basketball:6th</a> (12u)</li><li><a href="../../teams/12u/trust-gold-12u.html">trust gold:12u</a> (12u)</li><li><a href="../../teams/12u/trust-white-12u.html">trust white:12u</a> (12u)</li><li><a href="../../teams/12u/trust-12u.html">trust:12u</a> (12u)</li><li><a href="../../teams/13u/trust-basketball-silver-13u.html">trust basketball silver:13u</a> (13u)</li><li><a href="../../teams/13u/trust-basketball-13u.html">trust basketball:13u</a> (13u)</li><li><a href="../../teams/13u/trust-basketball-7th.html">trust basketball:7th</a> (13u)</li><li><a href="../../teams/13u/trust-white-13u.html">trust white:13u</a> (13u)</li><li><a href="../../teams/13u/trust-13u.html">trust:13u</a> (13u)</li><li><a href="../../teams/14u/trust-basketball-14u.html">trust basketball:14u</a> (14u)</li><li><a href="../../teams/14u/trust-basketball-8th.html">trust basketball:8th</a> (14u)</li><li><a href="../../teams/14u/trust-14u.html">trust:14u</a> (14u)</li><li><a href="../../teams/15u/trust-your-game-trg-15u.html">trust your game trg:15u</a> (15u)</li><li><a href="../../teams/15u/trust-15u.html">trust:15u</a> (15u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 2 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

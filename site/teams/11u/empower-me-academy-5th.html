@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,20 +113,22 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked empower me academy:5th</h2>
-<p class="sub">unranked &middot; 2-2 all-time &middot; 19.0 PPG / 30.8 OPP / -11.8 DIFF / L1 STRK / 2-2 L10 &middot; tier mix open4 &middot; window 2-2 (last 4) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 2-2 all-time &middot; 19.0 PPG / 30.8 OPP / -11.8 DIFF / W1 STRK / 2-2 L10 &middot; tier mix open4 &middot; window 2-2 (last 4) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (4 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>05-17</td><td class="l">L 11-44</td><td><a href="24-8-academy-black-5th.html">24/8 Academy Black</a></td><td>-</td><td>4th/5th Grade</td><td><a href="https://basketball.exposureevents.com/259081/hhh-spring-live-norcal/teams/empower-me-academy?divisionteamid=5253907">HHH: Spring Live NorCal - Schedule - May 15-17, 2026</a></td></tr>
-<tr><td>05-17</td><td class="w">W 29-6</td><td><a href="gv-magic-4th-5th.html">GV Magic 4th</a></td><td>-</td><td>4th/5th Grade</td><td><a href="https://basketball.exposureevents.com/259081/hhh-spring-live-norcal/teams/empower-me-academy?divisionteamid=5253907">HHH: Spring Live NorCal - Schedule - May 15-17, 2026</a></td></tr>
-<tr><td>05-16</td><td class="w">W 27-26</td><td><a href="24-8-academy-blue-5th.html">24/8 Academy Blue</a></td><td>-</td><td>4th/5th Grade</td><td><a href="https://basketball.exposureevents.com/259081/hhh-spring-live-norcal/teams/empower-me-academy?divisionteamid=5253907">HHH: Spring Live NorCal - Schedule - May 15-17, 2026</a></td></tr>
-<tr><td>05-16</td><td class="l">L 9-47</td><td><a href="san-jose-cagers-5th.html">San Jose Cagers 5th grade</a></td><td>-</td><td>4th/5th Grade</td><td><a href="https://basketball.exposureevents.com/259081/hhh-spring-live-norcal/teams/empower-me-academy?divisionteamid=5253907">HHH: Spring Live NorCal - Schedule - May 15-17, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1779051600000" data-source-date="2026-05-17" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-17</td><td data-cell="tipoff"><time datetime="2026-05-17T21:00:00Z" title="Source clock: 2:00 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">21:00 UTC</time></td><td class="w">W 29-6</td><td><a href="gv-magic-4th-5th.html">GV Magic 4th</a></td><td>-</td><td>4th/5th Grade</td><td><a href="https://basketball.exposureevents.com/259081/hhh-spring-live-norcal/teams/empower-me-academy?divisionteamid=5253907">HHH: Spring Live NorCal - Schedule - May 15-17, 2026</a></td></tr>
+<tr data-utc-ms="1779047400000" data-source-date="2026-05-17" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-17</td><td data-cell="tipoff"><time datetime="2026-05-17T19:50:00Z" title="Source clock: 12:50 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">19:50 UTC</time></td><td class="l">L 11-44</td><td><a href="24-8-academy-black-5th.html">24/8 Academy Black</a></td><td>-</td><td>4th/5th Grade</td><td><a href="https://basketball.exposureevents.com/259081/hhh-spring-live-norcal/teams/empower-me-academy?divisionteamid=5253907">HHH: Spring Live NorCal - Schedule - May 15-17, 2026</a></td></tr>
+<tr data-utc-ms="1778972400000" data-source-date="2026-05-16" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-16</td><td data-cell="tipoff"><time datetime="2026-05-16T23:00:00Z" title="Source clock: 4:00 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">23:00 UTC</time></td><td class="w">W 27-26</td><td><a href="24-8-academy-blue-5th.html">24/8 Academy Blue</a></td><td>-</td><td>4th/5th Grade</td><td><a href="https://basketball.exposureevents.com/259081/hhh-spring-live-norcal/teams/empower-me-academy?divisionteamid=5253907">HHH: Spring Live NorCal - Schedule - May 15-17, 2026</a></td></tr>
+<tr data-utc-ms="1778955600000" data-source-date="2026-05-16" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-16</td><td data-cell="tipoff"><time datetime="2026-05-16T18:20:00Z" title="Source clock: 11:20 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">18:20 UTC</time></td><td class="l">L 9-47</td><td><a href="san-jose-cagers-5th.html">San Jose Cagers 5th grade</a></td><td>-</td><td>4th/5th Grade</td><td><a href="https://basketball.exposureevents.com/259081/hhh-spring-live-norcal/teams/empower-me-academy?divisionteamid=5253907">HHH: Spring Live NorCal - Schedule - May 15-17, 2026</a></td></tr></tbody></table></section>
 
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 4 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

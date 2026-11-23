@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,20 +113,22 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>#138 net rippers:13u</h2>
-<p class="sub">0.013 &middot; 3-1 all-time &middot; 45.0 PPG / 39.5 OPP / +5.5 DIFF / W2 STRK / 3-1 L10 &middot; tier mix silver &middot; window 3-1 (last 4) &middot; SOS 0.007 &middot; 2026-11-22</p>
+<p class="sub">0.013 &middot; 3-1 all-time &middot; 45.0 PPG / 39.5 OPP / +5.5 DIFF / W3 STRK / 3-1 L10 &middot; tier mix silver &middot; window 3-1 (last 4) &middot; SOS 0.007 &middot; 2026-11-23</p>
 </div>
 <details class="note aliases"><summary>Known aliases (2)</summary><ul><li>NET RIPPERS</li><li>Net Rippers 13u</li></ul></details>
 <section class="note"><h2>Why #138</h2><p class="confidence confidence-low"><strong>Confidence: Low</strong> <span>4 active games · 1/4 opponents covered (25%) · latest 11/7/2026</span><span class="confidence-note">Evidence grade only; not a probability of exact placement. High requires ≥12 games, ≥80% coverage, and a game within 30 days.</span></p><ul><li>Form 3-1 in-band (silver, 3-1 overall); 33% sample kept (4g)</li><li>Best win #151 TEAM UNLIMITED 56-42 (11/7, silver)</li><li>Unbeaten: biggest win BRAVE ELITE BLUEPRINT (?) 53-30 (11/7)</li><li>Schedule silver-leaning (silver4), sos 0.007, 3 ghost</li><li>Margin biggest +23 / closest -19 (window +5.5)</li><li>fresh 11/7</li></ul></section>
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (4 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>11-07</td><td class="w">W 56-42</td><td><a href="team-unlimited-13u.html">TEAM UNLIMITED</a></td><td>#151</td><td>BOYS 13U SILVER</td><td><a href="https://bracketteam.com/event/8656/schedules/schedule?division_id=68699">NBN FALL FRENZY 2</a></td></tr>
-<tr><td>11-07</td><td class="w">W 53-30</td><td><a href="brave-elite-blueprint-13u.html">BRAVE ELITE BLUEPRINT</a></td><td>-</td><td>BOYS 13U SILVER</td><td><a href="https://bracketteam.com/event/8656/schedules/schedule?division_id=68699">NBN FALL FRENZY 2</a></td></tr>
-<tr><td>09-19</td><td class="l">L 29-48</td><td><a href="sj-mavs-13u.html">SJ Mavs 13u</a></td><td>-</td><td>Boys-13u American</td><td><a href="https://basketball.exposureevents.com/261729/sf-rumble-for-the-ring/teams/net-rippers-13u?divisionteamid=5556865">SF Rumble for the Ring - Schedule - Sep 19-20, 2026</a></td></tr>
-<tr><td>09-19</td><td class="w">W 42-38</td><td><a href="blueprint-black-13u.html">Blueprint 13u Black</a></td><td>-</td><td>Boys-13u American</td><td><a href="https://basketball.exposureevents.com/261729/sf-rumble-for-the-ring/teams/net-rippers-13u?divisionteamid=5556865">SF Rumble for the Ring - Schedule - Sep 19-20, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1794070500000" data-source-date="2026-11-07" data-known-time="1" data-assumed-pacific="1"><td data-cell="date">11-07</td><td data-cell="tipoff"><time datetime="2026-11-07T16:55:00Z" title="Source clock: 08:55; Timezone: America/Los_Angeles; Pacific was assumed (America/Los_Angeles); UTC instant used for timezone conversion">16:55 UTC</time></td><td class="w">W 53-30</td><td><a href="brave-elite-blueprint-13u.html">BRAVE ELITE BLUEPRINT</a></td><td>-</td><td>BOYS 13U SILVER</td><td><a href="https://bracketteam.com/event/8656/schedules/schedule?division_id=68699">NBN FALL FRENZY 2</a></td></tr>
+<tr data-utc-ms="1794067200000" data-source-date="2026-11-07" data-known-time="1" data-assumed-pacific="1"><td data-cell="date">11-07</td><td data-cell="tipoff"><time datetime="2026-11-07T16:00:00Z" title="Source clock: 08:00; Timezone: America/Los_Angeles; Pacific was assumed (America/Los_Angeles); UTC instant used for timezone conversion">16:00 UTC</time></td><td class="w">W 56-42</td><td><a href="team-unlimited-13u.html">TEAM UNLIMITED</a></td><td>#151</td><td>BOYS 13U SILVER</td><td><a href="https://bracketteam.com/event/8656/schedules/schedule?division_id=68699">NBN FALL FRENZY 2</a></td></tr>
+<tr data-utc-ms="1789848000000" data-source-date="2026-09-19" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-19</td><td data-cell="tipoff"><time datetime="2026-09-19T20:00:00Z" title="Source clock: 1:00 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">20:00 UTC</time></td><td class="w">W 42-38</td><td><a href="blueprint-black-13u.html">Blueprint 13u Black</a></td><td>-</td><td>Boys-13u American</td><td><a href="https://basketball.exposureevents.com/261729/sf-rumble-for-the-ring/teams/net-rippers-13u?divisionteamid=5556865">SF Rumble for the Ring - Schedule - Sep 19-20, 2026</a></td></tr>
+<tr data-utc-ms="1789833000000" data-source-date="2026-09-19" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-19</td><td data-cell="tipoff"><time datetime="2026-09-19T15:50:00Z" title="Source clock: 8:50 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">15:50 UTC</time></td><td class="l">L 29-48</td><td><a href="sj-mavs-13u.html">SJ Mavs 13u</a></td><td>-</td><td>Boys-13u American</td><td><a href="https://basketball.exposureevents.com/261729/sf-rumble-for-the-ring/teams/net-rippers-13u?divisionteamid=5556865">SF Rumble for the Ring - Schedule - Sep 19-20, 2026</a></td></tr></tbody></table></section>
 <section class="note"><h2>More <a href="../../clubs/net.html">Net</a> (1)</h2><ul><li><a href="../../teams/12u/net-rippers-12u.html">net rippers:12u</a> (12u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 4 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,20 +113,22 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked dc finest:5th</h2>
-<p class="sub">unranked &middot; 0-4 all-time &middot; 13.8 PPG / 36.8 OPP / -23.0 DIFF / L4 STRK / 0-4 L10 &middot; tier mix open4 &middot; window 0-4 (last 4) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 0-4 all-time &middot; 13.8 PPG / 36.8 OPP / -23.0 DIFF / L4 STRK / 0-4 L10 &middot; tier mix open4 &middot; window 0-4 (last 4) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (4 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>09-14</td><td class="l">L 8-37</td><td><a href="tfe-5th.html">TFE</a></td><td>-</td><td>5th Boys Blue</td><td><a href="https://basketball.exposureevents.com/238018/bulldawgs-whos-got-next-2025/teams/dc-finest?divisionteamid=4733037">BullDawgs Who&#x27;s Got Next 2025 - Schedule - Sep 13-14, 2025</a></td></tr>
-<tr><td>09-14</td><td class="l">L 9-32</td><td>Bay City 10u Select</td><td>-</td><td>5th Boys Blue</td><td><a href="https://basketball.exposureevents.com/238018/bulldawgs-whos-got-next-2025/teams/dc-finest?divisionteamid=4733037">BullDawgs Who&#x27;s Got Next 2025 - Schedule - Sep 13-14, 2025</a></td></tr>
-<tr><td>09-13</td><td class="l">L 25-29</td><td><a href="bulldawgs-5th.html">BullDawgs</a></td><td>#63</td><td>5th Boys Blue</td><td><a href="https://basketball.exposureevents.com/238018/bulldawgs-whos-got-next-2025/teams/dc-finest?divisionteamid=4733037">BullDawgs Who&#x27;s Got Next 2025 - Schedule - Sep 13-14, 2025</a></td></tr>
-<tr><td>09-13</td><td class="l">L 13-49</td><td><a href="maniacz-5th.html">Maniacz</a></td><td>-</td><td>5th Boys Blue</td><td><a href="https://basketball.exposureevents.com/238018/bulldawgs-whos-got-next-2025/teams/dc-finest?divisionteamid=4733037">BullDawgs Who&#x27;s Got Next 2025 - Schedule - Sep 13-14, 2025</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1757878500000" data-source-date="2025-09-14" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-14</td><td data-cell="tipoff"><time datetime="2025-09-14T19:35:00Z" title="Source clock: 12:35 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">19:35 UTC</time></td><td class="l">L 9-32</td><td>Bay City 10u Select</td><td>-</td><td>5th Boys Blue</td><td><a href="https://basketball.exposureevents.com/238018/bulldawgs-whos-got-next-2025/teams/dc-finest?divisionteamid=4733037">BullDawgs Who&#x27;s Got Next 2025 - Schedule - Sep 13-14, 2025</a></td></tr>
+<tr data-utc-ms="1757865300000" data-source-date="2025-09-14" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-14</td><td data-cell="tipoff"><time datetime="2025-09-14T15:55:00Z" title="Source clock: 8:55 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">15:55 UTC</time></td><td class="l">L 8-37</td><td><a href="tfe-5th.html">TFE</a></td><td>-</td><td>5th Boys Blue</td><td><a href="https://basketball.exposureevents.com/238018/bulldawgs-whos-got-next-2025/teams/dc-finest?divisionteamid=4733037">BullDawgs Who&#x27;s Got Next 2025 - Schedule - Sep 13-14, 2025</a></td></tr>
+<tr data-utc-ms="1757805300000" data-source-date="2025-09-13" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-13</td><td data-cell="tipoff"><time datetime="2025-09-13T23:15:00Z" title="Source clock: 4:15 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">23:15 UTC</time></td><td class="l">L 25-29</td><td><a href="bulldawgs-5th.html">BullDawgs</a></td><td>#63</td><td>5th Boys Blue</td><td><a href="https://basketball.exposureevents.com/238018/bulldawgs-whos-got-next-2025/teams/dc-finest?divisionteamid=4733037">BullDawgs Who&#x27;s Got Next 2025 - Schedule - Sep 13-14, 2025</a></td></tr>
+<tr data-utc-ms="1757798700000" data-source-date="2025-09-13" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-13</td><td data-cell="tipoff"><time datetime="2025-09-13T21:25:00Z" title="Source clock: 2:25 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">21:25 UTC</time></td><td class="l">L 13-49</td><td><a href="maniacz-5th.html">Maniacz</a></td><td>-</td><td>5th Boys Blue</td><td><a href="https://basketball.exposureevents.com/238018/bulldawgs-whos-got-next-2025/teams/dc-finest?divisionteamid=4733037">BullDawgs Who&#x27;s Got Next 2025 - Schedule - Sep 13-14, 2025</a></td></tr></tbody></table></section>
 <section class="note"><h2>More <a href="../../clubs/dc.html">Dc</a> (6)</h2><ul><li><a href="dc-finest-4-5-5th.html">dc finest 4 5:5th</a> (same age)</li><li><a href="dc-finest-11u.html">dc finest:11u</a> (same age)</li><li><a href="../../teams/12u/dc-finest-12u.html">dc finest:12u</a> (12u)</li><li><a href="../../teams/13u/dc-falcons-13u.html">dc falcons:13u</a> (13u)</li><li><a href="../../teams/15u/dc-falcons-15u.html">dc falcons:15u</a> (15u)</li><li><a href="../../teams/15u/dc-hoops-15u.html">dc hoops:15u</a> (15u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 4 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

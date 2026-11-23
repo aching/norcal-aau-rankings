@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,18 +113,20 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked blaze 14 black:14u</h2>
-<p class="sub">unranked &middot; 2-0 all-time &middot; 49.5 PPG / 29.0 OPP / +20.5 DIFF / W2 STRK / 2-0 L10 &middot; tier mix open2 &middot; window 2-0 (last 2) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 2-0 all-time &middot; 49.5 PPG / 29.0 OPP / +20.5 DIFF / W2 STRK / 2-0 L10 &middot; tier mix open2 &middot; window 2-0 (last 2) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (2 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>11-09</td><td class="w">W 34-18</td><td><a href="h-a-s-14u.html">H.A.S.</a></td><td>-</td><td>14u / 15u</td><td><a href="https://basketball.exposureevents.com/234792/bay-area-hoop-explosion/teams/blaze-14-black?divisionteamid=4819372">Bay Area Hoop Explosion - Schedule - Nov 8-9, 2025</a></td></tr>
-<tr><td>11-09</td><td class="w">W 65-40</td><td>Underdogs SF 15u Orange</td><td>-</td><td>14u / 15u</td><td><a href="https://basketball.exposureevents.com/234792/bay-area-hoop-explosion/teams/blaze-14-black?divisionteamid=4819372">Bay Area Hoop Explosion - Schedule - Nov 8-9, 2025</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1762720800000" data-source-date="2025-11-09" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">11-09</td><td data-cell="tipoff"><time datetime="2025-11-09T20:40:00Z" title="Source clock: 12:40 PM PST; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">20:40 UTC</time></td><td class="w">W 65-40</td><td>Underdogs SF 15u Orange</td><td>-</td><td>14u / 15u</td><td><a href="https://basketball.exposureevents.com/234792/bay-area-hoop-explosion/teams/blaze-14-black?divisionteamid=4819372">Bay Area Hoop Explosion - Schedule - Nov 8-9, 2025</a></td></tr>
+<tr data-utc-ms="1762714800000" data-source-date="2025-11-09" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">11-09</td><td data-cell="tipoff"><time datetime="2025-11-09T19:00:00Z" title="Source clock: 11:00 AM PST; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">19:00 UTC</time></td><td class="w">W 34-18</td><td><a href="h-a-s-14u.html">H.A.S.</a></td><td>-</td><td>14u / 15u</td><td><a href="https://basketball.exposureevents.com/234792/bay-area-hoop-explosion/teams/blaze-14-black?divisionteamid=4819372">Bay Area Hoop Explosion - Schedule - Nov 8-9, 2025</a></td></tr></tbody></table></section>
 <section class="note"><h2>More Blaze (2)</h2><ul><li><a href="../../teams/11u/blaze-11-black-11u.html">blaze 11 black:11u</a> (11u)</li><li><a href="../../teams/11u/blaze-black-11u.html">blaze black:11u</a> (11u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 2 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

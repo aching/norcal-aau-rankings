@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,21 +113,23 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked thn next generation:6th</h2>
-<p class="sub">unranked &middot; 1-4 all-time &middot; 19.4 PPG / 27.6 OPP / -8.2 DIFF / W1 STRK / 1-4 L10 &middot; tier mix open5 &middot; window 1-4 (last 5) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 1-4 all-time &middot; 19.4 PPG / 27.6 OPP / -8.2 DIFF / L2 STRK / 1-4 L10 &middot; tier mix open5 &middot; window 1-4 (last 5) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (5 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>05-31</td><td class="w">W 35-19</td><td><a href="centex-attack-lee-6th.html">CenTex Attack - Lee</a></td><td>-</td><td>6th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/thn-next-generation?divisionteamid=5326395">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
-<tr><td>05-31</td><td class="l">L 25-36</td><td><a href="dfw-jags-6th.html">DFW Jags</a></td><td>-</td><td>6th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/thn-next-generation?divisionteamid=5326395">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
-<tr><td>05-31</td><td class="l">L 14-35</td><td><a href="houston-hoops-atx-lee-6th.html">Houston Hoops ATX - Lee</a></td><td>-</td><td>6th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/thn-next-generation?divisionteamid=5326395">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
-<tr><td>05-30</td><td class="l">L 0-15</td><td><a href="dfw-jags-6th.html">DFW Jags</a></td><td>-</td><td>6th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/thn-next-generation?divisionteamid=5326395">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
-<tr><td>05-29</td><td class="l">L 23-33</td><td><a href="westlake-hoops-blue-6th.html">Westlake Hoops 6th Grade Blue</a></td><td>-</td><td>6th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/thn-next-generation?divisionteamid=5326395">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1780253400000" data-source-date="2026-05-31" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-31</td><td data-cell="tipoff"><time datetime="2026-05-31T18:50:00Z" title="Source clock: 1:50 PM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">18:50 UTC</time></td><td class="l">L 14-35</td><td><a href="houston-hoops-atx-lee-6th.html">Houston Hoops ATX - Lee</a></td><td>-</td><td>6th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/thn-next-generation?divisionteamid=5326395">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
+<tr data-utc-ms="1780238400000" data-source-date="2026-05-31" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-31</td><td data-cell="tipoff"><time datetime="2026-05-31T14:40:00Z" title="Source clock: 9:40 AM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">14:40 UTC</time></td><td class="l">L 25-36</td><td><a href="dfw-jags-6th.html">DFW Jags</a></td><td>-</td><td>6th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/thn-next-generation?divisionteamid=5326395">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
+<tr data-utc-ms="1780232400000" data-source-date="2026-05-31" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-31</td><td data-cell="tipoff"><time datetime="2026-05-31T13:00:00Z" title="Source clock: 8:00 AM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">13:00 UTC</time></td><td class="w">W 35-19</td><td><a href="centex-attack-lee-6th.html">CenTex Attack - Lee</a></td><td>-</td><td>6th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/thn-next-generation?divisionteamid=5326395">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
+<tr data-utc-ms="1780167600000" data-source-date="2026-05-30" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-30</td><td data-cell="tipoff"><time datetime="2026-05-30T19:00:00Z" title="Source clock: 2:00 PM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">19:00 UTC</time></td><td class="l">L 0-15</td><td><a href="dfw-jags-6th.html">DFW Jags</a></td><td>-</td><td>6th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/thn-next-generation?divisionteamid=5326395">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
+<tr data-utc-ms="1780106400000" data-source-date="2026-05-29" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-30</td><td data-cell="tipoff"><time datetime="2026-05-30T02:00:00Z" title="Source clock: 9:00 PM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">02:00 UTC</time></td><td class="l">L 23-33</td><td><a href="westlake-hoops-blue-6th.html">Westlake Hoops 6th Grade Blue</a></td><td>-</td><td>6th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/thn-next-generation?divisionteamid=5326395">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr></tbody></table></section>
 
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 5 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

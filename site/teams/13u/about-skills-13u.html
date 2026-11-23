@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,22 +113,24 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked about skills:13u</h2>
-<p class="sub">unranked &middot; 1-5 all-time &middot; 15.2 PPG / 32.8 OPP / -17.7 DIFF / L5 STRK / 1-5 L10 &middot; tier mix silver4/open2 &middot; window 1-5 (last 6) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 1-5 all-time &middot; 15.2 PPG / 32.8 OPP / -17.7 DIFF / L4 STRK / 1-5 L10 &middot; tier mix silver4/open2 &middot; window 1-5 (last 6) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 <details class="note aliases"><summary>Known aliases (2)</summary><ul><li>About Skills</li><li>About Skills 13U</li></ul></details>
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (6 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>10-05</td><td class="l">L 0-15</td><td><a href="lakeshow-sun-13u.html">Lakeshow 13u Sun</a></td><td>-</td><td>13U/7th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/about-skills?divisionteamid=4762337">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
-<tr><td>10-05</td><td class="l">L 0-15</td><td><a href="we-compete-nation-bears-13u.html">We Compete Nation Bears</a></td><td>-</td><td>13U/7th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/about-skills?divisionteamid=4762337">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
-<tr><td>10-04</td><td class="l">L 18-52</td><td><a href="ema-leaders-13u.html">EMA Leaders</a></td><td>-</td><td>13U/7th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/about-skills?divisionteamid=4762337">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
-<tr><td>10-04</td><td class="l">L 25-67</td><td><a href="lakeshow-sun-13u.html">Lakeshow 13u Sun</a></td><td>-</td><td>13U/7th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/about-skills?divisionteamid=4762337">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
-<tr><td>08-30</td><td class="l">L 24-30</td><td><a href="next-level-13u.html">Next Level 13U</a></td><td>-</td><td>13U Boys Division</td><td><a href="https://basketball.exposureevents.com/245183/gsg-shootout/teams/about-skills-13u?divisionteamid=4715770">GSG - Shootout - Schedule - Aug 30-31, 2025</a></td></tr>
-<tr><td>08-30</td><td class="w">W 24-18</td><td><a href="follow-through-hoops-13u.html">Follow Through Hoops 13U</a></td><td>-</td><td>13U Boys Division</td><td><a href="https://basketball.exposureevents.com/245183/gsg-shootout/teams/about-skills-13u?divisionteamid=4715770">GSG - Shootout - Schedule - Aug 30-31, 2025</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1759702800000" data-source-date="2025-10-05" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-05</td><td data-cell="tipoff"><time datetime="2025-10-05T22:20:00Z" title="Source clock: 3:20 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">22:20 UTC</time></td><td class="l">L 0-15</td><td><a href="we-compete-nation-bears-13u.html">We Compete Nation Bears</a></td><td>-</td><td>13U/7th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/about-skills?divisionteamid=4762337">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr data-utc-ms="1759692900000" data-source-date="2025-10-05" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-05</td><td data-cell="tipoff"><time datetime="2025-10-05T19:35:00Z" title="Source clock: 12:35 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">19:35 UTC</time></td><td class="l">L 0-15</td><td><a href="lakeshow-sun-13u.html">Lakeshow 13u Sun</a></td><td>-</td><td>13U/7th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/about-skills?divisionteamid=4762337">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr data-utc-ms="1759609800000" data-source-date="2025-10-04" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-04</td><td data-cell="tipoff"><time datetime="2025-10-04T20:30:00Z" title="Source clock: 1:30 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">20:30 UTC</time></td><td class="l">L 25-67</td><td><a href="lakeshow-sun-13u.html">Lakeshow 13u Sun</a></td><td>-</td><td>13U/7th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/about-skills?divisionteamid=4762337">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr data-utc-ms="1759596600000" data-source-date="2025-10-04" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-04</td><td data-cell="tipoff"><time datetime="2025-10-04T16:50:00Z" title="Source clock: 9:50 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">16:50 UTC</time></td><td class="l">L 18-52</td><td><a href="ema-leaders-13u.html">EMA Leaders</a></td><td>-</td><td>13U/7th Grade Silver</td><td><a href="https://basketball.exposureevents.com/249866/g365-bay-breeze/teams/about-skills?divisionteamid=4762337">G365 Bay Breeze - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr data-utc-ms="1756602000000" data-source-date="2025-08-30" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">08-31</td><td data-cell="tipoff"><time datetime="2025-08-31T01:00:00Z" title="Source clock: 6:00 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">01:00 UTC</time></td><td class="w">W 24-18</td><td><a href="follow-through-hoops-13u.html">Follow Through Hoops 13U</a></td><td>-</td><td>13U Boys Division</td><td><a href="https://basketball.exposureevents.com/245183/gsg-shootout/teams/about-skills-13u?divisionteamid=4715770">GSG - Shootout - Schedule - Aug 30-31, 2025</a></td></tr>
+<tr data-utc-ms="1756599000000" data-source-date="2025-08-30" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">08-31</td><td data-cell="tipoff"><time datetime="2025-08-31T00:10:00Z" title="Source clock: 5:10 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">00:10 UTC</time></td><td class="l">L 24-30</td><td><a href="next-level-13u.html">Next Level 13U</a></td><td>-</td><td>13U Boys Division</td><td><a href="https://basketball.exposureevents.com/245183/gsg-shootout/teams/about-skills-13u?divisionteamid=4715770">GSG - Shootout - Schedule - Aug 30-31, 2025</a></td></tr></tbody></table></section>
 <section class="note"><h2>More About (1)</h2><ul><li><a href="../../teams/12u/about-skills-12u.html">about skills:12u</a> (12u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 6 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

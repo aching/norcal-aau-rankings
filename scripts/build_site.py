@@ -22,8 +22,10 @@ import sqlite3
 import subprocess
 import sys
 from pathlib import Path
+from shutil import copyfile
 
 from html_utils import esc, external_link, json_for_script, safe_url
+from game_time import order_games, payload as game_time_payload
 from profile_aliases import profile_aliases, render_aliases
 from rank_teams import DEFAULT_WINDOW_DAYS
 from rank_confidence import render_confidence
@@ -100,6 +102,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -309,11 +315,13 @@ TEAM_TMPL = """<!DOCTYPE html>
 <section class="note"><h2>Titles ({ntitles})</h2><ul>{titlelist}</ul></section>
 {upcoming_section}{scheduled_section}
 <section class="note"><h2>Full record ({ngames} scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
 <tbody>{gamerows}</tbody></table></section>
 {circuit_section}{club_section}
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = {lastn} games within {window_days} days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>
 """
@@ -649,6 +657,33 @@ def load_upcoming_games():
         con.close()
 
 
+def game_time_cells(g):
+    """UTC as a no-JS fallback; game_sort.js localizes these timestamp attrs."""
+    info = game_time_payload(g) or {}
+    utc = info.get("utc") or ""
+    seconds = info.get("utc_ms") if utc else None
+    date = utc[:10] if utc else (g.get("d") or "")
+    attrs = (f'data-utc-ms="{seconds if seconds is not None else ""}" '
+             f'data-source-date="{esc(g.get("d") or date)}" '
+             f'data-known-time="{1 if utc else 0}" '
+             f'data-assumed-pacific="{1 if info.get("assumed_pacific") else 0}"')
+    date_cell = f'<td data-cell="date">{esc(date[5:])}</td>'
+    if not utc:
+        return attrs, date_cell, ('<td data-cell="tipoff">—</td>')
+    source = []
+    if info.get("source_time"):
+        source.append(f"Source clock: {info['source_time']}")
+    if info.get("source_timezone"):
+        source.append(f"Timezone: {info['source_timezone']}")
+    if info.get("assumed_pacific"):
+        source.append("Pacific was assumed (America/Los_Angeles)")
+    source.append("UTC instant used for timezone conversion")
+    title = "; ".join(source)
+    cell = (f'<td data-cell="tipoff"><time datetime="{esc(utc)}" '
+            f'title="{esc(title)}">{esc(utc[11:16])} UTC</time></td>')
+    return attrs, date_cell, cell
+
+
 def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
               circuit_log=None, scheduled_games=None, aliases=None):
     """Write site/teams/<cohort>/<slug>.html -- full detail page.
@@ -656,7 +691,8 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
     page_of: team_id -> relative page path (for opponent links).
     rank_of: team_id -> current board rank (for the score line).
     """
-    log = r.get("log", [])
+    # Display ordering only; scores/ranking tuples were already computed.
+    log = order_games(r.get("log", []))
     w = sum(1 for g in log if g.get("w"))
     bands = {}
     for g in log:
@@ -689,14 +725,15 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
                 tag = f"<td>#{rank_of[oid]}</td>"
             else:
                 tag = "<td>-</td>"
+            time_attrs, date_cell, time_cell = game_time_cells(g)
             gamerows.append(
-                f"<tr><td>{esc(g.get('d', '')[5:])}</td>"
+                f"<tr {time_attrs}>{date_cell}{time_cell}"
                 f'<td class="{cls}">{res}</td>'
                 f"<td>{opp}</td>{tag}"
                 f"<td>{esc(g.get('div', ''))}</td><td>{ev}</td></tr>")
         gamerows = "\n".join(gamerows)
     else:
-        gamerows = '<tr><td colspan="6">No scored games.</td></tr>'
+        gamerows = '<tr><td colspan="7">No scored games.</td></tr>'
     why = "".join(f"<li>{esc(x)}</li>" for x in r["why"])
     _titles = r.get("titlelist", [])
     _items = []
@@ -966,6 +1003,7 @@ def main():
     from datetime import date
     gen = date.today().isoformat()
     OUT.mkdir(parents=True, exist_ok=True)
+    copyfile(Path(__file__).with_name("game_sort.js"), OUT / "game_sort.js")
     scheduled_games = load_upcoming_games()
     alias_db = sqlite3.connect("data/aau.db")
     try:
