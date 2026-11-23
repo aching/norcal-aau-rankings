@@ -101,7 +101,11 @@ def main():
     # sharing a first token). Unranked squads still listed on kept pages.
     clubs = {c: v for c, v in clubs.items()
              if len(v) > 1 and any(t in info for t in v)}
+    # Remove generated pages for club identities that no longer qualify;
+    # otherwise team-id merges leave stale club pages and orphaned links.
     OUT.mkdir(parents=True, exist_ok=True)
+    for old_page in OUT.glob("*.html"):
+        old_page.unlink()
     tabs = "".join(
         f'<a href="../{c}.html">{t}</a>' for c, (t, _, _) in
         {"11u": ("11U", 0, 0), "12u": ("12U/6th Grade", 0, 0),

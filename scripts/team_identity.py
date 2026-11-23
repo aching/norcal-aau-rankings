@@ -205,6 +205,10 @@ OVERRIDES = [
     # HoopFest label for bare 14U NBBA. Do not infer other NBBA coach merges.
     (("nbba 8th ua (k. winter) 8th/14u", "14u"), "nbba:14u"),
     (("nbba 8th ua (k. winter) 8th/14u", "8th"), "nbba:14u"),
+    # Barnstomers (user-confirmed Nov 2026): literal source misspelling of
+    # Barnstormers. Restrict the correction to this 14U label/cohort.
+    (("barnstomers 14u", "14u"), "barnstormers:14u"),
+    (("barnstomers 14u", "8th"), "barnstormers:14u"),
     # NorCal Elite Allocco (user-confirmed Nov 2026): "NorCal Elite 14u
     # (Allocco) 8th/14U" (FB Fall Classic 9/19-20: NBBA/Fuca/Flow Elite
     # + WeCompete Black) is the same squad as "NorCal Elite 14U

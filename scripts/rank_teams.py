@@ -517,33 +517,24 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
 
 
 def h2h_reorder(ranked, wins, band):
-    """Apply close-score and compensating-win-aware H2H corrections.
+    """Apply only bounded close-score H2H corrections (user-approved Nov 2026).
 
     ranked: score-sorted rows; r[0] is score and r[5] is team_id.
     wins: {(winner_id, loser_id): number of fresh, same-level wins}.
 
-    Preserves the legacy CFP-style correction (within band and <=2 places),
-    then handles a one-sided result at ANY distance only when the loser has
-    NO ranked win above the winner's original position. A #4 team with no
-    win above #9 cannot stay above a #9 team that beat it. A strong win
-    elsewhere is a compensating credential and blocks the swap (e.g. a #4
-    team that beat #1 can stay above a #9 team it lost to).
-
-    Qualification uses the original score order and each pair flips at most
-    once, so split series are ignored and processing cannot cycle forever.
-    Level/freshness filtering belongs to the caller (same rule as before).
+    A head-to-head win may exchange nearby teams only when their scores are
+    within `band` and their positions are at most two apart. The underlying
+    result remains in the iterative opponent-strength model, but one game
+    cannot displace a substantially stronger overall resume at any distance.
+    Level/freshness filtering belongs to the caller.
     """
-    base_pos = {r[5]: i for i, r in enumerate(ranked)}
     order = list(range(len(ranked)))
     swaps = []
     beat = defaultdict(set)
-    best_win = {}
     for (winner, loser), n in wins.items():
-        if n <= 0 or winner not in base_pos or loser not in base_pos:
+        if n <= 0:
             continue
         beat[winner].add(loser)
-        best_win[winner] = min(best_win.get(winner, len(ranked)),
-                               base_pos[loser])
 
     # Legacy close tiebreak: at most two positions and within --h2h-band.
     for _ in range(2):
@@ -563,37 +554,6 @@ def h2h_reorder(ranked, wins, band):
         if not moved:
             break
 
-    # Strong H2H: one-sided net winner only. Sort by the ORIGINAL positions
-    # so output is independent of dict/set iteration and earlier swaps do
-    # not change which results qualify.
-    strong = []
-    for (a, b), nab in wins.items():
-        nba = wins.get((b, a), 0)
-        if nab > nba:
-            winner, loser, nw, nl = a, b, nab, nba
-        elif nba > nab:
-            winner, loser, nw, nl = b, a, nba, nab
-        else:
-            continue  # split series (or a duplicate mirrored row)
-        if (nw - nl <= 0 or winner not in base_pos
-                or loser not in base_pos
-                or base_pos[winner] <= base_pos[loser]):
-            continue
-        strong.append((base_pos[loser], base_pos[winner], winner, loser))
-    strong.sort()
-    seen_pairs = set()
-    for _, __, winner, loser in strong:
-        pair = tuple(sorted((winner, loser)))
-        if pair in seen_pairs:
-            continue
-        seen_pairs.add(pair)
-        if best_win.get(loser, len(ranked)) <= base_pos[winner]:
-            continue  # loser has a compensating higher-ranked win
-        pos = {ranked[order[k]][5]: k for k in range(len(order))}
-        if pos[winner] > pos[loser]:
-            order[pos[winner]], order[pos[loser]] = \
-                order[pos[loser]], order[pos[winner]]
-            swaps.append((winner, loser))
     return [ranked[i] for i in order], swaps
 
 
@@ -647,9 +607,9 @@ def main():
                          "default 1.25; 0 disables). Stacks with --title-bonus "
                          "on title-clinching wins.")
     ap.add_argument("--h2h-band", type=float, default=0.01, metavar="GAP",
-                                         help="close head-to-head tiebreak: exchange within 2 places when scores "
-                         "are within GAP; unambiguous H2H overcomes larger gaps when the loser has no compensating higher win "
-                         "(default 0.01; 0 disables).")
+                                         help="close head-to-head tiebreak: exchange by at most 2 places when scores "
+                                         "are within GAP; no unlimited-distance swaps "
+                                         "(default 0.01; 0 disables).")
     ap.add_argument("--no-title", action="store_true",
                     help="disable the tournament-title + prestige bonuses")
     ap.add_argument("--no-margin", action="store_true",
@@ -1049,7 +1009,7 @@ def main():
     # way: only losing to the top-N earns consolation; losing to #13+
     # costs full. Display (vs column), the H2H tiebreak, and titles are
     # ungated -- a direct win is still shown, flips within its +-2 band,
-    # and can flip farther if the loser has no compensating higher win.
+    # subject to the bounded close-band correction below.
     # --ranked-win-top 0 disables (single pass, old behavior).
     def run_board(credit):
         """credit: None = every ranked opp score counts (pass 1);
@@ -1100,6 +1060,10 @@ def main():
 
     final, sos_map = run_board(None)
     h2h_map = {tid: [] for tid in team_games}
+    # A safe reporting default when --no-sos skips the iterative gate:
+    # all ranked opponents may be shown as a descriptive best win.
+    # Iterative passes below replace this with the narrower credit set.
+    top = set(team_games)
     if args.ranked_win_top > 0 and not args.no_sos:
         # Multi-pass refinement (user-confirmed Nov 2026): pass-1 order
         # sets the credit set, pass 2 re-ranks under it, then the new
@@ -1107,7 +1071,6 @@ def main():
         # quality-of-wins against the revised rankings, so a team that
         # climbs on legit H2H (e.g. BMG over Cali Gold) starts conferring
         # credit itself. SOS stays ungated for display throughout.
-        top = None
         for _pass in range(max(1, args.sos_passes)):
             prelim = sorted(
                 team_games,
@@ -1288,9 +1251,8 @@ def main():
             ranked.sort(key=lambda r: (r[0], r[1], r[2], r[3]), reverse=True)
 
     # Head-to-head corrections: close scores exchange within two places.
-    # Beyond that, a one-sided in-window winner exchanges with the loser
-    # at ANY distance only when the loser has no compensating ranked win
-    # above the winner's original position (h2h_reorder).
+    # No unlimited-distance swaps (user-approved Nov 2026): a direct win
+    # still contributes to the model, but cannot replace a whole resume.
     H2H = args.h2h_band
     h2h_swaps = []
     if H2H and H2H > 0:
@@ -1316,8 +1278,7 @@ def main():
                         and o != tid and _same_level(g[5])
                         and (g[0] or "") >= _cut):
                     _wins[(tid, o)] += 1
-        # Preserve close-score flips, then allow unambiguous H2H at any
-        # distance when the loser has no compensating higher-ranked win.
+        # Preserve only the bounded, close-score head-to-head correction.
         ranked, h2h_swaps = h2h_reorder(ranked, _wins, H2H)
     else:
         h2h_swaps = []
@@ -1565,7 +1526,7 @@ def main():
           f"(runner-up final at half) + prestige x{args.prestige_mult if use_prestige else 0} "
           f"on EVERY win at Made Hoops/G365/OGP events; "
           f"{n_titled} ranked teams hold titles; "
-          f"h2h tiebreak ±{args.h2h_band if H2H else 0} + no-compensating-win overrides "
+          f"h2h close-score swaps (max 2 places, band {args.h2h_band if H2H else 0}) "
           f"({len(h2h_swaps)} flips: "
           f"{', '.join(f'{a}>={b}' for a, b in h2h_swaps[:8]) or 'none'})")
     print(f"# {len(ranked)} ranked, {len(thin)} below min-games, "
