@@ -14,7 +14,9 @@ from rank_teams import games_for_team
 from team_identity import event_provider_alias
 from upcoming_games import fastbreak_date, render_upcoming_games, upcoming_by_team
 
-BLACK = "tm:falcons-black-14u"
+# User-confirmed alias: 14U TM Falcons Black and bare TM Falcons are the
+# same cohort. The FastBreak provider/event scope assertions are unchanged.
+BLACK = "tm:falcons-14u"
 OPPONENT = "Hoop Famillia (Mayan) 8th/14U"
 OTHER = "East Bay Athletics 14u Red (Jeremy) 8th/14U"
 

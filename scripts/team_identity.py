@@ -31,7 +31,7 @@ SQUAD_ALIASES = {
 # These never make a program-wide label globally equivalent to one squad.
 EVENT_PROVIDER_ALIASES = {
     # Thanksgiving HoopFest 2026: TM Falcons Black, 14u Silver Sat Only.
-    ("11535", "280786"): "tm:falcons-black-14u",
+    ("11535", "280786"): "tm:falcons-14u",
 }
 
 
@@ -49,6 +49,10 @@ WS = re.compile(r"\s+")
 # (program keyword, age-token) -> canonical team id.
 # age-token is matched against the raw lowercased name + division string.
 OVERRIDES = [
+    # Reconciliation Nov 2026 (user-confirmed): bare TM Falcons and 14U TM
+    # Falcons Black are the same cohort. Retarget the established Black 14
+    # aliases/provider roster to the history-carrying tm:falcons-14u.
+    # Black 13U and Falcons Red remain separate squads.
     # TM program: Falcons track (user-confirmed Nov 2026: the 13U-spring
     # "TM Falcons" and the 14U-fall "TM Falcons 14U" are the same cohort
     # aged up -- merge everything into tm:falcons-14u; the bare blob id
@@ -63,22 +67,22 @@ OVERRIDES = [
     # 14u rule (Black, A-squad default), and bare "TM Falcons" hits the
     # era base. Spring-13U bare "TM Falcons" stays on tm:falcons-14u
     # (successors link the 13U history).
-    (("tm falcons black", "14u"), "tm:falcons-black-14u"),
-    (("tm falcons black", "8th"), "tm:falcons-black-14u"),
+    (("tm falcons black", "14u"), "tm:falcons-14u"),
+    (("tm falcons black", "8th"), "tm:falcons-14u"),
     (("tm falcons black", "13u"), "tm:falcons-black-13u"),
     (("tm falcons black", "7th"), "tm:falcons-black-13u"),
     (("tm falcons red", "14u"), "tm:falcons-red-14u"),
     (("tm falcons red", "8th"), "tm:falcons-red-14u"),
     (("tm falcons red", "13u"), "tm:falcons-red-13u"),
     (("tm falcons red", "7th"), "tm:falcons-red-13u"),
-    (("tm falcons 14u", "14u"), "tm:falcons-black-14u"),
-    (("tm falcons 14u", "8th"), "tm:falcons-black-14u"),
+    (("tm falcons 14u", "14u"), "tm:falcons-14u"),
+    (("tm falcons 14u", "8th"), "tm:falcons-14u"),
     # Coach-first-name spellings (user-confirmed Nov 2026, BT event 8432
     # South Bay Showdown): "TM Dashawn" = Falcons Black, "TM Tony" =
     # Falcons Red. Pinned at 14u/8th only (the confirmed level) -- a bare
     # coach name at any other age stays unresolved rather than guessed.
-    (("tm dashawn", "14u"), "tm:falcons-black-14u"),
-    (("tm dashawn", "8th"), "tm:falcons-black-14u"),
+    (("tm dashawn", "14u"), "tm:falcons-14u"),
+    (("tm dashawn", "8th"), "tm:falcons-14u"),
     (("tm tony", "14u"), "tm:falcons-red-14u"),
     (("tm tony", "8th"), "tm:falcons-red-14u"),
     # bare "TM Falcons" with NO age in name or division: era base only
@@ -92,8 +96,8 @@ OVERRIDES = [
     # NOTE: "TM Basketball" is the club name -- "TM Basketball" alone is
     # unattributable (could be Black/Red/Griffins); only resolve it when a
     # level token disambiguates, handled below at match time.
-    (("tm basketball", "14u"), "tm:falcons-black-14u"),
-    (("tm basketball", "8th"), "tm:falcons-black-14u"),
+    (("tm basketball", "14u"), "tm:falcons-14u"),
+    (("tm basketball", "8th"), "tm:falcons-14u"),
     # TM Griffins rename (user-confirmed Nov 2026): bare "TM Basketball"
     # entries (year-round, latest 10/24 Soldiers Halloween) and explicit
     # "TM Griffins 12U" entries (GSG x BAM Nov events, from 10/31) are
@@ -260,6 +264,11 @@ EXACT_TEAM_OVERRIDES = {
     (("all in elite uaa", "8th"), "all in elite:14u"),
     (("all in elite uaa 14u", "14u"), "all in elite:14u"),
     (("all in elite uaa 14u", "8th"), "all in elite:14u"),
+    # Bare Barnstormers in an eighth-grade division (user-confirmed Nov
+    # 2026): the 8th-grade Silver/Bronze lone label is the same 14U squad.
+    # Explicit younger cohorts and color-qualified squads stay separate.
+    (("barnstormers", "8th"), "barnstormers:14u"),
+    (("barnstormers", "14u"), "barnstormers:14u"),
 }
 
 # team_id -> successor team_id (grade-up / rename continuity)
