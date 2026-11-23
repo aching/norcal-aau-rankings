@@ -12,7 +12,7 @@ to winner by score (no isWinner flag); forfeits and sets stored as-is.
 Schema:
   ee_tournaments(tournament_id, slug, title, scraped_at)
   ee_divisions(tournament_id, division_id, name)
-  ee_games(tournament_id, game_id, date, time, game_type, division_id, division_name,
+  ee_games(tournament_id, game_id, date, time, time_zone, game_type, division_id, division_name,
            home_team, away_team, home_score, away_score, home_won, away_won,
            status, venue, court, day_group)
   bt_events(event_id, name, start_date, end_date)
@@ -34,7 +34,7 @@ SCHEMA = """
 CREATE TABLE ee_tournaments(tournament_id TEXT PRIMARY KEY, slug TEXT, title TEXT, scraped_at TEXT);
 CREATE TABLE ee_divisions(tournament_id TEXT, division_id INTEGER, name TEXT,
   PRIMARY KEY(tournament_id, division_id));
-CREATE TABLE ee_games(tournament_id TEXT, game_id INTEGER, date TEXT, time TEXT,
+CREATE TABLE ee_games(tournament_id TEXT, game_id INTEGER, date TEXT, time TEXT, time_zone TEXT,
   game_type TEXT, division_id INTEGER, division_name TEXT,
   home_team TEXT, away_team TEXT, home_score TEXT, away_score TEXT,
   home_won INTEGER, away_won INTEGER, status TEXT, venue TEXT, court TEXT, day_group TEXT,
@@ -98,9 +98,9 @@ def load_ee(cur, path):
         if g.get("HideScores"):
             skipped += 1
             continue
-        cur.execute("""INSERT OR REPLACE INTO ee_games VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", (
+        cur.execute("""INSERT OR REPLACE INTO ee_games VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", (
             tid, g.get("Id"), g.get("DateFormatted"), g.get("TimeFormatted"),
-            g.get("GameTypeName"), g.get("DivisionId"),
+            g.get("TimeZone"), g.get("GameTypeName"), g.get("DivisionId"),
             g.get("_division_name") or g.get("DivisionName"),
             g.get("HomeTeamName"), g.get("AwayTeamName"),
             g.get("HomeTeamScoreDisplay"), g.get("AwayTeamScoreDisplay"),

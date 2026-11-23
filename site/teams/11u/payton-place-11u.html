@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,20 +113,22 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>#50 payton place:11u</h2>
-<p class="sub">0.021 &middot; 3-1 all-time &middot; 36.8 PPG / 32.2 OPP / +4.5 DIFF / W3 STRK / 3-1 L10 &middot; tier mix silver &middot; window 3-1 (last 4) &middot; SOS 0.049 &middot; 2026-11-22</p>
+<p class="sub">0.021 &middot; 3-1 all-time &middot; 36.8 PPG / 32.2 OPP / +4.5 DIFF / W2 STRK / 3-1 L10 &middot; tier mix silver &middot; window 3-1 (last 4) &middot; SOS 0.049 &middot; 2026-11-23</p>
 </div>
 
 <section class="note"><h2>Why #50</h2><p class="confidence confidence-low"><strong>Confidence: Low</strong> <span>4 active games · 3/4 opponents covered (75%) · latest 11/22/2026</span><span class="confidence-note">Evidence grade only; not a probability of exact placement. High requires ≥12 games, ≥80% coverage, and a game within 30 days.</span></p><ul><li>Form 3-1 in-band (silver, 3-1 overall); 33% sample kept (4g)</li><li>Best win #36 All in Elite 11u 35-23 (11/22, silver)</li><li>Hardest test lost to #36 All in Elite 11u 32-33 (11/21)</li><li>Schedule silver-leaning (silver4), sos 0.049, 1 ghost</li><li>Margin biggest +12 / closest -1 (window +4.5)</li><li>fresh 11/22</li></ul></section>
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (4 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>11-22</td><td class="w">W 35-23</td><td><a href="all-in-elite-11u.html">All in Elite 11u</a></td><td>#36</td><td>Boys-11u American</td><td><a href="https://basketball.exposureevents.com/261733/norcal-rumble-for-the-ring/teams/payton-place-11u?divisionteamid=5679592">NorCal Rumble for the Ring - Schedule - Nov 21-22, 2026</a></td></tr>
-<tr><td>11-22</td><td class="w">W 32-27</td><td><a href="bay-area-stars-11u.html">Bay Area Stars 11u</a></td><td>#45</td><td>Boys-11u American</td><td><a href="https://basketball.exposureevents.com/261733/norcal-rumble-for-the-ring/teams/payton-place-11u?divisionteamid=5679592">NorCal Rumble for the Ring - Schedule - Nov 21-22, 2026</a></td></tr>
-<tr><td>11-21</td><td class="w">W 48-46</td><td><a href="ballin-since-birth-11u.html">Ballin since birth 11u</a></td><td>-</td><td>Boys-11u American</td><td><a href="https://basketball.exposureevents.com/261733/norcal-rumble-for-the-ring/teams/payton-place-11u?divisionteamid=5679592">NorCal Rumble for the Ring - Schedule - Nov 21-22, 2026</a></td></tr>
-<tr><td>11-21</td><td class="l">L 32-33</td><td><a href="all-in-elite-11u.html">All in Elite 11u</a></td><td>#36</td><td>Boys-11u American</td><td><a href="https://basketball.exposureevents.com/261733/norcal-rumble-for-the-ring/teams/payton-place-11u?divisionteamid=5679592">NorCal Rumble for the Ring - Schedule - Nov 21-22, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1795376400000" data-source-date="2026-11-22" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">11-22</td><td data-cell="tipoff"><time datetime="2026-11-22T19:40:00Z" title="Source clock: 11:40 AM PST; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">19:40 UTC</time></td><td class="w">W 32-27</td><td><a href="bay-area-stars-11u.html">Bay Area Stars 11u</a></td><td>#45</td><td>Boys-11u American</td><td><a href="https://basketball.exposureevents.com/261733/norcal-rumble-for-the-ring/teams/payton-place-11u?divisionteamid=5679592">NorCal Rumble for the Ring - Schedule - Nov 21-22, 2026</a></td></tr>
+<tr data-utc-ms="1795366500000" data-source-date="2026-11-22" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">11-22</td><td data-cell="tipoff"><time datetime="2026-11-22T16:55:00Z" title="Source clock: 8:55 AM PST; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">16:55 UTC</time></td><td class="w">W 35-23</td><td><a href="all-in-elite-11u.html">All in Elite 11u</a></td><td>#36</td><td>Boys-11u American</td><td><a href="https://basketball.exposureevents.com/261733/norcal-rumble-for-the-ring/teams/payton-place-11u?divisionteamid=5679592">NorCal Rumble for the Ring - Schedule - Nov 21-22, 2026</a></td></tr>
+<tr data-utc-ms="1795306500000" data-source-date="2026-11-21" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">11-22</td><td data-cell="tipoff"><time datetime="2026-11-22T00:15:00Z" title="Source clock: 4:15 PM PST; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">00:15 UTC</time></td><td class="l">L 32-33</td><td><a href="all-in-elite-11u.html">All in Elite 11u</a></td><td>#36</td><td>Boys-11u American</td><td><a href="https://basketball.exposureevents.com/261733/norcal-rumble-for-the-ring/teams/payton-place-11u?divisionteamid=5679592">NorCal Rumble for the Ring - Schedule - Nov 21-22, 2026</a></td></tr>
+<tr data-utc-ms="1795299900000" data-source-date="2026-11-21" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">11-21</td><td data-cell="tipoff"><time datetime="2026-11-21T22:25:00Z" title="Source clock: 2:25 PM PST; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">22:25 UTC</time></td><td class="w">W 48-46</td><td><a href="ballin-since-birth-11u.html">Ballin since birth 11u</a></td><td>-</td><td>Boys-11u American</td><td><a href="https://basketball.exposureevents.com/261733/norcal-rumble-for-the-ring/teams/payton-place-11u?divisionteamid=5679592">NorCal Rumble for the Ring - Schedule - Nov 21-22, 2026</a></td></tr></tbody></table></section>
 <section class="note"><h2>More <a href="../../clubs/payton.html">Payton</a> (2)</h2><ul><li><a href="../../teams/12u/payton-place-12u.html">payton place:12u</a> (12u)</li><li><a href="../../teams/14u/payton-place-14u.html">payton place:14u</a> (14u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 4 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

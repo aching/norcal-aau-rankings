@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,20 +113,22 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked mavs 14s:14u</h2>
-<p class="sub">unranked &middot; 0-4 all-time &middot; 35.8 PPG / 49.5 OPP / -13.8 DIFF / L4 STRK / 0-4 L10 &middot; tier mix silver4 &middot; window 0-4 (last 4) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 0-4 all-time &middot; 35.8 PPG / 49.5 OPP / -13.8 DIFF / L4 STRK / 0-4 L10 &middot; tier mix silver4 &middot; window 0-4 (last 4) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (4 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>09-06</td><td class="l">L 35-47</td><td><a href="we-whp-14u.html">WE/WHP</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/275606/free-team-registration-ftlotg-labor-day-classic-norcal/teams/mavs-14s?divisionteamid=5534910">(Free Team Registration) FTLOTG Labor Day Classic (NorCal) - Schedule - Sep 5-7, 2026</a></td></tr>
-<tr><td>09-06</td><td class="l">L 34-54</td><td><a href="underrated-14-d2-14u.html">Underrated 14 D2</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/275606/free-team-registration-ftlotg-labor-day-classic-norcal/teams/mavs-14s?divisionteamid=5534910">(Free Team Registration) FTLOTG Labor Day Classic (NorCal) - Schedule - Sep 5-7, 2026</a></td></tr>
-<tr><td>09-05</td><td class="l">L 38-41</td><td><a href="underrated-14-d2-14u.html">Underrated 14 D2</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/275606/free-team-registration-ftlotg-labor-day-classic-norcal/teams/mavs-14s?divisionteamid=5534910">(Free Team Registration) FTLOTG Labor Day Classic (NorCal) - Schedule - Sep 5-7, 2026</a></td></tr>
-<tr><td>09-05</td><td class="l">L 36-56</td><td><a href="sfba-2031-14u.html">SFBA 2031</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/275606/free-team-registration-ftlotg-labor-day-classic-norcal/teams/mavs-14s?divisionteamid=5534910">(Free Team Registration) FTLOTG Labor Day Classic (NorCal) - Schedule - Sep 5-7, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1788716700000" data-source-date="2026-09-06" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-06</td><td data-cell="tipoff"><time datetime="2026-09-06T17:45:00Z" title="Source clock: 10:45 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">17:45 UTC</time></td><td class="l">L 34-54</td><td><a href="underrated-14-d2-14u.html">Underrated 14 D2</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/275606/free-team-registration-ftlotg-labor-day-classic-norcal/teams/mavs-14s?divisionteamid=5534910">(Free Team Registration) FTLOTG Labor Day Classic (NorCal) - Schedule - Sep 5-7, 2026</a></td></tr>
+<tr data-utc-ms="1788710100000" data-source-date="2026-09-06" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-06</td><td data-cell="tipoff"><time datetime="2026-09-06T15:55:00Z" title="Source clock: 8:55 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">15:55 UTC</time></td><td class="l">L 35-47</td><td><a href="we-whp-14u.html">WE/WHP</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/275606/free-team-registration-ftlotg-labor-day-classic-norcal/teams/mavs-14s?divisionteamid=5534910">(Free Team Registration) FTLOTG Labor Day Classic (NorCal) - Schedule - Sep 5-7, 2026</a></td></tr>
+<tr data-utc-ms="1788643500000" data-source-date="2026-09-05" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-05</td><td data-cell="tipoff"><time datetime="2026-09-05T21:25:00Z" title="Source clock: 2:25 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">21:25 UTC</time></td><td class="l">L 36-56</td><td><a href="sfba-2031-14u.html">SFBA 2031</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/275606/free-team-registration-ftlotg-labor-day-classic-norcal/teams/mavs-14s?divisionteamid=5534910">(Free Team Registration) FTLOTG Labor Day Classic (NorCal) - Schedule - Sep 5-7, 2026</a></td></tr>
+<tr data-utc-ms="1788636900000" data-source-date="2026-09-05" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-05</td><td data-cell="tipoff"><time datetime="2026-09-05T19:35:00Z" title="Source clock: 12:35 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">19:35 UTC</time></td><td class="l">L 38-41</td><td><a href="underrated-14-d2-14u.html">Underrated 14 D2</a></td><td>-</td><td>14U/8th Grade Silver</td><td><a href="https://basketball.exposureevents.com/275606/free-team-registration-ftlotg-labor-day-classic-norcal/teams/mavs-14s?divisionteamid=5534910">(Free Team Registration) FTLOTG Labor Day Classic (NorCal) - Schedule - Sep 5-7, 2026</a></td></tr></tbody></table></section>
 <section class="note"><h2>More Mavs (11)</h2><ul><li><a href="mavs-14g-14u.html">mavs 14g:14u</a> (same age)</li><li><a href="mavs-15-16-14u.html">mavs 15 16:14u</a> (same age)</li><li><a href="mavs-elite-14u.html">mavs elite:14u</a> (same age)</li><li><a href="mavs-national-14u.html">mavs national:14u</a> (same age)</li><li><a href="mavs-premier-14u.html">mavs premier:14u</a> (same age)</li><li><a href="../../teams/11u/mavs-11u.html">mavs:11u</a> (11u)</li><li><a href="../../teams/12u/mavs-12u.html">mavs:12u</a> (12u)</li><li><a href="../../teams/13u/mavs-7th-7th.html">mavs 7th:7th</a> (13u)</li><li><a href="../../teams/13u/mavs-national-13u.html">mavs national:13u</a> (13u)</li><li><a href="../../teams/13u/mavs-13u.html">mavs:13u</a> (13u)</li><li><a href="../../teams/15u/mavs-elite-15u.html">mavs elite:15u</a> (15u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 4 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

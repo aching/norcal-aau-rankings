@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,18 +113,20 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked 4th qtr bta:14u</h2>
-<p class="sub">unranked &middot; 1-1 all-time &middot; 39.0 PPG / 36.0 OPP / +3.0 DIFF / L1 STRK / 1-1 L10 &middot; tier mix open2 &middot; window 1-1 (last 2) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 1-1 all-time &middot; 39.0 PPG / 36.0 OPP / +3.0 DIFF / W1 STRK / 1-1 L10 &middot; tier mix open2 &middot; window 1-1 (last 2) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (2 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>11-14</td><td class="l">L 40-48</td><td><a href="royal-kings-14u.html">Royal Kings</a></td><td>#197</td><td>14u Boys</td><td><a href="https://bracketteam.com/event/8680/schedules/schedule?division_id=68861">HoopsGiving</a></td></tr>
-<tr><td>11-14</td><td class="w">W 38-24</td><td><a href="royal-kings-14u.html">Royal Kings</a></td><td>#197</td><td>14u Boys</td><td><a href="https://bracketteam.com/event/8680/schedules/schedule?division_id=68861">HoopsGiving</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1794696000000" data-source-date="2026-11-14" data-known-time="1" data-assumed-pacific="1"><td data-cell="date">11-14</td><td data-cell="tipoff"><time datetime="2026-11-14T22:40:00Z" title="Source clock: 14:40; Timezone: America/Los_Angeles; Pacific was assumed (America/Los_Angeles); UTC instant used for timezone conversion">22:40 UTC</time></td><td class="w">W 38-24</td><td><a href="royal-kings-14u.html">Royal Kings</a></td><td>#197</td><td>14u Boys</td><td><a href="https://bracketteam.com/event/8680/schedules/schedule?division_id=68861">HoopsGiving</a></td></tr>
+<tr data-utc-ms="1794693000000" data-source-date="2026-11-14" data-known-time="1" data-assumed-pacific="1"><td data-cell="date">11-14</td><td data-cell="tipoff"><time datetime="2026-11-14T21:50:00Z" title="Source clock: 13:50; Timezone: America/Los_Angeles; Pacific was assumed (America/Los_Angeles); UTC instant used for timezone conversion">21:50 UTC</time></td><td class="l">L 40-48</td><td><a href="royal-kings-14u.html">Royal Kings</a></td><td>#197</td><td>14u Boys</td><td><a href="https://bracketteam.com/event/8680/schedules/schedule?division_id=68861">HoopsGiving</a></td></tr></tbody></table></section>
 <section class="note"><h2>More 4Th (8)</h2><ul><li><a href="4th-in-b-8th.html">4th in b:8th</a> (same age)</li><li><a href="../../teams/12u/4th-in-b-12u.html">4th in b:12u</a> (12u)</li><li><a href="../../teams/12u/4th-quarter-boys-12u.html">4th quarter boys:12u</a> (12u)</li><li><a href="../../teams/13u/4th-qtr-bta-13u.html">4th qtr bta:13u</a> (13u)</li><li><a href="../../teams/15u/4th-in-m-15u.html">4th in m:15u</a> (15u)</li><li><a href="../../teams/15u/4th-in-n-15u.html">4th in n:15u</a> (15u)</li><li><a href="../../teams/15u/4th-quarter-boyz-15u.html">4th quarter boyz:15u</a> (15u)</li><li><a href="../../teams/15u/4th-15u.html">4th:15u</a> (15u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 2 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

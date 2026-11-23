@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,19 +113,21 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked texas trailblazers &#x27;31:7th</h2>
-<p class="sub">unranked &middot; 0-3 all-time &middot; 28.7 PPG / 58.7 OPP / -30.0 DIFF / L3 STRK / 0-3 L10 &middot; tier mix open3 &middot; window 0-3 (last 3) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 0-3 all-time &middot; 28.7 PPG / 58.7 OPP / -30.0 DIFF / L3 STRK / 0-3 L10 &middot; tier mix open3 &middot; window 0-3 (last 3) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (3 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>05-31</td><td class="l">L 44-59</td><td><a href="sweat-hoops-31-7th.html">Sweat Hoops 31&#x27;</a></td><td>-</td><td>7th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/texas-trailblazers-31?divisionteamid=5281215">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
-<tr><td>05-30</td><td class="l">L 15-69</td><td><a href="central-park-7th.html">Central Park</a></td><td>-</td><td>7th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/texas-trailblazers-31?divisionteamid=5281215">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
-<tr><td>05-29</td><td class="l">L 27-48</td><td><a href="lonestar-legends-gold-7th.html">Lonestar Legends - Gold</a></td><td>-</td><td>7th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/texas-trailblazers-31?divisionteamid=5281215">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1780232400000" data-source-date="2026-05-31" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-31</td><td data-cell="tipoff"><time datetime="2026-05-31T13:00:00Z" title="Source clock: 8:00 AM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">13:00 UTC</time></td><td class="l">L 44-59</td><td><a href="sweat-hoops-31-7th.html">Sweat Hoops 31&#x27;</a></td><td>-</td><td>7th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/texas-trailblazers-31?divisionteamid=5281215">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
+<tr data-utc-ms="1780146000000" data-source-date="2026-05-30" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-30</td><td data-cell="tipoff"><time datetime="2026-05-30T13:00:00Z" title="Source clock: 8:00 AM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">13:00 UTC</time></td><td class="l">L 15-69</td><td><a href="central-park-7th.html">Central Park</a></td><td>-</td><td>7th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/texas-trailblazers-31?divisionteamid=5281215">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr>
+<tr data-utc-ms="1780099200000" data-source-date="2026-05-29" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-30</td><td data-cell="tipoff"><time datetime="2026-05-30T00:00:00Z" title="Source clock: 7:00 PM CDT; Timezone: Central Standard Time; UTC instant used for timezone conversion">00:00 UTC</time></td><td class="l">L 27-48</td><td><a href="lonestar-legends-gold-7th.html">Lonestar Legends - Gold</a></td><td>-</td><td>7th Grade Boys</td><td><a href="https://basketball.exposureevents.com/249943/super-regional-national-qualifier-9th-annual/teams/texas-trailblazers-31?divisionteamid=5281215">Super Regional | National Qualifier | 9th Annual - Schedule - May 30-31, 2026</a></td></tr></tbody></table></section>
 <section class="note"><h2>More Texas (10)</h2><ul><li><a href="texas-fighting-irish-7th.html">texas fighting irish:7th</a> (same age)</li><li><a href="texas-trailblazers-camo-7th.html">texas trailblazers camo:7th</a> (same age)</li><li><a href="../../teams/11u/texas-trailblazers-33-5th.html">texas trailblazers &#x27;33:5th</a> (11u)</li><li><a href="../../teams/12u/texas-trailblazers-32-6th.html">texas trailblazers &#x27;32:6th</a> (12u)</li><li><a href="../../teams/12u/texas-6th.html">texas:6th</a> (12u)</li><li><a href="../../teams/14u/texas-assassin-generals-8th.html">texas assassin generals:8th</a> (14u)</li><li><a href="../../teams/14u/texas-fighting-irish-8th.html">texas fighting irish:8th</a> (14u)</li><li><a href="../../teams/14u/texas-trailblazers-30-8th.html">texas trailblazers &#x27;30:8th</a> (14u)</li><li><a href="../../teams/14u/texas-u-14u.html">texas u:14u</a> (14u)</li><li><a href="../../teams/15u/texas-u-15u.html">texas u:15u</a> (15u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 3 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

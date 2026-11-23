@@ -49,6 +49,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from upcoming_games import fastbreak_date
 from rank_confidence import rate_confidence
+from game_time import order_games, payload as game_time_payload
 from team_identity import GIRLS
 
 HERE = Path(__file__).resolve().parent
@@ -426,15 +427,16 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
                     """SELECT date, home_team, away_team, home_score, away_score,
                               home_won, away_won, status, tournament_id, division_name,
                               game_type, home_slug, away_slug,
-                              home_dt_id, away_dt_id, division_id, game_id
+                              home_dt_id, away_dt_id,                               division_id, game_id, time, time_zone
                        FROM ee_games
+
                        WHERE status = 'Final'
                          AND ((home_team = ? AND division_name = ?)
                            OR (away_team = ? AND division_name = ?))""",
                     (raw, div, raw, div)).fetchall()
                 for (d, ht, at, hs, aws, hw, aw, st,
                         tid, divname, gtype, hslug, aslug,
-                        hdt, adt, divid, gid) in rows:
+                        hdt, adt, divid, gid, tipoff, source_zone) in rows:
                     if hw == 1 and aw == 1:
                         continue  # corrupt flags; skip
                     is_home = (ht == raw)
@@ -451,7 +453,8 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
                         iso = "0000-00-00"
                     _xtra = {"source": "ee", "slug": hslug if is_home else aslug,
                              "dt": hdt if is_home else adt,
-                             "divid": divid, "gid": gid}
+                             "divid": divid, "gid": gid,
+                             "tipoff": tipoff, "time_zone": source_zone}
                     # ID INVARIANT: g[4] is always str (EE tournament_id may
                     # be int or str on disk depending on scraper vintage;
                     # normalize here so every downstream comparison --
@@ -464,20 +467,21 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
                 rows = cur.execute(
                     """SELECT date, home_team, away_team, home_score, away_score,
                               winner, has_result, event_id, division_name,
-                              division_id, match_id
+                              division_id, match_id, start_hour
                        FROM bt_games
                        WHERE has_result = 1 AND winner IN ('H','A')
                          AND ((home_team = ? AND division_name = ?)
                            OR (away_team = ? AND division_name = ?))""",
                     (raw, div, raw, div)).fetchall()
                 for (d, ht, at, hs, aws, w, hr, eid, divname,
-                        divid, mid) in rows:
+                        divid, mid, tipoff) in rows:
                     is_home = (ht == raw)
                     won = (w == "H") if is_home else (w == "A")
                     pf = hs if is_home else aws
                     pa = aws if is_home else hs
                     iso = (d or "")[:10]
-                    _xtra = {"source": "bt", "divid": divid, "mid": mid}
+                    _xtra = {"source": "bt", "divid": divid, "mid": mid,
+                             "tipoff": tipoff}
                     out.append((iso, won, weight, band, str(eid), divname,
                                 ht if is_home else at,
                                 at if is_home else ht, pf, pa, None,
@@ -488,7 +492,7 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
                 rows = cur.execute(
                     """SELECT g.date, g.home_team, g.away_team, g.home_score,
                               g.away_score, g.home_won, g.away_won, g.status,
-                              g.event_id, g.division_name, g.pool, e.start_date
+                              g.event_id, g.division_name, g.pool, e.start_date, g.time
                        FROM fb_games g LEFT JOIN fb_events e
                          ON e.event_id = g.event_id
                        WHERE g.status = 'FINAL'
@@ -496,7 +500,7 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
                            OR (g.away_team = ? AND g.division_name = ?))""",
                     (raw, div, raw, div)).fetchall()
                 for (d, ht, at, hs, aws, hw, aw, st,
-                        eid, divname, pool, sdate) in rows:
+                        eid, divname, pool, sdate, tipoff) in rows:
                     # Do not turn missing scores, draws, or unclear winner
                     # flags into an automatic loss.
                     if hs is None or aws is None or bool(hw) == bool(aw):
@@ -516,7 +520,7 @@ def games_for_team(cur, team_id, region_cities, gender_filter):
                     out.append((iso, won, weight, band, f"fb{eid}",
                                 divname, ht if is_home else at,
                                 at if is_home else ht, pf, pa, gtype,
-                                {}))
+                                {"tipoff": tipoff}))
     # region filter on tournament city
     if region_cities is not None:
         out = [g for g in out if region_cities.get(g[4])]
@@ -1622,6 +1626,9 @@ def main():
             # scoring engine used the verified circuit's national tier.
             if not args.no_circuit_tier:
                 full = apply_circuit_tier(full, CIRCUIT_EVENTS)
+            # Presentation only: scores/ranks above used the established game
+            # ordering. Convert and sort full-record instants for the UI.
+            full = order_games(full)
             log = []
             for g in full:
                 try:
@@ -1635,7 +1642,8 @@ def main():
                             "score": score, "self": g[6], "opp": g[7],
                             "opp_id": _oppid,
                             "div": g[5], "band": g[3].split(":")[0],
-                            "event": _ename, "event_url": _eurl})
+                            "event": _ename, "event_url": _eurl,
+                            "tipoff": game_time_payload(g)})
             confidence = (rate_confidence(team_games[tid], opp_ids[tid],
                                            team_games, today)
                           if tid in _ranked_ids else None)

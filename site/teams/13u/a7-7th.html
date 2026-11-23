@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,23 +113,25 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked a7:7th</h2>
-<p class="sub">unranked &middot; 0-7 all-time &middot; 54.0 PPG / 56.6 OPP / -2.6 DIFF / L7 STRK / 0-7 L10 &middot; tier mix open7 &middot; window 0-7 (last 7) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 0-7 all-time &middot; 54.0 PPG / 56.6 OPP / -2.6 DIFF / L7 STRK / 0-7 L10 &middot; tier mix open7 &middot; window 0-7 (last 7) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (7 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>12-28</td><td class="l">L 61-79</td><td><a href="oakland-soldiers-navy-2031-7th.html">Oakland Soldiers Navy 2031</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
-<tr><td>12-27</td><td class="l">L 60-44</td><td><a href="a2-7th.html">(A2)</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
-<tr><td>12-27</td><td class="l">L 69-66</td><td><a href="nlb-2031-7th.html">NLB 2031</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
-<tr><td>12-07</td><td class="l">L 43-63</td><td><a href="silicon-valley-soldiers-2031-7th.html">Silicon Valley Soldiers 2031</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
-<tr><td>12-07</td><td class="l">L 47-70</td><td><a href="az-phenoms-2031-7th.html">AZ Phenoms 2031</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
-<tr><td>12-06</td><td class="l">L 50-54</td><td><a href="san-diego-soldiers-2031-7th.html">San Diego Soldiers 2031</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
-<tr><td>12-06</td><td class="l">L 48-20</td><td><a href="vegas-elite-7-gold-7th.html">Vegas Elite 7 Gold</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1766937600000" data-source-date="2025-12-28" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">12-28</td><td data-cell="tipoff"><time datetime="2025-12-28T16:00:00Z" title="Source clock: 8:00 AM PST; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">16:00 UTC</time></td><td class="l">L 61-79</td><td><a href="oakland-soldiers-navy-2031-7th.html">Oakland Soldiers Navy 2031</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
+<tr data-utc-ms="1766859600000" data-source-date="2025-12-27" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">12-27</td><td data-cell="tipoff"><time datetime="2025-12-27T18:20:00Z" title="Source clock: 10:20 AM PST; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">18:20 UTC</time></td><td class="l">L 60-44</td><td><a href="a2-7th.html">(A2)</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
+<tr data-utc-ms="1766851200000" data-source-date="2025-12-27" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">12-27</td><td data-cell="tipoff"><time datetime="2025-12-27T16:00:00Z" title="Source clock: 8:00 AM PST; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">16:00 UTC</time></td><td class="l">L 69-66</td><td><a href="nlb-2031-7th.html">NLB 2031</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
+<tr data-utc-ms="1765131600000" data-source-date="2025-12-07" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">12-07</td><td data-cell="tipoff"><time datetime="2025-12-07T18:20:00Z" title="Source clock: 11:20 AM MST; Timezone: Mountain Standard Time; UTC instant used for timezone conversion">18:20 UTC</time></td><td class="l">L 47-70</td><td><a href="az-phenoms-2031-7th.html">AZ Phenoms 2031</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
+<tr data-utc-ms="1765123500000" data-source-date="2025-12-07" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">12-07</td><td data-cell="tipoff"><time datetime="2025-12-07T16:05:00Z" title="Source clock: 9:05 AM MST; Timezone: Mountain Standard Time; UTC instant used for timezone conversion">16:05 UTC</time></td><td class="l">L 43-63</td><td><a href="silicon-valley-soldiers-2031-7th.html">Silicon Valley Soldiers 2031</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
+<tr data-utc-ms="1765069200000" data-source-date="2025-12-06" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">12-07</td><td data-cell="tipoff"><time datetime="2025-12-07T01:00:00Z" title="Source clock: 6:00 PM MST; Timezone: Mountain Standard Time; UTC instant used for timezone conversion">01:00 UTC</time></td><td class="l">L 48-20</td><td><a href="vegas-elite-7-gold-7th.html">Vegas Elite 7 Gold</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr>
+<tr data-utc-ms="1765045500000" data-source-date="2025-12-06" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">12-06</td><td data-cell="tipoff"><time datetime="2025-12-06T18:25:00Z" title="Source clock: 11:25 AM MST; Timezone: Mountain Standard Time; UTC instant used for timezone conversion">18:25 UTC</time></td><td class="l">L 50-54</td><td><a href="san-diego-soldiers-2031-7th.html">San Diego Soldiers 2031</a></td><td>-</td><td>7th Purple</td><td><a href="https://basketball.exposureevents.com/256656/2025-west-winter-circuit/schedule">2025 West Winter Circuit - Schedule - Dec 6 - Mar 1, 2026</a></td></tr></tbody></table></section>
 
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 7 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

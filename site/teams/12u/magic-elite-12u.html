@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,19 +113,21 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked magic elite:12u</h2>
-<p class="sub">unranked &middot; 0-3 all-time &middot; 31.0 PPG / 43.7 OPP / -12.7 DIFF / L3 STRK / 0-3 L10 &middot; tier mix national3 &middot; window 0-3 (last 3) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 0-3 all-time &middot; 31.0 PPG / 43.7 OPP / -12.7 DIFF / L3 STRK / 0-3 L10 &middot; tier mix national3 &middot; window 0-3 (last 3) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (3 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>10-05</td><td class="l">L 25-42</td><td><a href="gamebreakers-academy-12u.html">GameBreakers Academy</a></td><td>-</td><td>12U/6th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250214/jr-3ssb-west-tip-off/teams/magic-elite?divisionteamid=4760103">Jr. 3SSB West Tip-Off - Schedule - Oct 4-5, 2025</a></td></tr>
-<tr><td>10-04</td><td class="l">L 35-46</td><td><a href="lsba-select-12u.html">LSBA Select</a></td><td>-</td><td>12U/6th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250214/jr-3ssb-west-tip-off/teams/magic-elite?divisionteamid=4760103">Jr. 3SSB West Tip-Off - Schedule - Oct 4-5, 2025</a></td></tr>
-<tr><td>10-04</td><td class="l">L 33-43</td><td><a href="thunder-coach-enrique-12u.html">12u Thunder Coach Enrique</a></td><td>-</td><td>12U/6th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250214/jr-3ssb-west-tip-off/teams/magic-elite?divisionteamid=4760103">Jr. 3SSB West Tip-Off - Schedule - Oct 4-5, 2025</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1759701600000" data-source-date="2025-10-05" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-05</td><td data-cell="tipoff"><time datetime="2025-10-05T22:00:00Z" title="Source clock: 3:00 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">22:00 UTC</time></td><td class="l">L 25-42</td><td><a href="gamebreakers-academy-12u.html">GameBreakers Academy</a></td><td>-</td><td>12U/6th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250214/jr-3ssb-west-tip-off/teams/magic-elite?divisionteamid=4760103">Jr. 3SSB West Tip-Off - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr data-utc-ms="1759633800000" data-source-date="2025-10-04" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-05</td><td data-cell="tipoff"><time datetime="2025-10-05T03:10:00Z" title="Source clock: 8:10 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">03:10 UTC</time></td><td class="l">L 35-46</td><td><a href="lsba-select-12u.html">LSBA Select</a></td><td>-</td><td>12U/6th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250214/jr-3ssb-west-tip-off/teams/magic-elite?divisionteamid=4760103">Jr. 3SSB West Tip-Off - Schedule - Oct 4-5, 2025</a></td></tr>
+<tr data-utc-ms="1759627200000" data-source-date="2025-10-04" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-05</td><td data-cell="tipoff"><time datetime="2025-10-05T01:20:00Z" title="Source clock: 6:20 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">01:20 UTC</time></td><td class="l">L 33-43</td><td><a href="thunder-coach-enrique-12u.html">12u Thunder Coach Enrique</a></td><td>-</td><td>12U/6th Grade Silver</td><td><a href="https://basketball.exposureevents.com/250214/jr-3ssb-west-tip-off/teams/magic-elite?divisionteamid=4760103">Jr. 3SSB West Tip-Off - Schedule - Oct 4-5, 2025</a></td></tr></tbody></table></section>
 <section class="note"><h2>More Magic (13)</h2><ul><li><a href="magic-boyz-ca-12u.html">magic boyz ca:12u</a> (same age)</li><li><a href="magic-elite-ca-12u.html">magic elite ca:12u</a> (same age)</li><li><a href="../../teams/11u/magic-elite-11u.html">magic elite:11u</a> (11u)</li><li><a href="../../teams/13u/magic-boyz-ca-13u.html">magic boyz ca:13u</a> (13u)</li><li><a href="../../teams/14u/magic-boyz-black-ca-14u.html">magic boyz black ca:14u</a> (14u)</li><li><a href="../../teams/14u/magic-boyz-ca-14u.html">magic boyz ca:14u</a> (14u)</li><li><a href="../../teams/14u/magic-boyz-select-ca-14u.html">magic boyz select ca:14u</a> (14u)</li><li><a href="../../teams/14u/magic-boyz-select-14u.html">magic boyz select:14u</a> (14u)</li><li><a href="../../teams/14u/magic-boyz-white-ca-14u.html">magic boyz white ca:14u</a> (14u)</li><li><a href="../../teams/14u/magic-boyz-yellow-ca-14u.html">magic boyz yellow ca:14u</a> (14u)</li><li><a href="../../teams/14u/magic-elite-ca-14u.html">magic elite ca:14u</a> (14u)</li><li><a href="../../teams/14u/magic-elite-14u.html">magic elite:14u</a> (14u)</li><li><a href="../../teams/15u/magic-boyz-ca-15u.html">magic boyz ca:15u</a> (15u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 3 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

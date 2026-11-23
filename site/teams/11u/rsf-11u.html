@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,19 +113,21 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked rsf:11u</h2>
-<p class="sub">unranked &middot; 0-3 all-time &middot; 10.0 PPG / 29.7 OPP / -19.7 DIFF / L3 STRK / 0-3 L10 &middot; tier mix bronze3 &middot; window 0-3 (last 3) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 0-3 all-time &middot; 10.0 PPG / 29.7 OPP / -19.7 DIFF / L3 STRK / 0-3 L10 &middot; tier mix bronze3 &middot; window 0-3 (last 3) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (3 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>06-08</td><td class="l">L 13-15</td><td><a href="bay-city-eb-11u.html">Bay City EB</a></td><td>#55</td><td>11u Division 3</td><td><a href="https://basketball.exposureevents.com/236775/battle-in-the-bay/teams/rsf?divisionteamid=4528940">Battle In The Bay - Schedule - Jun 7-8, 2025</a></td></tr>
-<tr><td>06-07</td><td class="l">L 10-30</td><td><a href="nor-cal-elite-gold-11u.html">Nor Cal Elite Gold</a></td><td>-</td><td>11u Division 3</td><td><a href="https://basketball.exposureevents.com/236775/battle-in-the-bay/teams/rsf?divisionteamid=4528940">Battle In The Bay - Schedule - Jun 7-8, 2025</a></td></tr>
-<tr><td>06-07</td><td class="l">L 7-44</td><td><a href="team-unlimited-select-mateo-11u.html">Team Unlimited Select Mateo</a></td><td>-</td><td>11u Division 3</td><td><a href="https://basketball.exposureevents.com/236775/battle-in-the-bay/teams/rsf?divisionteamid=4528940">Battle In The Bay - Schedule - Jun 7-8, 2025</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1749416400000" data-source-date="2025-06-08" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">06-08</td><td data-cell="tipoff"><time datetime="2025-06-08T21:00:00Z" title="Source clock: 2:00 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">21:00 UTC</time></td><td class="l">L 13-15</td><td><a href="bay-city-eb-11u.html">Bay City EB</a></td><td>#55</td><td>11u Division 3</td><td><a href="https://basketball.exposureevents.com/236775/battle-in-the-bay/teams/rsf?divisionteamid=4528940">Battle In The Bay - Schedule - Jun 7-8, 2025</a></td></tr>
+<tr data-utc-ms="1749353100000" data-source-date="2025-06-07" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">06-08</td><td data-cell="tipoff"><time datetime="2025-06-08T03:25:00Z" title="Source clock: 8:25 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">03:25 UTC</time></td><td class="l">L 10-30</td><td><a href="nor-cal-elite-gold-11u.html">Nor Cal Elite Gold</a></td><td>-</td><td>11u Division 3</td><td><a href="https://basketball.exposureevents.com/236775/battle-in-the-bay/teams/rsf?divisionteamid=4528940">Battle In The Bay - Schedule - Jun 7-8, 2025</a></td></tr>
+<tr data-utc-ms="1749346500000" data-source-date="2025-06-07" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">06-08</td><td data-cell="tipoff"><time datetime="2025-06-08T01:35:00Z" title="Source clock: 6:35 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">01:35 UTC</time></td><td class="l">L 7-44</td><td><a href="team-unlimited-select-mateo-11u.html">Team Unlimited Select Mateo</a></td><td>-</td><td>11u Division 3</td><td><a href="https://basketball.exposureevents.com/236775/battle-in-the-bay/teams/rsf?divisionteamid=4528940">Battle In The Bay - Schedule - Jun 7-8, 2025</a></td></tr></tbody></table></section>
 <section class="note"><h2>More Rsf (3)</h2><ul><li><a href="../../teams/12u/rsf-12u.html">rsf:12u</a> (12u)</li><li><a href="../../teams/13u/rsf-13u.html">rsf:13u</a> (13u)</li><li><a href="../../teams/14u/rsf-14u.html">rsf:14u</a> (14u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 3 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

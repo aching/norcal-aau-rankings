@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,20 +113,22 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>#54 stable basketball:7th</h2>
-<p class="sub">0.026 &middot; 3-1 all-time &middot; 54.0 PPG / 53.5 OPP / +0.5 DIFF / L1 STRK / 3-1 L10 &middot; tier mix open &middot; window 3-1 (last 4) &middot; SOS 0.041 &middot; 2026-11-22</p>
+<p class="sub">0.026 &middot; 3-1 all-time &middot; 54.0 PPG / 53.5 OPP / +0.5 DIFF / W1 STRK / 3-1 L10 &middot; tier mix open &middot; window 3-1 (last 4) &middot; SOS 0.041 &middot; 2026-11-23</p>
 </div>
 
 <section class="note"><h2>Why #54</h2><p class="confidence confidence-low"><strong>Confidence: Low</strong> <span>4 active games · 3/4 opponents covered (75%) · latest 9/27/2026</span><span class="confidence-note">Evidence grade only; not a probability of exact placement. High requires ≥12 games, ≥80% coverage, and a game within 30 days.</span></p><ul><li>Form 3-1 in-band (open, 3-1 overall); 33% sample kept (4g)</li><li>Best win #3 City Stars 41-39 (9/27, open)</li><li>Hardest test lost to #3 City Stars 48-74 (9/27)</li><li>Schedule open-leaning (open4), sos 0.041, 1 ghost</li><li>Margin biggest +23 / closest -26 (window +0.5)</li><li>latest 9/27 (56d ago)</li></ul></section>
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (4 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>09-27</td><td class="l">L 48-74</td><td><a href="city-stars-7th.html">City Stars</a></td><td>#3</td><td>7th Grade Lakers</td><td><a href="https://basketball.exposureevents.com/271003/2026-west-coast-preview/teams/stable-basketball?divisionteamid=5565569">2026 West Coast Preview - Schedule - Sep 26-27, 2026</a></td></tr>
-<tr><td>09-27</td><td class="w">W 41-39</td><td><a href="city-stars-7th.html">City Stars</a></td><td>#3</td><td>7th Grade Lakers</td><td><a href="https://basketball.exposureevents.com/271003/2026-west-coast-preview/teams/stable-basketball?divisionteamid=5565569">2026 West Coast Preview - Schedule - Sep 26-27, 2026</a></td></tr>
-<tr><td>09-26</td><td class="w">W 58-55</td><td><a href="socal-legends-7th.html">SoCal Legends</a></td><td>-</td><td>7th Grade Lakers</td><td><a href="https://basketball.exposureevents.com/271003/2026-west-coast-preview/teams/stable-basketball?divisionteamid=5565569">2026 West Coast Preview - Schedule - Sep 26-27, 2026</a></td></tr>
-<tr><td>09-26</td><td class="w">W 69-46</td><td><a href="young-kings-7th.html">Young Kings</a></td><td>#206</td><td>7th Grade Lakers</td><td><a href="https://basketball.exposureevents.com/271003/2026-west-coast-preview/teams/stable-basketball?divisionteamid=5565569">2026 West Coast Preview - Schedule - Sep 26-27, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1790546400000" data-source-date="2026-09-27" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-27</td><td data-cell="tipoff"><time datetime="2026-09-27T22:00:00Z" title="Source clock: 3:00 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">22:00 UTC</time></td><td class="w">W 41-39</td><td><a href="city-stars-7th.html">City Stars</a></td><td>#3</td><td>7th Grade Lakers</td><td><a href="https://basketball.exposureevents.com/271003/2026-west-coast-preview/teams/stable-basketball?divisionteamid=5565569">2026 West Coast Preview - Schedule - Sep 26-27, 2026</a></td></tr>
+<tr data-utc-ms="1790530800000" data-source-date="2026-09-27" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-27</td><td data-cell="tipoff"><time datetime="2026-09-27T17:40:00Z" title="Source clock: 10:40 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">17:40 UTC</time></td><td class="l">L 48-74</td><td><a href="city-stars-7th.html">City Stars</a></td><td>#3</td><td>7th Grade Lakers</td><td><a href="https://basketball.exposureevents.com/271003/2026-west-coast-preview/teams/stable-basketball?divisionteamid=5565569">2026 West Coast Preview - Schedule - Sep 26-27, 2026</a></td></tr>
+<tr data-utc-ms="1790444100000" data-source-date="2026-09-26" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-26</td><td data-cell="tipoff"><time datetime="2026-09-26T17:35:00Z" title="Source clock: 10:35 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">17:35 UTC</time></td><td class="w">W 58-55</td><td><a href="socal-legends-7th.html">SoCal Legends</a></td><td>-</td><td>7th Grade Lakers</td><td><a href="https://basketball.exposureevents.com/271003/2026-west-coast-preview/teams/stable-basketball?divisionteamid=5565569">2026 West Coast Preview - Schedule - Sep 26-27, 2026</a></td></tr>
+<tr data-utc-ms="1790440200000" data-source-date="2026-09-26" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-26</td><td data-cell="tipoff"><time datetime="2026-09-26T16:30:00Z" title="Source clock: 9:30 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">16:30 UTC</time></td><td class="w">W 69-46</td><td><a href="young-kings-7th.html">Young Kings</a></td><td>#206</td><td>7th Grade Lakers</td><td><a href="https://basketball.exposureevents.com/271003/2026-west-coast-preview/teams/stable-basketball?divisionteamid=5565569">2026 West Coast Preview - Schedule - Sep 26-27, 2026</a></td></tr></tbody></table></section>
 
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 4 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

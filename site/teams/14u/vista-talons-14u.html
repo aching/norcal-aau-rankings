@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,20 +113,22 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked vista talons:14u</h2>
-<p class="sub">unranked &middot; 2-2 all-time &middot; 50.0 PPG / 55.2 OPP / -5.2 DIFF / L2 STRK / 2-2 L10 &middot; tier mix open4 &middot; window 2-2 (last 4) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 2-2 all-time &middot; 50.0 PPG / 55.2 OPP / -5.2 DIFF / L2 STRK / 2-2 L10 &middot; tier mix open4 &middot; window 2-2 (last 4) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (4 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>09-20</td><td class="l">L 27-66</td><td><a href="showtime-xvi-2031-14u.html">Showtime XVI 2031</a></td><td>#22</td><td>14U</td><td><a href="https://basketball.exposureevents.com/271812/yellow-jackets-fall-ball-classic/teams/vista-talons?divisionteamid=5555998">Yellow Jackets Fall Ball Classic - Schedule - Sep 19-20, 2026</a></td></tr>
-<tr><td>09-20</td><td class="l">L 37-58</td><td><a href="shine-academy-14u.html">Shine Academy</a></td><td>#52</td><td>14U</td><td><a href="https://basketball.exposureevents.com/271812/yellow-jackets-fall-ball-classic/teams/vista-talons?divisionteamid=5555998">Yellow Jackets Fall Ball Classic - Schedule - Sep 19-20, 2026</a></td></tr>
-<tr><td>09-19</td><td class="w">W 69-40</td><td><a href="swish-army-select-14u.html">Swish Army Select</a></td><td>#106</td><td>14U</td><td><a href="https://basketball.exposureevents.com/271812/yellow-jackets-fall-ball-classic/teams/vista-talons?divisionteamid=5555998">Yellow Jackets Fall Ball Classic - Schedule - Sep 19-20, 2026</a></td></tr>
-<tr><td>09-19</td><td class="w">W 67-57</td><td><a href="yba-rize-elite-14u.html">YBA Rize Elite</a></td><td>-</td><td>14U</td><td><a href="https://basketball.exposureevents.com/271812/yellow-jackets-fall-ball-classic/teams/vista-talons?divisionteamid=5555998">Yellow Jackets Fall Ball Classic - Schedule - Sep 19-20, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1789940400000" data-source-date="2026-09-20" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-20</td><td data-cell="tipoff"><time datetime="2026-09-20T21:40:00Z" title="Source clock: 2:40 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">21:40 UTC</time></td><td class="l">L 37-58</td><td><a href="shine-academy-14u.html">Shine Academy</a></td><td>#52</td><td>14U</td><td><a href="https://basketball.exposureevents.com/271812/yellow-jackets-fall-ball-classic/teams/vista-talons?divisionteamid=5555998">Yellow Jackets Fall Ball Classic - Schedule - Sep 19-20, 2026</a></td></tr>
+<tr data-utc-ms="1789934400000" data-source-date="2026-09-20" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-20</td><td data-cell="tipoff"><time datetime="2026-09-20T20:00:00Z" title="Source clock: 1:00 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">20:00 UTC</time></td><td class="l">L 27-66</td><td><a href="showtime-xvi-2031-14u.html">Showtime XVI 2031</a></td><td>#22</td><td>14U</td><td><a href="https://basketball.exposureevents.com/271812/yellow-jackets-fall-ball-classic/teams/vista-talons?divisionteamid=5555998">Yellow Jackets Fall Ball Classic - Schedule - Sep 19-20, 2026</a></td></tr>
+<tr data-utc-ms="1789866000000" data-source-date="2026-09-19" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-20</td><td data-cell="tipoff"><time datetime="2026-09-20T01:00:00Z" title="Source clock: 6:00 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">01:00 UTC</time></td><td class="w">W 67-57</td><td><a href="yba-rize-elite-14u.html">YBA Rize Elite</a></td><td>-</td><td>14U</td><td><a href="https://basketball.exposureevents.com/271812/yellow-jackets-fall-ball-classic/teams/vista-talons?divisionteamid=5555998">Yellow Jackets Fall Ball Classic - Schedule - Sep 19-20, 2026</a></td></tr>
+<tr data-utc-ms="1789860000000" data-source-date="2026-09-19" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">09-19</td><td data-cell="tipoff"><time datetime="2026-09-19T23:20:00Z" title="Source clock: 4:20 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">23:20 UTC</time></td><td class="w">W 69-40</td><td><a href="swish-army-select-14u.html">Swish Army Select</a></td><td>#106</td><td>14U</td><td><a href="https://basketball.exposureevents.com/271812/yellow-jackets-fall-ball-classic/teams/vista-talons?divisionteamid=5555998">Yellow Jackets Fall Ball Classic - Schedule - Sep 19-20, 2026</a></td></tr></tbody></table></section>
 <section class="note"><h2>More Vista (2)</h2><ul><li><a href="../../teams/13u/vista-talons-blue-13u.html">vista talons blue:13u</a> (13u)</li><li><a href="../../teams/13u/vista-talons-13u.html">vista talons:13u</a> (13u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 4 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

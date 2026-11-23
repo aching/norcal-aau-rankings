@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,19 +113,21 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked mba triple threat alex:13u</h2>
-<p class="sub">unranked &middot; 0-3 all-time &middot; 23.0 PPG / 38.7 OPP / -15.7 DIFF / L3 STRK / 0-3 L10 &middot; tier mix silver3 &middot; window 0-3 (last 3) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 0-3 all-time &middot; 23.0 PPG / 38.7 OPP / -15.7 DIFF / L3 STRK / 0-3 L10 &middot; tier mix silver3 &middot; window 0-3 (last 3) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (3 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>10-12</td><td class="l">L 28-32</td><td><a href="team-unlimited-red-13u.html">Team Unlimited Red</a></td><td>-</td><td>13u Division 2</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/mba-triple-threat-alex?divisionteamid=4772615">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
-<tr><td>10-11</td><td class="l">L 20-50</td><td><a href="lakeshow-sun-13u.html">Lakeshow 13U Sun</a></td><td>-</td><td>13u Division 2</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/mba-triple-threat-alex?divisionteamid=4772615">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
-<tr><td>10-11</td><td class="l">L 21-34</td><td><a href="javstep-13u.html">Javstep</a></td><td>#116</td><td>13u Division 2</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/mba-triple-threat-alex?divisionteamid=4772615">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1760292900000" data-source-date="2025-10-12" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-12</td><td data-cell="tipoff"><time datetime="2025-10-12T18:15:00Z" title="Source clock: 11:15 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">18:15 UTC</time></td><td class="l">L 28-32</td><td><a href="team-unlimited-red-13u.html">Team Unlimited Red</a></td><td>-</td><td>13u Division 2</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/mba-triple-threat-alex?divisionteamid=4772615">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr data-utc-ms="1760209800000" data-source-date="2025-10-11" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-11</td><td data-cell="tipoff"><time datetime="2025-10-11T19:10:00Z" title="Source clock: 12:10 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">19:10 UTC</time></td><td class="l">L 21-34</td><td><a href="javstep-13u.html">Javstep</a></td><td>#116</td><td>13u Division 2</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/mba-triple-threat-alex?divisionteamid=4772615">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr>
+<tr data-utc-ms="1760203200000" data-source-date="2025-10-11" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">10-11</td><td data-cell="tipoff"><time datetime="2025-10-11T17:20:00Z" title="Source clock: 10:20 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">17:20 UTC</time></td><td class="l">L 20-50</td><td><a href="lakeshow-sun-13u.html">Lakeshow 13U Sun</a></td><td>-</td><td>13u Division 2</td><td><a href="https://basketball.exposureevents.com/249876/the-fall-extravaganza/teams/mba-triple-threat-alex?divisionteamid=4772615">The Fall Extravaganza - Schedule - Oct 11-12, 2025</a></td></tr></tbody></table></section>
 <section class="note"><h2>More <a href="../../clubs/mba.html">Mba</a> (14)</h2><ul><li><a href="mba-triple-threat-black-13u.html">mba triple threat black:13u</a> (same age)</li><li><a href="mba-triple-threat-cisneros-13u.html">mba triple threat cisneros:13u</a> (same age)</li><li><a href="mba-triple-threat-mendez-13u.html">mba triple threat mendez:13u</a> (same age)</li><li><a href="mba-triple-threat-phelps-13u.html">mba triple threat phelps:13u</a> (same age)</li><li><a href="mba-triple-threat-13u.html">mba triple threat:13u</a> (same age)</li><li><a href="../../teams/11u/mba-triple-threat-kassel-11u.html">mba triple threat kassel:11u</a> (11u)</li><li><a href="../../teams/11u/mba-triple-threat-11u.html">mba triple threat:11u</a> (11u)</li><li><a href="../../teams/12u/mba-triple-threat-hall-12u.html">mba triple threat hall:12u</a> (12u)</li><li><a href="../../teams/12u/mba-triple-threat-12u.html">mba triple threat:12u</a> (12u)</li><li><a href="../../teams/14u/mba-triple-threat-hall-14u.html">mba triple threat hall:14u</a> (14u)</li><li><a href="../../teams/14u/mba-triple-threat-14u.html">mba triple threat:14u</a> (14u)</li><li><a href="../../teams/14u/mba-14u.html">mba:14u</a> (14u)</li><li><a href="../../teams/15u/mba-triple-threat-15u.html">mba triple threat:15u</a> (15u)</li><li><a href="../../teams/15u/mba-15u.html">mba:15u</a> (15u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 3 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>

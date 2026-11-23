@@ -63,6 +63,10 @@ ul.why li { margin: 1px 0; }
 .confidence-note { display: block; color: var(--mut); font-size: 12px; margin-top: 3px; }
 .aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
+button.time-sort { background: none; border: 0; padding: 0; font: inherit;
+                   color: inherit; text-decoration: underline; cursor: pointer; }
+button.time-sort:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+td[data-cell] { white-space: nowrap; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
 .back { display: inline-block; margin-top: 4px; font-size: 14px; }
@@ -109,20 +113,22 @@ footer.gen { margin-top: 32px; color: var(--mut); font-size: 12.5px; }
 <nav class="tabs"><a href="../../11u.html">11U</a><a href="../../12u.html">12U/6th Grade</a><a href="../../13u.html">13U/7th Grade</a><a href="../../14u.html">14U/8th Grade</a><a href="../../15u.html">15U/9th Grade</a><a href="../../upcoming.html">Upcoming</a><a href="../../organizers.html">Organizers</a><a href="../../clubs.html">Clubs</a></nav>
 <div class="detail-head">
 <h2>Unranked idaho premier regional:15u</h2>
-<p class="sub">unranked &middot; 3-1 all-time &middot; 52.2 PPG / 46.5 OPP / +5.8 DIFF / W1 STRK / 3-1 L10 &middot; tier mix open4 &middot; window 3-1 (last 4) &middot; SOS - &middot; 2026-11-22</p>
+<p class="sub">unranked &middot; 3-1 all-time &middot; 52.2 PPG / 46.5 OPP / +5.8 DIFF / W1 STRK / 3-1 L10 &middot; tier mix open4 &middot; window 3-1 (last 4) &middot; SOS - &middot; 2026-11-23</p>
 </div>
 
 
 <section class="note"><h2>Titles (0)</h2><ul><li>No titles held.</li></ul></section>
 
 <section class="note"><h2>Full record (4 scored games, newest first)</h2>
-<table class="detail"><thead><tr><th>Date</th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
-<tbody><tr><td>05-24</td><td class="w">W 55-51</td><td><a href="real-run-las-vegas-15u.html">Real Run Las Vegas</a></td><td>-</td><td>Boys - 15U/9th Grade - 2029</td><td><a href="https://basketball.exposureevents.com/253070/las-vegas-memorial-day-classic/teams/idaho-premier-regional?divisionteamid=5299550">Las Vegas Memorial Day Classic - Schedule - May 23-25, 2026</a></td></tr>
-<tr><td>05-24</td><td class="l">L 55-71</td><td><a href="prominent-elite-15u.html">Prominent Elite</a></td><td>-</td><td>Boys - 15U/9th Grade - 2029</td><td><a href="https://basketball.exposureevents.com/253070/las-vegas-memorial-day-classic/teams/idaho-premier-regional?divisionteamid=5299550">Las Vegas Memorial Day Classic - Schedule - May 23-25, 2026</a></td></tr>
-<tr><td>05-23</td><td class="w">W 57-27</td><td><a href="vegas-elite-thornton-15u.html">Vegas Elite Thornton</a></td><td>-</td><td>Boys - 15U/9th Grade - 2029</td><td><a href="https://basketball.exposureevents.com/253070/las-vegas-memorial-day-classic/teams/idaho-premier-regional?divisionteamid=5299550">Las Vegas Memorial Day Classic - Schedule - May 23-25, 2026</a></td></tr>
-<tr><td>05-23</td><td class="w">W 42-37</td><td><a href="shooters-elite-15u.html">Shooters Elite</a></td><td>-</td><td>Boys - 15U/9th Grade - 2029</td><td><a href="https://basketball.exposureevents.com/253070/las-vegas-memorial-day-classic/teams/idaho-premier-regional?divisionteamid=5299550">Las Vegas Memorial Day Classic - Schedule - May 23-25, 2026</a></td></tr></tbody></table></section>
+<p id="history-timezone" class="why-note">Date first, then tip-off time. Times shown in UTC until your browser's timezone is applied. — means no valid timestamp.</p>
+<table class="detail" id="full-record"><thead><tr><th>Date</th><th><button class="time-sort" type="button" data-tipoff-sort aria-label="Latest game first within each date">Time <span data-sort-arrow aria-hidden="true">↓</span></button></th><th>Result</th><th>Opponent</th><th>Rank</th><th>Division</th><th>Event</th></tr></thead>
+<tbody><tr data-utc-ms="1779673800000" data-source-date="2026-05-24" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-25</td><td data-cell="tipoff"><time datetime="2026-05-25T01:50:00Z" title="Source clock: 6:50 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">01:50 UTC</time></td><td class="w">W 55-51</td><td><a href="real-run-las-vegas-15u.html">Real Run Las Vegas</a></td><td>-</td><td>Boys - 15U/9th Grade - 2029</td><td><a href="https://basketball.exposureevents.com/253070/las-vegas-memorial-day-classic/teams/idaho-premier-regional?divisionteamid=5299550">Las Vegas Memorial Day Classic - Schedule - May 23-25, 2026</a></td></tr>
+<tr data-utc-ms="1779646500000" data-source-date="2026-05-24" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-24</td><td data-cell="tipoff"><time datetime="2026-05-24T18:15:00Z" title="Source clock: 11:15 AM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">18:15 UTC</time></td><td class="l">L 55-71</td><td><a href="prominent-elite-15u.html">Prominent Elite</a></td><td>-</td><td>Boys - 15U/9th Grade - 2029</td><td><a href="https://basketball.exposureevents.com/253070/las-vegas-memorial-day-classic/teams/idaho-premier-regional?divisionteamid=5299550">Las Vegas Memorial Day Classic - Schedule - May 23-25, 2026</a></td></tr>
+<tr data-utc-ms="1779575700000" data-source-date="2026-05-23" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-23</td><td data-cell="tipoff"><time datetime="2026-05-23T22:35:00Z" title="Source clock: 3:35 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">22:35 UTC</time></td><td class="w">W 42-37</td><td><a href="shooters-elite-15u.html">Shooters Elite</a></td><td>-</td><td>Boys - 15U/9th Grade - 2029</td><td><a href="https://basketball.exposureevents.com/253070/las-vegas-memorial-day-classic/teams/idaho-premier-regional?divisionteamid=5299550">Las Vegas Memorial Day Classic - Schedule - May 23-25, 2026</a></td></tr>
+<tr data-utc-ms="1779567900000" data-source-date="2026-05-23" data-known-time="1" data-assumed-pacific="0"><td data-cell="date">05-23</td><td data-cell="tipoff"><time datetime="2026-05-23T20:25:00Z" title="Source clock: 1:25 PM PDT; Timezone: Pacific Standard Time; UTC instant used for timezone conversion">20:25 UTC</time></td><td class="w">W 57-27</td><td><a href="vegas-elite-thornton-15u.html">Vegas Elite Thornton</a></td><td>-</td><td>Boys - 15U/9th Grade - 2029</td><td><a href="https://basketball.exposureevents.com/253070/las-vegas-memorial-day-classic/teams/idaho-premier-regional?divisionteamid=5299550">Las Vegas Memorial Day Classic - Schedule - May 23-25, 2026</a></td></tr></tbody></table></section>
 <section class="note"><h2>More Idaho (10)</h2><ul><li><a href="idaho-premier-id-15u.html">idaho premier id:15u</a> (same age)</li><li><a href="idaho-premier-power-32-15u.html">idaho premier power 32:15u</a> (same age)</li><li><a href="idaho-premier-ua-rise-15u.html">idaho premier ua rise:15u</a> (same age)</li><li><a href="../../teams/12u/idaho-premier-regional-12u.html">idaho premier regional:12u</a> (12u)</li><li><a href="../../teams/13u/idaho-premier-regional-13u.html">idaho premier regional:13u</a> (13u)</li><li><a href="../../teams/13u/idaho-premier-13u.html">idaho premier:13u</a> (13u)</li><li><a href="../../teams/14u/idaho-gold-8th.html">idaho gold:8th</a> (14u)</li><li><a href="../../teams/14u/idaho-premier-2030-8th.html">idaho premier 2030:8th</a> (14u)</li><li><a href="../../teams/14u/idaho-premier-regional-14u.html">idaho premier regional:14u</a> (14u)</li><li><a href="../../teams/14u/idaho-premier-14u.html">idaho premier:14u</a> (14u)</li></ul></section>
 <footer class="gen">Source: data/aau.db via rank_teams.py. Window = last 4 games within 365 days; full record below spans all scored games.</footer>
 </div>
+<script src="../../game_sort.js" defer></script>
 </body>
 </html>
