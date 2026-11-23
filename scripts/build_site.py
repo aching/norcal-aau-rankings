@@ -24,6 +24,7 @@ import sys
 from pathlib import Path
 
 from html_utils import esc, external_link, json_for_script, safe_url
+from profile_aliases import profile_aliases, render_aliases
 from rank_teams import DEFAULT_WINDOW_DAYS
 from upcoming_games import render_upcoming_games, upcoming_by_team
 
@@ -89,6 +90,8 @@ ul.why li { margin: 1px 0; }
           padding: 20px 24px; margin: 16px 0; }
 .detail-head h2 { margin: 0 0 4px; font-size: 22px; }
 .detail-head .sub { color: var(--mut); font-size: 14px; margin: 0; }
+.aliases summary { cursor: pointer; font-weight: 600; font-size: 15px; }
+.aliases p, .aliases li { font-size: 14px; }
 table.detail { font-size: 13.5px; }
 td.w { font-weight: 700; color: #0a7a2e; }
 td.l { font-weight: 700; color: #b3261e; }
@@ -294,6 +297,7 @@ TEAM_TMPL = """<!DOCTYPE html>
 <h2>{rank} {team}{titles}</h2>
 <p class="sub">{score} &middot; {alltime} all-time &middot; {statline} &middot; tier mix {tier} &middot; window {wl} &middot; SOS {sos} &middot; {gen}</p>
 </div>
+{aliases_section}
 {why_section}
 <section class="note"><h2>Titles ({ntitles})</h2><ul>{titlelist}</ul></section>
 {upcoming_section}{scheduled_section}
@@ -635,7 +639,7 @@ def load_upcoming_games():
 
 
 def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
-              circuit_log=None, scheduled_games=None):
+              circuit_log=None, scheduled_games=None, aliases=None):
     """Write site/teams/<cohort>/<slug>.html -- full detail page.
 
     page_of: team_id -> relative page path (for opponent links).
@@ -775,6 +779,7 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
         upcoming_section=upcoming_section,
         scheduled_section=render_upcoming_games(scheduled_games, page_of),
         club_section=club_section,
+        aliases_section=render_aliases(aliases),
         circuit_section=render_circuit_games(circuit_log),
         gamerows=gamerows, lastn=esc(lastn), window_days=DEFAULT_WINDOW_DAYS,
     )
@@ -783,7 +788,7 @@ def team_page(cohort, cohort_title, r, gen, page_of, rank_of, upcoming=None,
     return page
 
 
-def build_board(cohort, title, sub, gen, scheduled_by_team=None):
+def build_board(cohort, title, sub, gen, scheduled_by_team=None, aliases=None):
     num = {"11u": "11", "12u": "12", "13u": "13", "14u": "14", "15u": "15"}[cohort]
     level_arg = {"11u": "11u", "12u": "12u,6th", "13u": "13u,7th", "14u": "14u,8th", "15u": "15u,9th"}[cohort]
     rows, titles, tmnote, meta, team_titles = parse_rep(f"/tmp/rep{num}.md")
@@ -911,7 +916,8 @@ def build_board(cohort, title, sub, gen, scheduled_by_team=None):
         (outdir / rel.split("/")[-1]).write_text(
             team_page(cohort, title, r, gen, page_of, rank_of, upcoming,
                       circuit_games.get(rel),
-                      (scheduled_by_team or {}).get(r["team"])))
+                      (scheduled_by_team or {}).get(r["team"]),
+                      aliases=(aliases or {}).get(r["team"], [])))
         r["page"] = rel
     if unranked:
         ulist = "\n".join(
@@ -944,10 +950,16 @@ def main():
     gen = date.today().isoformat()
     OUT.mkdir(parents=True, exist_ok=True)
     scheduled_games = load_upcoming_games()
+    alias_db = sqlite3.connect("data/aau.db")
+    try:
+        aliases_by_team = profile_aliases(alias_db)
+    finally:
+        alias_db.close()
     cards = ""
     counts = {}
     for cohort, (title, num, sub) in COHORTS.items():
-        n, _ = build_board(cohort, title, sub, gen, scheduled_by_team=scheduled_games)
+        n, _ = build_board(cohort, title, sub, gen,
+                           scheduled_by_team=scheduled_games, aliases=aliases_by_team)
         counts[cohort] = n
     for cohort, (title, num, sub) in COHORTS.items():
         first = ""

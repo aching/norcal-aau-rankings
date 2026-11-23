@@ -197,6 +197,14 @@ OVERRIDES = [
     # scoped to this exact FastBreak label, not other Lakeshow cohorts.
     (("lakeshow 14u (fuca) 8th/14u", "14u"), "lakeshow fuca:14u"),
     (("lakeshow 14u (fuca) 8th/14u", "8th"), "lakeshow fuca:14u"),
+    # LGSR 8th (user-confirmed Nov 2026): FastBreak's grade-qualified label
+    # belongs to the same 14U squad as bare LGSR, not other LGSR cohorts.
+    (("lgsr 8th", "14u"), "lgsr:14u"),
+    (("lgsr 8th", "8th"), "lgsr:14u"),
+    # NBBA 8th UA (K. Winter) (user-confirmed Nov 2026): exact Thanksgiving
+    # HoopFest label for bare 14U NBBA. Do not infer other NBBA coach merges.
+    (("nbba 8th ua (k. winter) 8th/14u", "14u"), "nbba:14u"),
+    (("nbba 8th ua (k. winter) 8th/14u", "8th"), "nbba:14u"),
     # NorCal Elite Allocco (user-confirmed Nov 2026): "NorCal Elite 14u
     # (Allocco) 8th/14U" (FB Fall Classic 9/19-20: NBBA/Fuca/Flow Elite
     # + WeCompete Black) is the same squad as "NorCal Elite 14U
